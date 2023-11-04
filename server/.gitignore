@@ -1,3 +1,7 @@
-node_modules
-# Keep environment variables out of version control
+node_modules/
+# Ignore any generated or temporary files
+.DS_Store
 .env
+
+# Ignore logs
+logs/
