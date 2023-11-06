@@ -51,7 +51,7 @@ const AccountMenu = (props: AccountMenuProps) => {
           aria-expanded={open ? "true" : undefined}
         >
           <Avatar sx={{ width: 32, height: 32 }}>
-            {props.username ? props.username[0] : ""}
+            {props.username ? props.username[0].toUpperCase() : ""}
           </Avatar>
         </IconButton>
       </Tooltip>

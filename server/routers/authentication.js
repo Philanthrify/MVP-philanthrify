@@ -11,13 +11,19 @@ const passwordMiddleware = require("../middleware/passwordUtil");
 const SECRET = process.env.JWT_SECRET;
 
 router.post("/signup", async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, userType } = req.body;
 
-  // Basic validation
-  if (!username || !password) {
+  // Basic validation including userType
+  if (!username || !password || !email || !userType) {
+    return res.status(400).json({
+      error: "Username, password, email, and user type are required.",
+    });
+  }
+  // Additional validation to ensure userType is either DONOR or CHARITY
+  if (userType !== "DONOR" && userType !== "CHARITY") {
     return res
       .status(400)
-      .json({ error: "Username and password are required." });
+      .json({ error: "User type must be either 'DONOR' or 'CHARITY'." });
   }
   try {
     // Check if username and email already exist
@@ -51,6 +57,7 @@ router.post("/signup", async (req, res) => {
         username: username,
         password: hashedPassword,
         email: email,
+        userType: userType,
       },
     });
     res
@@ -77,9 +84,13 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Invalid username or password" });
   }
   // user is returned with a json web token
-  const token = jwt.sign({ userId: user.id, username: user.username }, SECRET, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { userType: user.userType, userId: user.id, username: user.username },
+    SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
   res.json({ token: token, username: user.username });
 });
 module.exports = router;

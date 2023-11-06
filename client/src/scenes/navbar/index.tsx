@@ -14,7 +14,8 @@ const Navbar = (props: Props) => {
   const [selected, setSelected] = useState("dashboard");
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const username = useSelector((state: RootState) => state.auth.username);
-
+  const userType = useSelector((state: RootState) => state.auth.userType);
+  console.log(userType);
   return (
     <FlexBetween mb="0.25" p="0.5rem 0rem" color={palette.grey[300]}>
       {/* LEFT */}
@@ -42,19 +43,21 @@ const Navbar = (props: Props) => {
                 dashboard
               </Link>
             </Box>
-            <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
-              <Link
-                to={"/predictions"}
-                onClick={() => setSelected("predictions")}
-                style={{
-                  color:
-                    selected === "predictions" ? "inherit" : palette.grey[700],
-                  textDecoration: "inherit",
-                }}
-              >
-                predictions
-              </Link>
-            </Box>
+            {userType === "CHARITY" && (
+              <Box sx={{ "&:hover": { color: palette.primary.main } }}>
+                <Link
+                  to={"/projects"}
+                  onClick={() => setSelected("projects")}
+                  style={{
+                    color:
+                      selected === "projects" ? "inherit" : palette.grey[700],
+                    textDecoration: "inherit",
+                  }}
+                >
+                  projects
+                </Link>
+              </Box>
+            )}
             <AccountMenu username={username} />
           </>
         )}

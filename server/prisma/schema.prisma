@@ -10,20 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Enum to represent the type of the user
+enum UserType {
+  DONOR
+  CHARITY
+}
 model User {
-  id        String    @id @default(uuid())
-  username String      @unique
-  password String
-  email    String      @unique
-  investments Investment[]
+  id        String     @id @default(uuid())
+  username  String     @unique
+  password  String
+  email     String     @unique
+  userType  UserType   // This field determines whether the user is a Donor or a Charity
+  projects  Project[]  // Relation to projects, one-to-many
 }
 
-model Investment {
-  id        String    @id @default(uuid())
-  assetName    String
-  quantity     Float
-  purchaseDate DateTime
-  purchasePrice Float
-  userId       String
-  user         User   @relation(fields: [userId], references: [id])
+model Project {
+  id                  String   @id @default(uuid())
+  title               String
+  challenge           String   // A description of the challenge the project is addressing
+  solution            String   // The proposed solution for the challenge
+  donationUsage       String   // A description of how the donations will be used
+  futureImpact        String   // The anticipated future impact or end result of the project
+  links               Json     // Stores a JSON object containing various links related to the project
+  targetAmount        Float    // The fundraising goal for the project
+  currentAmount        Float   // The current money raised
+  userId              String   // Foreign key reference to the User model
+  user                User     @relation(fields: [userId], references: [id])
 }

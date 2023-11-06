@@ -33,8 +33,8 @@ app.use("/auth", authenticationRoutes);
 // all routes chronologically below this are protected by authentication
 app.use(authMiddleware);
 
-const investmentRoutes = require("./routers/investment");
-app.use("/investment", investmentRoutes);
+const projectRoutes = require("./routers/project");
+app.use("/project", projectRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3001;

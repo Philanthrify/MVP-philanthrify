@@ -10,12 +10,16 @@ import {
   TextField,
   FormHelperText,
   IconButton,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
 import FormBox from "@/components/FormBox";
 import FormStyles from "@/components/FormsUI";
 import TypographyTitle from "@/components/Title";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import HelpIcon from "@/components/HelpIcon";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // import TextFieldWrapper from "@/components/FormsUI/Textfield";
@@ -45,10 +49,17 @@ const validationSchema = yup.object({
 
 const Register = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
+  const [userType, setUserType] = useState("DONOR");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [regError, setRegError] = useState("");
 
+  const handleUserTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newUserType = (event.target as HTMLInputElement).value;
+    setUserType(newUserType);
+    formik.setFieldValue("userType", newUserType.toUpperCase());
+  };
   const handleMouseDownPassword = () => {
     // event.preventDefault();
     setShowPassword(true);
@@ -66,6 +77,7 @@ const Register = () => {
   const handleMouseUpConfirmPassword = () => {
     setShowConfirmPassword(false);
   };
+
   const { palette } = useTheme();
   const textFieldProps = FormStyles();
 
@@ -75,9 +87,11 @@ const Register = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      userType: userType,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      console.log("Form values on submit:", values);
       axios({
         method: "post",
         url: "http://localhost:1337/auth/signup",
@@ -128,6 +142,53 @@ const Register = () => {
               justifyContent="center"
               alignItems="center"
             >
+              <Grid xs={10}>
+                <FormControl>
+                  <FormLabel
+                    id="demo-controlled-radio-buttons-group"
+                    sx={{
+                      color: palette.grey[500], // Grey color for the unchecked state
+                    }}
+                  >
+                    What best describes you?
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={userType}
+                    onChange={handleUserTypeChange}
+                  >
+                    <FormControlLabel
+                      value="DONOR"
+                      control={
+                        <Radio
+                          sx={{
+                            color: palette.grey[500], // Grey color for the unchecked state
+                          }}
+                        />
+                      }
+                      label="Donor"
+                      sx={{
+                        color: palette.grey[500], // Grey color for the unchecked state
+                      }}
+                    />
+                    <FormControlLabel
+                      value="CHARITY"
+                      control={
+                        <Radio
+                          sx={{
+                            color: palette.grey[500], // Grey color for the unchecked state
+                          }}
+                        />
+                      }
+                      label="Charity"
+                      sx={{
+                        color: palette.grey[500], // Grey color for the unchecked state
+                      }}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
               <Grid xs={10}>
                 <TextField
                   fullWidth

@@ -19,6 +19,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/authSlice";
+import { jwtDecode } from "jwt-decode";
 
 const validationSchema = yup.object({
   username: yup.string().required("username is required"),
@@ -54,7 +55,13 @@ const Login = () => {
           const token = response.data.token;
           const username = response.data.username;
           console.log(token);
-          dispatch(login({ token: token, username: username }));
+          dispatch(
+            login({
+              token: token,
+              username: username,
+              userType: jwtDecode(token).userType,
+            })
+          );
           localStorage.setItem("token", token);
           navigate("/dashboard");
         })

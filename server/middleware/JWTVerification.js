@@ -15,7 +15,7 @@ const authJWT = (req, res, next) => {
     }
     // user is returned
     req.user = decoded;
-    console.log(`${decoded.username} request validated!`);
+    console.log(`${decoded.userId} request validated!`);
     next();
   });
 };

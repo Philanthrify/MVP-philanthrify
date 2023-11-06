@@ -23,8 +23,12 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route
-                path="/predictions"
-                element={<div>predictions page</div>}
+                path="/projects"
+                element={
+                  <div>
+                    projects page we can use 'speed dials from MUI to add?'
+                  </div>
+                }
               />
             </Route>
           </Routes>
