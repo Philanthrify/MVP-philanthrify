@@ -1,5 +1,6 @@
 // authSlice.js
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
 // Define a type for the slice state
 interface AuthState {
@@ -59,5 +60,6 @@ export const authSlice = createSlice({
 });
 
 export const { setToken, logout, login, setLoginState } = authSlice.actions;
+export const selectToken = (state: RootState) => state.auth.token;
 
 export default authSlice.reducer;

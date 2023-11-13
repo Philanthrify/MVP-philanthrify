@@ -8,6 +8,7 @@ import {
   IconButton,
   useTheme,
   Typography,
+  Box,
 } from "@mui/material";
 import FormBox from "@/components/FormBox";
 import FormStyles from "@/components/FormsUI";
@@ -72,7 +73,7 @@ const Login = () => {
         });
     },
   });
-
+  console.log(textFieldProps.textField);
   return (
     <Grid
       container
@@ -95,67 +96,77 @@ const Login = () => {
             // </Typography>
             <ErrorComponent message={loginError} />
           )}
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Grid
               container
-              spacing={2}
+              spacing={0}
               direction="column"
               justifyContent="center"
               alignItems="center"
+              width="70%"
             >
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="username"
-                  name="username"
-                  label="Username"
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
-                  }
-                  helperText={formik.touched.username && formik.errors.username}
-                  sx={{ ...textFieldProps.textField }}
-                />
-              </Grid>
+              <TextField
+                fullWidth
+                id="username"
+                name="username"
+                label="Username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+              />
 
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="password"
-                  name="password"
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={formik.touched.password && formik.errors.password}
-                  sx={{ ...textFieldProps.textField }}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton
-                        edge="end"
-                        color="primary"
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        size="small" // Set size to small
-                      >
-                        {showPassword ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Grid>
+              <TextField
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      edge="end"
+                      color="primary"
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      size="small" // Set size to small
+                    >
+                      {showPassword ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  ),
+                }}
+              />
 
-              <Grid xs={10} padding="10px 0px">
+              <Grid item xs={12} padding="10px 0px">
                 <Button
                   color="primary"
                   variant="contained"

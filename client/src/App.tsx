@@ -8,6 +8,7 @@ import Navbar from "@/scenes/navbar";
 import Dashboard from "@/scenes/dashboard";
 import Login from "./scenes/login";
 import PrivateRoute from "@/components/Routes/PrivateRoute";
+import Project from "./scenes/project";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
@@ -22,14 +23,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route
-                path="/projects"
-                element={
-                  <div>
-                    projects page we can use 'speed dials from MUI to add?'
-                  </div>
-                }
-              />
+              <Route path="/projects" element={<Project />} />
             </Route>
           </Routes>
         </Box>

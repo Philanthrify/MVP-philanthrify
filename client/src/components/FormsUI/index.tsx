@@ -1,32 +1,72 @@
-import { useTheme } from "@mui/material";
+import { SxProps, useTheme } from "@mui/material";
 
-const FormStyles = () => {
+type FormStylesReturnType = {
+  textField: SxProps;
+  button: SxProps;
+  spacing: SxProps;
+  select: SxProps;
+  textFieldWidth: string;
+};
+
+const FormStyles = (): FormStylesReturnType => {
   const { palette } = useTheme();
-  return {
-    textField: {
-      "& .MuiInputLabel-outlined": {
-        color: palette.grey.main,
-      },
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: palette.grey.main,
-      },
-      "& .MuiInputBase-input": {
-        color: palette.grey.main, // Default color of the text
-        "&:-webkit-autofill": {
-          // Styles for autofilled input
-          WebkitTextFillColor: palette.grey.main, // Text color
-          WebkitBoxShadow: "0 0 0px 1000px white inset", // Background color
-        },
-      },
-      // Add padding or any other styles here
-      padding: "10px 0",
-      width: "400px", // Example fixed height
-      "& .MuiOutlinedInput-input": {
-        padding: "12px 14px", // Adjust the padding to make sure the text is well placed
-      },
-      //   minWidth: "300px",
+  const defaultTextColor = palette.grey.main;
+
+  const getTextFieldStyles = (): SxProps => ({
+    "& .MuiInputLabel-outlined": {
+      color: defaultTextColor,
     },
-    // ... Add other style objects if necessary
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: defaultTextColor,
+    },
+    "& .MuiInputBase-input": {
+      color: defaultTextColor,
+      "&:-webkit-autofill": {
+        WebkitTextFillColor: defaultTextColor,
+        WebkitBoxShadow: "0 0 0px 1000px white inset",
+      },
+    },
+    padding: "10px 0",
+    "& .MuiOutlinedInput-input": {
+      padding: "12px 14px",
+    },
+  });
+
+  const getButtonStyles = (): SxProps => ({
+    backgroundColor: palette.primary.main,
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: palette.primary.dark,
+    },
+  });
+
+  const getSelectStyles = (): SxProps => ({
+    "& .MuiInputLabel-outlined": {
+      color: palette.grey.main,
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: palette.grey.main,
+    },
+    "& .MuiInputBase-input": {
+      color: palette.grey.main,
+      "&:-webkit-autofill": {
+        WebkitTextFillColor: palette.grey.main,
+        WebkitBoxShadow: "0 0 0px 1000px white inset",
+      },
+    },
+    padding: "10px 0px",
+  });
+
+  const getSpacingStyles = (): SxProps => ({
+    padding: "10px 0px",
+  });
+
+  return {
+    textField: getTextFieldStyles(),
+    button: getButtonStyles(),
+    spacing: getSpacingStyles(),
+    select: getSelectStyles(),
+    textFieldWidth: "70%", // defau
   };
 };
 

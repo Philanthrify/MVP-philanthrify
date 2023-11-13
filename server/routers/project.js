@@ -36,13 +36,21 @@ router.post("/", async (req, res) => {
         solution: solution,
         donationUsage: donationUsage,
         futureImpact: futureImpact,
-        links: links,
-        targetAmount: targetAmount,
+        targetAmount: Number(targetAmount),
         currentAmount: currentAmount,
-        userId: userId, // The ID of the user creating the project
+        userId: userId,
       },
     });
-
+    // create links
+    links.forEach(async (element) => {
+      const newLink = await prisma.link.create({
+        data: {
+          url: element.link,
+          socialMedia: element.socialMedia,
+          projectId: newProject.id,
+        },
+      });
+    });
     res.status(201).json(newProject);
   } catch (error) {
     console.error("Failed to add project:", error);

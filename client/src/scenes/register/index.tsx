@@ -189,35 +189,36 @@ const Register = () => {
                   </RadioGroup>
                 </FormControl>
               </Grid>
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="username"
-                  name="username"
-                  label="Username"
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
+              <TextField
+                fullWidth
+                id="username"
+                name="username"
+                label="Username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+                InputProps={
+                  {
+                    // endAdornment: (
+                    //   <>
+                    //     <HelpIcon
+                    //       title="
+                    //       Minimum of 3 characters in length and should not exceed 30 characters.
+                    //       "
+                    //     />
+                    //   </>
+                    // ),
                   }
-                  helperText={""}
-                  sx={{ ...textFieldProps.textField }}
-                  InputProps={
-                    {
-                      // endAdornment: (
-                      //   <>
-                      //     <HelpIcon
-                      //       title="
-                      //       Minimum of 3 characters in length and should not exceed 30 characters.
-                      //       "
-                      //     />
-                      //   </>
-                      // ),
-                    }
-                  }
-                />
-              </Grid>
+                }
+              />
               <Grid xs={10}>
                 <FormHelperText
                   error={
@@ -228,31 +229,32 @@ const Register = () => {
                 </FormHelperText>
               </Grid>
 
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="email"
-                  name="email"
-                  label="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={""}
-                  sx={{ ...textFieldProps.textField }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        {/* <HelpIcon
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      {/* <HelpIcon
                           title="
                           Must be valid email.
                           "
                         /> */}
-                      </>
-                    ),
-                  }}
-                />
-              </Grid>
+                    </>
+                  ),
+                }}
+              />
               <Grid xs={10}>
                 <FormHelperText
                   error={formik.touched.email && Boolean(formik.errors.email)}
@@ -261,47 +263,48 @@ const Register = () => {
                 </FormHelperText>
               </Grid>
 
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="password"
-                  name="password"
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                  helperText={""}
-                  sx={{ ...textFieldProps.textField }}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <IconButton
-                          edge="end"
-                          color="primary"
-                          aria-label="toggle password visibility"
-                          onMouseDown={handleMouseDownPassword}
-                          onMouseUp={handleMouseUpPassword}
-                          onTouchStart={handleMouseDownPassword}
-                          onTouchEnd={handleMouseUpPassword}
-                          size="small" // Set size to small
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                        {/* 
+              <TextField
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      <IconButton
+                        edge="end"
+                        color="primary"
+                        aria-label="toggle password visibility"
+                        onMouseDown={handleMouseDownPassword}
+                        onMouseUp={handleMouseUpPassword}
+                        onTouchStart={handleMouseDownPassword}
+                        onTouchEnd={handleMouseUpPassword}
+                        size="small" // Set size to small
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                      {/* 
                         <HelpIcon
                           title="
                           Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
                           "
                         /> */}
-                      </>
-                    ),
-                  }}
-                />
-              </Grid>
+                    </>
+                  ),
+                }}
+              />
               <Grid xs={10}>
                 <FormHelperText
                   error={
@@ -311,40 +314,41 @@ const Register = () => {
                   {formik.touched.password && formik.errors.password}
                 </FormHelperText>
               </Grid>
-              <Grid xs={10}>
-                <TextField
-                  fullWidth
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formik.values.confirmPassword}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.confirmPassword &&
-                    Boolean(formik.errors.confirmPassword)
-                  }
-                  helperText={""}
-                  sx={{ ...textFieldProps.textField }}
-                  InputProps={{
-                    endAdornment: (
-                      <IconButton
-                        edge="end"
-                        color="primary"
-                        aria-label="toggle password visibility"
-                        onMouseDown={handleMouseDownConfirmPassword}
-                        onMouseUp={handleMouseUpConfirmPassword}
-                        onTouchStart={handleMouseDownConfirmPassword}
-                        onTouchEnd={handleMouseUpConfirmPassword}
-                        size="small" // Set size to small
-                      >
-                        <VisibilityIcon />
-                      </IconButton>
-                    ),
-                  }}
-                />
-              </Grid>
+              <TextField
+                fullWidth
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                type={showConfirmPassword ? "text" : "password"}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                  width: textFieldProps.textFieldWidth,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      edge="end"
+                      color="primary"
+                      aria-label="toggle password visibility"
+                      onMouseDown={handleMouseDownConfirmPassword}
+                      onMouseUp={handleMouseUpConfirmPassword}
+                      onTouchStart={handleMouseDownConfirmPassword}
+                      onTouchEnd={handleMouseUpConfirmPassword}
+                      size="small" // Set size to small
+                    >
+                      <VisibilityIcon />
+                    </IconButton>
+                  ),
+                }}
+              />
               <Grid xs={10}>
                 <FormHelperText
                   error={
