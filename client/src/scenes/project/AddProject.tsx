@@ -63,7 +63,6 @@ const CreateProjectForm = () => {
     console.log(updatedLinks);
   };
   const [formError, setFormError] = useState("");
-  const { palette } = useTheme();
   const textFieldProps = FormStyles();
 
   const formik = useFormik({

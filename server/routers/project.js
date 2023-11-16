@@ -62,10 +62,43 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const userId = req.user.userId;
-    const projects = await prisma.project.findMany({
-      where: { userId: userId },
-    });
-    res.status(201).json(projects);
+    const { search, page, pageSize } = req.query;
+
+    const pageNumber = parseInt(page) || 1;
+    const size = parseInt(pageSize) || 10;
+    const skip = (pageNumber - 1) * size;
+
+    let queryOptions = {
+      where: {
+        OR: [
+          {
+            title: {
+              contains: search,
+            },
+          },
+          {
+            challenge: {
+              contains: search,
+            },
+          },
+          {
+            solution: {
+              contains: search,
+            },
+          },
+        ],
+      },
+      skip: skip,
+      take: size,
+    };
+
+    // If no search term is provided, remove the OR filter
+    if (!search) {
+      delete queryOptions.where.OR;
+    }
+
+    const projects = await prisma.project.findMany(queryOptions);
+    res.status(200).json(projects);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "Failed to fetch projects" });

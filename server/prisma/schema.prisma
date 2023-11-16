@@ -33,7 +33,7 @@ model Project {
   solution            String   // The proposed solution for the challenge
   donationUsage       String   // A description of how the donations will be used
   futureImpact        String   // The anticipated future impact or end result of the project
-  link               Link[]     // Stores a JSON object containing various links related to the project
+  link               Link[]     // Stores various links related to the project
   targetAmount        Float    // The fundraising goal for the project
   currentAmount        Float   // The current money raised
   userId              String   // Foreign key reference to the User model

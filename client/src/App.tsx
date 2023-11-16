@@ -8,7 +8,8 @@ import Navbar from "@/scenes/navbar";
 import Dashboard from "@/scenes/dashboard";
 import Login from "./scenes/login";
 import PrivateRoute from "@/components/Routes/PrivateRoute";
-import Project from "./scenes/project";
+import Project from "./scenes/project/AddProject";
+import Explore from "./scenes/explore";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
@@ -24,6 +25,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/projects" element={<Project />} />
+              <Route path="/explore" element={<Explore />} />
             </Route>
           </Routes>
         </Box>

@@ -52,27 +52,44 @@ const Navbar = (props: Props) => {
             >
               Dashboard
             </Button>
-            <BasicMenu
-              selected={selected}
-              menuValue="subscriptions"
-              buttonLabel="Subscriptions"
-              menuItems={[
-                {
-                  label: "Charities",
-                  onClick: () => {
-                    setSelected("subscriptions");
-                    console.log("View Your Subscribed Charities");
-                  },
+            <Button
+              variant="text"
+              sx={{
+                color:
+                  selected === "explore"
+                    ? palette.primary.main
+                    : palette.grey[700],
+                "&:hover": {
+                  color: palette.primary.light,
+                  backgroundColor: "transparent",
                 },
-                {
-                  label: "Projects",
-                  onClick: () => {
-                    setSelected("subscriptions");
-                    console.log("View Your Subscribed Projects");
-                  },
+              }}
+              onClick={() => {
+                setSelected("explore");
+                navigate("/explore");
+              }}
+            >
+              Explore
+            </Button>
+            <Button
+              variant="text"
+              sx={{
+                color:
+                  selected === "subscriptions"
+                    ? palette.primary.main
+                    : palette.grey[700],
+                "&:hover": {
+                  color: palette.primary.light,
+                  backgroundColor: "transparent",
                 },
-              ]}
-            />
+              }}
+              onClick={() => {
+                setSelected("subscriptions");
+                console.log("/subscriptions");
+              }}
+            >
+              Subscriptions
+            </Button>
             {userType === "CHARITY" && (
               <BasicMenu
                 selected={selected}

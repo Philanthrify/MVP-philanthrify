@@ -6,6 +6,7 @@ type FormStylesReturnType = {
   spacing: SxProps;
   select: SxProps;
   textFieldWidth: string;
+  searchTextFieldWidth: string;
 };
 
 const FormStyles = (): FormStylesReturnType => {
@@ -66,7 +67,8 @@ const FormStyles = (): FormStylesReturnType => {
     button: getButtonStyles(),
     spacing: getSpacingStyles(),
     select: getSelectStyles(),
-    textFieldWidth: "70%", // defau
+    textFieldWidth: "70%",
+    searchTextFieldWidth: "40%",
   };
 };
 
