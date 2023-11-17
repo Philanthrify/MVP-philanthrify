@@ -5,16 +5,28 @@ import SearchTextField from "@/components/Search/SearchTextField";
 import { Grid, useTheme } from "@mui/material";
 import Page from "@/components/Page";
 import TypographyTitle from "@/components/Title";
+import SearchResult from "@/components/Search/SearchResult";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 const Explore = () => {
   const [projects, setProjects] = useState([]);
-
+  const token = useSelector((state: RootState) => state.auth.token);
   const fetchProjects = async (searchTerm: string) => {
     try {
       console.log(searchTerm);
-      //   const response = await axios.get(
-      //     `http://localhost:3000/search?query=${searchTerm}`
-      //   );
+      axios({
+        method: "get",
+        url: "http://localhost:1337/project",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: { search: searchTerm, page: 1, pageSize: 3 },
+        // data: ,
+        withCredentials: true,
+      }).then((response) => {
+        console.log(response);
+      });
       //   setProjects(response.data);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -53,7 +65,7 @@ const Explore = () => {
           height="100%"
         >
           <div>the projects</div>
-          {/* <SearchResult projects={projects} /> */}
+          <SearchResult />
         </Grid>
       </Page>
     </Grid>

@@ -17,8 +17,9 @@ const prisma = new PrismaClient();
 app.use(helmet()); // Helps set some security headers
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend's URL
-    credentials: true, // this is important for sending cookies
+    // origin: "http://localhost:5173",
+    origin: "http://127.0.0.1:5173",
+    // credentials: true,
   })
 ); // Enable CORS for all routes
 app.use(bodyParser.json()); // Parses incoming requests with JSON payloads

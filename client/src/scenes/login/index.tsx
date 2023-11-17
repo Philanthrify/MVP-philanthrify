@@ -50,7 +50,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         data: JSON.stringify(values),
-        withCredentials: true,
+        // withCredentials: true,
       })
         .then((response) => {
           const token = response.data.token;
