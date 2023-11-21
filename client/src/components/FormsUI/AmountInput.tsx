@@ -24,7 +24,6 @@ const AmountInput: React.FC<AmountInputProps> = ({
   const theme = useTheme();
   const textFieldProps = FormStyles();
   const defaultTextColor = theme.palette.grey.main;
-  console.log("Default Text Color:", defaultTextColor); // Add this line to debug
 
   return (
     <TextField

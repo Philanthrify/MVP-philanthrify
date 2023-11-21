@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
   Button,
+  Checkbox,
   FormControl,
-  FormHelperText,
   Grid,
-  InputAdornment,
   InputLabel,
+  ListItemText,
+  MenuItem,
   OutlinedInput,
+  Select,
+  SelectChangeEvent,
   TextField,
-  useTheme,
 } from "@mui/material";
 import FormBox from "@/components/FormBox";
 import FormStyles from "@/components/FormsUI";
@@ -23,6 +25,24 @@ import AmountInput from "@/components/FormsUI/AmountInput";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/authSlice";
+import { useDropzone } from "react-dropzone";
+import SmallText from "@/components/SmallText";
+
+import TagValues from "@/models/tagValues";
+
+const allowedExtensions = ["image/jpeg", "image/png", "image/gif"];
+const maxSize = 5 * 1024 * 1024; // 5MB
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 // TODO: add validation for links including the 'http...' format
 const validationSchema = yup.object({
   title: yup.string().required("username is required"),
@@ -32,6 +52,7 @@ const validationSchema = yup.object({
     .required("Target amount is required")
     .positive("Amount must be positive")
     .typeError("Amount must be a number"),
+  image: yup.mixed().required("Required"),
 });
 
 const CreateProjectForm = () => {
@@ -39,7 +60,22 @@ const CreateProjectForm = () => {
   const [links, setLinks] = useState<Link[]>([
     { id: uuidv4(), link: "", socialMedia: "Facebook" },
   ]);
+  const [file, setFile] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedTag, setSelectedTag] = React.useState<string[]>([]);
 
+  const handleTagChange = (event: SelectChangeEvent<typeof selectedTag>) => {
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+    setSelectedTag(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+    formik.setFieldValue("listOfTags", value);
+    // console.log(selectedTag);
+  };
   const addLink = () => {
     const newLink = { id: uuidv4(), link: "", socialMedia: "Facebook" };
     setLinks([...links, newLink]);
@@ -62,6 +98,7 @@ const CreateProjectForm = () => {
     formik.setFieldValue("links", updatedLinks);
     console.log(updatedLinks);
   };
+
   const [formError, setFormError] = useState("");
   const textFieldProps = FormStyles();
 
@@ -72,8 +109,10 @@ const CreateProjectForm = () => {
       solution: "",
       donationUsage: "",
       futureImpact: "",
-      links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }], // a list of links
+      links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
+      listOfTags: [],
       targetAmount: 0,
+      image: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -86,7 +125,6 @@ const CreateProjectForm = () => {
           Authorization: token,
         },
         data: JSON.stringify(values),
-        withCredentials: true,
       })
         .then((response) => {
           console.log(response);
@@ -96,6 +134,23 @@ const CreateProjectForm = () => {
         });
     },
   });
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+
+    if (file && allowedExtensions.includes(file.type) && file.size <= maxSize) {
+      setFile(file);
+      console.log(file);
+      formik.setFieldValue("image", file);
+      setErrorMessage("");
+    } else {
+      setFile(null);
+      setErrorMessage(
+        "Invalid file type or size. Please upload a valid image file (jpg, png, gif) no larger than 5MB."
+      );
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
     <Grid
@@ -143,6 +198,28 @@ const CreateProjectForm = () => {
                   width: textFieldProps.textFieldWidth,
                 }}
               />
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-multiple-checkbox-label">Tags</InputLabel>
+                <Select
+                  labelId="demo-multiple-checkbox-label"
+                  id="demo-multiple-checkbox"
+                  multiple
+                  value={selectedTag}
+                  onChange={handleTagChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(", ")}
+                  MenuProps={MenuProps}
+                  sx={{ ...textFieldProps.select, paddingY: "0px" }}
+                >
+                  {TagValues.map((tag) => (
+                    <MenuItem key={tag} value={tag}>
+                      <Checkbox checked={selectedTag.indexOf(tag) > -1} />
+                      <ListItemText primary={tag} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
               <TextField
                 fullWidth
                 multiline
@@ -254,6 +331,33 @@ const CreateProjectForm = () => {
                 ))}
                 <Button onClick={addLink}>Add Link</Button>
               </Grid>
+              <TypographyTitle variant="h4" align="center" padding="15px 0">
+                Add a profile picture for the project:
+              </TypographyTitle>
+              {/* Drag and Drop Zone */}
+              <div
+                {...getRootProps()}
+                style={{
+                  border: "2px dashed gray",
+                  padding: "20px",
+                  textAlign: "center",
+                }}
+              >
+                <input {...getInputProps()} />
+                {isDragActive ? (
+                  <SmallText>Drop the file here...</SmallText>
+                ) : (
+                  <SmallText>
+                    Drag 'n' drop a file here, or click to select a file
+                  </SmallText>
+                )}
+              </div>
+
+              {/* File information display (optional) */}
+              {file && <SmallText>Selected file: {file.name}</SmallText>}
+              {errorMessage && (
+                <div style={{ color: "red" }}>{errorMessage}</div>
+              )}
 
               <Grid xs={10} padding="10px 0px">
                 <Button

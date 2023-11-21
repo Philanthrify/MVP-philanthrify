@@ -7,7 +7,7 @@ import Page from "@/components/Page";
 import TypographyTitle from "@/components/Title";
 import SearchResult from "@/components/Search/SearchResult";
 import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "@/redux/store";
 
 const Explore = () => {
   const [projects, setProjects] = useState([]);
@@ -20,10 +20,11 @@ const Explore = () => {
         url: "http://localhost:1337/project",
         headers: {
           "Content-Type": "application/json",
+          Authorization: token,
         },
         params: { search: searchTerm, page: 1, pageSize: 3 },
         // data: ,
-        withCredentials: true,
+        // withCredentials: true,
       }).then((response) => {
         console.log(response);
       });
@@ -64,7 +65,6 @@ const Explore = () => {
           width="100%"
           height="100%"
         >
-          <div>the projects</div>
           <SearchResult />
         </Grid>
       </Page>

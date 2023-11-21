@@ -17,8 +17,8 @@ const prisma = new PrismaClient();
 app.use(helmet()); // Helps set some security headers
 app.use(
   cors({
-    // origin: "http://localhost:5173",
-    origin: "http://127.0.0.1:5173",
+    origin: "http://localhost:5173",
+    // origin: "http://127.0.0.1:5173",
     // credentials: true,
   })
 ); // Enable CORS for all routes
@@ -36,6 +36,9 @@ app.use(authMiddleware);
 
 const projectRoutes = require("./routers/project");
 app.use("/project", projectRoutes);
+
+const tagRoutes = require("./routers/tag");
+app.use("/tag", tagRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3001;

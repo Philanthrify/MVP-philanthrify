@@ -10,39 +10,125 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Charity {
+  id      String              @id @default(uuid())
+  members CharityMembership[]
+}
+
+model CharityMembership {
+  id        String @id @default(uuid())
+  userId    String
+  charityId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  charity Charity @relation(fields: [charityId], references: [id])
+
+  @@unique([userId, charityId])
+}
+
+// TODO (Fergus): multipage signup form for extra info such as bio, soc media links (redux)
+model User {
+  id       String              @id @default(uuid())
+  username String              @unique
+  password String
+  email    String              @unique
+  userType UserType // This field determines whether the user is a Donor or a Charity
+  projects Project[] // Relation to projects, one-to-many
+  charity  CharityMembership[]
+}
+
+model Project {
+  id            String @id @default(uuid())
+  title         String
+  challenge     String // A description of the challenge the project is addressing
+  solution      String // The proposed solution for the challenge
+  donationUsage String // A description of how the donations will be used
+  futureImpact  String // The anticipated future impact or end result of the project
+  link          Link[] // Stores various links related to the project
+  tag           Tag[] // Stores various tags related to the project
+
+  targetAmount  Float // The fundraising goal for the project
+  currentAmount Float // The current money raised
+  userId        String // Foreign key reference to the User model
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Link {
+  id          String  @id @default(uuid())
+  url         String
+  socialMedia String // Type of link, e.g., social media, website, etc.
+  projectId   String // Foreign key reference to the Project model
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  projectId String // Foreign key reference to the Project model
+  value     TagValue // Enum for predefined tag values
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@unique([projectId, value])
+}
+
 // Enum to represent the type of the user
 enum UserType {
   DONOR
   CHARITY
 }
 
-// TODO (Fergus): multipage signup form for extra info such as bio, soc media links (redux)
-model User {
-  id        String     @id @default(uuid())
-  username  String     @unique
-  password  String
-  email     String     @unique
-  userType  UserType   // This field determines whether the user is a Donor or a Charity
-  projects  Project[]  // Relation to projects, one-to-many
-}
-
-model Project {
-  id                  String   @id @default(uuid())
-  title               String
-  challenge           String   // A description of the challenge the project is addressing
-  solution            String   // The proposed solution for the challenge
-  donationUsage       String   // A description of how the donations will be used
-  futureImpact        String   // The anticipated future impact or end result of the project
-  link               Link[]     // Stores various links related to the project
-  targetAmount        Float    // The fundraising goal for the project
-  currentAmount        Float   // The current money raised
-  userId              String   // Foreign key reference to the User model
-  user                User     @relation(fields: [userId], references: [id])
-}
-model Link {
-  id        String    @id @default(uuid())
-  url       String
-  socialMedia      String    // Type of link, e.g., social media, website, etc.
-  projectId String    // Foreign key reference to the Project model
-  project   Project   @relation(fields: [projectId], references: [id])
+// Allowed values for tags
+enum TagValue {
+  HungerAndFoodSecurity
+  HomelessnessAndHousing
+  DisasterReliefAndRecovery
+  ChildWelfare
+  ElderlyCare
+  EducationAndLiteracy
+  HealthcareAndMedicalResearch
+  MentalHealthSupport
+  CancerResearchAndSupport
+  HIVAIDSPreventionAndSupport
+  HeartDiseaseResearch
+  DiabetesResearchAndSupport
+  EnvironmentalConservation
+  WildlifePreservation
+  MarineConservation
+  ClimateChangeMitigation
+  SustainableDevelopment
+  CleanWaterAndSanitation
+  RenewableEnergyInitiatives
+  AnimalWelfareAndRights
+  DomesticViolencePreventionAndSupport
+  HumanTraffickingPreventionAndAid
+  RefugeeAndImmigrantSupport
+  VeteransSupport
+  DisabilitiesSupportAndAdvocacy
+  MentalDisabilitiesSupport
+  PhysicalDisabilitiesSupport
+  ArtsAndCulture
+  HistoricalPreservationAndRestoration
+  ScientificResearchAndInnovation
+  UrbanDevelopmentAndPlanning
+  CommunityBuildingAndSocialWork
+  PovertyAlleviation
+  MicrofinanceAndEconomicEmpowerment
+  GirlsAndWomensRights
+  LGBTQPlusRightsAndSupport
+  RacialAndEthnicEquality
+  ReligiousAndSpiritualSupport
+  PeaceAndConflictResolution
+  LegalAidAndAdvocacy
+  SubstanceAbusePreventionAndTreatment
+  EducationForUnderprivilegedChildren
+  YouthDevelopmentAndLeadership
+  GlobalHealthInitiatives
+  OrphanageSupportAndAdoptionServices
+  DementiaAndAlzheimersSupport
+  OrganAndTissueDonationAwareness
+  CulturalExchangeAndUnderstanding
+  DigitalInclusionAndInternetAccess
+  HumanRightsAdvocacy
+  HealthServices
+  Technology
+  CleanWater
+  EconomicEmpowerment
 }

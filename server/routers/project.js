@@ -2,9 +2,22 @@ const express = require("express");
 const printObject = require("../debug/debug");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const tagMiddleware = require("../middleware/tag");
 
 const router = express.Router();
-
+const multer = require("multer");
+const path = require("path");
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "../assets");
+//   },
+//   filename: (req, file, cb) => {
+//     console.log(file);
+//     console.log(req);
+//     cb(null, Date.now() + path.extname(file.originalname));
+//   },
+// });
+// const upload = multer({ storage: storage });
 // Add a new project for a user
 router.post("/", async (req, res) => {
   try {
@@ -25,6 +38,7 @@ router.post("/", async (req, res) => {
       donationUsage,
       futureImpact,
       links,
+      listOfTags,
       targetAmount,
       currentAmount = 0.0, // default to 0 if not provided
     } = req.body;
@@ -51,7 +65,14 @@ router.post("/", async (req, res) => {
         },
       });
     });
-    res.status(201).json(newProject);
+
+    // creating the tags
+    const tags = await tagMiddleware.createTag(newProject.id, listOfTags);
+
+    res.status(201).json({
+      project: newProject,
+      createdTags: tags.createdTags,
+    });
   } catch (error) {
     console.error("Failed to add project:", error);
     res.status(400).json({ error: "Failed to add project" });
