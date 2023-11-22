@@ -198,8 +198,15 @@ const CreateProjectForm = () => {
                   width: textFieldProps.textFieldWidth,
                 }}
               />
-              <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Tags</InputLabel>
+              <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
+                <InputLabel
+                  id="demo-multiple-checkbox-label"
+                  sx={{
+                    ...textFieldProps.inputLabel,
+                  }}
+                >
+                  Tags
+                </InputLabel>
                 <Select
                   labelId="demo-multiple-checkbox-label"
                   id="demo-multiple-checkbox"
@@ -209,7 +216,10 @@ const CreateProjectForm = () => {
                   input={<OutlinedInput label="Tag" />}
                   renderValue={(selected) => selected.join(", ")}
                   MenuProps={MenuProps}
-                  sx={{ ...textFieldProps.select, paddingY: "0px" }}
+                  sx={{
+                    ...textFieldProps.select,
+                    width: "100%",
+                  }}
                 >
                   {TagValues.map((tag) => (
                     <MenuItem key={tag} value={tag}>

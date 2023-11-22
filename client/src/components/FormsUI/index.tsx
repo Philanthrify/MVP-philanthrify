@@ -5,6 +5,7 @@ type FormStylesReturnType = {
   button: SxProps;
   spacing: SxProps;
   select: SxProps;
+  inputLabel: SxProps;
   textFieldWidth: string;
   searchTextFieldWidth: string;
 };
@@ -55,18 +56,27 @@ const FormStyles = (): FormStylesReturnType => {
         WebkitBoxShadow: "0 0 0px 1000px white inset",
       },
     },
+    "& .MuiSelect-icon": {
+      color: "grey", // Replace with your theme color or specific grey color code
+    },
     padding: "10px 0px",
   });
 
   const getSpacingStyles = (): SxProps => ({
     padding: "10px 0px",
   });
-
+  const getInputLabel = (): SxProps => ({
+    "&.Mui-focused": {
+      color: palette.primary.main,
+    },
+    color: palette.grey.main,
+  });
   return {
     textField: getTextFieldStyles(),
     button: getButtonStyles(),
     spacing: getSpacingStyles(),
     select: getSelectStyles(),
+    inputLabel: getInputLabel(),
     textFieldWidth: "70%",
     searchTextFieldWidth: "40%",
   };
