@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useState } from "react";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as yup from "yup";
 import {
   Button,
@@ -45,17 +45,29 @@ const MenuProps = {
 
 // TODO: add validation for links including the 'http...' format
 const validationSchema = yup.object({
-  title: yup.string().required("username is required"),
-  challenge: yup.string().required("Password is required"),
-  targetAmount: yup
-    .number()
-    .required("Target amount is required")
-    .positive("Amount must be positive")
-    .typeError("Amount must be a number"),
-  image: yup.mixed().required("Required"),
+  // title: yup.string().required("title is required"),
+  // challenge: yup.string().required("challenge is required"),
+  // solution: yup.string().required("solution is required"),
+  // donationUsage: yup.string().required("donationUsage is required"),
+  // futureImpact: yup.string().required("futureImpact is required"),
+  // targetAmount: yup
+  //   .number()
+  //   .required("Target amount is required")
+  //   .positive("Amount must be positive")
+  //   .typeError("Amount must be a number"),
 });
 
 const CreateProjectForm = () => {
+  const [data, setData] = useState({
+    title: "",
+    challenge: "",
+    solution: "",
+    donationUsage: "",
+    futureImpact: "",
+    links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
+    listOfTags: [],
+    targetAmount: 0,
+  });
   const token = useSelector(selectToken);
   const [links, setLinks] = useState<Link[]>([
     { id: uuidv4(), link: "", socialMedia: "Facebook" },
@@ -63,6 +75,23 @@ const CreateProjectForm = () => {
   const [file, setFile] = useState<File | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedTag, setSelectedTag] = React.useState<string[]>([]);
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const totalSteps = 2;
+
+  const isLastStep = () => currentStep === totalSteps - 1;
+
+  const handleNext = () => {
+    if (currentStep < totalSteps - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
   const handleTagChange = (event: SelectChangeEvent<typeof selectedTag>) => {
     const {
@@ -103,35 +132,27 @@ const CreateProjectForm = () => {
   const textFieldProps = FormStyles();
 
   const formik = useFormik({
-    initialValues: {
-      title: "",
-      challenge: "",
-      solution: "",
-      donationUsage: "",
-      futureImpact: "",
-      links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
-      listOfTags: [],
-      targetAmount: 0,
-      image: "",
-    },
+    initialValues: data,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      axios({
-        method: "post",
-        url: "http://localhost:1337/project",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        data: JSON.stringify(values),
-      })
-        .then((response) => {
-          console.log(response);
+      if (isLastStep()) {
+        axios({
+          method: "post",
+          url: "http://localhost:1337/project",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+          data: JSON.stringify(values),
         })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   });
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -140,7 +161,6 @@ const CreateProjectForm = () => {
     if (file && allowedExtensions.includes(file.type) && file.size <= maxSize) {
       setFile(file);
       console.log(file);
-      formik.setFieldValue("image", file);
       setErrorMessage("");
     } else {
       setFile(null);
@@ -183,201 +203,240 @@ const CreateProjectForm = () => {
               alignItems="center"
               width="70%"
             >
-              <TextField
-                fullWidth
-                id="title"
-                name="title"
-                label="title"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.title && Boolean(formik.errors.title)}
-                helperText={formik.touched.title && formik.errors.title}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-              />
-              <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
-                <InputLabel
-                  id="demo-multiple-checkbox-label"
-                  sx={{
-                    ...textFieldProps.inputLabel,
-                  }}
-                >
-                  Tags
-                </InputLabel>
-                <Select
-                  labelId="demo-multiple-checkbox-label"
-                  id="demo-multiple-checkbox"
-                  multiple
-                  value={selectedTag}
-                  onChange={handleTagChange}
-                  input={<OutlinedInput label="Tag" />}
-                  renderValue={(selected) => selected.join(", ")}
-                  MenuProps={MenuProps}
-                  sx={{
-                    ...textFieldProps.select,
-                    width: "100%",
-                  }}
-                >
-                  {TagValues.map((tag) => (
-                    <MenuItem key={tag} value={tag}>
-                      <Checkbox checked={selectedTag.indexOf(tag) > -1} />
-                      <ListItemText primary={tag} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                id="challenge"
-                name="challenge"
-                label="challenge"
-                value={formik.values.challenge}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.challenge && Boolean(formik.errors.challenge)
-                }
-                helperText={formik.touched.challenge && formik.errors.challenge}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-              />
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                id="solution"
-                name="solution"
-                label="solution"
-                value={formik.values.solution}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.solution && Boolean(formik.errors.solution)
-                }
-                helperText={formik.touched.solution && formik.errors.solution}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-              />
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                id="donationUsage"
-                name="donationUsage"
-                label="Donation Usage"
-                value={formik.values.donationUsage}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.donationUsage &&
-                  Boolean(formik.errors.donationUsage)
-                }
-                helperText={
-                  formik.touched.donationUsage && formik.errors.donationUsage
-                }
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-              />
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                id="futureImpact"
-                name="futureImpact"
-                label="Future Impact"
-                value={formik.values.futureImpact}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.futureImpact &&
-                  Boolean(formik.errors.futureImpact)
-                }
-                helperText={
-                  formik.touched.futureImpact && formik.errors.futureImpact
-                }
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-              />
-              <AmountInput
-                value={formik.values.targetAmount}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.targetAmount &&
-                  Boolean(formik.errors.targetAmount)
-                }
-                helperText={
-                  formik.touched.targetAmount && formik.errors.targetAmount
-                    ? formik.errors.targetAmount
-                    : undefined
-                }
-              />
-              <TypographyTitle variant="h4" align="center" padding="15px 0">
-                Add links to social media:
-              </TypographyTitle>
-              <Grid item xs={12}>
-                {links.map((link) => (
-                  <LinkInput
-                    id={link.id}
-                    link={link.link}
-                    socialMedia={link.socialMedia}
-                    onChange={(updatedLink) => handleLinkChange(updatedLink)}
-                    onDelete={removeLink}
+              {currentStep === 0 && (
+                <>
+                  <TextField
+                    fullWidth
+                    id="title"
+                    name="title"
+                    label="title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
+                    sx={{
+                      ...textFieldProps.textField,
+                      width: textFieldProps.textFieldWidth,
+                    }}
                   />
-                ))}
-                <Button onClick={addLink}>Add Link</Button>
-              </Grid>
-              <TypographyTitle variant="h4" align="center" padding="15px 0">
-                Add a profile picture for the project:
-              </TypographyTitle>
-              {/* Drag and Drop Zone */}
-              <div
-                {...getRootProps()}
-                style={{
-                  border: "2px dashed gray",
-                  padding: "20px",
-                  textAlign: "center",
-                }}
-              >
-                <input {...getInputProps()} />
-                {isDragActive ? (
-                  <SmallText>Drop the file here...</SmallText>
-                ) : (
-                  <SmallText>
-                    Drag 'n' drop a file here, or click to select a file
-                  </SmallText>
-                )}
-              </div>
 
-              {/* File information display (optional) */}
-              {file && <SmallText>Selected file: {file.name}</SmallText>}
-              {errorMessage && (
-                <div style={{ color: "red" }}>{errorMessage}</div>
+                  <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
+                    <InputLabel
+                      id="demo-multiple-checkbox-label"
+                      sx={{
+                        ...textFieldProps.inputLabel,
+                      }}
+                    >
+                      Tags
+                    </InputLabel>
+                    <Select
+                      labelId="demo-multiple-checkbox-label"
+                      id="demo-multiple-checkbox"
+                      multiple
+                      value={selectedTag}
+                      onChange={handleTagChange}
+                      input={<OutlinedInput label="Tag" />}
+                      renderValue={(selected) => selected.join(", ")}
+                      MenuProps={MenuProps}
+                      sx={{
+                        ...textFieldProps.select,
+                        width: "100%",
+                      }}
+                    >
+                      {TagValues.map((tag) => (
+                        <MenuItem key={tag} value={tag}>
+                          <Checkbox checked={selectedTag.indexOf(tag) > -1} />
+                          <ListItemText primary={tag} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    id="challenge"
+                    name="challenge"
+                    label="challenge"
+                    value={formik.values.challenge}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.challenge &&
+                      Boolean(formik.errors.challenge)
+                    }
+                    helperText={
+                      formik.touched.challenge && formik.errors.challenge
+                    }
+                    sx={{
+                      ...textFieldProps.textField,
+                      width: textFieldProps.textFieldWidth,
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    id="solution"
+                    name="solution"
+                    label="solution"
+                    value={formik.values.solution}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.solution && Boolean(formik.errors.solution)
+                    }
+                    helperText={
+                      formik.touched.solution && formik.errors.solution
+                    }
+                    sx={{
+                      ...textFieldProps.textField,
+                      width: textFieldProps.textFieldWidth,
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    id="donationUsage"
+                    name="donationUsage"
+                    label="Donation Usage"
+                    value={formik.values.donationUsage}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.donationUsage &&
+                      Boolean(formik.errors.donationUsage)
+                    }
+                    helperText={
+                      formik.touched.donationUsage &&
+                      formik.errors.donationUsage
+                    }
+                    sx={{
+                      ...textFieldProps.textField,
+                      width: textFieldProps.textFieldWidth,
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={4}
+                    id="futureImpact"
+                    name="futureImpact"
+                    label="Future Impact"
+                    value={formik.values.futureImpact}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.futureImpact &&
+                      Boolean(formik.errors.futureImpact)
+                    }
+                    helperText={
+                      formik.touched.futureImpact && formik.errors.futureImpact
+                    }
+                    sx={{
+                      ...textFieldProps.textField,
+                      width: textFieldProps.textFieldWidth,
+                    }}
+                  />
+                  <AmountInput
+                    value={formik.values.targetAmount}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.targetAmount &&
+                      Boolean(formik.errors.targetAmount)
+                    }
+                    helperText={
+                      formik.touched.targetAmount && formik.errors.targetAmount
+                        ? formik.errors.targetAmount
+                        : undefined
+                    }
+                  />
+
+                  <TypographyTitle variant="h4" align="center" padding="15px 0">
+                    Add links to social media:
+                  </TypographyTitle>
+                  <Grid item xs={12}>
+                    {links.map((link) => (
+                      <LinkInput
+                        id={link.id}
+                        link={link.link}
+                        socialMedia={link.socialMedia}
+                        onChange={(updatedLink) =>
+                          handleLinkChange(updatedLink)
+                        }
+                        onDelete={removeLink}
+                      />
+                    ))}
+                    <Button onClick={addLink}>Add Link</Button>
+                  </Grid>
+                </>
+              )}
+              {currentStep === 1 && (
+                <>
+                  <TypographyTitle variant="h4" align="center" padding="15px 0">
+                    Add a profile picture for the project:
+                  </TypographyTitle>
+                  {/* Drag and Drop Zone */}
+                  <div
+                    {...getRootProps()}
+                    style={{
+                      border: "2px dashed gray",
+                      padding: "20px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                      <SmallText>Drop the file here...</SmallText>
+                    ) : (
+                      <SmallText>
+                        Drag 'n' drop a file here, or click to select a file
+                      </SmallText>
+                    )}
+                  </div>
+
+                  {/* File information display (optional) */}
+                  {file && <SmallText>Selected file: {file.name}</SmallText>}
+                  {errorMessage && (
+                    <div style={{ color: "red" }}>{errorMessage}</div>
+                  )}
+                </>
               )}
 
               <Grid xs={10} padding="10px 0px">
-                <Button
+                <Button onClick={handleBack} disabled={currentStep === 0}>
+                  Previous
+                </Button>
+                {isLastStep() ? (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    fullWidth
+                    onClick={handleNext}
+                  >
+                    Next
+                  </Button>
+                )}
+                {/* <Button
                   color="primary"
                   variant="contained"
                   fullWidth
                   type="submit"
                 >
                   Submit
-                </Button>
+                </Button> */}
               </Grid>
             </Grid>
           </form>
