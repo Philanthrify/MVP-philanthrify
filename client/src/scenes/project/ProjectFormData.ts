@@ -9,4 +9,5 @@ export interface ProjectFormData {
   links: Link[];
   listOfTags: string[];
   targetAmount: number;
+  image?: File | null;
 }

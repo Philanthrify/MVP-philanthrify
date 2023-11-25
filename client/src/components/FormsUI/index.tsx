@@ -6,6 +6,7 @@ type FormStylesReturnType = {
   spacing: SxProps;
   select: SxProps;
   inputLabel: SxProps;
+  stepper: SxProps;
   textFieldWidth: string;
   searchTextFieldWidth: string;
 };
@@ -71,12 +72,24 @@ const FormStyles = (): FormStylesReturnType => {
     },
     color: palette.grey.main,
   });
+  const getStepper = (): SxProps => ({
+    // Custom styles here
+    ".MuiStepLabel-label": {
+      // Style for the step label
+      color: palette.grey.main, // Example color
+    },
+    ".MuiStepIcon-root": {
+      // Style for the step icon
+      color: palette.grey.main, // Example color for untried steps
+    },
+  });
   return {
     textField: getTextFieldStyles(),
     button: getButtonStyles(),
     spacing: getSpacingStyles(),
     select: getSelectStyles(),
     inputLabel: getInputLabel(),
+    stepper: getStepper(),
     textFieldWidth: "70%",
     searchTextFieldWidth: "40%",
   };
