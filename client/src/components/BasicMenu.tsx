@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useTheme } from "@mui/material";
+import ArticleIcon from "@mui/icons-material/Article";
 
 type BasicMenuProps = {
   buttonLabel: string;
@@ -41,6 +42,7 @@ export default function BasicMenu({
             selected === menuValue ? palette.primary.main : palette.grey[700], // Adjust grey color as needed
         }}
       >
+        <ArticleIcon sx={{ marginRight: "8px" }} />
         {buttonLabel}
       </Button>
       <Menu

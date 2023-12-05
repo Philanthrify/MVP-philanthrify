@@ -10,6 +10,8 @@ import Login from "./scenes/login";
 import PrivateRoute from "@/components/Routes/PrivateRoute";
 import Project from "./scenes/project/AddProject";
 import Explore from "./scenes/explore";
+import ProjectPage from "./scenes/project/XProject";
+import Profile from "./scenes/profile";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
@@ -25,6 +27,9 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/projects" element={<Project />} />
+              <Route path="/project/:projectId" element={<ProjectPage />} />
+              <Route path="/profile" element={<Profile />} />
+
               <Route path="/explore" element={<Explore />} />
             </Route>
           </Routes>

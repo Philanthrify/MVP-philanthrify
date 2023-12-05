@@ -1,5 +1,5 @@
 import AmountInput from "@/components/FormsUI/AmountInput";
-import { ProjectFormData } from "./ProjectFormData";
+import { ProjectFormData } from "./Project";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as yup from "yup";
@@ -18,7 +18,7 @@ import {
   TextField,
 } from "@mui/material";
 import FormStyles from "@/components/FormsUI";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TagValues from "@/models/tagValues";
 import LinkInput, { Link } from "@/components/LinkInput";
 import TypographyTitle from "@/components/Title";
@@ -27,6 +27,8 @@ type StepOneProps = {
   projectData: ProjectFormData;
   onSubmit: (updatedData: ProjectFormData) => void;
 };
+const countries = ["United States", "Canada", "United Kingdom", "Australia"];
+
 const maxSize = 5 * 1024 * 1024; // 5MB
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,7 +46,11 @@ const validationSchema = yup.object({
 });
 
 const StepOne = (props: StepOneProps) => {
-  const [selectedTag, setSelectedTag] = useState<string[]>([]);
+  // console.log("🚀 ~ file: StepOne.tsx:47 ~ StepOne ~ props:", props);
+
+  const [selectedTag, setSelectedTag] = useState<string[]>(
+    props.projectData.listOfTags
+  );
   const formik = useFormik({
     initialValues: props.projectData,
     validationSchema: validationSchema,
@@ -88,7 +94,12 @@ const StepOne = (props: StepOneProps) => {
     console.log(updatedLinks);
   };
   const textFieldProps = FormStyles();
-
+  useEffect(() => {
+    console.log("Selected Tags Changed (FORMIK):", formik.values.listOfTags);
+  }, [formik.values.listOfTags]);
+  useEffect(() => {
+    console.log("Selected Tags Changed:", selectedTag);
+  }, [selectedTag]);
   return (
     <form
       // onSubmit={formik.handleSubmit}
@@ -122,7 +133,38 @@ const StepOne = (props: StepOneProps) => {
             width: textFieldProps.textFieldWidth,
           }}
         />
-
+        <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
+          <InputLabel
+            id="country-label"
+            sx={{
+              ...textFieldProps.inputLabel,
+            }}
+          >
+            Country
+          </InputLabel>
+          <Select
+            labelId="country-label"
+            id="country"
+            name="country"
+            value={formik.values.country}
+            label="Country"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            sx={{
+              ...textFieldProps.select,
+              width: "100%",
+            }}
+          >
+            {countries.map((country) => (
+              <MenuItem key={country} value={country}>
+                {country}
+              </MenuItem>
+            ))}
+          </Select>
+          {formik.touched.country && formik.errors.country ? (
+            <div>{formik.errors.country}</div>
+          ) : null}
+        </FormControl>
         <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
           <InputLabel
             id="demo-multiple-checkbox-label"

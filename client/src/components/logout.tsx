@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
 import {
   Avatar,
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import { PersonAdd, Settings } from "@mui/icons-material";
 import Logout from "@mui/icons-material/Logout";
+import { RootState } from "@/redux/store";
 type AccountMenuProps = {
   username: string | null;
 };
@@ -25,6 +26,7 @@ const AccountMenu = (props: AccountMenuProps) => {
   const { palette } = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const userType = useSelector((state: RootState) => state.auth.userType);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +39,10 @@ const AccountMenu = (props: AccountMenuProps) => {
     dispatch(logout());
     localStorage.removeItem("token");
     navigate("/");
+  };
+  const goToProfile = () => {
+    handleClose(); // Assuming this closes the menu
+    navigate("/profile"); // Replace '/profile' with the path to your profile route
   };
 
   return (
@@ -90,25 +96,26 @@ const AccountMenu = (props: AccountMenuProps) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={goToProfile}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
+
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
+        {userType === "CHARITY" && (
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <PersonAdd fontSize="small" />
+            </ListItemIcon>
+            Add another account
+          </MenuItem>
+        )}
+
+        {/* <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Settings
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />

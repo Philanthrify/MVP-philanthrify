@@ -8,16 +8,17 @@ import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/authSlice";
 
 import StepOne from "./StepOne";
-import { ProjectFormData } from "./ProjectFormData";
+import { ProjectFormData } from "./Project";
 import { useEffect, useState } from "react";
 import StepTwo from "./StepTwo";
 import axios from "axios";
 import FormStyles from "@/components/FormsUI";
 import { useTheme } from "@emotion/react";
-const steps = ["Project Information", "Upload Images"];
+const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
   const [data, setData] = useState<ProjectFormData>({
     title: "",
+    country: "",
     challenge: "",
     solution: "",
     donationUsage: "",

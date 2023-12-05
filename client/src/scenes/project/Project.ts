@@ -1,6 +1,7 @@
 import { Link } from "@/components/LinkInput";
 
-export interface ProjectFormData {
+export interface Project {
+  id?: string | null;
   title: string;
   challenge: string;
   solution: string;

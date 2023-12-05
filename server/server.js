@@ -40,6 +40,8 @@ app.use("/project", projectRoutes);
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
 
+app.use("/project-photo", express.static("assets/projectPhotos"));
+
 // Start the server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

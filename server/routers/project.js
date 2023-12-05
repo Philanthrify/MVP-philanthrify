@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
     }
     const {
       title,
+      country,
       challenge,
       solution,
       donationUsage,
@@ -51,6 +52,7 @@ router.post("/", async (req, res) => {
     const newProject = await prisma.project.create({
       data: {
         title: title,
+        country: country,
         challenge: challenge,
         solution: solution,
         donationUsage: donationUsage,
@@ -90,10 +92,6 @@ router.get("/", async (req, res) => {
     const userId = req.user.userId;
     const { search, page, pageSize } = req.query;
 
-    const pageNumber = parseInt(page) || 1;
-    const size = parseInt(pageSize) || 10;
-    const skip = (pageNumber - 1) * size;
-
     let queryOptions = {
       where: {
         OR: [
@@ -114,8 +112,9 @@ router.get("/", async (req, res) => {
           },
         ],
       },
-      skip: skip,
-      take: size,
+      include: {
+        link: true, // Include associated links
+      },
     };
 
     // If no search term is provided, remove the OR filter
@@ -124,10 +123,38 @@ router.get("/", async (req, res) => {
     }
 
     const projects = await prisma.project.findMany(queryOptions);
+    // projects.forEach((project) => {});
     res.status(200).json(projects);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "Failed to fetch projects" });
+  }
+});
+
+// Retrieve all projects for a user
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    let queryOptions = {
+      where: {
+        id: id,
+      },
+      include: {
+        link: true,
+        tag: true,
+      },
+    };
+
+    const project = await prisma.project.findUnique(queryOptions);
+    if (project) {
+      res.status(200).json(project);
+    } else {
+      res.status(404).json({ error: "Failed to find project" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch project" });
   }
 });
 

@@ -14,6 +14,11 @@ const SearchTextField = (props: SearchTextFieldProps) => {
   const handleSearch = () => {
     props.onSearch(searchTerm);
   };
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
   return (
     <>
       <TextField
@@ -21,6 +26,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
         variant="outlined"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={handleKeyPress}
         sx={{
           ...textFieldProps.textField,
           width: textFieldProps.searchTextFieldWidth,

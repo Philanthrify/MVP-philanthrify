@@ -1,5 +1,5 @@
 import AmountInput from "@/components/FormsUI/AmountInput";
-import { ProjectFormData } from "./ProjectFormData";
+import { ProjectFormData } from "./Project";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as yup from "yup";
@@ -81,22 +81,33 @@ const StepTwo = (props: StepTwoProps) => {
         {file && <SmallText>Selected file: {file.name}</SmallText>}
         {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
       </div>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={props.handleBack}
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
       >
-        Back
-      </Button>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={() => props.onSubmit(props.projectData)}
-      >
-        Submit
-      </Button>
+        <Grid item>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={props.handleBack}
+          >
+            Back
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => props.onSubmit(props.projectData)}
+          >
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 };
