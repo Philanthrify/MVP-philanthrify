@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/authSlice";
 
 import StepOne from "./StepOne";
-import { ProjectFormData } from "./Project";
+import { Project } from "@/models/project";
 import { useEffect, useState } from "react";
 import StepTwo from "./StepTwo";
 import axios from "axios";
@@ -16,7 +16,7 @@ import FormStyles from "@/components/FormsUI";
 import { useTheme } from "@emotion/react";
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
-  const [data, setData] = useState<ProjectFormData>({
+  const [data, setData] = useState<Project>({
     title: "",
     country: "",
     challenge: "",
@@ -34,7 +34,7 @@ const CreateProjectForm = () => {
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
-  const handleNext = (updatedData: ProjectFormData) => {
+  const handleNext = (updatedData: Project) => {
     console.log(updatedData);
     setData(updatedData);
     setCurrentStep(currentStep + 1);
@@ -46,7 +46,7 @@ const CreateProjectForm = () => {
     }
   };
 
-  const onSubmit = (data: ProjectFormData) => {
+  const onSubmit = (data: Project) => {
     console.log(data);
     const { image, ...dataWithoutImage } = data;
 
@@ -82,9 +82,6 @@ const CreateProjectForm = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(currentStep); // This will log the current step whenever it changes
-  }, [currentStep]); // Dependency array with `currentStep` ensures this effect runs whenever `currentStep` changes
   const { palette } = useTheme();
   return (
     <Grid

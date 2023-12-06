@@ -91,6 +91,6 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     }
   );
-  res.json({ token: token, username: user.username });
+  res.json({ token: token, username: user.username, email: user.email });
 });
 module.exports = router;

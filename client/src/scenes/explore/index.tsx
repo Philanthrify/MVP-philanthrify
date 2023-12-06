@@ -17,7 +17,7 @@ const Explore = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [projects, setProjects] = useState<Project[]>([]);
   const itemsPerPage = 15; // clone code
-
+  const [searched, setSearched] = useState<Boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
 
   const totalPages = Math.ceil(projects.length / itemsPerPage);
@@ -37,13 +37,13 @@ const Explore = () => {
         url: "http://localhost:1337/project",
         headers: {
           "Content-Type": "application/json",
-          Authorization: token,
         },
         params: { search: searchTerm },
         // data: ,
         // withCredentials: true,
       }).then((response) => {
-        console.log(response);
+        setSearched(true);
+        setCurrentPage(1);
         setProjects(response.data);
       });
     } catch (error) {
@@ -84,20 +84,22 @@ const Explore = () => {
         // results were taking up the rest of the page and overflowing onto everythingafter!
       >
         <SearchResult projects={projects} currentPage={currentPage} />{" "}
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={handlePageChange}
-          variant="outlined"
-          shape="rounded"
-          sx={{
-            paddingBottom: "30px",
-            "& .MuiPaginationItem-root": {
-              color: palette.grey[500], // This targets the text color
-              borderColor: palette.grey[500], // This targets the border color
-            },
-          }}
-        />
+        {searched && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            variant="outlined"
+            shape="rounded"
+            sx={{
+              paddingBottom: "30px",
+              "& .MuiPaginationItem-root": {
+                color: palette.grey[500], // This targets the text color
+                borderColor: palette.grey[500], // This targets the border color
+              },
+            }}
+          />
+        )}
       </Grid>{" "}
     </Grid>
   );

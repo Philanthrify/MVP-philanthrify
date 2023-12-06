@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import FormStyles from "@/components/FormsUI";
 import React, { useEffect, useState } from "react";
-import TagValues from "@/models/tagValues";
+import { TagValues, TagValuesObj } from "@/models/tagValues";
 import LinkInput, { Link } from "@/components/LinkInput";
 import TypographyTitle from "@/components/Title";
 
@@ -79,7 +79,7 @@ const StepOne = (props: StepOneProps) => {
   const removeLink = (linkToRemove: Link) => {
     const currentLinks = formik.values.links;
     const updatedLinks = currentLinks.filter(
-      (link) => link.id !== linkToRemove.id
+      (link: Link) => link.id !== linkToRemove.id
     );
     formik.setFieldValue("links", updatedLinks);
     console.log(updatedLinks);

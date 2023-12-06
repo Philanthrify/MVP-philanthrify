@@ -53,18 +53,15 @@ const Login = () => {
         // withCredentials: true,
       })
         .then((response) => {
-          const token = response.data.token;
-          const username = response.data.username;
-          console.log(token);
           dispatch(
             login({
-              token: token,
-              username: username,
-              userType: jwtDecode(token).userType,
+              token: response.data.token,
+              username: response.data.username,
+              email: response.data.email,
+              userType: jwtDecode(response.data.token).userType,
             })
           );
-          localStorage.setItem("token", token);
-          navigate("/dashboard");
+          navigate("/explore");
         })
         .catch((error) => {
           // Handle error

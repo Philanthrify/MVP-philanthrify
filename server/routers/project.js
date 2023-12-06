@@ -3,6 +3,7 @@ const printObject = require("../debug/debug");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const tagMiddleware = require("../middleware/tag");
+const authMiddleware = require("../middleware/JWTVerification");
 
 const router = express.Router();
 const multer = require("multer");
@@ -24,7 +25,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 // Add a new project for a user
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
     const userType = req.user.userType;
@@ -89,8 +90,7 @@ router.post("/", async (req, res) => {
 // Retrieve all projects for a user
 router.get("/", async (req, res) => {
   try {
-    const userId = req.user.userId;
-    const { search, page, pageSize } = req.query;
+    const { search } = req.query;
 
     let queryOptions = {
       where: {

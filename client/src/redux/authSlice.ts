@@ -7,6 +7,7 @@ interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
   username: string | null;
+  email: string | null;
   userType: string | null;
 }
 
@@ -15,6 +16,7 @@ const initialState: AuthState = {
   isLoggedIn: false,
   token: null,
   username: null,
+  email: null,
   userType: null,
 };
 
@@ -39,6 +41,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
       state.username = null;
+      state.email = null;
       state.userType = null;
     },
     // This action can be used to set the login state and token at the same time
@@ -47,13 +50,15 @@ export const authSlice = createSlice({
       action: PayloadAction<{
         token: string | null;
         username: string | null;
+        email: string | null;
         userType: string | null;
       }>
     ) => {
-      const { token, username, userType } = action.payload;
+      const { token, username, email, userType } = action.payload;
       state.isLoggedIn = true;
       state.token = token;
       state.username = username;
+      state.email = email;
       state.userType = userType;
     },
   },

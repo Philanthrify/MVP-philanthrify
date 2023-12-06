@@ -8,7 +8,7 @@ import Navbar from "@/scenes/navbar";
 import Dashboard from "@/scenes/dashboard";
 import Login from "./scenes/login";
 import PrivateRoute from "@/components/Routes/PrivateRoute";
-import Project from "./scenes/project/AddProject";
+import AddProject from "./scenes/project/AddProject";
 import Explore from "./scenes/explore";
 import ProjectPage from "./scenes/project/XProject";
 import Profile from "./scenes/profile";
@@ -23,14 +23,13 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/register" element={<Register />} />
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/explore" element={<Explore />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/projects" element={<Project />} />
+              <Route path="/addproject" element={<AddProject />} />
               <Route path="/project/:projectId" element={<ProjectPage />} />
               <Route path="/profile" element={<Profile />} />
-
-              <Route path="/explore" element={<Explore />} />
             </Route>
           </Routes>
         </Box>

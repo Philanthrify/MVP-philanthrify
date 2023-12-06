@@ -31,11 +31,12 @@ app.use(morgan("dev")); // Logs incoming requests
 const authenticationRoutes = require("./routers/authentication");
 app.use("/auth", authenticationRoutes);
 
-// all routes chronologically below this are protected by authentication
-app.use(authMiddleware);
-
+// projects
 const projectRoutes = require("./routers/project");
 app.use("/project", projectRoutes);
+
+// all routes chronologically below this are protected by authentication
+app.use(authMiddleware);
 
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);

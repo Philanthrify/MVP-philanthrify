@@ -43,6 +43,10 @@ export const tokens = {
     light: "#2d2d34",
     main: "#1f2026",
   },
+  white: {
+    light: "#ffffff",
+    middle: "#94969c",
+  },
 };
 
 // mui theme settings
@@ -68,6 +72,9 @@ export const themeSettings = {
       default: tokens.background.main,
       light: tokens.background.light,
       lighter: tokens.background.lighter,
+    },
+    white: {
+      ...tokens.white,
     },
   },
   typography: {

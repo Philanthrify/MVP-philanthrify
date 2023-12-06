@@ -13,7 +13,7 @@ export interface Project {
   futureImpact?: string;
   links?: Link[];
   listOfTags?: string[];
-  targetAmount: number;
-  currentAmount: number;
+  targetAmount?: number;
+  currentAmount?: number;
   image?: File | null;
 }
