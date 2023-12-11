@@ -17,7 +17,7 @@ import TypographyTitle from "@/components/Title";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, Location } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/authSlice";
 import { jwtDecode } from "jwt-decode";
@@ -26,16 +26,21 @@ const validationSchema = yup.object({
   username: yup.string().required("username is required"),
   password: yup.string().required("Password is required"),
 });
+interface LocationState {
+  from: string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
-
+  const state = location.state as LocationState | undefined;
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
   const { palette } = useTheme();
   const textFieldProps = FormStyles();
-
+  const from = state?.from || "/";
+  console.log(from);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -61,7 +66,7 @@ const Login = () => {
               userType: jwtDecode(response.data.token).userType,
             })
           );
-          navigate("/explore");
+          navigate(from);
         })
         .catch((error) => {
           // Handle error

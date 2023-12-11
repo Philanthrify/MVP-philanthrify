@@ -81,9 +81,14 @@ const AccountMenu = (props: AccountMenuProps) => {
         >
           <Button // same button styles as in parent
             sx={{
-              ...props.buttonStyles,
+              minWidth: "80px",
+              height: "48px",
+              borderRadius: "1rem",
               color: palette.white.middle,
               backgroundColor: palette.background.light,
+              "&:hover": {
+                backgroundColor: palette.background.light,
+              },
               justifyContent: "space-between",
               alignItems: "center",
               gap: "0.3rem",
@@ -93,7 +98,7 @@ const AccountMenu = (props: AccountMenuProps) => {
               {username ? username[0].toUpperCase() : ""}
             </Avatar>
             {username}
-            {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </Button>
         </IconButton>
       </Tooltip>

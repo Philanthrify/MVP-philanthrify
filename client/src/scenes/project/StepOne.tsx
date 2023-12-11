@@ -22,12 +22,11 @@ import React, { useEffect, useState } from "react";
 import { TagValues, TagValuesObj } from "@/models/tagValues";
 import LinkInput, { Link } from "@/components/LinkInput";
 import TypographyTitle from "@/components/Title";
-
+import CountrySelect from "@/components/FormsUI/CountrySelector";
 type StepOneProps = {
   projectData: ProjectFormData;
   onSubmit: (updatedData: ProjectFormData) => void;
 };
-const countries = ["United States", "Canada", "United Kingdom", "Australia"];
 
 const maxSize = 5 * 1024 * 1024; // 5MB
 const ITEM_HEIGHT = 48;
@@ -93,6 +92,12 @@ const StepOne = (props: StepOneProps) => {
     formik.setFieldValue("links", updatedLinks);
     console.log(updatedLinks);
   };
+  const handleCountryChange = (
+    event: React.SyntheticEvent,
+    newValue: String | null
+  ) => {
+    formik.setFieldValue("country", newValue ? newValue : "");
+  };
   const textFieldProps = FormStyles();
   useEffect(() => {
     console.log("Selected Tags Changed (FORMIK):", formik.values.listOfTags);
@@ -100,6 +105,9 @@ const StepOne = (props: StepOneProps) => {
   useEffect(() => {
     console.log("Selected Tags Changed:", selectedTag);
   }, [selectedTag]);
+  useEffect(() => {
+    console.log("Selected Country Changed (FORMIK):", formik.values.country);
+  }, [formik.values.country]);
   return (
     <form
       // onSubmit={formik.handleSubmit}
@@ -133,38 +141,11 @@ const StepOne = (props: StepOneProps) => {
             width: textFieldProps.textFieldWidth,
           }}
         />
-        <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
-          <InputLabel
-            id="country-label"
-            sx={{
-              ...textFieldProps.inputLabel,
-            }}
-          >
-            Country
-          </InputLabel>
-          <Select
-            labelId="country-label"
-            id="country"
-            name="country"
-            value={formik.values.country}
-            label="Country"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            sx={{
-              ...textFieldProps.select,
-              width: "100%",
-            }}
-          >
-            {countries.map((country) => (
-              <MenuItem key={country} value={country}>
-                {country}
-              </MenuItem>
-            ))}
-          </Select>
-          {formik.touched.country && formik.errors.country ? (
-            <div>{formik.errors.country}</div>
-          ) : null}
-        </FormControl>
+        <CountrySelect
+          value={formik.values.country}
+          onChange={handleCountryChange}
+        />
+
         <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
           <InputLabel
             id="demo-multiple-checkbox-label"
@@ -188,10 +169,11 @@ const StepOne = (props: StepOneProps) => {
               width: "100%",
             }}
           >
-            {TagValues.map((tag) => (
-              <MenuItem key={tag} value={tag}>
-                <Checkbox checked={selectedTag.indexOf(tag) > -1} />
-                <ListItemText primary={tag} />
+            {Object.entries(TagValuesObj).map(([key, value]) => (
+              <MenuItem key={key} value={key}>
+                <Checkbox checked={selectedTag.indexOf(key) > -1} />
+                <ListItemText primary={value} />{" "}
+                {/* Display the value with spaces */}
               </MenuItem>
             ))}
           </Select>

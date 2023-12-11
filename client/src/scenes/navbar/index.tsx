@@ -70,7 +70,6 @@ const Navbar = (props: Props) => {
           <Typography variant="h4" fontSize="16px">
             Philanthrify
           </Typography>
-
           <Button
             // variant="text"
             sx={{
@@ -88,7 +87,7 @@ const Navbar = (props: Props) => {
             }}
             onClick={() => {
               setSelected("explore");
-              navigate("/explore");
+              navigate("/");
             }}
           >
             <ExploreIcon sx={{ marginRight: "8px" }} />

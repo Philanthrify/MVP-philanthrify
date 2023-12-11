@@ -44,17 +44,30 @@ const FormStyles = (): FormStylesReturnType => {
   });
 
   const getSelectStyles = (): SxProps => ({
-    "& .MuiInputLabel-outlined": {
-      color: palette.grey.main,
+    "& .MuiInputLabel-root": {
+      // Default label color
+      color: "defaultLabelColor", // Replace with your default color
     },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: palette.grey.main,
+    "& .MuiInputLabel-root.Mui-focused": {
+      // Label color when the input is focused
+      color: palette.primary.main, // Replace with your focused color
     },
-    "& .MuiInputBase-input": {
-      color: palette.grey.main,
-      "&:-webkit-autofill": {
-        WebkitTextFillColor: palette.grey.main,
-        WebkitBoxShadow: "0 0 0px 1000px white inset",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "defaultBorderColor", // default border color
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: palette.primary.main, // border color when focused
+      },
+      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderWidth: "2px", // border width when focused
+      },
+      // Apply colors for text and icons when focused and not focused
+      "& input": {
+        color: "defaultTextColor", // default text color
+      },
+      "& input.Mui-focused": {
+        color: palette.primary.main, // text color when focused
       },
     },
     "& .MuiSelect-icon": {

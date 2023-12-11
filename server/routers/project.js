@@ -90,10 +90,21 @@ router.post("/", authMiddleware, async (req, res) => {
 // Retrieve all projects for a user
 router.get("/", async (req, res) => {
   try {
-    const { search } = req.query;
+    const { search, country } = req.query;
 
     let queryOptions = {
       where: {
+        AND: [], // Initialize an empty AND array
+      },
+      include: {
+        link: true, // Include associated links
+        tag: true, // Include associated links
+      },
+    };
+
+    // Dynamically build the search part of the query if search term is provided
+    if (search) {
+      queryOptions.where.AND.push({
         OR: [
           {
             title: {
@@ -111,19 +122,24 @@ router.get("/", async (req, res) => {
             },
           },
         ],
-      },
-      include: {
-        link: true, // Include associated links
-      },
-    };
-
-    // If no search term is provided, remove the OR filter
-    if (!search) {
-      delete queryOptions.where.OR;
+      });
     }
 
+    // Include country in the query if it's provided
+    if (country) {
+      queryOptions.where.AND.push({
+        country: {
+          contains: country,
+        },
+      });
+    }
+
+    // If neither search nor country are provided, remove the AND filter
+    if (!search && !country) {
+      delete queryOptions.where.AND;
+    }
     const projects = await prisma.project.findMany(queryOptions);
-    // projects.forEach((project) => {});
+
     res.status(200).json(projects);
   } catch (error) {
     console.log(error);

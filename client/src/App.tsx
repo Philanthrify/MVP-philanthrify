@@ -24,11 +24,11 @@ function App() {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/explore" element={<Explore />} />
+            <Route path="/" element={<Explore />} />{" "}
+            <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/addproject" element={<AddProject />} />
-              <Route path="/project/:projectId" element={<ProjectPage />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>

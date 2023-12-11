@@ -1,4 +1,4 @@
-import { Grid, Step, StepLabel, Stepper } from "@mui/material";
+import { Alert, Grid, Snackbar, Step, StepLabel, Stepper } from "@mui/material";
 import FormBox from "@/components/FormBox";
 
 import TypographyTitle from "@/components/Title";
@@ -14,6 +14,8 @@ import StepTwo from "./StepTwo";
 import axios from "axios";
 import FormStyles from "@/components/FormsUI";
 import { useTheme } from "@emotion/react";
+import MuiAlert from "@mui/material/Alert";
+
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
   const [data, setData] = useState<Project>({
@@ -27,10 +29,21 @@ const CreateProjectForm = () => {
     listOfTags: [],
     targetAmount: 0,
   });
+  const [open, setOpen] = useState(false);
   const token = useSelector(selectToken);
   const [currentStep, setCurrentStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -65,6 +78,7 @@ const CreateProjectForm = () => {
           const formData = new FormData();
           formData.append("image", image);
           console.log(response.data.project.id);
+          setOpen(true);
           return axios({
             method: "post",
             url: `http://localhost:1337/project/upload-project-image`, // Change to your image upload endpoint
@@ -91,6 +105,12 @@ const CreateProjectForm = () => {
       width="100%"
       height="100%"
     >
+      {/* TODO: do this a bit later */}
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
       <Grid xs={8}>
         <FormBox>
           <TypographyTitle variant="h1" align="center" padding="15px 0">
