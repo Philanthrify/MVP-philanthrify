@@ -23,12 +23,12 @@ import { TagValues, TagValuesObj } from "@/models/tagValues";
 import LinkInput, { Link } from "@/components/LinkInput";
 import TypographyTitle from "@/components/Title";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
+import TagSelector from "@/components/FormsUI/TagSelector";
 type StepOneProps = {
   projectData: ProjectFormData;
   onSubmit: (updatedData: ProjectFormData) => void;
 };
 
-const maxSize = 5 * 1024 * 1024; // 5MB
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -58,7 +58,7 @@ const StepOne = (props: StepOneProps) => {
       props.onSubmit(values);
     },
   });
-  const handleTagChange = (event: SelectChangeEvent<typeof selectedTag>) => {
+  const handleTagChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
@@ -141,43 +141,17 @@ const StepOne = (props: StepOneProps) => {
             width: textFieldProps.textFieldWidth,
           }}
         />
+        {/* setting the country via formik */}
         <CountrySelect
           value={formik.values.country}
           onChange={handleCountryChange}
         />
+        {/* setting the tags via formik */}
+        <TagSelector
+          value={formik.values.listOfTags}
+          handleChange={handleTagChange}
+        />
 
-        <FormControl sx={{ width: textFieldProps.textFieldWidth }}>
-          <InputLabel
-            id="demo-multiple-checkbox-label"
-            sx={{
-              ...textFieldProps.inputLabel,
-            }}
-          >
-            Tags
-          </InputLabel>
-          <Select
-            labelId="demo-multiple-checkbox-label"
-            id="demo-multiple-checkbox"
-            multiple
-            value={selectedTag}
-            onChange={handleTagChange}
-            input={<OutlinedInput label="Tag" />}
-            renderValue={(selected) => selected.join(", ")}
-            MenuProps={MenuProps}
-            sx={{
-              ...textFieldProps.select,
-              width: "100%",
-            }}
-          >
-            {Object.entries(TagValuesObj).map(([key, value]) => (
-              <MenuItem key={key} value={key}>
-                <Checkbox checked={selectedTag.indexOf(key) > -1} />
-                <ListItemText primary={value} />{" "}
-                {/* Display the value with spaces */}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
         <TextField
           fullWidth
           multiline

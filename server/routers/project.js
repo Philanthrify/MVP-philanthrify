@@ -87,10 +87,13 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// Retrieve all projects for a user
-router.get("/", async (req, res) => {
+// Explore page searchbar
+router.post("/search", async (req, res) => {
   try {
-    const { search, country } = req.query;
+    const { search } = req.query;
+    const { country, listOfTags } = req.body;
+    console.log(country, listOfTags);
+    // const { listOfTags } = req.body;
 
     let queryOptions = {
       where: {
@@ -133,9 +136,17 @@ router.get("/", async (req, res) => {
         },
       });
     }
+    // Add tag filter
+    if (listOfTags && listOfTags.length > 0) {
+      queryOptions.where.AND.push({
+        tag: {
+          some: { value: { in: listOfTags } },
+        },
+      });
+    }
 
-    // If neither search nor country are provided, remove the AND filter
-    if (!search && !country) {
+    // Remove the AND filter if it's empty
+    if (queryOptions.where.AND.length === 0) {
       delete queryOptions.where.AND;
     }
     const projects = await prisma.project.findMany(queryOptions);

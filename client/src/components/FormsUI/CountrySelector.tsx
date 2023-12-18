@@ -7,17 +7,30 @@ import { useTheme } from "@emotion/react";
 import { useEffect, useState } from "react";
 
 interface CountrySelectProps {
-  value: String | null;
-  onChange: (event: React.SyntheticEvent, newValue: String | null) => void; // Function to update Formik's value
+  value: string | null;
+  onChange: (event: React.SyntheticEvent, newValue: string) => void; // Function to update Formik's value
 }
 
 export default function CountrySelect(props: CountrySelectProps) {
   const { palette } = useTheme();
   const [country, setCountry] = useState(props.value);
   const textFieldProps = FormStyles();
-  const findSelectedCountryByCode = (countryName: string) => {
-    return countries.find((country) => country.label === countryName);
+  // Find the country object by its name, or return null if not found or if the name is empty
+  const findSelectedCountryByCode = (countryName: string | null) => {
+    return countryName
+      ? countries.find((country) => country.label === countryName)
+      : null;
   };
+  // Effect hook to update the local state when the Redux state changes
+  useEffect(() => {
+    // If the Redux country value is an empty string, set the local country state to null to clear the Autocomplete
+    if (props.value === "") {
+      setCountry(null);
+    } else {
+      setCountry(props.value);
+    }
+  }, [props.value]);
+
   useEffect(() => {
     console.log("Selected Country Changed:", props.value);
   }, [props.value]);
@@ -37,7 +50,8 @@ export default function CountrySelect(props: CountrySelectProps) {
       getOptionLabel={(option) => option.label}
       value={findSelectedCountryByCode(country)}
       onChange={(event, newValue) => {
-        props.onChange(event, newValue ? newValue.label : null);
+        // Call the onChange prop with null when the new value is null
+        props.onChange(event, newValue ? newValue.label : "");
       }}
       renderOption={(props, option) => (
         <Box
@@ -52,7 +66,7 @@ export default function CountrySelect(props: CountrySelectProps) {
             src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
             alt=""
           />
-          {option.label} ({option.code}) +{option.phone}
+          {option.label} ({option.code})
         </Box>
       )}
       renderInput={(params) => (

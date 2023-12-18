@@ -1,14 +1,53 @@
-import { Box, Divider, Drawer, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  Grid,
+  SelectChangeEvent,
+  useTheme,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import TypographyTitle from "../Title";
+import TypographySmallText from "../SmallText";
+import { SearchFilters } from "@/models/searchFilters";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import CountrySelect from "../FormsUI/CountrySelector";
+import { setFilters } from "@/redux/exploreSlice";
+import TagSelector from "../FormsUI/TagSelector";
 
 type FilterDrawerProps = {
   drawerOpen: boolean;
   setDrawerOpen: (arg0: boolean) => void;
+  fetchProjects: () => Promise<void>; // for searching
 };
 
 const FilterDrawer = (props: FilterDrawerProps) => {
   const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const filters = useSelector((state: RootState) => state.explore.filters);
+  const handleCountryChange = (
+    event: React.SyntheticEvent,
+    newValue: string
+  ) => {
+    dispatch(setFilters({ ...filters, country: newValue }));
+  };
+  const handleTagChange = (event: SelectChangeEvent<string[]>) => {
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+    const valueArray = typeof value === "string" ? [value] : value;
 
+    dispatch(setFilters({ ...filters, listOfTags: valueArray }));
+  };
+  const clearFilters = () => {
+    dispatch(setFilters({ country: "", listOfTags: [] }));
+  };
+  useEffect(() => {
+    console.log("Filters in Redux Store:", filters);
+  }, [filters]);
   return (
     <Drawer
       anchor="left"
@@ -17,7 +56,7 @@ const FilterDrawer = (props: FilterDrawerProps) => {
     >
       <Box
         p={2}
-        width="250px"
+        width="400px"
         textAlign="center"
         role="presentation"
         sx={{
@@ -25,11 +64,44 @@ const FilterDrawer = (props: FilterDrawerProps) => {
           height: "100%",
         }}
       >
-        <Typography variant="h3" component="div" sx={{ color: "white" }}>
-          Filters
-        </Typography>
-        <Divider sx={{ borderColor: palette.white.middle, marginY: 2 }} />
-        {/* Divider styled with white color */}
+        <Grid
+          container
+          direction="column"
+          justifyContent="space-between"
+          maxWidth="100%"
+        >
+          <Grid item xs={12} maxWidth="100%">
+            <TypographyTitle variant="h3" align="center" padding="15px 0">
+              Filters
+            </TypographyTitle>
+            <Divider sx={{ borderColor: palette.white.middle, marginY: 2 }} />
+            <TypographyTitle variant="h4" align="center" padding="15px 0">
+              Country
+            </TypographyTitle>
+            <TypographySmallText variant="h6" align="center" padding="15px 0">
+              Select any country worldwide.
+            </TypographySmallText>
+            <CountrySelect
+              value={filters.country}
+              onChange={handleCountryChange}
+            />
+            <Divider sx={{ borderColor: palette.white.middle, marginY: 2 }} />
+            <TypographyTitle variant="h4" align="center" padding="15px 0">
+              Categories
+            </TypographyTitle>
+            <TypographySmallText variant="h6" align="center" padding="15px 0">
+              What kind of project are you looking for?
+            </TypographySmallText>
+            <TagSelector
+              value={filters.listOfTags}
+              handleChange={handleTagChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button onClick={props.fetchProjects}>Search</Button>
+            <Button onClick={clearFilters}>Clear Filters</Button>
+          </Grid>
+        </Grid>
       </Box>
     </Drawer>
   );

@@ -7,36 +7,47 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormStyles from "../FormsUI";
 import SearchIcon from "@mui/icons-material/Search";
 import TuneIcon from "@mui/icons-material/Tune";
-import Box from "@mui/material/Box";
 import FilterDrawer from "./FilterDrawer";
+import { SearchFilters } from "@/models/searchFilters";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "@/redux/exploreSlice";
+import { RootState } from "@/redux/store"; // Import the type for RootState
 
 type SearchTextFieldProps = {
-  onSearch: (searchTerm: string) => void;
+  fetchProjects: () => Promise<void>;
+  openFilterMenu: () => void;
 };
 
 const SearchTextField = (props: SearchTextFieldProps) => {
+  const dispatch = useDispatch();
+
   const textFieldProps = FormStyles();
+
   const { palette } = useTheme();
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const handleSearch = () => {
-    props.onSearch(searchTerm);
-  };
+
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
-      handleSearch();
+      console.log("searching!");
+      props.fetchProjects();
     }
   };
   const openFilterMenu = () => {
     setDrawerOpen(!drawerOpen);
   };
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const searchTerm = useSelector(
+    (state: RootState) => state.explore.searchTerm
+  );
+
+  useEffect(() => {
+    console.log("searchTerm in Redux Store:", searchTerm);
+  }, [searchTerm]);
   return (
     <>
-      <FilterDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
       <Grid
         container
         direction="column"
@@ -59,8 +70,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
             <TextField
               label="Search"
               variant="outlined"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => dispatch(setSearchTerm(e.target.value))}
               onKeyDown={handleKeyPress}
               sx={{
                 ...textFieldProps.textField,
@@ -92,16 +102,14 @@ const SearchTextField = (props: SearchTextFieldProps) => {
             <Button
               variant="contained"
               sx={{ height: "100%", width: "90%" }}
-              onClick={openFilterMenu}
+              onClick={props.openFilterMenu}
             >
               <TuneIcon />
               Filters
             </Button>
           </Grid>
         </Grid>
-        <Button variant="contained" onClick={handleSearch}>
-          Search
-        </Button>
+        <Button variant="contained">Search</Button>
       </Grid>
     </>
   );
