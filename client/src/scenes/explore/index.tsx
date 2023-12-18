@@ -16,6 +16,7 @@ import FilterDrawer from "@/components/Search/FilterDrawer";
 const Explore = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
+
   const itemsPerPage = 15;
   const pageNum = useSelector((state: RootState) => state.explore.page);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);

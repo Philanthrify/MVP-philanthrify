@@ -3,6 +3,8 @@ import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import ProgressBar from "../ProgressBar";
+
 type ResultBoxProps = {
   project: Project;
   sx: any;
@@ -51,10 +53,12 @@ const ResultBox = (props: ResultBoxProps) => {
       >
         Image Here
       </Box>
-      <ProgressBar
-        required={props.project.currentAmount}
-        fulfilled={props.project.targetAmount}
-      />
+      {props.project.currentAmount && props.project.targetAmount && (
+        <ProgressBar
+          required={props.project.currentAmount}
+          fulfilled={props.project.targetAmount}
+        />
+      )}
       {props.project.country && (
         <div>
           <LocationOnOutlinedIcon />
@@ -63,45 +67,6 @@ const ResultBox = (props: ResultBoxProps) => {
       )}
       <div>{props.project.title}</div>
     </Box>
-  );
-};
-
-type ProgressBarProps = {
-  required: number;
-  fulfilled: number;
-};
-const ProgressBar = (props: ProgressBarProps) => {
-  const { palette } = useTheme();
-
-  const progress = (props.required * 100) / props.fulfilled;
-  const containerStyles = {
-    height: 20,
-    width: "100%",
-    backgroundColor: "#e0e0de",
-    borderRadius: "1rem",
-  };
-
-  const fillerStyles = {
-    height: "100%",
-    width: `${progress}%`,
-    backgroundColor: palette.primary.main,
-    borderRadius: "inherit",
-    textAlign: "right" as const,
-  };
-
-  const labelStyles = {
-    padding: 5,
-    color: "white",
-    fontWeight: "bold",
-  };
-  return (
-    <>
-      <div style={containerStyles}>
-        <div style={fillerStyles}>
-          <span style={labelStyles}>{`${progress.toFixed()}%`}</span>
-        </div>
-      </div>
-    </>
   );
 };
 

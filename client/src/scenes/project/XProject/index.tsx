@@ -5,133 +5,147 @@ import {
   Grid,
   Paper,
   Typography,
-  useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { Project } from "../Project";
-import Row1 from "./Row1";
-import Row2 from "./Row2";
-import Row3 from "./Row3";
+import { Project } from "@/models/project";
+import { RootState } from "@/redux/store";
+import { fetchProject } from "@/redux/projectSlice";
+
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/authSlice";
-
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import TypographyTitle from "@/components/Title";
+import { useDispatch, useSelector } from "@/redux/hooks";
+import XProjectProgress from "./xProjectProgress";
 const ProjectPage = () => {
-  const token = useSelector(selectToken);
-
+  const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const project = useSelector((state: RootState) => state.project.project);
+  const loading = useSelector((state: RootState) => state.project.loading);
   const { projectId } = useParams<{ projectId: string }>();
-  const [project, setProject] = useState<Project | null>(null);
-  const getProjectById = async (
-    projectId: string | undefined
-  ): Promise<Project | null> => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          // Add any other headers you need here
-          Authorization: token, // Example for an auth token
-        },
-      };
-      console.log(token);
-      const response = await axios.get<Project>(
-        `http://localhost:1337/project/${projectId}`,
-        config
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching project:", error);
-      return null;
-    }
-  };
-  useEffect(() => {
-    const fetchProject = async () => {
-      const projectData = await getProjectById(projectId);
-      if (projectData) {
-        console.log(projectData);
-        setProject(projectData);
-      }
-    };
 
-    fetchProject();
-  }, [projectId]);
+  useEffect(() => {
+    if (projectId) {
+      dispatch(fetchProject(projectId));
+    }
+  }, [dispatch, projectId]);
+  // if not found the project yet then return loading screen
+  if (!project) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
-    <Grid container spacing={2}>
+    <Grid
+      container
+      spacing={2}
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        marginTop: "20px",
+        marginBottom: "20px",
+        width: "90%",
+        margin: "auto",
+      }}
+    >
       {/* Main content */}
-      <Grid container item xs={12} spacing={3} padding={3}>
+      <Grid
+        container
+        item
+        xs={12}
+        spacing={2}
+        width="100%"
+        height="510px"
+        sx={{
+          backgroundColor: palette.background.light,
+          borderRadius: "1rem",
+          margin: "0 auto 20px",
+          padding: "20px",
+        }}
+      >
         {/* Left Side */}
-        <Grid item md={8} xs={12}>
-          <Paper elevation={3}>
-            {/* Project Image */}
-            <img src="/path/to/project/image.jpg" alt="Project" width="100%" />
-            {/* Tags */}
-            <Box display="flex" justifyContent="start" flexWrap="wrap" p={2}>
-              {/* Map through your tags and display them */}
-            </Box>
-            {/* Project Details */}
-            <Box p={2}>
-              {/* Each section can be a Typography component */}
-              <Typography variant="h5">Challenge</Typography>
-              <Typography paragraph>{/* Content */}</Typography>
-
-              <Typography variant="h5">Solution</Typography>
-              <Typography paragraph>{/* Content */}</Typography>
-
-              {/* ... Other sections */}
-            </Box>
-          </Paper>
+        <Grid item md={6} xs={6}>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#063970",
+              justifyContent: "center",
+              alignItems: "center",
+              // Add any additional styling you need here
+            }}
+          >
+            Image Here
+          </Box>
         </Grid>
 
         {/* Right Side */}
-        <Grid item md={4} xs={12}>
-          <Paper elevation={3} sx={{ padding: 2 }}>
-            {/* Project Title and Details */}
-            <Typography variant="h4">{/* Title */}</Typography>
-            <Typography variant="body1">
-              {/* Location and other details */}
-            </Typography>
-
-            {/* Donation Progress */}
+        <Grid item md={6} xs={6}>
+          {" "}
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#063970",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              // Add any additional styling you need here
+            }}
+          >
+            {project.country && (
+              <div>
+                <LocationOnOutlinedIcon />
+                {project.country}
+              </div>
+            )}
+            {project.title && (
+              <div>
+                <TypographyTitle variant="h2" align="center" padding="15px 0">
+                  {project.title}
+                </TypographyTitle>
+              </div>
+            )}
             <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              my={2}
+              height="100px"
+              width="100%"
+              sx={{ backgroundColor: "#64F2A4" }}
             >
-              <CircularProgress variant="determinate" value={40} size={100} />
-              <Box>
-                <Typography
-                  variant="body1"
-                  component="div"
-                  color="text.secondary"
-                >
-                  {/* Donation progress text */}
-                </Typography>
-              </Box>
+              Charity Logo Here
             </Box>
-
-            {/* Donation Amounts */}
-            <Typography variant="h6">{/* Amount Raised */}</Typography>
-
-            {/* Share and Donate Buttons */}
-            <Button variant="contained" color="primary">
-              {/* Share */}
-            </Button>
-            <Button variant="contained" color="secondary">
-              {/* Donate */}
-            </Button>
-
-            {/* Donors List */}
-            <Box>{/* Map through donors and display them */}</Box>
-          </Paper>
+          </Box>
         </Grid>
       </Grid>
-
-      {/* Footer */}
-      <Grid item xs={12}>
-        {/* Your footer components */}
+      {/* text on the left and progressbar on right */}
+      <Grid container item xs={12} spacing={2} sx={{ width: "90%" }}>
+        <Grid item xs={7}>
+          <Box
+            sx={{
+              width: "100%",
+              height: "10000px",
+              backgroundColor: "#063970",
+              // Add any additional styling you need here
+            }}
+          ></Box>
+        </Grid>
+        <Grid item xs={5}>
+          <XProjectProgress />
+        </Grid>
+        {/* challenge */}
       </Grid>
     </Grid>
   );
