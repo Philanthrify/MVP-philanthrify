@@ -10,7 +10,7 @@ import Login from "./scenes/login";
 import PrivateRoute from "@/components/Routes/PrivateRoute";
 import AddProject from "./scenes/project/AddProject";
 import Explore from "./scenes/explore";
-import ProjectPage from "./scenes/project/XProject";
+import ProjectPage from "./scenes/XProject";
 import Profile from "./scenes/profile";
 
 function App() {

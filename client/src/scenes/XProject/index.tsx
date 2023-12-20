@@ -18,7 +18,8 @@ import { selectToken } from "@/redux/authSlice";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import TypographyTitle from "@/components/Title";
 import { useDispatch, useSelector } from "@/redux/hooks";
-import XProjectProgress from "./xProjectProgress";
+import SideFloater from "@/components/Project/SideFloater";
+import Challenge from "@/components/Project/Challenge";
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const ProjectPage = () => {
       sx={{
         marginTop: "20px",
         marginBottom: "20px",
-        width: "90%",
+        width: "100%",
         margin: "auto",
       }}
     >
@@ -132,18 +133,11 @@ const ProjectPage = () => {
       </Grid>
       {/* text on the left and progressbar on right */}
       <Grid container item xs={12} spacing={2} sx={{ width: "90%" }}>
-        <Grid item xs={7}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "10000px",
-              backgroundColor: "#063970",
-              // Add any additional styling you need here
-            }}
-          ></Box>
+        <Grid item xs={8}>
+          <Challenge />
         </Grid>
-        <Grid item xs={5}>
-          <XProjectProgress />
+        <Grid item xs={4}>
+          <SideFloater />
         </Grid>
         {/* challenge */}
       </Grid>
