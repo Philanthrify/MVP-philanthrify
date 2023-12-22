@@ -109,7 +109,9 @@ const SearchTextField = (props: SearchTextFieldProps) => {
             </Button>
           </Grid>
         </Grid>
-        <Button variant="contained">Search</Button>
+        <Button variant="contained" onClick={props.fetchProjects}>
+          Search
+        </Button>
       </Grid>
     </>
   );

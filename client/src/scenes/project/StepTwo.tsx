@@ -20,7 +20,7 @@ import {
 import FormStyles from "@/components/FormsUI";
 import React, { useState, useCallback } from "react";
 import TagValues from "@/models/tagValues";
-import LinkInput, { Link } from "@/components/LinkInput";
+import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TypographyTitle from "@/components/Title";
 import SmallText from "@/components/SmallText";
 import { useDropzone } from "react-dropzone";

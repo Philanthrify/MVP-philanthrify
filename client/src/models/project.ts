@@ -1,4 +1,4 @@
-import { Link } from "@/components/LinkInput";
+import { Link } from "@/components/FormsUI/LinkInput";
 
 /*
 sometimes need partial aspects of project data meaning that I left all fields as optional.
@@ -12,7 +12,7 @@ export interface Project {
   donationUsage?: string;
   futureImpact?: string;
   links?: Link[];
-  listOfTags?: string[];
+  tag?: string[];
   targetAmount?: number;
   currentAmount?: number;
   image?: File | null;

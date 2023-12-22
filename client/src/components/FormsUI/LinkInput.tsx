@@ -61,6 +61,8 @@ const LinkInput: React.FC<LinkInputProps> = ({
             sx={{ ...textFieldProps.select, paddingY: "0px" }}
           >
             <MenuItem value="Facebook">Facebook</MenuItem>
+            <MenuItem value="LinkedIn">LinkedIn</MenuItem>
+            <MenuItem value="Youtube">Youtube</MenuItem>
             <MenuItem value="Twitter">Twitter</MenuItem>
             <MenuItem value="Instagram">Instagram</MenuItem>
             {/* Add other social media options */}
@@ -74,6 +76,7 @@ const LinkInput: React.FC<LinkInputProps> = ({
           value={link}
           onChange={(e) => onChange({ id, link: e.target.value, socialMedia })}
           label="Link"
+          classes={{ ...textFieldProps.selectClasses }}
           sx={{ ...textFieldProps.textField }}
         />
       </Grid>

@@ -77,6 +77,7 @@ export default function CountrySelect(props: CountrySelectProps) {
             ...params.inputProps,
             autoComplete: "new-password", // disable autocomplete and autofill
           }}
+          classes={{ ...textFieldProps.selectClasses }}
           sx={{
             ...textFieldProps.select,
             width: textFieldProps.textFieldWidth,

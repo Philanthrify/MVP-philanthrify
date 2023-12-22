@@ -158,9 +158,10 @@ router.post("/search", async (req, res) => {
   }
 });
 
-// Retrieve all projects for a user
+// Retrieve a single project
 router.get("/:id", async (req, res) => {
   try {
+    // project id
     const id = req.params.id;
     console.log(id);
     let queryOptions = {

@@ -1,4 +1,4 @@
-import { Link } from "@/components/LinkInput";
+import { Link } from "@/components/FormsUI/LinkInput";
 
 export interface Project {
   id?: string | null;

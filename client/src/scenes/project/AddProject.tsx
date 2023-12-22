@@ -26,7 +26,7 @@ const CreateProjectForm = () => {
     donationUsage: "",
     futureImpact: "",
     links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
-    listOfTags: [],
+    tag: [],
     targetAmount: 0,
   });
   const [open, setOpen] = useState(false);

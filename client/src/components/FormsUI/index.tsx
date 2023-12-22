@@ -9,6 +9,7 @@ type FormStylesReturnType = {
   stepper: SxProps;
   textFieldWidth: string;
   searchTextFieldWidth: string;
+  selectClasses: object;
 };
 
 const FormStyles = (): FormStylesReturnType => {
@@ -44,9 +45,16 @@ const FormStyles = (): FormStylesReturnType => {
   });
 
   const getSelectStyles = (): SxProps => ({
-    "& .MuiInputLabel-root": {
-      // Default label color
-      color: "defaultLabelColor", // Replace with your default color
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: palette.grey.main,
+    },
+    "& .MuiSelect-select": {
+      // Target the text inside the select
+      color: palette.grey.main, // Replace with the color you want for the text
+      // If the above doesn't work, try targeting the child span explicitly
+      "& > span": {
+        color: palette.grey.main, // Replace with the color you want for the text
+      },
     },
     "& .MuiInputLabel-root.Mui-focused": {
       // Label color when the input is focused
@@ -64,7 +72,7 @@ const FormStyles = (): FormStylesReturnType => {
       },
       // Apply colors for text and icons when focused and not focused
       "& input": {
-        color: "defaultTextColor", // default text color
+        color: palette.grey.main, // default text color
       },
       "& input.Mui-focused": {
         color: palette.primary.main, // text color when focused
@@ -96,6 +104,10 @@ const FormStyles = (): FormStylesReturnType => {
       color: palette.grey.main, // Example color for untried steps
     },
   });
+  const getSelectClasses = () => ({
+    root: palette.grey.main,
+    icon: palette.grey.main,
+  });
   return {
     textField: getTextFieldStyles(),
     button: getButtonStyles(),
@@ -105,6 +117,8 @@ const FormStyles = (): FormStylesReturnType => {
     stepper: getStepper(),
     textFieldWidth: "70%",
     searchTextFieldWidth: "40%",
+    // classes
+    selectClasses: getSelectClasses(),
   };
 };
 

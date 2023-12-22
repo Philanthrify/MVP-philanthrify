@@ -20,7 +20,7 @@ import {
 import FormStyles from "@/components/FormsUI";
 import React, { useEffect, useState } from "react";
 import { TagValues, TagValuesObj } from "@/models/tagValues";
-import LinkInput, { Link } from "@/components/LinkInput";
+import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TypographyTitle from "@/components/Title";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
 import TagSelector from "@/components/FormsUI/TagSelector";
@@ -243,7 +243,7 @@ const StepOne = (props: StepOneProps) => {
           Add links to social media:
         </TypographyTitle>
         <Grid item xs={12}>
-          {formik.values.links.map((link) => (
+          {formik.values.links.map((link: Link) => (
             <LinkInput
               id={link.id}
               link={link.link}
