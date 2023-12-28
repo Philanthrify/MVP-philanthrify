@@ -28,6 +28,7 @@ const Challenge = () => {
       <Box
         sx={{
           width: "90%",
+          // maxWidth: "400px",
           // height: "230px",
           borderRadius: "1rem",
           border: "2px solid", // Set the border thickness and style
@@ -62,7 +63,11 @@ const Challenge = () => {
           </Grid>
 
           <Grid item>
-            <TypographySmallText variant="h6" align="center">
+            <TypographySmallText
+              variant="h6"
+              // align="center"
+              sx={{ wordWrap: "break-word" }}
+            >
               {project.challenge}
             </TypographySmallText>
           </Grid>

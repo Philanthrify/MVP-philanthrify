@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import StepTwo from "./StepTwo";
 import axios from "axios";
 import FormStyles from "@/components/FormsUI";
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 
 const steps = ["Project Information", "Upload Image"];
@@ -27,6 +27,7 @@ const CreateProjectForm = () => {
     futureImpact: "",
     links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
     tag: [],
+    endDate: null,
     targetAmount: 0,
   });
   const [open, setOpen] = useState(false);

@@ -8,6 +8,8 @@ const authMiddleware = require("../middleware/JWTVerification");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
+const dayjs = require("dayjs");
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "assets/ProjectPhotos");
@@ -45,10 +47,14 @@ router.post("/", authMiddleware, async (req, res) => {
       donationUsage,
       futureImpact,
       links,
-      listOfTags,
+      tag,
       targetAmount,
       currentAmount = 0.0, // default to 0 if not provided
+      endDate,
     } = req.body;
+    console.log(endDate);
+    // ensure right format of date
+    // const isoDateString = endDate.toDate().toISOString();
 
     const newProject = await prisma.project.create({
       data: {
@@ -61,6 +67,7 @@ router.post("/", authMiddleware, async (req, res) => {
         targetAmount: Number(targetAmount),
         currentAmount: currentAmount,
         userId: userId,
+        endDate: endDate, // comes out as ISO 8641 which is compat with figma
       },
     });
     // create links
@@ -75,7 +82,7 @@ router.post("/", authMiddleware, async (req, res) => {
     });
 
     // creating the tags
-    const tags = await tagMiddleware.createTag(newProject.id, listOfTags);
+    const tags = await tagMiddleware.createTag(newProject.id, tag);
 
     res.status(201).json({
       project: newProject,

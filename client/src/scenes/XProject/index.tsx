@@ -20,6 +20,10 @@ import TypographyTitle from "@/components/Title";
 import { useDispatch, useSelector } from "@/redux/hooks";
 import SideFloater from "@/components/Project/SideFloater";
 import Challenge from "@/components/Project/Challenge";
+import SectionHeader from "@/components/Project/SectionHeader";
+import SectionText from "@/components/Project/SectionText";
+import Links from "@/components/Project/SocialMedia";
+import PhilanthrifyLogo from "@/components/Icons/PhilanthrifyLogo";
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -132,9 +136,59 @@ const ProjectPage = () => {
         </Grid>
       </Grid>
       {/* text on the left and progressbar on right */}
-      <Grid container item xs={12} spacing={2} sx={{ width: "90%" }}>
-        <Grid item xs={8}>
-          <Challenge />
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        item
+        xs={12}
+        spacing={2}
+        sx={{ width: "90%" }}
+      >
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="flex-end"
+          item
+          spacing={2}
+          xs={8}
+        >
+          <Grid item sx={{ width: "100%" }}>
+            <Challenge />
+          </Grid>
+          {/* Solution */}
+          <Grid item sx={{ width: "100%" }}>
+            <SectionHeader header="Solution" />
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            {project.solution && <SectionText text={project.solution} />}
+          </Grid>
+
+          {/* Donation Usage */}
+          <Grid item sx={{ width: "100%" }}>
+            <SectionHeader header="Donation Usage" />
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            {project.donationUsage && (
+              <SectionText text={project.donationUsage} />
+            )}
+          </Grid>
+          {/* Future Impact */}
+          <Grid item sx={{ width: "100%" }}>
+            <SectionHeader header="Future Impact" />
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            {project.futureImpact && (
+              <SectionText text={project.futureImpact} />
+            )}
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            <SectionHeader header="Links" />
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            <Links />
+          </Grid>
         </Grid>
         <Grid item xs={4}>
           <SideFloater />

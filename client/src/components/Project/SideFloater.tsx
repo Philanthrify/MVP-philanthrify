@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, styled, useTheme } from "@mui/material";
+import { Box, Button, Divider, Grid, styled, useTheme } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
@@ -7,10 +7,16 @@ import ProgressBar from "@/components/ProgressBar";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import ProgressRing from "./ProgressRing";
+import PhilanthrifyLogo from "../Icons/PhilanthrifyLogo";
 
 const SideFloater = () => {
   const { palette } = useTheme();
   const project = useSelector((state: RootState) => state.project.project);
+  const buttonStyles = {
+    minWidth: "80px",
+    height: "60%",
+    borderRadius: "1rem",
+  };
   console.log(project);
   console.log(project?.currentAmount);
   console.log(project?.targetAmount);
@@ -40,38 +46,107 @@ const SideFloater = () => {
       >
         <Grid
           container
+          item
+          spacing={2}
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <TypographySmallText variant="h3" align="center" padding="15px 0">
-            £{project.targetAmount.toLocaleString()} target
-          </TypographySmallText>
+          <Grid item>
+            <TypographySmallText variant="h3" align="center" padding="15px 0">
+              £{project.targetAmount.toLocaleString()} target
+            </TypographySmallText>
+          </Grid>
           <Divider
             sx={{
               alignSelf: "center",
               borderColor: palette.white.middle,
-              // borderWidth: "2px",
               width: "90%",
-              // padding: "25px 0px 75px 0px",
             }}
           />
           <Grid
+            item
             container
             direction="row"
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <ProgressRing
-              percentage={percentRaised}
-              doneColour="#099250"
-              unDoneColour="#3B3B41"
-              innerColour="#3B3B4166"
-              radius={50}
-            ></ProgressRing>
-            <TypographySmallText variant="h3" align="center" padding="15px 0">
-              £{project.currentAmount.toLocaleString()} raised
-            </TypographySmallText>
+            <Grid item lg={6} md={6}>
+              <ProgressRing
+                percentage={percentRaised}
+                doneColour="#099250"
+                unDoneColour="#3B3B41"
+                innerColour="#3B3B4166"
+                radius={50}
+              ></ProgressRing>
+            </Grid>{" "}
+            {project.currentAmount === 0 ? (
+              <Grid item container lg={6} md={6} direction="column">
+                <Grid item>
+                  {" "}
+                  <PhilanthrifyLogo />
+                </Grid>
+                <Grid item>
+                  <TypographySmallText
+                    variant="h3"
+                    align="center"
+                    padding="15px 0"
+                  >
+                    Be the first donor
+                  </TypographySmallText>
+                </Grid>
+
+                <></>
+              </Grid>
+            ) : (
+              <Grid item container lg={6} md={6} alignItems="center">
+                <Grid item>
+                  <TypographySmallText
+                    variant="h3"
+                    align="center"
+                    padding="15px 0"
+                  >
+                    £{project.currentAmount.toLocaleString()} raised
+                  </TypographySmallText>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+          <Grid item container spacing={2} direction="row">
+            <Grid item lg={6} md={6}>
+              <Button
+                sx={{
+                  ...buttonStyles,
+                  color: palette.background.light,
+                  backgroundColor: palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: palette.primary.main,
+                  },
+                }}
+                onClick={() => {
+                  console.log("");
+                }}
+              >
+                Share
+              </Button>
+            </Grid>
+            <Grid item lg={6} md={6}>
+              <Button
+                sx={{
+                  ...buttonStyles,
+                  color: palette.background.light,
+                  backgroundColor: palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: palette.primary.main,
+                  },
+                }}
+                onClick={() => {
+                  console.log("");
+                }}
+              >
+                Donate
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

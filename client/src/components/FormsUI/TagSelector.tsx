@@ -32,7 +32,6 @@ type TagSelectorProps = {
 
 const TagSelector = (props: TagSelectorProps) => {
   const textFieldProps = FormStyles();
-  const { palette } = useTheme();
   useEffect(() => {
     console.log(
       "🚀 ~ file: TagSelector.tsx:37 ~ TagSelector ~ props.value:",
@@ -44,6 +43,10 @@ const TagSelector = (props: TagSelectorProps) => {
       .map((key) => TagValuesObj[key] || key) // Map each key to its value from TagValuesObj
       .join(", ");
   };
+  console.log(
+    "🚀 ~ file: TagSelector.tsx:66 ~ TagSelector ~ props.handleChange:",
+    props.handleChange
+  );
   return (
     <>
       {" "}
@@ -76,7 +79,7 @@ const TagSelector = (props: TagSelectorProps) => {
         >
           {Object.entries(TagValuesObj).map(([key, value]) => (
             <MenuItem key={key} value={key}>
-              <Checkbox checked={props.value.indexOf(key) > -1} />
+              <Checkbox checked={(props.value ?? []).indexOf(key) > -1} />
               <ListItemText primary={value} />{" "}
               {/* Display the value with spaces */}
             </MenuItem>

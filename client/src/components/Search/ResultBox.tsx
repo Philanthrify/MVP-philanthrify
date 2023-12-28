@@ -53,12 +53,13 @@ const ResultBox = (props: ResultBoxProps) => {
       >
         Image Here
       </Box>
-      {props.project.currentAmount && props.project.targetAmount && (
-        <ProgressBar
-          required={props.project.currentAmount}
-          fulfilled={props.project.targetAmount}
-        />
-      )}
+      {typeof props.project.currentAmount === "number" &&
+        typeof props.project.targetAmount === "number" && (
+          <ProgressBar
+            required={props.project.currentAmount}
+            fulfilled={props.project.targetAmount}
+          />
+        )}
       {props.project.country && (
         <div>
           <LocationOnOutlinedIcon />

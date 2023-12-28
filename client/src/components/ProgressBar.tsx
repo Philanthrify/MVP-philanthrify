@@ -7,7 +7,9 @@ type ProgressBarProps = {
 const ProgressBar = (props: ProgressBarProps) => {
   const { palette } = useTheme();
 
-  const progress = (props.required * 100) / props.fulfilled;
+  const progress =
+    props.fulfilled === 0 ? 0 : (props.required * 100) / props.fulfilled;
+
   const containerStyles = {
     height: 5,
     width: "100%",

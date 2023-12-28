@@ -53,6 +53,8 @@ model Project {
   currentAmount Float // The current money raised
   userId        String // Foreign key reference to the User model
   user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startDate      DateTime @default(now()) // Auto-generated field capturing today's date
+  endDate        DateTime // This field should be set to a date after startDate
 }
 
 model Link {

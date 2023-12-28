@@ -9,36 +9,25 @@ import {
   Checkbox,
   FormControl,
   Grid,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import FormStyles from "@/components/FormsUI";
 import React, { useEffect, useState } from "react";
-import { TagValues, TagValuesObj } from "@/models/tagValues";
 import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TypographyTitle from "@/components/Title";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
 import TagSelector from "@/components/FormsUI/TagSelector";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
+import CustomDatePicker from "@/components/FormsUI/DatePicker";
+import { Dayjs } from "dayjs";
 type StepOneProps = {
   projectData: ProjectFormData;
   onSubmit: (updatedData: ProjectFormData) => void;
 };
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 // TODO: add validation for links including the 'http...' format
 const validationSchema = yup.object({
   title: yup.string().required("username is required"),
@@ -47,9 +36,6 @@ const validationSchema = yup.object({
 const StepOne = (props: StepOneProps) => {
   // console.log("🚀 ~ file: StepOne.tsx:47 ~ StepOne ~ props:", props);
 
-  const [selectedTag, setSelectedTag] = useState<string[]>(
-    props.projectData.listOfTags
-  );
   const formik = useFormik({
     initialValues: props.projectData,
     validationSchema: validationSchema,
@@ -63,12 +49,8 @@ const StepOne = (props: StepOneProps) => {
       target: { value },
     } = event;
     console.log(value);
-    setSelectedTag(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-    formik.setFieldValue("listOfTags", value);
-    // console.log(selectedTag);
+
+    formik.setFieldValue("tag", value);
   };
   const addLink = () => {
     const newLink = { id: uuidv4(), link: "", socialMedia: "Facebook" };
@@ -86,7 +68,7 @@ const StepOne = (props: StepOneProps) => {
 
   const handleLinkChange = (updatedLink: Link) => {
     const currentLinks = formik.values.links;
-    const updatedLinks = currentLinks.map((link) =>
+    const updatedLinks = currentLinks.map((link: Link) =>
       link.id === updatedLink.id ? updatedLink : link
     );
     formik.setFieldValue("links", updatedLinks);
@@ -98,16 +80,14 @@ const StepOne = (props: StepOneProps) => {
   ) => {
     formik.setFieldValue("country", newValue ? newValue : "");
   };
+  const handleEndDateChange = (newValue: Dayjs | null) => {
+    formik.setFieldValue("endDate", newValue ? newValue : null);
+  };
   const textFieldProps = FormStyles();
   useEffect(() => {
-    console.log("Selected Tags Changed (FORMIK):", formik.values.listOfTags);
-  }, [formik.values.listOfTags]);
-  useEffect(() => {
-    console.log("Selected Tags Changed:", selectedTag);
-  }, [selectedTag]);
-  useEffect(() => {
-    console.log("Selected Country Changed (FORMIK):", formik.values.country);
-  }, [formik.values.country]);
+    console.log("Changed (FORMIK):", formik.values);
+  }, [formik.values]);
+
   return (
     <form
       // onSubmit={formik.handleSubmit}
@@ -126,6 +106,12 @@ const StepOne = (props: StepOneProps) => {
         alignItems="center"
         width="70%"
       >
+        {/* Date picker */}
+        <CustomDatePicker
+          value={formik.values.endDate}
+          onChange={handleEndDateChange}
+        />
+
         <TextField
           fullWidth
           id="title"
@@ -147,10 +133,7 @@ const StepOne = (props: StepOneProps) => {
           onChange={handleCountryChange}
         />
         {/* setting the tags via formik */}
-        <TagSelector
-          value={formik.values.listOfTags}
-          handleChange={handleTagChange}
-        />
+        <TagSelector value={formik.values.tag} handleChange={handleTagChange} />
 
         <TextField
           fullWidth
