@@ -10,6 +10,7 @@ import BasicMenu from "@/components/BasicMenu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 type Props = {};
 
 const Navbar = (props: Props) => {
@@ -28,27 +29,12 @@ const Navbar = (props: Props) => {
     color: palette.grey[300],
     height: "80px",
   };
-  const buttonStyles = {
-    minWidth: "80px",
-    height: "60%",
-    borderRadius: "1rem",
-  };
 
   const leftBoxStyle = {
     height: "100%",
     display: "flex",
     alignItems: "center",
     gap: "0.75rem",
-  };
-
-  const middleBoxStyle = {
-    borderRadius: "1rem", // Rounded edges
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-    // backgroundColor: palette.background.light, // Set the background color
-    flexGrow: 0, // Prevents growing
-    justifyContent: "center",
   };
 
   const rightBoxStyle = {
@@ -73,7 +59,6 @@ const Navbar = (props: Props) => {
           <Button
             // variant="text"
             sx={{
-              ...buttonStyles,
               color:
                 selected === "explore"
                   ? palette.white.light
@@ -96,7 +81,6 @@ const Navbar = (props: Props) => {
           <Button
             // variant="text"
             sx={{
-              ...buttonStyles,
               color:
                 selected === "howWorks"
                   ? palette.white.light
@@ -128,7 +112,6 @@ const Navbar = (props: Props) => {
               <Button
                 // variant="text"
                 sx={{
-                  ...buttonStyles,
                   color: palette.background.light,
                   backgroundColor: palette.primary.main,
                   "&:hover": {
@@ -142,35 +125,21 @@ const Navbar = (props: Props) => {
                 Fund a project
               </Button>
             ) : (
-              <Button
-                // variant="text"
-                sx={{
-                  ...buttonStyles,
-                  color: palette.background.light,
-                  backgroundColor: palette.primary.main,
-                  "&:hover": {
-                    backgroundColor: palette.primary.main,
-                  },
-                }}
+              <PrimaryButton
+                text="Donate"
                 onClick={() => {
                   console.log("");
                 }}
-              >
-                Donate
-              </Button>
+              />
             )}
 
             {/* Depending on login status */}
             {isLoggedIn ? (
-              <AccountMenu
-                setSelected={setSelected}
-                buttonStyles={buttonStyles}
-              />
+              <AccountMenu setSelected={setSelected} />
             ) : (
               <Button
                 // variant="text"
                 sx={{
-                  ...buttonStyles,
                   color: palette.white.middle,
                   backgroundColor: palette.background.light,
                   "&:hover": {

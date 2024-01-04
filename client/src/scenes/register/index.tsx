@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -22,87 +22,64 @@ import TypographyTitle from "@/components/Title";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import TextFieldWrapper from "@/components/FormsUI/Textfield";
-const validationSchema = yup.object({
-  username: yup
-    .string()
-    .min(3, "Username should be of minimum 3 characters length")
-    .max(30, "Username should not exceed 30 characters")
-    .required("Username is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password should be of minimum 8 characters length")
-    .matches(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}$/,
-      "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character"
-    )
-    .required("Password is required"),
-  confirmPassword: yup
-    .string()
-    .required("Confirm your password")
-    .oneOf([yup.ref("password")], "Passwords must match"),
-});
+import SignupButton from "@/components/Button/SignupButton";
+
+import { Signup } from "@/models/Signup";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
 
 const Register = () => {
+  const [data, setData] = useState<Signup>({
+    userType: "DONOR",
+    username: "",
+    email: "",
+    password: "",
+    ukCharityNumber: null,
+    charityName: "",
+  });
   const navigate = useNavigate();
-
-  const [userType, setUserType] = useState("DONOR");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [regError, setRegError] = useState("");
-
-  const handleUserTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newUserType = (event.target as HTMLInputElement).value;
-    setUserType(newUserType);
-    formik.setFieldValue("userType", newUserType.toUpperCase());
-  };
-  const handleMouseDownPassword = () => {
-    // event.preventDefault();
-    setShowPassword(true);
-  };
-
-  const handleMouseUpPassword = () => {
-    setShowPassword(false);
-  };
-
-  const handleMouseDownConfirmPassword = () => {
-    // event.preventDefault();
-    setShowConfirmPassword(true);
-  };
-
-  const handleMouseUpConfirmPassword = () => {
-    setShowConfirmPassword(false);
-  };
-
   const { palette } = useTheme();
-  const textFieldProps = FormStyles();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      userType: userType,
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log("Form values on submit:", values);
+  // when signup vals are edited
+  const updateData = (updatedData: Signup) => {
+    setData(updatedData);
+  };
+  // getting to next page (first page only)
+  const handleNextStepOne = () => {
+    if (currentStep <= 2) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+  // getting to next page (other pages need to work with formik)
+  const handleNextRest = (updatedData: Signup) => {
+    setData(updatedData);
+    if (currentStep <= 2) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+  // getting to the page before
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+  const onSubmit = (updatedData: Signup) => {
+    if (updatedData.userType === "CHARITY") {
       axios({
         method: "post",
-        url: "http://localhost:1337/auth/signup",
+        url: "http://localhost:1337/auth/signup-charity",
         headers: {
           "Content-Type": "application/json",
         },
-        data: JSON.stringify(values),
+        data: JSON.stringify(updatedData),
       })
         .then((response) => {
           console.log(response.data);
-          navigate("/");
+          navigate("/login");
         })
         .catch((error) => {
           setRegError(
@@ -110,9 +87,37 @@ const Register = () => {
               error.response.data.error
           );
         });
-    },
-  });
+    } else if (updatedData.userType === "DONOR") {
+      axios({
+        method: "post",
+        url: "http://localhost:1337/auth/signup-donor",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify(updatedData),
+      })
+        .then((response) => {
+          console.log(response.data);
+          navigate("/login");
+        })
+        .catch((error) => {
+          setRegError(
+            "There was an error during registration: " +
+              error.response.data.error
+          );
+        });
+    }
+  };
 
+  useEffect(() => {
+    console.log("🚀 ~ file: StepOne.tsx:16 ~ StepOne ~ data:", data);
+  }, [data]);
+  useEffect(() => {
+    console.log(
+      "🚀 ~ file: StepOne.tsx:16 ~ StepOne ~ currentStep:",
+      currentStep
+    );
+  }, [currentStep]);
   return (
     <Grid
       container
@@ -134,244 +139,35 @@ const Register = () => {
               {regError}
             </Typography>
           )}
-          <form onSubmit={formik.handleSubmit}>
-            <Grid
-              container
-              spacing={2}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Grid xs={10}>
-                <FormControl>
-                  <FormLabel
-                    id="demo-controlled-radio-buttons-group"
-                    sx={{
-                      color: palette.grey[500], // Grey color for the unchecked state
-                    }}
-                  >
-                    What best describes you?
-                  </FormLabel>
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={userType}
-                    onChange={handleUserTypeChange}
-                  >
-                    <FormControlLabel
-                      value="DONOR"
-                      control={
-                        <Radio
-                          sx={{
-                            color: palette.grey[500], // Grey color for the unchecked state
-                          }}
-                        />
-                      }
-                      label="Donor"
-                      sx={{
-                        color: palette.grey[500], // Grey color for the unchecked state
-                      }}
-                    />
-                    <FormControlLabel
-                      value="CHARITY"
-                      control={
-                        <Radio
-                          sx={{
-                            color: palette.grey[500], // Grey color for the unchecked state
-                          }}
-                        />
-                      }
-                      label="Charity"
-                      sx={{
-                        color: palette.grey[500], // Grey color for the unchecked state
-                      }}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <TextField
-                fullWidth
-                id="username"
-                name="username"
-                label="Username"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.username && Boolean(formik.errors.username)
-                }
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-                InputProps={
-                  {
-                    // endAdornment: (
-                    //   <>
-                    //     <HelpIcon
-                    //       title="
-                    //       Minimum of 3 characters in length and should not exceed 30 characters.
-                    //       "
-                    //     />
-                    //   </>
-                    // ),
-                  }
-                }
-              />
-              <Grid xs={10}>
-                <FormHelperText
-                  error={
-                    formik.touched.username && Boolean(formik.errors.username)
-                  }
-                >
-                  {formik.touched.username && formik.errors.username}
-                </FormHelperText>
-              </Grid>
 
-              <TextField
-                fullWidth
-                id="email"
-                name="email"
-                label="Email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <>
-                      {/* <HelpIcon
-                          title="
-                          Must be valid email.
-                          "
-                        /> */}
-                    </>
-                  ),
-                }}
+          {/* Formstuff */}
+          <>
+            {currentStep === 0 && (
+              <StepOne
+                data={data}
+                updateData={updateData}
+                handleNext={handleNextStepOne}
               />
-              <Grid xs={10}>
-                <FormHelperText
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                >
-                  {formik.touched.email && formik.errors.email}
-                </FormHelperText>
-              </Grid>
+            )}
 
-              <TextField
-                fullWidth
-                id="password"
-                name="password"
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <>
-                      <IconButton
-                        edge="end"
-                        color="primary"
-                        aria-label="toggle password visibility"
-                        onMouseDown={handleMouseDownPassword}
-                        onMouseUp={handleMouseUpPassword}
-                        onTouchStart={handleMouseDownPassword}
-                        onTouchEnd={handleMouseUpPassword}
-                        size="small" // Set size to small
-                      >
-                        <VisibilityIcon />
-                      </IconButton>
-                      {/* 
-                        <HelpIcon
-                          title="
-                          Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character
-                          "
-                        /> */}
-                    </>
-                  ),
-                }}
+            {currentStep === 1 && (
+              <StepTwo
+                data={data}
+                updateData={updateData}
+                handleNext={handleNextRest}
+                handleBack={handleBack}
               />
-              <Grid xs={10}>
-                <FormHelperText
-                  error={
-                    formik.touched.password && Boolean(formik.errors.password)
-                  }
-                >
-                  {formik.touched.password && formik.errors.password}
-                </FormHelperText>
-              </Grid>
-              <TextField
-                fullWidth
-                id="confirmPassword"
-                name="confirmPassword"
-                label="Confirm Password"
-                type={showConfirmPassword ? "text" : "password"}
-                value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton
-                      edge="end"
-                      color="primary"
-                      aria-label="toggle password visibility"
-                      onMouseDown={handleMouseDownConfirmPassword}
-                      onMouseUp={handleMouseUpConfirmPassword}
-                      onTouchStart={handleMouseDownConfirmPassword}
-                      onTouchEnd={handleMouseUpConfirmPassword}
-                      size="small" // Set size to small
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                  ),
-                }}
+            )}
+            {currentStep === 2 && (
+              <StepThree
+                data={data}
+                updateData={updateData}
+                onSubmit={onSubmit}
+                handleBack={handleBack}
               />
-              <Grid xs={10}>
-                <FormHelperText
-                  error={
-                    formik.touched.confirmPassword &&
-                    Boolean(formik.errors.confirmPassword)
-                  }
-                >
-                  {formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword}
-                </FormHelperText>
-              </Grid>
-              <Grid xs={10} padding="10px 0px">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
+            )}
+          </>
+
           <Box display="flex" alignItems="center" justifyContent="center">
             {" "}
             {/* Box for TOS and Privacy Policy */}

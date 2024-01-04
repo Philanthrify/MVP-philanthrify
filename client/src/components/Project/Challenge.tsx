@@ -53,7 +53,7 @@ const Challenge = () => {
             </Grid>
             <Grid item>
               <TypographyTitle
-                variant="h4"
+                variant="h3"
                 align="left"
                 //   padding="0px 0px px 0px"
               >
@@ -64,7 +64,7 @@ const Challenge = () => {
 
           <Grid item>
             <TypographySmallText
-              variant="h6"
+              variant="h5"
               // align="center"
               sx={{ wordWrap: "break-word" }}
             >

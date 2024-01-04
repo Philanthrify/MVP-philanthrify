@@ -15,8 +15,7 @@ const SearchResult = (props: SearchResultProps) => {
     (state: RootState) => state.explore.searchResults
   );
   const pageNum = useSelector((state: RootState) => state.explore.page);
-  const isAboveMediumScreens = useMediaQuery("@media (min-width: 1100px)");
-  const isAboveSmallScreens = useMediaQuery("@media (min-width: 700px)");
+
   if (!searchResults) {
     return <></>;
   } else {

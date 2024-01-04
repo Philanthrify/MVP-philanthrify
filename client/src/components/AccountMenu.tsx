@@ -28,7 +28,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 type AccountMenuProps = {
   setSelected: (value: string) => void;
-  buttonStyles: object;
 };
 const AccountMenu = (props: AccountMenuProps) => {
   const dispatch = useDispatch();
@@ -82,8 +81,7 @@ const AccountMenu = (props: AccountMenuProps) => {
           <Button // same button styles as in parent
             sx={{
               minWidth: "80px",
-              height: "48px",
-              borderRadius: "1rem",
+              // height: "48px",
               color: palette.white.middle,
               backgroundColor: palette.background.light,
               "&:hover": {

@@ -99,11 +99,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
               justifyContent: "flex-end",
             }}
           >
-            <Button
-              variant="contained"
-              sx={{ height: "100%", width: "90%" }}
-              onClick={props.openFilterMenu}
-            >
+            <Button variant="contained" sx={{}} onClick={props.openFilterMenu}>
               <TuneIcon />
               Filters
             </Button>

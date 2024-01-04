@@ -15,6 +15,7 @@ import Profile from "./scenes/profile";
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>

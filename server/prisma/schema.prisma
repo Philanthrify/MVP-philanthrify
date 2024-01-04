@@ -11,17 +11,18 @@ datasource db {
 }
 
 model Charity {
-  id      String              @id @default(uuid())
-  members CharityMembership[]
+  ukCharityNumber Int                 @id
+  members         CharityMembership[]
+  charityName     String
+  email           String
 }
 
 model CharityMembership {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   userId    String
-  charityId String
-
-  user    User    @relation(fields: [userId], references: [id])
-  charity Charity @relation(fields: [charityId], references: [id])
+  charityId Int
+  user      User    @relation(fields: [userId], references: [id])
+  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
 
   @@unique([userId, charityId])
 }
@@ -38,23 +39,23 @@ model User {
 }
 
 model Project {
-  id      String @id @default(uuid())
+  id      String  @id @default(uuid())
   title   String
   country String? @default("Unknown")
 
   challenge     String @db.LongText // A description of the challenge the project is addressing
-  solution      String @db.LongText// The proposed solution for the challenge
-  donationUsage String @db.LongText// A description of how the donations will be used
-  futureImpact  String @db.LongText// The anticipated future impact or end result of the project
+  solution      String @db.LongText // The proposed solution for the challenge
+  donationUsage String @db.LongText // A description of how the donations will be used
+  futureImpact  String @db.LongText // The anticipated future impact or end result of the project
   link          Link[] // Stores various links related to the project
   tag           Tag[] // Stores various tags related to the project
 
   targetAmount  Float // The fundraising goal for the project
   currentAmount Float // The current money raised
   userId        String // Foreign key reference to the User model
-  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  startDate      DateTime @default(now()) // Auto-generated field capturing today's date
-  endDate        DateTime // This field should be set to a date after startDate
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startDate     DateTime @default(now()) // Auto-generated field capturing today's date
+  endDate       DateTime // This field should be set to a date after startDate
 }
 
 model Link {
@@ -82,58 +83,30 @@ enum UserType {
 
 // Allowed values for tags
 enum TagValue {
-  HungerAndFoodSecurity
-  HomelessnessAndHousing
-  DisasterReliefAndRecovery
-  ChildWelfare
-  ElderlyCare
-  EducationAndLiteracy
-  HealthcareAndMedicalResearch
-  MentalHealthSupport
-  CancerResearchAndSupport
-  HIVAIDSPreventionAndSupport
-  HeartDiseaseResearch
-  DiabetesResearchAndSupport
-  EnvironmentalConservation
-  WildlifePreservation
-  MarineConservation
-  ClimateChangeMitigation
-  SustainableDevelopment
-  CleanWaterAndSanitation
-  RenewableEnergyInitiatives
-  AnimalWelfareAndRights
-  DomesticViolencePreventionAndSupport
-  HumanTraffickingPreventionAndAid
-  RefugeeAndImmigrantSupport
-  VeteransSupport
-  DisabilitiesSupportAndAdvocacy
-  MentalDisabilitiesSupport
-  PhysicalDisabilitiesSupport
-  ArtsAndCulture
-  HistoricalPreservationAndRestoration
-  ScientificResearchAndInnovation
-  UrbanDevelopmentAndPlanning
-  CommunityBuildingAndSocialWork
-  PovertyAlleviation
-  MicrofinanceAndEconomicEmpowerment
-  GirlsAndWomensRights
-  LGBTQPlusRightsAndSupport
-  RacialAndEthnicEquality
-  ReligiousAndSpiritualSupport
-  PeaceAndConflictResolution
-  LegalAidAndAdvocacy
-  SubstanceAbusePreventionAndTreatment
-  EducationForUnderprivilegedChildren
-  YouthDevelopmentAndLeadership
-  GlobalHealthInitiatives
-  OrphanageSupportAndAdoptionServices
-  DementiaAndAlzheimersSupport
-  OrganAndTissueDonationAwareness
-  CulturalExchangeAndUnderstanding
-  DigitalInclusionAndInternetAccess
-  HumanRightsAdvocacy
-  HealthServices
+  Farming
+  Wildlife
+  Business
+  Climate
+  Community
+  Crisis
+  Culture
+  Development
+  Economy
+  Energy
+  Environment
+  Food
+  Healthcare
+  Housing
+  HumanRights
+  Innovation
+  Medical
+  Security
+  Sports
   Technology
+  Women
+  Youth
+  Rewilding
+  ElderCare
+  Education
   CleanWater
-  EconomicEmpowerment
 }

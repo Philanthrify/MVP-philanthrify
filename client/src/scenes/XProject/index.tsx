@@ -24,6 +24,8 @@ import SectionHeader from "@/components/Project/SectionHeader";
 import SectionText from "@/components/Project/SectionText";
 import Links from "@/components/Project/SocialMedia";
 import PhilanthrifyLogo from "@/components/Icons/PhilanthrifyLogo";
+import LocationText from "@/components/Project/LocationText";
+import ProjectTitle from "@/components/Project/ProjectTitle";
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -98,33 +100,24 @@ const ProjectPage = () => {
         </Grid>
 
         {/* Right Side */}
-        <Grid item md={6} xs={6}>
+        <Grid
+          container
+          item
+          md={6}
+          xs={6}
+          direction="column"
+          justifyContent="flex-start"
+        >
           {" "}
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "#063970",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              // Add any additional styling you need here
-            }}
-          >
-            {project.country && (
-              <div>
-                <LocationOnOutlinedIcon />
-                {project.country}
-              </div>
-            )}
-            {project.title && (
-              <div>
-                <TypographyTitle variant="h2" align="center" padding="15px 0">
-                  {project.title}
-                </TypographyTitle>
-              </div>
-            )}
+          {/* the location of the project */}
+          <Grid item>
+            {" "}
+            {project.country && <LocationText text={project.country} />}
+          </Grid>
+          <Grid item>
+            <ProjectTitle />
+          </Grid>
+          <Grid item>
             <Box
               height="100px"
               width="100%"
@@ -132,7 +125,7 @@ const ProjectPage = () => {
             >
               Charity Logo Here
             </Box>
-          </Box>
+          </Grid>
         </Grid>
       </Grid>
       {/* text on the left and progressbar on right */}

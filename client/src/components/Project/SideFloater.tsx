@@ -8,6 +8,7 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import ProgressRing from "./ProgressRing";
 import PhilanthrifyLogo from "../Icons/PhilanthrifyLogo";
+import PrimaryButton from "../Button/PrimaryButton";
 
 const SideFloater = () => {
   const { palette } = useTheme();
@@ -112,41 +113,39 @@ const SideFloater = () => {
               </Grid>
             )}
           </Grid>
-          <Grid item container spacing={2} direction="row">
-            <Grid item lg={6} md={6}>
-              <Button
-                sx={{
-                  ...buttonStyles,
-                  color: palette.background.light,
-                  backgroundColor: palette.primary.main,
-                  "&:hover": {
-                    backgroundColor: palette.primary.main,
-                  },
-                }}
+          <Grid
+            item
+            container
+            spacing={2}
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Grid
+              item
+              xs={true}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <PrimaryButton
+                text="Share"
                 onClick={() => {
                   console.log("");
                 }}
-              >
-                Share
-              </Button>
-            </Grid>
-            <Grid item lg={6} md={6}>
-              <Button
-                sx={{
-                  ...buttonStyles,
-                  color: palette.background.light,
-                  backgroundColor: palette.primary.main,
-                  "&:hover": {
-                    backgroundColor: palette.primary.main,
-                  },
-                }}
+                sx={{ width: "90%" }}
+              />
+            </Grid>{" "}
+            <Grid
+              item
+              xs={true}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <PrimaryButton
+                text="Donate"
                 onClick={() => {
                   console.log("");
                 }}
-              >
-                Donate
-              </Button>
-            </Grid>
+                sx={{ width: "90%" }}
+              />
+            </Grid>{" "}
           </Grid>
         </Grid>
       </Grid>

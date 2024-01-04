@@ -16,6 +16,7 @@ export interface Project {
   tag?: string[];
   targetAmount?: number;
   currentAmount?: number;
+  startDate?: Dayjs | null;
   endDate?: Dayjs | null;
   image?: File | null;
 }

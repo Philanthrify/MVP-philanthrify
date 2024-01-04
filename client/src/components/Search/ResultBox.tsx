@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ProgressBar from "../ProgressBar";
+import LocationText from "../Project/LocationText";
 
 type ResultBoxProps = {
   project: Project;
@@ -60,12 +61,7 @@ const ResultBox = (props: ResultBoxProps) => {
             fulfilled={props.project.targetAmount}
           />
         )}
-      {props.project.country && (
-        <div>
-          <LocationOnOutlinedIcon />
-          {props.project.country}
-        </div>
-      )}
+      {props.project.country && <LocationText text={props.project.country} />}
       <div>{props.project.title}</div>
     </Box>
   );

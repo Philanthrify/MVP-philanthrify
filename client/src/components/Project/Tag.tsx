@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // Define the props type
 interface TagProps {
@@ -26,7 +26,7 @@ const Tag: React.FC<TagProps> = ({ text }) => {
         cursor: "default", // Default cursor
       }}
     >
-      {text}
+      <Typography variant="h6">{text}</Typography>
     </Box>
   );
 };

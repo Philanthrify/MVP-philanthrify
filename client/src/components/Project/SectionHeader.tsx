@@ -12,7 +12,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
   return (
     <Grid container direction="column" alignItems="flex-start">
       <Grid item>
-        <TypographyTitle variant="h1" align="center" padding="15px 0">
+        <TypographyTitle variant="h3" align="center" padding="15px 0">
           {props.header}
         </TypographyTitle>
       </Grid>
