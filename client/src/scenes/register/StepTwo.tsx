@@ -33,10 +33,6 @@ const validationSchemaCharity = yup.object({
     .min(2, "Charity name should be of minimum 3 characters length")
     .max(30, "Charity name should not exceed 30 characters")
     .required("Charity name is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
 });
 
 // TODO: check charity number
@@ -62,8 +58,6 @@ const StepTwo = (props: StepTwoProps) => {
       props.handleNext(values);
     },
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     console.log("Changed (FORMIK):", formik.values);
@@ -78,26 +72,6 @@ const StepTwo = (props: StepTwoProps) => {
         justifyContent="center"
         alignItems="center"
       >
-        <TextField
-          fullWidth
-          id="username"
-          name="username"
-          label="Username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={""}
-          sx={{
-            ...textFieldProps.textField,
-            width: textFieldProps.textFieldWidth,
-          }}
-        />
-        <Grid xs={10}>
-          <FormHelperText
-            error={formik.touched.username && Boolean(formik.errors.username)}
-          ></FormHelperText>{" "}
-        </Grid>{" "}
         {props.data.userType === "CHARITY" && (
           <>
             <TextField
@@ -129,35 +103,14 @@ const StepTwo = (props: StepTwoProps) => {
             </Grid>
           </>
         )}
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={""}
-          sx={{
-            ...textFieldProps.textField,
-            width: textFieldProps.textFieldWidth,
-          }}
-        />
-        <Grid xs={10}>
-          <FormHelperText
-            error={formik.touched.email && Boolean(formik.errors.email)}
-          >
-            {formik.touched.email && formik.errors.email}
-          </FormHelperText>
-        </Grid>
+
         {props.data.userType === "CHARITY" && (
           <>
             <TextField
               fullWidth
               id="ukCharityNumber"
               name="ukCharityNumber"
-              label="UK Charity Number"
+              label="Charity Registration Number (UK)"
               value={formik.values.ukCharityNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

@@ -83,7 +83,7 @@ const themeSettings = {
   typography: {
     fontFamily: ["IBM Plex Sans", "sans-serif"].join(","),
     fontSize: 13,
-    weight: 400,
+    weight: 500,
     color: tokens.grey[500],
 
     // Main title of page (e.g. project name on xproject page or 'explore' on explore page)
@@ -121,6 +121,14 @@ const themeSettings = {
     h6: {
       fontSize: 14,
       fontWeight: 500,
+      lineHeight: "20px",
+      color: tokens.grey[700],
+    },
+
+    // Main body text - can be overwritten on the color
+    body1: {
+      fontSize: 14,
+      // fontWeight: 600,
       lineHeight: "20px",
       color: tokens.grey[700],
     },

@@ -32,7 +32,8 @@ import StepThree from "./StepThree";
 const Register = () => {
   const [data, setData] = useState<Signup>({
     userType: "DONOR",
-    username: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
     ukCharityNumber: null,
@@ -69,6 +70,8 @@ const Register = () => {
   };
   const onSubmit = (updatedData: Signup) => {
     if (updatedData.userType === "CHARITY") {
+      // when onboarding a charity, the root is always CHARITYHEAD
+      updatedData.charityUserType = "CHARITYHEAD";
       axios({
         method: "post",
         url: "http://localhost:1337/auth/signup-charity",

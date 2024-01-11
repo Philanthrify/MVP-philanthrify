@@ -12,9 +12,7 @@ import { Project } from "@/models/project";
 import { useEffect, useState } from "react";
 import StepTwo from "./StepTwo";
 import axios from "axios";
-import FormStyles from "@/components/FormsUI";
 import { useTheme } from "@mui/material";
-import MuiAlert from "@mui/material/Alert";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {

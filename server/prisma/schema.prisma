@@ -13,28 +13,62 @@ datasource db {
 model Charity {
   ukCharityNumber Int                 @id
   members         CharityMembership[]
+  links         CharityLink[]
+  tags         CharityTag[]
+  countriesActive         CharityCountry[]
   charityName     String
   email           String
+}
+
+model CharityCountry {
+  id        String   @id @default(uuid())
+  charityId Int
+  value     Country 
+  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+
+  @@unique([charityId, value])
+}
+
+
+model CharityTag {
+  id        String   @id @default(uuid())
+  charityId Int
+  value     TagValue 
+  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+
+  @@unique([charityId, value])
+}
+
+model CharityLink {
+  id          String  @id @default(uuid())
+  webLink         String
+  socialMedia String // Type of link, e.g., social media, website, etc.
+  charityId   Int // Foreign key reference to the Project model
+  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 }
 
 model CharityMembership {
   id        String  @id @default(uuid())
   userId    String
   charityId Int
+  charityUserType CharityUserType
   user      User    @relation(fields: [userId], references: [id])
   charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
-
   @@unique([userId, charityId])
 }
+
+
 
 // TODO (Fergus): multipage signup form for extra info such as bio, soc media links (redux)
 model User {
   id       String              @id @default(uuid())
-  username String              @unique
+  firstname String
+  lastname String
   password String
   email    String              @unique
   userType UserType // This field determines whether the user is a Donor or a Charity
-  projects Project[] // Relation to projects, one-to-many
+  projects Project[] // only when a charity member, TODO: check if needed action to further restrict to that
+  updates ProjectUpdate[]
   charity  CharityMembership[]
 }
 
@@ -49,7 +83,7 @@ model Project {
   futureImpact  String @db.LongText // The anticipated future impact or end result of the project
   link          Link[] // Stores various links related to the project
   tag           Tag[] // Stores various tags related to the project
-
+  updates ProjectUpdate[]
   targetAmount  Float // The fundraising goal for the project
   currentAmount Float // The current money raised
   userId        String // Foreign key reference to the User model
@@ -57,14 +91,25 @@ model Project {
   startDate     DateTime @default(now()) // Auto-generated field capturing today's date
   endDate       DateTime // This field should be set to a date after startDate
 }
+model ProjectUpdate {
+    id      String  @id @default(uuid())
+      text     String @db.LongText // text within the update which is displayed
+
+  userId        String // Foreign key reference to the User model
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    projectId   String // Foreign key reference to the Project model
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
 
 model Link {
   id          String  @id @default(uuid())
-  url         String
+  webLink         String
   socialMedia String // Type of link, e.g., social media, website, etc.
   projectId   String // Foreign key reference to the Project model
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
+
+
 
 model Tag {
   id        String   @id @default(uuid())
@@ -79,6 +124,12 @@ model Tag {
 enum UserType {
   DONOR
   CHARITY
+}
+// Enum to represent the type of the user
+enum CharityUserType {
+  CHARITYHEAD
+  PROJECTLEAD
+  PROJECTWORKER
 }
 
 // Allowed values for tags
@@ -109,4 +160,255 @@ enum TagValue {
   ElderCare
   Education
   CleanWater
+}
+
+enum Country {
+  AD
+  AE
+  AF
+  AG
+  AI
+  AL
+  AM
+  AO
+  AQ
+  AR
+  AS
+  AT
+  AU
+  AW
+  AX
+  AZ
+  BA
+  BB
+  BD
+  BE
+  BF
+  BG
+  BH
+  BI
+  BJ
+  BL
+  BM
+  BN
+  BO
+  BR
+  BS
+  BT
+  BV
+  BW
+  BY
+  BZ
+  CA
+  CC
+  CD
+  CF
+  CG
+  CH
+  CI
+  CK
+  CL
+  CM
+  CN
+  CO
+  CR
+  CU
+  CV
+  CW
+  CX
+  CY
+  CZ
+  DE
+  DJ
+  DK
+  DM
+  DO
+  DZ
+  EC
+  EE
+  EG
+  EH
+  ER
+  ES
+  ET
+  FI
+  FJ
+  FK
+  FM
+  FO
+  FR
+  GA
+  GB
+  GD
+  GE
+  GF
+  GG
+  GH
+  GI
+  GL
+  GM
+  GN
+  GP
+  GQ
+  GR
+  GS
+  GT
+  GU
+  GW
+  GY
+  HK
+  HM
+  HN
+  HR
+  HT
+  HU
+  ID
+  IE
+  IL
+  IM
+  IN
+  IO
+  IQ
+  IR
+  IS
+  IT
+  JE
+  JM
+  JO
+  JP
+  KE
+  KG
+  KH
+  KI
+  KM
+  KN
+  KP
+  KR
+  KW
+  KY
+  KZ
+  LA
+  LB
+  LC
+  LI
+  LK
+  LR
+  LS
+  LT
+  LU
+  LV
+  LY
+  MA
+  MC
+  MD
+  ME
+  MF
+  MG
+  MH
+  MK
+  ML
+  MM
+  MN
+  MO
+  MP
+  MQ
+  MR
+  MS
+  MT
+  MU
+  MV
+  MW
+  MX
+  MY
+  MZ
+  NA
+  NC
+  NE
+  NF
+  NG
+  NI
+  NL
+  NO
+  NP
+  NR
+  NU
+  NZ
+  OM
+  PA
+  PE
+  PF
+  PG
+  PH
+  PK
+  PL
+  PM
+  PN
+  PR
+  PS
+  PT
+  PW
+  PY
+  QA
+  RE
+  RO
+  RS
+  RU
+  RW
+  SA
+  SB
+  SC
+  SD
+  SE
+  SG
+  SH
+  SI
+  SJ
+  SK
+  SL
+  SM
+  SN
+  SO
+  SR
+  SS
+  ST
+  SV
+  SX
+  SY
+  SZ
+  TC
+  TD
+  TF
+  TG
+  TH
+  TJ
+  TK
+  TL
+  TM
+  TN
+  TO
+  TR
+  TT
+  TV
+  TW
+  TZ
+  UA
+  UG
+  US
+  UY
+  UZ
+  VA
+  VC
+  VE
+  VG
+  VI
+  VN
+  VU
+  WF
+  WS
+  XK
+  YE
+  YT
+  ZA
+  ZM
+  ZW
 }

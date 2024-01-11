@@ -1,5 +1,4 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -11,33 +10,26 @@ const passwordMiddleware = require("../middleware/passwordUtil");
 const SECRET = process.env.JWT_SECRET;
 
 router.post("/signup-donor", async (req, res) => {
-  const { username, password, email } = req.body;
+  const { firstname, lastname, password, email } = req.body;
 
   // Basic validation including userType
-  if (!username || !password || !email) {
+  if (!firstname || !lastname || !password || !email) {
     return res.status(400).json({
-      error: "Username, password, email are required.",
+      error: "firstname, lastname, password and email are required.",
     });
   }
 
   try {
-    // Check if username and email already exist
-    const existingUname = await prisma.user.findUnique({
-      where: {
-        username: username,
-      },
-    });
+    // checking if email already in DB
     const existingEmail = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
     // logic to return what already exists
-    if (existingUname || existingEmail) {
+    if (existingEmail) {
       let errorMessage = "";
 
-      errorMessage += existingUname ? "Username" : "";
-      errorMessage += existingUname && existingEmail ? " and " : "";
       errorMessage += existingEmail ? "Email" : "";
 
       errorMessage += " already exists.";
@@ -46,17 +38,18 @@ router.post("/signup-donor", async (req, res) => {
     }
     // Create user (hash password)
     const hashedPassword = await passwordMiddleware.hashPassword(password);
-    const user = await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
-        username: username,
+        firstname: firstname,
+        lastname: lastname,
         password: hashedPassword,
         email: email,
         userType: "DONOR",
       },
     });
-    res
-      .status(201)
-      .json({ id: user.id, username: user.username, email: user.email });
+    res.status(201).json({
+      newUser: newUser,
+    });
   } catch (error) {
     console.error("Error during user signup:", error);
     res.status(500).json({ error: "Internal server error." });
@@ -65,13 +58,29 @@ router.post("/signup-donor", async (req, res) => {
 
 router.post("/signup-charity", async (req, res) => {
   // username is the name of the person
-  const { username, password, email, ukCharityNumber, charityName } = req.body;
+  const {
+    firstname,
+    lastname,
+    password,
+    email,
+    ukCharityNumber,
+    charityName,
+    charityUserType,
+  } = req.body;
 
   // Basic validation including userType
-  if (!username || !password || !email || !ukCharityNumber || !charityName) {
+  if (
+    !firstname ||
+    !lastname ||
+    !password ||
+    !email ||
+    !ukCharityNumber ||
+    !charityName ||
+    !charityUserType
+  ) {
     return res.status(400).json({
       error:
-        "Username, password, email, ukCharityNumber, and charityName are all required.",
+        "firstname, lastname, password, email, ukCharityNumber, charityName and charityUserType are all required.",
     });
   }
   const charityData = {
@@ -80,8 +89,10 @@ router.post("/signup-charity", async (req, res) => {
     ukCharityNumber: Number(ukCharityNumber),
   };
   const hashedPassword = await passwordMiddleware.hashPassword(password);
+
   const userData = {
-    username: username,
+    firstname: firstname,
+    lastname: lastname,
     password: hashedPassword,
     email: email,
     userType: "CHARITY", // usertype is perhaps a bit outdated
@@ -115,12 +126,7 @@ router.post("/signup-charity", async (req, res) => {
     }
 
     const newUser = await prisma.user.create({
-      data: {
-        username: username,
-        password: hashedPassword,
-        email: email,
-        userType: "CHARITY",
-      },
+      data: userData,
     });
 
     // Create user (hash password)
@@ -130,6 +136,7 @@ router.post("/signup-charity", async (req, res) => {
         members: {
           create: {
             userId: newUser.id,
+            charityUserType: charityUserType,
           },
         },
       },
@@ -145,10 +152,10 @@ router.post("/signup-charity", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { username } });
+  const { email, password } = req.body;
+  const user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
-    return res.status(401).json({ error: "Invalid username or password" });
+    return res.status(401).json({ error: "Invalid email or password" });
   }
   // check password
   const isPasswordValid = await passwordMiddleware.verifyPassword(
@@ -156,16 +163,16 @@ router.post("/login", async (req, res) => {
     user.password
   );
   if (!isPasswordValid) {
-    return res.status(401).json({ error: "Invalid username or password" });
+    return res.status(401).json({ error: "Invalid email or password" });
   }
   // user is returned with a json web token
   const token = jwt.sign(
-    { userType: user.userType, userId: user.id, username: user.username },
+    { userType: user.userType, userId: user.id, email: user.email },
     SECRET,
     {
       expiresIn: "1h",
     }
   );
-  res.json({ token: token, username: user.username, email: user.email });
+  res.json({ token: token, email: user.email, firstname: user.firstname });
 });
 module.exports = router;

@@ -1,5 +1,6 @@
 import { Link } from "@/components/FormsUI/LinkInput";
 import { Dayjs } from "dayjs";
+import { Update } from "./update";
 
 /*
 sometimes need partial aspects of project data meaning that I left all fields as optional.
@@ -19,4 +20,5 @@ export interface Project {
   startDate?: Dayjs | null;
   endDate?: Dayjs | null;
   image?: File | null;
+  updates?: Update[];
 }

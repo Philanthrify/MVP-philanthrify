@@ -6,7 +6,7 @@ import { RootState } from "./store";
 interface AuthState {
   isLoggedIn: boolean;
   token: string | null;
-  username: string | null;
+  firstname: string | null;
   email: string | null;
   userType: string | null;
 }
@@ -15,7 +15,7 @@ interface AuthState {
 const initialState: AuthState = {
   isLoggedIn: false,
   token: null,
-  username: null,
+  firstname: null,
   email: null,
   userType: null,
 };
@@ -32,15 +32,12 @@ export const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
     },
-    // Action to set the token
-    setUsername: (state, action: PayloadAction<string | null>) => {
-      state.username = action.payload;
-    },
+
     // Action to logout
     logout: (state) => {
       state.isLoggedIn = false;
       state.token = null;
-      state.username = null;
+      state.firstname = null;
       state.email = null;
       state.userType = null;
     },
@@ -49,15 +46,15 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<{
         token: string | null;
-        username: string | null;
+        firstname: string | null;
         email: string | null;
         userType: string | null;
       }>
     ) => {
-      const { token, username, email, userType } = action.payload;
+      const { token, firstname, email, userType } = action.payload;
       state.isLoggedIn = true;
       state.token = token;
-      state.username = username;
+      state.firstname = firstname;
       state.email = email;
       state.userType = userType;
     },

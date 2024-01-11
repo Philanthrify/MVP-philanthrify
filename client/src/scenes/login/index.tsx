@@ -8,7 +8,6 @@ import {
   IconButton,
   useTheme,
   Typography,
-  Box,
 } from "@mui/material";
 import FormBox from "@/components/FormBox";
 import FormStyles from "@/components/FormsUI";
@@ -23,7 +22,7 @@ import { login } from "@/redux/authSlice";
 import { jwtDecode } from "jwt-decode";
 
 const validationSchema = yup.object({
-  username: yup.string().required("username is required"),
+  email: yup.string().required("email is required"),
   password: yup.string().required("Password is required"),
 });
 interface LocationState {
@@ -43,7 +42,7 @@ const Login = () => {
   console.log(from);
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     validationSchema: validationSchema,
@@ -61,7 +60,7 @@ const Login = () => {
           dispatch(
             login({
               token: response.data.token,
-              username: response.data.username,
+              firstname: response.data.firstname,
               email: response.data.email,
               userType: jwtDecode(response.data.token).userType,
             })
@@ -116,16 +115,14 @@ const Login = () => {
             >
               <TextField
                 fullWidth
-                id="username"
-                name="username"
-                label="Username"
-                value={formik.values.username}
+                id="email"
+                name="email"
+                label="email"
+                value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.username && Boolean(formik.errors.username)
-                }
-                helperText={formik.touched.username && formik.errors.username}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
                 sx={{
                   ...textFieldProps.textField,
                   width: textFieldProps.textFieldWidth,

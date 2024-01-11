@@ -178,6 +178,7 @@ router.get("/:id", async (req, res) => {
       include: {
         link: true,
         tag: true,
+        updates: true,
       },
     };
 

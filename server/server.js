@@ -41,6 +41,9 @@ app.use(authMiddleware);
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
 
+const projectUpdateRoutes = require("./routers/projectUpdates");
+app.use("/projectUpdate", projectUpdateRoutes);
+
 app.use("/project-photo", express.static("assets/projectPhotos"));
 
 // Start the server

@@ -21,6 +21,10 @@ type StepThreeProps = {
 };
 
 const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email")
+    .required("Email is required"),
   password: yup
     .string()
     .min(8, "Password should be of minimum 8 characters length")
@@ -76,6 +80,87 @@ const StepThree = (props: StepThreeProps) => {
         justifyContent="center"
         alignItems="center"
       >
+        <Grid
+          item
+          container
+          spacing={2}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="space-between"
+          sx={{ width: textFieldProps.textFieldWidth }}
+        >
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              id="firstname"
+              name="firstname"
+              label="Firstname"
+              value={formik.values.firstname}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.firstname && Boolean(formik.errors.firstname)
+              }
+              helperText={""}
+              sx={{
+                ...textFieldProps.textField,
+              }}
+            />
+            <Grid xs={10}>
+              <FormHelperText
+                error={
+                  formik.touched.firstname && Boolean(formik.errors.firstname)
+                }
+              ></FormHelperText>{" "}
+            </Grid>{" "}
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              id="lastname"
+              name="lastname"
+              label="Lastname"
+              value={formik.values.lastname}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+              helperText={""}
+              sx={{
+                ...textFieldProps.textField,
+              }}
+            />
+            <Grid xs={10}>
+              <FormHelperText
+                error={
+                  formik.touched.lastname && Boolean(formik.errors.lastname)
+                }
+              ></FormHelperText>{" "}
+            </Grid>{" "}
+          </Grid>
+        </Grid>
+
+        <TextField
+          fullWidth
+          id="email"
+          name="email"
+          label="Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={""}
+          sx={{
+            ...textFieldProps.textField,
+            width: textFieldProps.textFieldWidth,
+          }}
+        />
+        <Grid xs={10}>
+          <FormHelperText
+            error={formik.touched.email && Boolean(formik.errors.email)}
+          >
+            {formik.touched.email && formik.errors.email}
+          </FormHelperText>
+        </Grid>
         <TextField
           fullWidth
           id="password"
