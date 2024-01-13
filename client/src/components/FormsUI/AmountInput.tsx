@@ -12,6 +12,9 @@ interface AmountInputProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
   helperText?: string;
+  label: string;
+  id: string; // when using formik we need to match this with the name of the formik value
+  name: string; // when using formik we need to match this with the name of the formik value
 }
 
 const AmountInput: React.FC<AmountInputProps> = ({
@@ -20,6 +23,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
   onBlur,
   error,
   helperText,
+  label,
+  id,
+  name,
 }) => {
   const theme = useTheme();
   const textFieldProps = FormStyles();
@@ -28,9 +34,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
   return (
     <TextField
       fullWidth
-      id="targetAmount"
-      name="targetAmount"
-      label="Target Amount"
+      id={id}
+      name={name}
+      label={label}
       value={value}
       onChange={onChange}
       onBlur={onBlur}
@@ -51,7 +57,6 @@ const AmountInput: React.FC<AmountInputProps> = ({
       }}
       sx={{
         ...textFieldProps.textField,
-        width: textFieldProps.textFieldWidth,
       }}
     />
   );

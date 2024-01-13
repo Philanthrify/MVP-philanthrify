@@ -23,7 +23,7 @@ const CreateProjectForm = () => {
     solution: "",
     donationUsage: "",
     futureImpact: "",
-    links: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
+    link: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
     tag: [],
     endDate: null,
     targetAmount: 0,

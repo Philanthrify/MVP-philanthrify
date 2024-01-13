@@ -46,7 +46,7 @@ router.post("/", authMiddleware, async (req, res) => {
       solution,
       donationUsage,
       futureImpact,
-      links,
+      link,
       tag,
       targetAmount,
       currentAmount = 0.0, // default to 0 if not provided
@@ -71,10 +71,10 @@ router.post("/", authMiddleware, async (req, res) => {
       },
     });
     // create links
-    links.forEach(async (element) => {
+    link.forEach(async (element) => {
       const newLink = await prisma.link.create({
         data: {
-          url: element.link,
+          webLink: element.link,
           socialMedia: element.socialMedia,
           projectId: newProject.id,
         },
@@ -165,35 +165,6 @@ router.post("/search", async (req, res) => {
   }
 });
 
-// Retrieve a single project
-router.get("/:id", async (req, res) => {
-  try {
-    // project id
-    const id = req.params.id;
-    console.log(id);
-    let queryOptions = {
-      where: {
-        id: id,
-      },
-      include: {
-        link: true,
-        tag: true,
-        updates: true,
-      },
-    };
-
-    const project = await prisma.project.findUnique(queryOptions);
-    if (project) {
-      res.status(200).json(project);
-    } else {
-      res.status(404).json({ error: "Failed to find project" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Failed to fetch project" });
-  }
-});
-
 router.post(
   "/upload-project-image/",
   upload.single("image"),
@@ -213,4 +184,68 @@ router.post(
   }
 );
 
+// Retrieve project info (just one)
+router.get("/:id", async (req, res) => {
+  try {
+    // project id
+    // TODO: searching by charity
+    const { id } = req.params;
+    console.log(id);
+
+    // Construct query options with dynamic conditions and includes
+    let queryOptions = {
+      where: { id: id },
+      include: {
+        link: true,
+        tag: true,
+        updates: true,
+      },
+    };
+
+    // Fetch projects based on the constructed query
+    const projects = await prisma.project.findUnique(queryOptions);
+    if (projects) {
+      res.status(200).json(projects);
+    } else {
+      res.status(404).json({ error: "Failed to find project(s)" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch project(s)" });
+  }
+});
+
+// Retrieve full project information (CRUD)
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    // project id
+    // TODO: searching by charity
+    const { id } = req.query;
+    console.log(req.user);
+    let whereConditions = {};
+    if (id) whereConditions.id = id; // project Id
+    if (req.user.userId) whereConditions.userId = req.user.userId;
+
+    // Construct query options with dynamic conditions and includes
+    let queryOptions = {
+      where: whereConditions,
+      include: {
+        link: true,
+        tag: true,
+        updates: true,
+      },
+    };
+
+    // Fetch projects based on the constructed query
+    const projects = await prisma.project.findMany(queryOptions);
+    if (projects) {
+      res.status(200).json(projects);
+    } else {
+      res.status(404).json({ error: "Failed to find project(s)" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch project(s)" });
+  }
+});
 module.exports = router;

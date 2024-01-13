@@ -22,7 +22,7 @@ import { login } from "@/redux/authSlice";
 import { jwtDecode } from "jwt-decode";
 
 const validationSchema = yup.object({
-  email: yup.string().required("email is required"),
+  email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
 });
 interface LocationState {
@@ -117,7 +117,7 @@ const Login = () => {
                 fullWidth
                 id="email"
                 name="email"
-                label="email"
+                label="Email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

@@ -54,24 +54,24 @@ const StepOne = (props: StepOneProps) => {
   };
   const addLink = () => {
     const newLink = { id: uuidv4(), link: "", socialMedia: "Facebook" };
-    formik.setFieldValue("links", [...formik.values.links, newLink]);
+    formik.setFieldValue("link", [...formik.values.link, newLink]);
   };
 
   const removeLink = (linkToRemove: Link) => {
-    const currentLinks = formik.values.links;
+    const currentLinks = formik.values.link;
     const updatedLinks = currentLinks.filter(
       (link: Link) => link.id !== linkToRemove.id
     );
-    formik.setFieldValue("links", updatedLinks);
+    formik.setFieldValue("link", updatedLinks);
     console.log(updatedLinks);
   };
 
   const handleLinkChange = (updatedLink: Link) => {
-    const currentLinks = formik.values.links;
+    const currentLinks = formik.values.link;
     const updatedLinks = currentLinks.map((link: Link) =>
       link.id === updatedLink.id ? updatedLink : link
     );
-    formik.setFieldValue("links", updatedLinks);
+    formik.setFieldValue("link", updatedLinks);
     console.log(updatedLinks);
   };
   const handleCountryChange = (
@@ -221,12 +221,15 @@ const StepOne = (props: StepOneProps) => {
               ? formik.errors.targetAmount
               : undefined
           }
+          label="Target Amount"
+          id="targetAmount"
+          name="targetAmount"
         />
         <TypographyTitle variant="h4" align="center" padding="15px 0">
           Add links to social media:
         </TypographyTitle>
         <Grid item xs={12}>
-          {formik.values.links.map((link: Link) => (
+          {formik.values.link.map((link: Link) => (
             <LinkInput
               id={link.id}
               link={link.link}

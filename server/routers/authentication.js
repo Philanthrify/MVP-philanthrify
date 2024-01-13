@@ -167,7 +167,12 @@ router.post("/login", async (req, res) => {
   }
   // user is returned with a json web token
   const token = jwt.sign(
-    { userType: user.userType, userId: user.id, email: user.email },
+    {
+      userType: user.userType,
+      userId: user.id,
+      email: user.email,
+      userId: user.id,
+    },
     SECRET,
     {
       expiresIn: "1h",

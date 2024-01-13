@@ -26,7 +26,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddTeamMemberModal from "./AddTeamMemberModal";
-
+import PaidIcon from "@mui/icons-material/Paid";
 type AccountMenuProps = {
   setSelected: (value: string) => void;
 };
@@ -69,7 +69,11 @@ const AccountMenu = (props: AccountMenuProps) => {
     props.setSelected("addproject");
     navigate("/addproject"); // Replace '/profile' with the path to your profile route
   };
-
+  const goToTransactionAdd = () => {
+    handleClose(); // Assuming this closes the menu
+    props.setSelected("none");
+    navigate("/addtransaction"); // Replace '/profile' with the path to your profile route
+  };
   const handleOpenModal = () => {
     handleClose();
     setModalOpen(true);
@@ -183,15 +187,26 @@ const AccountMenu = (props: AccountMenuProps) => {
             Dashboard
           </MenuItem>{" "}
           {userType === "CHARITY" && (
-            <MenuItem
-              onClick={handleOpenModal}
-              sx={{ color: palette.white.light }}
-            >
-              <ListItemIcon sx={{ color: palette.white.light }}>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon>
-              Invite team member
-            </MenuItem>
+            <>
+              <MenuItem
+                onClick={handleOpenModal}
+                sx={{ color: palette.white.light }}
+              >
+                <ListItemIcon sx={{ color: palette.white.light }}>
+                  <PersonAdd fontSize="small" />
+                </ListItemIcon>
+                Invite team member
+              </MenuItem>{" "}
+              <MenuItem
+                onClick={goToTransactionAdd}
+                sx={{ color: palette.white.light }}
+              >
+                <ListItemIcon sx={{ color: palette.white.light }}>
+                  <PaidIcon fontSize="small" />
+                </ListItemIcon>
+                Confirm a transaction
+              </MenuItem>
+            </>
           )}{" "}
           {userType === "CHARITY" && (
             <MenuItem

@@ -13,20 +13,20 @@ import FormStyles from "@/components/FormsUI";
 
 export interface Link {
   id: string;
-  link: string;
+  webLink: string;
   socialMedia: string;
 }
 
 interface LinkInputProps {
   id: string;
-  link: string;
+  webLink: string;
   socialMedia: string;
   onChange: (updatedLink: Link) => void;
   onDelete: (linkToDelete: Link) => void;
 }
 const LinkInput: React.FC<LinkInputProps> = ({
   id,
-  link,
+  webLink,
   socialMedia,
   onChange,
   onDelete,
@@ -54,7 +54,7 @@ const LinkInput: React.FC<LinkInputProps> = ({
             onChange={(e) =>
               onChange({
                 id: id,
-                link: link,
+                webLink: webLink,
                 socialMedia: e.target.value as string,
               })
             }
@@ -73,15 +73,17 @@ const LinkInput: React.FC<LinkInputProps> = ({
         <TextField
           fullWidth
           name="link"
-          value={link}
-          onChange={(e) => onChange({ id, link: e.target.value, socialMedia })}
+          value={webLink}
+          onChange={(e) =>
+            onChange({ id, webLink: e.target.value, socialMedia })
+          }
           label="Link"
           classes={{ ...textFieldProps.selectClasses }}
           sx={{ ...textFieldProps.textField }}
         />
       </Grid>
       <Grid item xs={1}>
-        <Button onClick={() => onDelete({ id, link, socialMedia })}>
+        <Button onClick={() => onDelete({ id, webLink, socialMedia })}>
           Remove
         </Button>
       </Grid>
