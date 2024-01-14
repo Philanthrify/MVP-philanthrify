@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import AccountMenu from "@/components/AccountMenu";
@@ -11,6 +11,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import PrimaryButton from "@/components/Button/PrimaryButton";
+import PhilanthrifyLogo from "@/components/Icons/PhilanthrifyLogo";
+import PhilanthrifyLogoWithText from "@/components/Icons/PhilanthrifyLogoWithText";
 type Props = {};
 
 const Navbar = (props: Props) => {
@@ -32,6 +34,7 @@ const Navbar = (props: Props) => {
 
   const leftBoxStyle = {
     height: "100%",
+    width: "auto",
     display: "flex",
     alignItems: "center",
     gap: "0.75rem",
@@ -49,64 +52,106 @@ const Navbar = (props: Props) => {
   }, [selected]);
   return (
     <>
-      <Box sx={navbarStyles}>
-        {/* LEFT - Logo */}
-        <Box sx={leftBoxStyle}>
-          <AcUnitIcon sx={{ fontSize: "28px" }} />
-          <Typography variant="h4" fontSize="16px">
-            Philanthrify
-          </Typography>
-          <Button
-            // variant="text"
-            sx={{
-              color:
-                selected === "explore"
-                  ? palette.white.light
-                  : palette.white.middle,
-              backgroundColor:
-                selected === "explore" ? palette.background.light : null,
-              "&:hover": {
-                backgroundColor: "transparent",
-                color: palette.white.light,
-              },
-            }}
-            onClick={() => {
-              setSelected("explore");
-              navigate("/");
-            }}
-          >
-            <ExploreIcon sx={{ marginRight: "8px" }} />
-            Explore
-          </Button>
-          <Button
-            // variant="text"
-            sx={{
-              color:
-                selected === "howWorks"
-                  ? palette.white.light
-                  : palette.white.middle,
-              backgroundColor:
-                selected === "howWorks" ? palette.background.light : null,
-              "&:hover": {
-                backgroundColor: "transparent",
-                color: palette.white.light,
-              },
-            }}
-            onClick={() => {
-              setSelected("howWorks");
-              navigate("/howWorks");
-            }}
-          >
-            <MenuBookIcon sx={{ marginRight: "8px" }} />
-            How it works?
-          </Button>
-        </Box>
+      <Grid
+        container
+        direction="row"
+        spacing={2}
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ marginTop: "8px" }}
+      >
+        <Grid
+          item
+          xs={6}
+          container
+          direction="row"
+          spacing={2}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Grid item>
+            <Button
+              sx={{
+                padding: 1, // Removes padding inside the button
+                minWidth: 0, // Allows the button to shrink to the size of its contents
+                "&:hover": {
+                  backgroundColor: "transparent", // Keeps the background transparent on hover
+                },
+              }}
+              onClick={() => {
+                setSelected("explore");
+                navigate("/");
+              }}
+            >
+              <PhilanthrifyLogoWithText />
+            </Button>
+          </Grid>
+          <Grid item>
+            {" "}
+            <Button
+              // variant="text"
+              sx={{
+                color:
+                  selected === "explore"
+                    ? palette.white.light
+                    : palette.white.middle,
+                backgroundColor:
+                  selected === "explore" ? palette.background.light : null,
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  color: palette.white.light,
+                },
+              }}
+              onClick={() => {
+                setSelected("explore");
+                navigate("/");
+              }}
+            >
+              <ExploreIcon sx={{ marginRight: "8px" }} />
+              Explore
+            </Button>
+          </Grid>{" "}
+          <Grid item>
+            <Button
+              // variant="text"
+              sx={{
+                color:
+                  selected === "howWorks"
+                    ? palette.white.light
+                    : palette.white.middle,
+                backgroundColor:
+                  selected === "howWorks" ? palette.background.light : null,
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  color: palette.white.light,
+                },
+              }}
+              onClick={() => {
+                setSelected("howWorks");
+                navigate("/howWorks");
+              }}
+            >
+              <MenuBookIcon sx={{ marginRight: "8px" }} />
+              How it works?
+            </Button>
+          </Grid>{" "}
+          <Grid item></Grid>
+        </Grid>
 
-        {/* Middle */}
+        {/* </Box> */}
 
-        <>
-          {/* RIGHT - Account Menu */}
-          <Box sx={rightBoxStyle}>
+        {/* RIGHT - Account Menu */}
+        <Grid
+          item
+          xs={6}
+          container
+          direction="row"
+          spacing={2}
+          justifyContent="flex-end"
+          alignItems="center"
+        >
+          <Grid item>
+            {" "}
             {/* Depending on charity or donor */}
             {userType === "CHARITY" && isLoggedIn ? (
               <Button
@@ -128,11 +173,15 @@ const Navbar = (props: Props) => {
               <PrimaryButton
                 text="Donate"
                 onClick={() => {
+                  setSelected("donate");
+
                   console.log("");
                 }}
               />
             )}
-
+          </Grid>{" "}
+          <Grid item>
+            {" "}
             {/* Depending on login status */}
             {isLoggedIn ? (
               <AccountMenu setSelected={setSelected} />
@@ -148,15 +197,17 @@ const Navbar = (props: Props) => {
                   },
                 }}
                 onClick={() => {
+                  setSelected("login");
                   navigate("/login");
                 }}
               >
                 Login
               </Button>
             )}
-          </Box>
-        </>
-      </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* </Box> */}
     </>
   );
 };

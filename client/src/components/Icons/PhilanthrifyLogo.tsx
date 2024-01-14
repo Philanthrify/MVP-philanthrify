@@ -1,11 +1,19 @@
 import React from "react";
 
-const PhilanthrifyLogo = () => {
+interface PhilanthrifyLogoProps {
+  width?: string;
+  height: string;
+}
+
+const PhilanthrifyLogo: React.FC<PhilanthrifyLogoProps> = ({
+  width,
+  height,
+}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="41"
-      height="36"
+      width={width ? width : "auto"}
+      height={height}
       viewBox="0 0 41 36"
       fill="none"
     >

@@ -85,7 +85,7 @@ const SideFloater = () => {
               <Grid item container lg={6} md={6} direction="column">
                 <Grid item>
                   {" "}
-                  <PhilanthrifyLogo />
+                  <PhilanthrifyLogo width={"41"} height={"36"} />
                 </Grid>
                 <Grid item>
                   <TypographySmallText

@@ -137,7 +137,7 @@ const themeSettings = {
   components: {
     // Name of the component
     MuiButtonBase: {
-      defaultProps: {},
+      defaultProps: { disableRipple: true },
     },
     MuiButton: {
       styleOverrides: {
