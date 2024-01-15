@@ -74,7 +74,7 @@ router.post("/", authMiddleware, async (req, res) => {
     link.forEach(async (element) => {
       const newLink = await prisma.link.create({
         data: {
-          webLink: element.link,
+          webLink: element.webLink,
           socialMedia: element.socialMedia,
           projectId: newProject.id,
         },

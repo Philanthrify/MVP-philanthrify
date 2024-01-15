@@ -16,9 +16,21 @@ model Charity {
   links         CharityLink[]
   tags         CharityTag[]
   countriesActive         CharityCountry[]
+    teamInvites         TeamInvite[]
+
   charityName     String
   email           String
 }
+
+
+model TeamInvite {
+  id        String  @id @default(uuid())
+  charityId Int
+  email String
+  charityUserType CharityUserType
+  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
+}
+
 
 model CharityCountry {
   id        String   @id @default(uuid())

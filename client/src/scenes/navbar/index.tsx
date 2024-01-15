@@ -58,7 +58,7 @@ const Navbar = (props: Props) => {
         spacing={2}
         justifyContent="space-between"
         alignItems="center"
-        sx={{ marginTop: "8px" }}
+        sx={{ marginTop: "8px", marginBottom: "15px" }}
       >
         <Grid
           item

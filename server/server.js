@@ -41,6 +41,9 @@ app.use(authMiddleware);
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
 
+const teamInvitesRoutes = require("./routers/teamInvites");
+app.use("/team-invite", teamInvitesRoutes);
+
 const projectUpdateRoutes = require("./routers/projectUpdates");
 app.use("/projectUpdate", projectUpdateRoutes);
 
