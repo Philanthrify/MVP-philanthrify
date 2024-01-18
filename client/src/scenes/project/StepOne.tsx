@@ -235,7 +235,7 @@ const StepOne = (props: StepOneProps) => {
           {formik.values.link.map((link: Link) => (
             <LinkInput
               id={link.id}
-              link={link.webLink}
+              webLink={link.webLink}
               socialMedia={link.socialMedia}
               onChange={(updatedLink) => handleLinkChange(updatedLink)}
               onDelete={removeLink}
