@@ -71,6 +71,10 @@ const StepThree = (props: StepThreeProps) => {
   const handleMouseUpConfirmPassword = () => {
     setShowConfirmPassword(false);
   };
+  // as values are changed the parent value is changed accordingly
+  useEffect(() => {
+    props.updateData(formik.values);
+  }, [formik.values, props]);
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid

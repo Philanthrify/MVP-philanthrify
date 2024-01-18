@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+// takes tags and makes them from the list
 const createTag = async (projectId, listOfTags) => {
   let createdTags = [];
   let failureTags = [];

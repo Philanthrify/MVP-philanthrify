@@ -71,7 +71,7 @@ const Register = () => {
   const onSubmit = (updatedData: Signup) => {
     if (updatedData.userType === "CHARITY") {
       // when onboarding a charity, the root is always CHARITYHEAD
-      updatedData.charityUserType = "CHARITYHEAD";
+      updatedData.charityHead = true;
       axios({
         method: "post",
         url: "http://localhost:1337/auth/signup-charity",
@@ -113,13 +113,10 @@ const Register = () => {
   };
 
   useEffect(() => {
-    console.log("🚀 ~ file: StepOne.tsx:16 ~ StepOne ~ data:", data);
+    console.log("🚀 ~ file: index.tsx:16 ~ index ~ data:", data);
   }, [data]);
   useEffect(() => {
-    console.log(
-      "🚀 ~ file: StepOne.tsx:16 ~ StepOne ~ currentStep:",
-      currentStep
-    );
+    console.log("🚀 ~ file: index.tsx:16 ~ index ~ currentStep:", currentStep);
   }, [currentStep]);
   return (
     <Grid

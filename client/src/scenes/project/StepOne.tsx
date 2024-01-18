@@ -23,6 +23,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import CustomDatePicker from "@/components/FormsUI/DatePicker";
 import { Dayjs } from "dayjs";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 type StepOneProps = {
   projectData: ProjectFormData;
   onSubmit: (updatedData: ProjectFormData) => void;
@@ -35,6 +37,7 @@ const validationSchema = yup.object({
 
 const StepOne = (props: StepOneProps) => {
   // console.log("🚀 ~ file: StepOne.tsx:47 ~ StepOne ~ props:", props);
+  const userProjects = useSelector((state: RootState) => state.auth.projects); // using this later for some charity selector when we want to have projects submit for any charity
 
   const formik = useFormik({
     initialValues: props.projectData,
@@ -53,7 +56,7 @@ const StepOne = (props: StepOneProps) => {
     formik.setFieldValue("tag", value);
   };
   const addLink = () => {
-    const newLink = { id: uuidv4(), link: "", socialMedia: "Facebook" };
+    const newLink = { id: uuidv4(), webLink: "", socialMedia: "Facebook" };
     formik.setFieldValue("link", [...formik.values.link, newLink]);
   };
 
@@ -232,7 +235,7 @@ const StepOne = (props: StepOneProps) => {
           {formik.values.link.map((link: Link) => (
             <LinkInput
               id={link.id}
-              link={link.link}
+              link={link.webLink}
               socialMedia={link.socialMedia}
               onChange={(updatedLink) => handleLinkChange(updatedLink)}
               onDelete={removeLink}

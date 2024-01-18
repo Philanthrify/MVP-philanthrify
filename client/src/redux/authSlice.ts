@@ -1,6 +1,7 @@
 // authSlice.js
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { CharityMembership } from "@/models/charity";
 
 // Define a type for the slice state
 interface AuthState {
@@ -9,6 +10,8 @@ interface AuthState {
   firstname: string | null;
   email: string | null;
   userType: string | null;
+  charities: CharityMembership[] | null;
+  projects: any[] | null;
 }
 
 // Define the initial state using that type
@@ -18,6 +21,8 @@ const initialState: AuthState = {
   firstname: null,
   email: null,
   userType: null,
+  charities: null, // if not charity user/no charity then it's going to be either null or empty string, same with projects
+  projects: null,
 };
 
 export const authSlice = createSlice({
@@ -40,6 +45,8 @@ export const authSlice = createSlice({
       state.firstname = null;
       state.email = null;
       state.userType = null;
+      state.charities = null;
+      state.projects = null;
     },
     // This action can be used to set the login state and token at the same time
     login: (
@@ -49,14 +56,23 @@ export const authSlice = createSlice({
         firstname: string | null;
         email: string | null;
         userType: string | null;
+        charities?: CharityMembership[] | null;
+        projects?: any[] | null;
       }>
     ) => {
-      const { token, firstname, email, userType } = action.payload;
+      const { token, firstname, email, userType, charities, projects } =
+        action.payload;
       state.isLoggedIn = true;
       state.token = token;
       state.firstname = firstname;
       state.email = email;
       state.userType = userType;
+      if (charities) {
+        state.charities = charities;
+      }
+      if (projects) {
+        state.projects = projects;
+      }
     },
   },
 });

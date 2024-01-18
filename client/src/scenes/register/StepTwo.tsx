@@ -17,8 +17,6 @@ import {
 import FormStyles from "@/components/FormsUI";
 import { useEffect, useState } from "react";
 import { Signup } from "@/models/Signup";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 type StepTwoProps = {
   data: Signup; // signup data store
   updateData: (updatedData: Signup) => void; // updates the parent comp with the new data
@@ -54,15 +52,17 @@ const StepTwo = (props: StepTwoProps) => {
         ? validationSchemaCharity
         : validationSchemaDonor,
     onSubmit: (values) => {
-      console.log("next page");
+      console.log("leaving step2");
       props.handleNext(values);
     },
   });
 
+  // useEffect(() => {
+  //   console.log("Changed (FORMIK):", formik.values);
+  // }, [formik.values]);
   useEffect(() => {
-    console.log("Changed (FORMIK):", formik.values);
-  }, [formik.values]);
-
+    props.updateData(formik.values);
+  }, [formik.values, props]);
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid

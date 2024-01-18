@@ -13,17 +13,24 @@ import { useEffect, useState } from "react";
 import StepTwo from "./StepTwo";
 import axios from "axios";
 import { useTheme } from "@mui/material";
+import { RootState } from "@/redux/store";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
+  const userCharites = useSelector((state: RootState) => state.auth.charities);
   const [data, setData] = useState<Project>({
+    charityId:
+      userCharites && userCharites.length >= 1 ? userCharites[0]["id"] : "",
+    // WARNING: for now assuming that the user has only one charity, this project will be posted for the first charity
+    // which appears in the users list of charities, database output will not be as expected if user has more than one
+    // charity
     title: "",
     country: "",
     challenge: "",
     solution: "",
     donationUsage: "",
     futureImpact: "",
-    link: [{ id: uuidv4(), link: "", socialMedia: "Facebook" }],
+    link: [{ id: uuidv4(), webLink: "", socialMedia: "Facebook" }],
     tag: [],
     endDate: null,
     targetAmount: 0,

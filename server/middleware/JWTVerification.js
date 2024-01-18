@@ -14,8 +14,9 @@ const authJWT = (req, res, next) => {
       return res.status(401).json({ error: "Token invalid" });
     }
     // user is returned
-    req.user = decoded;
-    console.log(`${decoded.userId} request validated!`);
+    req.user = decoded.user;
+    console.log(decoded);
+    console.log(`${decoded.user.id} request validated!`);
     next();
   });
 };

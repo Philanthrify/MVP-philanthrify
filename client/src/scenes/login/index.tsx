@@ -57,12 +57,15 @@ const Login = () => {
         // withCredentials: true,
       })
         .then((response) => {
+          console.log(response.data.userType);
           dispatch(
             login({
               token: response.data.token,
               firstname: response.data.firstname,
               email: response.data.email,
-              userType: jwtDecode(response.data.token).userType,
+              userType: response.data.userType,
+              charities: response.data.charity,
+              projects: response.data.projects,
             })
           );
           navigate(from);

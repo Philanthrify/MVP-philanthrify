@@ -80,13 +80,14 @@ async function sendMail(email, accesstoken, link) {
   }
 }
 
-// Add a new project for a user
+// creating an invite link for the new user
 router.post("/", authMiddleware, async (req, res) => {
   try {
+    // sending as legacy charity user type where state can be of:
+    // CHARITYHEAD or PROJECTLEAD or PROJECTWORKER
     const { email, charityUserType } = req.body;
     // finding the charity they belong to
     // TODO: thusfar we're assuming each user belongs to one charity, this will need to be changed later
-
     const user = await prisma.user.findUnique({
       where: {
         id: req.user.userId,

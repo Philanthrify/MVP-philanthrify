@@ -5,9 +5,9 @@ export interface Signup {
   email?: string;
   password?: string;
   confirmPassword?: string;
-  ukCharityNumber?: number | null; // at this stage it can be null
+  ukCharityNumber?: string | null; // at this stage it can be null
   charityName?: string;
-  charityUserType?: CharityUserType;
+  charityHead?: boolean;
   // when onboarding a charity, the root is always CHARITYHEAD
 }
 

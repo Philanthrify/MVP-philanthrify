@@ -21,6 +21,7 @@ export interface Project {
   endDate?: Dayjs | null;
   image?: File | null;
   updates?: Update[];
+  charityId?: string;
 }
 
 // a project list is a list of the users current projects including database references

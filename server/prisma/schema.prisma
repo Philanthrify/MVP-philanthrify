@@ -11,30 +11,20 @@ datasource db {
 }
 
 model Charity {
-  ukCharityNumber Int                 @id
+  ukCharityNumber String                 @id
   members         CharityMembership[]
   links         CharityLink[]
   tags         CharityTag[]
   countriesActive         CharityCountry[]
-    teamInvites         TeamInvite[]
-
+  projects         Project[]
   charityName     String
   email           String
 }
 
 
-model TeamInvite {
-  id        String  @id @default(uuid())
-  charityId Int
-  email String
-  charityUserType CharityUserType
-  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
-}
-
-
 model CharityCountry {
   id        String   @id @default(uuid())
-  charityId Int
+  charityId String
   value     Country 
   charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 
@@ -44,8 +34,8 @@ model CharityCountry {
 
 model CharityTag {
   id        String   @id @default(uuid())
-  charityId Int
-  value     TagValue 
+  charityId String
+  value     TagValue
   charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 
   @@unique([charityId, value])
@@ -55,20 +45,28 @@ model CharityLink {
   id          String  @id @default(uuid())
   webLink         String
   socialMedia String // Type of link, e.g., social media, website, etc.
-  charityId   Int // Foreign key reference to the Project model
+  charityId   String // Foreign key reference to the Project model
   charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 }
 
 model CharityMembership {
   id        String  @id @default(uuid())
   userId    String
-  charityId Int
-  charityUserType CharityUserType
+  charityId String
+  charityHead Boolean
   user      User    @relation(fields: [userId], references: [id])
   charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
   @@unique([userId, charityId])
 }
-
+model ProjectMembership {
+  id        String  @id @default(uuid())
+  userId    String
+  projectId String
+  projectLead Boolean
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+  @@unique([userId, projectId])
+}
 
 
 // TODO (Fergus): multipage signup form for extra info such as bio, soc media links (redux)
@@ -79,16 +77,16 @@ model User {
   password String
   email    String              @unique
   userType UserType // This field determines whether the user is a Donor or a Charity
-  projects Project[] // only when a charity member, TODO: check if needed action to further restrict to that
   updates ProjectUpdate[]
   charity  CharityMembership[]
+    projects ProjectMembership[]
 }
 
 model Project {
   id      String  @id @default(uuid())
   title   String
   country String? @default("Unknown")
-
+  charityId String
   challenge     String @db.LongText // A description of the challenge the project is addressing
   solution      String @db.LongText // The proposed solution for the challenge
   donationUsage String @db.LongText // A description of how the donations will be used
@@ -96,13 +94,15 @@ model Project {
   link          Link[] // Stores various links related to the project
   tag           Tag[] // Stores various tags related to the project
   updates ProjectUpdate[]
+  members ProjectMembership[]
   targetAmount  Float // The fundraising goal for the project
   currentAmount Float // The current money raised
-  userId        String // Foreign key reference to the User model
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId        String // Foreign key reference to the User model
   startDate     DateTime @default(now()) // Auto-generated field capturing today's date
   endDate       DateTime // This field should be set to a date after startDate
+    charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
 }
+
 model ProjectUpdate {
     id      String  @id @default(uuid())
       text     String @db.LongText // text within the update which is displayed

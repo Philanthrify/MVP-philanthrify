@@ -9,6 +9,10 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const dayjs = require("dayjs");
+const {
+  getCharities,
+  hasCharityHeadRights,
+} = require("../middleware/CharityMiddleware");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -27,18 +31,18 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 // Add a new project for a user
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/", authMiddleware, getCharities, async (req, res) => {
   try {
     const userId = req.user.userId;
     const userType = req.user.userType;
     console.log("userId: " + userId);
     console.log("userType: " + userType);
-    //  ensure userType is CHARITY
-    if (userType !== "CHARITY") {
-      return res
-        .status(400)
-        .json({ error: "User type must be 'CHARITY' to upload project." });
-    }
+    // //  ensure userType is CHARITY
+    // if (userType !== "CHARITY") {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "User type must be 'CHARITY' to upload project." });
+    // }
     const {
       title,
       country,
@@ -53,8 +57,12 @@ router.post("/", authMiddleware, async (req, res) => {
       endDate,
     } = req.body;
     console.log(endDate);
-    // ensure right format of date
-    // const isoDateString = endDate.toDate().toISOString();
+    console.log("charity access rights: ", hasCharityHeadRights(req));
+    // check access rights, needs to be a charity head for that charity
+    const charityId = hasCharityHeadRights(req); // uk charity number (or false)
+    if (!charityId) {
+      res.status(403).json({ error: "Access denied" });
+    }
 
     const newProject = await prisma.project.create({
       data: {
@@ -66,10 +74,11 @@ router.post("/", authMiddleware, async (req, res) => {
         futureImpact: futureImpact,
         targetAmount: Number(targetAmount),
         currentAmount: currentAmount,
-        userId: userId,
+        charityId: charityId, // actual charity ID here
         endDate: endDate, // comes out as ISO 8641 which is compat with figma
       },
     });
+    console.log(link);
     // create links
     link.forEach(async (element) => {
       const newLink = await prisma.link.create({
@@ -199,6 +208,8 @@ router.get("/:id", async (req, res) => {
         link: true,
         tag: true,
         updates: true,
+        members: true,
+        charity: true,
       },
     };
 

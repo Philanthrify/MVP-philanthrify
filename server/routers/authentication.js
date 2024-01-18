@@ -65,7 +65,7 @@ router.post("/signup-charity", async (req, res) => {
     email,
     ukCharityNumber,
     charityName,
-    charityUserType,
+    charityHead,
   } = req.body;
 
   // Basic validation including userType
@@ -76,17 +76,20 @@ router.post("/signup-charity", async (req, res) => {
     !email ||
     !ukCharityNumber ||
     !charityName ||
-    !charityUserType
+    charityHead === undefined ||
+    charityHead === null
   ) {
+    // determine which is missing to get more meaningful error message:
+
     return res.status(400).json({
       error:
-        "firstname, lastname, password, email, ukCharityNumber, charityName and charityUserType are all required.",
+        "firstname, lastname, password, email, ukCharityNumber, charityName and charityHead are all required.",
     });
   }
   const charityData = {
     charityName: charityName,
     email: email,
-    ukCharityNumber: Number(ukCharityNumber),
+    ukCharityNumber: ukCharityNumber.toString(),
   };
   const hashedPassword = await passwordMiddleware.hashPassword(password);
 
@@ -102,7 +105,7 @@ router.post("/signup-charity", async (req, res) => {
     // Check if username and email already exist
     const existingNumber = await prisma.charity.findUnique({
       where: {
-        ukCharityNumber: Number(ukCharityNumber),
+        ukCharityNumber: ukCharityNumber,
       },
     });
     const existingEmail = await prisma.user.findUnique({
@@ -136,7 +139,7 @@ router.post("/signup-charity", async (req, res) => {
         members: {
           create: {
             userId: newUser.id,
-            charityUserType: charityUserType,
+            charityHead: charityHead,
           },
         },
       },
@@ -153,7 +156,10 @@ router.post("/signup-charity", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include: { charity: true, projects: true },
+  });
   if (!user) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
@@ -165,19 +171,19 @@ router.post("/login", async (req, res) => {
   if (!isPasswordValid) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
+  // getting charity from database
+  // const charity = await prisma.charity.findMany({ where: {  } });
   // user is returned with a json web token
   const token = jwt.sign(
     {
-      userType: user.userType,
-      userId: user.id,
-      email: user.email,
-      userId: user.id,
+      user,
     },
     SECRET,
     {
       expiresIn: "1h",
     }
   );
-  res.json({ token: token, email: user.email, firstname: user.firstname });
+  console.log(user);
+  res.json({ ...user, token: token });
 });
 module.exports = router;
