@@ -4,3 +4,4 @@ export interface CharityMembership {
   charityId: string;
   charityHead: boolean;
 }
+//TODO: consider adding a projects type
