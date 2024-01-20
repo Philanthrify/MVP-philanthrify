@@ -11,6 +11,10 @@ interface AuthState {
   email: string | null;
   userType: string | null;
   charities: CharityMembership[] | null;
+  // ATTENTION: only for project leads and project workers/reporters.
+  // This is a list of projects for which this user has access.
+  // for charity leads the list could be quite long since they have admin rights for
+  // all projects in charity therefore this will be fleshed out later.
   projects: any[] | null;
 }
 

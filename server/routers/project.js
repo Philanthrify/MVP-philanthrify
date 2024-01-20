@@ -12,6 +12,7 @@ const dayjs = require("dayjs");
 const {
   getCharities,
   hasCharityHeadRights,
+  isProjectLeadOrReporter,
 } = require("../middleware/CharityMiddleware");
 
 const storage = multer.diskStorage({
@@ -227,24 +228,34 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Retrieve full project information (CRUD)
-router.get("/", authMiddleware, async (req, res) => {
+// gets the projects which the user has rights to
+// Retrieve full project information (CRUD) - TODO: currently only works for charity heads
+router.get("/", authMiddleware, getCharities, async (req, res) => {
   try {
     // project id
     // TODO: searching by charity
-    const { id } = req.query;
-    console.log(req.user);
-    let whereConditions = {};
-    if (id) whereConditions.id = id; // project Id
-    if (req.user.userId) whereConditions.userId = req.user.userId;
-
-    // Construct query options with dynamic conditions and includes
-    let queryOptions = {
-      where: whereConditions,
+    const userCharities = await prisma.user.findUnique({
+      where: { id: req.user.id },
       include: {
-        link: true,
-        tag: true,
-        updates: true,
+        charity: true, // This will include the charities associated with the user
+        projects: true, // TODO: This will include the projects associated with the user
+      },
+    });
+    // filter out the ones where the user isn't charity head
+    const userCharitiesWhereHead = userCharities.charity.filter(
+      (charity) => charity.charityHead
+    );
+    // Extract charityIds from the filtered charities
+    const charityIds = userCharitiesWhereHead.map(
+      (charity) => charity.charityId
+    );
+    console.log("charityIds", charityIds);
+
+    // Construct query options with dynamic conditions
+    const queryOptions = {
+      where: {
+        // Use the `in` operator to match any of the charity IDs
+        charityId: { in: charityIds },
       },
     };
 

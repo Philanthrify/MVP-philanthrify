@@ -30,7 +30,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
         type: category,
         whatFor: whatFor,
         whatBrought: whatBrought,
-        amount: amount,
+        amount: Number(amount),
         projectId: project,
         posterId: req.user.id,
       },

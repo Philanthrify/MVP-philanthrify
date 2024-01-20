@@ -22,10 +22,7 @@ import {
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
 import { TransactionKinds } from "@/models/transaction";
-const validationSchema = yup.object({}); //can use this to create a validation schema - STEP 3 IN REGISTER SCENE EXAMPLE
-import { createObjectCsvWriter } from "csv-writer";
-import * as fs from 'fs';
-// remove when transactions working
+const validationSchema = yup.object({});
 
 const TransactionAdd = () => {
   const [loading, setLoading] = useState(true);
@@ -77,10 +74,21 @@ const TransactionAdd = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-
-      //write to database for now FAKE IT TILL WE MAKE IT
-
+      axios({
+        method: "post",
+        url: "http://localhost:1337/transaction",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        data: values,
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
   // console logging as they change
@@ -175,12 +183,14 @@ const TransactionAdd = () => {
 
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  What Kind of Transaction
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={formik.values.category}
-                  label="Role"
+                  label="Type of Transaction"
                   onChange={changeCategory}
                 >
                   {Object.entries(TransactionKinds).map(([key, value]) => (
