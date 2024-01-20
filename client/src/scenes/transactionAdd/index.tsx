@@ -23,6 +23,9 @@ import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
 import { TransactionKinds } from "@/models/transaction";
 const validationSchema = yup.object({}); //can use this to create a validation schema - STEP 3 IN REGISTER SCENE EXAMPLE
+import { createObjectCsvWriter } from "csv-writer";
+import * as fs from 'fs';
+// remove when transactions working
 
 const TransactionAdd = () => {
   const [loading, setLoading] = useState(true);
@@ -75,9 +78,9 @@ const TransactionAdd = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      //write to CSV
-      //use validation schema - formik and yup libraries - look up documentation for these and make sure you use the validation schema
-      //
+
+      //write to database for now FAKE IT TILL WE MAKE IT
+
     },
   });
   // console logging as they change
