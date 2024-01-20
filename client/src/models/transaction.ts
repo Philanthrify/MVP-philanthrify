@@ -7,3 +7,13 @@ export const TransactionKinds = {
   Licensing: "Licensing Costs",
   Subcontractor: "Subcontractor Costs",
 };
+
+export interface Transaction {
+  id: string;
+  type: string;
+  whatFor: string;
+  whatBrought: string;
+  amount: string;
+  posterId: string;
+  projectId: string;
+};

@@ -1,6 +1,7 @@
 import { Link } from "@/components/FormsUI/LinkInput";
 import { Dayjs } from "dayjs";
 import { Update } from "./update";
+import { Transaction } from "./transaction";
 
 /*
 sometimes need partial aspects of project data meaning that I left all fields as optional.
@@ -22,6 +23,7 @@ export interface Project {
   image?: File | null;
   updates?: Update[];
   charityId?: string;
+  transactions?: Transaction[];
 }
 
 // a project list is a list of the users current projects including database references
