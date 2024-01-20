@@ -187,6 +187,14 @@ const ProjectPage = () => {
             <Links />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
+            <SectionHeader header="Transactions" />
+
+            
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            <Updates />
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Updates" />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
