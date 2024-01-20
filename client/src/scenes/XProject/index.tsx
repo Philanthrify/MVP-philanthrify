@@ -28,6 +28,9 @@ import LocationText from "@/components/Project/LocationText";
 import ProjectTitle from "@/components/Project/ProjectTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import Updates from "@/components/Project/Updates";
+import Transactions from "@/components/Project/Transactions";
+
+
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -188,11 +191,9 @@ const ProjectPage = () => {
           </Grid>
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Transactions" />
-
-            
           </Grid>
           <Grid item sx={{ width: "100%" }}>
-            <Updates />
+            <Transactions />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Updates" />
