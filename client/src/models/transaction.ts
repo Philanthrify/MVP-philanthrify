@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export const TransactionKinds = {
   Administrative: "Administrative Costs",
   Salary: "Salary Costs",
@@ -16,4 +18,5 @@ export interface Transaction {
   amount: string;
   posterId: string;
   projectId: string;
-};
+  dateTime: Dayjs;
+}
