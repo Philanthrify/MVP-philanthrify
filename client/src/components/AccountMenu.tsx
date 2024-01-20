@@ -41,6 +41,8 @@ const AccountMenu = (props: AccountMenuProps) => {
   const userType = useSelector((state: RootState) => state.auth.userType);
   const firstname = useSelector((state: RootState) => state.auth.firstname);
   const email = useSelector((state: RootState) => state.auth.email);
+  const charity = useSelector((state: RootState) => state.auth.charity);
+  console.log("🚀 ~ AccountMenu ~ charity:", charity);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -146,16 +148,16 @@ const AccountMenu = (props: AccountMenuProps) => {
         >
           <Grid
             container
-            sx={{ p: 2, alignItems: "center", justifyContent: "center" }}
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
             <Grid
+              container
               item
-              xs={3}
-              sx={{
-                display: "flex",
-                direction: "row",
-                justifyContent: "flex-end",
-              }}
+              xs={4}
+              justifyContent="center"
+              alignItems="flex-end"
             >
               <Avatar
                 sx={{
@@ -170,11 +172,22 @@ const AccountMenu = (props: AccountMenuProps) => {
                 {firstname ? firstname[0].toUpperCase() : ""}
               </Avatar>{" "}
             </Grid>
-            <Grid item xs={9} sx={{ justifyContent: "flex-start" }}>
-              <Typography variant="h6" sx={{ color: "white" }}>
+            <Grid
+              container
+              item
+              xs={8}
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <Typography variant="h6" sx={{ color: palette.white.light }}>
                 {firstname}
               </Typography>
-              <Typography variant="caption" sx={{ color: "grey.300" }}>
+              {charity && (
+                <Typography variant="caption">{charity.charityName}</Typography>
+              )}
+
+              <Typography variant="caption" sx={{ color: palette.white.light }}>
                 {email}
               </Typography>
             </Grid>
