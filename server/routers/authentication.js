@@ -171,8 +171,16 @@ router.post("/login", async (req, res) => {
   if (!isPasswordValid) {
     return res.status(401).json({ error: "Invalid email or password" });
   }
-  // getting charity from database
-  // const charity = await prisma.charity.findMany({ where: {  } });
+  console.log(
+    "🚀 ~ router.post ~ user.charity[0].charityId:",
+    user.charity[0].charityId
+  );
+  // getting charity from database, for now assuming only one charity a user
+  // therefore taking first in list
+  const charity = await prisma.charity.findUnique({
+    where: { ukCharityNumber: user.charity[0].charityId },
+  });
+  console.log("🚀 ~ router.post ~ charity:", charity);
   // user is returned with a json web token
   const token = jwt.sign(
     {
@@ -184,6 +192,6 @@ router.post("/login", async (req, res) => {
     }
   );
   console.log(user);
-  res.json({ ...user, token: token });
+  res.json({ ...user, token: token, charity: charity });
 });
 module.exports = router;

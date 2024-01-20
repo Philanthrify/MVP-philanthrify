@@ -4,3 +4,9 @@ export interface CharityMembership {
   charityId: string;
   charityHead: boolean;
 }
+
+export interface Charity {
+  ukCharityNumber: string;
+  charityName: string;
+  email: string;
+}

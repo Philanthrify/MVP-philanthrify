@@ -1,7 +1,7 @@
 // authSlice.js
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { CharityMembership } from "@/models/charity";
+import { Charity, CharityMembership } from "@/models/charity";
 
 // Define a type for the slice state
 interface AuthState {
@@ -10,6 +10,9 @@ interface AuthState {
   firstname: string | null;
   email: string | null;
   userType: string | null;
+  charity: Charity | null;
+  // ATTENTION: charity is a for which they are a member of and are logged in as
+  // for now assuming only one membership a user.
   charities: CharityMembership[] | null;
   // ATTENTION: only for project leads and project workers/reporters.
   // This is a list of projects for which this user has access.
@@ -25,6 +28,7 @@ const initialState: AuthState = {
   firstname: null,
   email: null,
   userType: null,
+  charity: null,
   charities: null, // if not charity user/no charity then it's going to be either null or empty string, same with projects
   projects: null,
 };
@@ -49,6 +53,7 @@ export const authSlice = createSlice({
       state.firstname = null;
       state.email = null;
       state.userType = null;
+      state.charity = null;
       state.charities = null;
       state.projects = null;
     },
@@ -60,17 +65,28 @@ export const authSlice = createSlice({
         firstname: string | null;
         email: string | null;
         userType: string | null;
+        charity?: Charity | null;
         charities?: CharityMembership[] | null;
         projects?: any[] | null;
       }>
     ) => {
-      const { token, firstname, email, userType, charities, projects } =
-        action.payload;
+      const {
+        token,
+        firstname,
+        email,
+        userType,
+        charity,
+        charities,
+        projects,
+      } = action.payload;
       state.isLoggedIn = true;
       state.token = token;
       state.firstname = firstname;
       state.email = email;
       state.userType = userType;
+      if (charity) {
+        state.charity = charity;
+      }
       if (charities) {
         state.charities = charities;
       }

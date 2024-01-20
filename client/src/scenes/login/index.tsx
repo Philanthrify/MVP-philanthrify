@@ -57,13 +57,17 @@ const Login = () => {
         // withCredentials: true,
       })
         .then((response) => {
-          console.log(response.data.userType);
+          console.log(
+            "🚀 ~ .then ~ response.data.charity:",
+            response.data.charity
+          );
           dispatch(
             login({
               token: response.data.token,
               firstname: response.data.firstname,
               email: response.data.email,
               userType: response.data.userType,
+              charity: response.data.charity,
               charities: response.data.charity,
               projects: response.data.projects,
             })
