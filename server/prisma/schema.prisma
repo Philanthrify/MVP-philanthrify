@@ -80,6 +80,7 @@ model User {
   updates ProjectUpdate[]
   charity  CharityMembership[]
     projects ProjectMembership[]
+    transactions          Transaction[]
 }
 
 model Project {
@@ -92,6 +93,7 @@ model Project {
   donationUsage String @db.LongText // A description of how the donations will be used
   futureImpact  String @db.LongText // The anticipated future impact or end result of the project
   link          Link[] // Stores various links related to the project
+  transactions          Transaction[] // Stores various links related to the project
   tag           Tag[] // Stores various tags related to the project
   updates ProjectUpdate[]
   members ProjectMembership[]
@@ -119,6 +121,19 @@ model Link {
   socialMedia String // Type of link, e.g., social media, website, etc.
   projectId   String // Foreign key reference to the Project model
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id          String  @id @default(uuid())
+  type         String
+    whatFor         String
+  whatBrought         String
+  amount         Float
+
+  projectId   String // Foreign key reference to the Project model
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  posterId   String // Foreign key reference to the Project model
+  poster     User @relation(fields: [posterId], references: [id], onDelete: Cascade)
 }
 
 

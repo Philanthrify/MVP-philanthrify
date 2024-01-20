@@ -34,7 +34,9 @@ const ProjectPage = () => {
   const project = useSelector((state: RootState) => state.project.project);
   const loading = useSelector((state: RootState) => state.project.loading);
   const { projectId } = useParams<{ projectId: string }>();
-
+  useEffect(() => {
+    console.log(project);
+  }, [project]);
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));

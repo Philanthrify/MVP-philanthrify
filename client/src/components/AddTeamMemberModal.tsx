@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { CharityUserTypeObj } from "@/models/Signup";
 import { WidthFull } from "@mui/icons-material";
 import FormStyles from "./FormsUI";
+import SubMenu from "./FormsUI/SubMenu";
 interface AddTeamMemberModalProps {
   open: boolean;
   onClose: () => void;
@@ -157,6 +158,10 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
                 ))}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item sx={{ width: "100%" }}>
+            {" "}
+            <SubMenu />
           </Grid>
           <Grid container item alignItems="center" justifyContent="center">
             {" "}
