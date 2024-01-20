@@ -210,6 +210,7 @@ router.get("/:id", async (req, res) => {
         updates: true,
         members: true,
         charity: true,
+        transactions: true,
       },
     };
 

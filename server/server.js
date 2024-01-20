@@ -47,6 +47,9 @@ app.use("/team-invite", teamInvitesRoutes);
 const projectUpdateRoutes = require("./routers/projectUpdates");
 app.use("/projectUpdate", projectUpdateRoutes);
 
+const transactionRoutes = require("./routers/transaction");
+app.use("/transaction", transactionRoutes);
+
 app.use("/project-photo", express.static("assets/projectPhotos"));
 
 // Start the server
