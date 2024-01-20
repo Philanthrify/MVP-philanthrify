@@ -11,6 +11,7 @@ const Links = () => {
   const project = useSelector((state: RootState) => state.project.project);
   console.log(project?.link);
   const renderSocialIcon = (socialMedia: string, webLink: string) => {
+    // TODO: youtube and other
     switch (socialMedia) {
       case "Facebook":
         return <Facebook webLink={webLink} />;

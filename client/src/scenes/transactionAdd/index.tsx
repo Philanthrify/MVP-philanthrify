@@ -74,7 +74,21 @@ const TransactionAdd = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      axios({
+        method: "post",
+        url: "http://localhost:1337/transaction",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        data: values,
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
   // console logging as they change
@@ -169,12 +183,14 @@ const TransactionAdd = () => {
 
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  What Kind of Transaction
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={formik.values.category}
-                  label="Role"
+                  label="Type of Transaction"
                   onChange={changeCategory}
                 >
                   {Object.entries(TransactionKinds).map(([key, value]) => (
