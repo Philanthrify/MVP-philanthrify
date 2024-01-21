@@ -5,10 +5,15 @@ const authMiddleware = require("../middleware/JWTVerification");
 const router = express.Router();
 const SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
-
+const {
+  getCharities,
+  hasCharityHeadRights,
+  isProjectLeadOrReporter,
+} = require("../middleware/CharityMiddleware");
 // we need these two for these
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
+const passwordMiddleware = require("../middleware/passwordUtil");
 
 const CLIENT_ID =
   "200256463245-kjm6anfj03f6jcotgd7eqmp65nkvia47.apps.googleusercontent.com";
@@ -81,24 +86,24 @@ async function sendMail(email, accesstoken, link) {
 }
 
 // creating an invite link for the new user
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/", authMiddleware, getCharities, async (req, res) => {
   try {
-    // sending as legacy charity user type where state can be of:
-    // CHARITYHEAD or PROJECTLEAD or PROJECTWORKER
-    const { email, charityUserType } = req.body;
-    // finding the charity they belong to
-    // TODO: thusfar we're assuming each user belongs to one charity, this will need to be changed later
-    const user = await prisma.user.findUnique({
-      where: {
-        id: req.user.userId,
-      },
-      include: {
-        charity: true,
-      },
-    });
-    const charityId = user.charity[0].charityId;
+    //
+    const {
+      email,
+      charityHead, // also need charity Id (uk number) but not extracted here
+    } = req.body;
+
+    // check if they have the permissions for this charity
+    // check access rights, needs to be a charity head for that charity
+    console.log("charity access rights: ", hasCharityHeadRights(req));
+    charityId = hasCharityHeadRights(req); // uk charity number (or false)
+    if (!charityId) {
+      // for now only charity heads can do invites
+      return res.status(403).json({ error: "Access denied" });
+    }
     const token = jwt.sign(
-      { email, charityUserType, charityId },
+      { email, charityHead, charityId },
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );
@@ -114,6 +119,74 @@ router.post("/", authMiddleware, async (req, res) => {
   } catch (error) {
     console.error("Failed to send invitation:", error);
     res.status(400).json({ error: "Failed to send invitation" });
+  }
+});
+
+router.post("/signup-with-link", async (req, res) => {
+  // username is the name of the person
+  const { firstname, lastname, password, token } = req.body;
+  try {
+    console.log("🚀 ~ router.post ~ token:", token);
+    const hashedPassword = await passwordMiddleware.hashPassword(password);
+
+    const decoded = await new Promise((resolve, reject) => {
+      jwt.verify(token, SECRET, (err, decoded) => {
+        if (err) {
+          reject("Token invalid");
+        } else {
+          resolve(decoded);
+        }
+      });
+    });
+    // Check if email already exists
+    const existingEmail = await prisma.user.findUnique({
+      where: {
+        email: decoded.email,
+      },
+    });
+
+    console.log(decoded);
+
+    console.log("🚀 ~ router.post ~ existingEmail:", existingEmail);
+
+    if (existingEmail) {
+      let errorMessage = "";
+
+      errorMessage += `Email: ${decoded.email} already exists.`;
+
+      return res.status(400).json({ error: errorMessage });
+    }
+    // Create user data
+    let userData = {
+      firstname: firstname,
+      lastname: lastname,
+      password: hashedPassword,
+      email: decoded.email,
+      userType: "CHARITY", // usertype is perhaps a bit outdated
+    };
+
+    // Create charity membership data
+    let charityMembershipData = {
+      charityId: decoded.charityId,
+      charityHead: Boolean(decoded.charityHead),
+    };
+    // creating the user
+    const newUser = await prisma.user.create({
+      data: userData,
+    });
+
+    const charityMembership = await prisma.charityMembership.create({
+      data: {
+        userId: newUser.id, // need this to link to crafted user
+        ...charityMembershipData,
+      },
+    });
+    return res
+      .status(200)
+      .json({ userData: userData, charityMembership: charityMembership });
+  } catch (error) {
+    console.error("Error during user signup:", error);
+    res.status(500).json({ error: "Internal server error." });
   }
 });
 
