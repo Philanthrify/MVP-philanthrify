@@ -21,15 +21,26 @@ import FormStyles from "@/components/FormsUI";
 import TypographyTitle from "@/components/Title";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SignupButton from "@/components/Button/SignupButton";
-
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Signup } from "@/models/Signup";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 
+// a custom type for the payload
+interface MyTokenPayload extends JwtPayload {
+  email?: string;
+  charityId?: string;
+  // ... add any other custom fields that your token might have
+}
+
 const Register = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const [linkSignup, setLinkSignup] = useState<boolean>(false); // boolean to know whether they're using a charity invite link
+  const [personalizedMessage, setPersonalizedMessage] = useState<string>(""); // the message they'll see if they're using a signup link
   const [data, setData] = useState<Signup>({
     userType: "DONOR",
     firstname: "",
@@ -44,7 +55,32 @@ const Register = () => {
   const { palette } = useTheme();
   const [currentStep, setCurrentStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
-
+  useEffect(() => {
+    // Validate token and set initial step
+    if (token) {
+      try {
+        //  decode the token to ensure token is right
+        const decoded = jwtDecode<MyTokenPayload>(token);
+        console.log(decoded);
+        // check the token has the right fields
+        setData({
+          ...data,
+          userType: "CHARITY",
+          email: decoded.email,
+          charityId: decoded.charityId,
+          token: token,
+        });
+        setLinkSignup(true);
+        setPersonalizedMessage(
+          `Thanks for following the link, ${decoded.email}! We'd just like to gather some quick details about you.`
+        );
+        // Move directly to step 3
+        setCurrentStep(2);
+      } catch (error) {
+        console.error("Invalid token");
+      }
+    }
+  }, [token]);
   // when signup vals are edited
   const updateData = (updatedData: Signup) => {
     setData(updatedData);
@@ -70,26 +106,48 @@ const Register = () => {
   };
   const onSubmit = (updatedData: Signup) => {
     if (updatedData.userType === "CHARITY") {
-      // when onboarding a charity, the root is always CHARITYHEAD
-      updatedData.charityHead = true;
-      axios({
-        method: "post",
-        url: "http://localhost:1337/auth/signup-charity",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(updatedData),
-      })
-        .then((response) => {
-          console.log(response.data);
-          navigate("/login");
+      // this can either be a user joining a charity or a full charity onboarding
+      if (linkSignup) {
+        axios({
+          method: "post",
+          url: "http://localhost:1337/team-invite/signup-with-link",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify(updatedData),
         })
-        .catch((error) => {
-          setRegError(
-            "There was an error during registration: " +
-              error.response.data.error
-          );
-        });
+          .then((response) => {
+            console.log(response.data);
+            navigate("/login");
+          })
+          .catch((error) => {
+            setRegError(
+              "There was an error during registration: " +
+                error.response.data.error
+            );
+          });
+      } else {
+        // when onboarding a charity, the root is always CHARITYHEAD
+        updatedData.charityHead = true;
+        axios({
+          method: "post",
+          url: "http://localhost:1337/auth/signup-charity",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify(updatedData),
+        })
+          .then((response) => {
+            console.log(response.data);
+            navigate("/login");
+          })
+          .catch((error) => {
+            setRegError(
+              "There was an error during registration: " +
+                error.response.data.error
+            );
+          });
+      }
     } else if (updatedData.userType === "DONOR") {
       axios({
         method: "post",
@@ -131,9 +189,16 @@ const Register = () => {
           <TypographyTitle variant="h1" align="center" padding="15px 0">
             Sign Up
           </TypographyTitle>
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
-            Join our community and explore the benefits!
-          </TypographyTitle>
+
+          {personalizedMessage ? (
+            <TypographyTitle variant="h4" align="center" padding="15px 0">
+              {personalizedMessage}
+            </TypographyTitle>
+          ) : (
+            <TypographyTitle variant="h4" align="center" padding="15px 0">
+              Join our community and explore the benefits!
+            </TypographyTitle>
+          )}
           {regError && (
             <Typography color="error" align="center" padding="15px 0">
               {regError}

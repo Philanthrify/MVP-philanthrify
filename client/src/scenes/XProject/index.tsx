@@ -26,6 +26,7 @@ import Links from "@/components/Project/SocialMedia";
 import LocationText from "@/components/Project/LocationText";
 import ProjectTitle from "@/components/Project/ProjectTitle";
 import Updates from "@/components/Project/Updates";
+import Transactions from "@/components/Project/Transactions";
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {
@@ -189,9 +190,9 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Transactions" />
           </Grid>
-          {/* <Grid item sx={{ width: "100%" }}>
+          <Grid item sx={{ width: "100%" }}>
             <Transactions />
-          </Grid> */}
+          </Grid>
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Updates" />
           </Grid>

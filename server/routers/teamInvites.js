@@ -14,15 +14,14 @@ const {
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const passwordMiddleware = require("../middleware/passwordUtil");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const CLIENT_ID =
-  "200256463245-kjm6anfj03f6jcotgd7eqmp65nkvia47.apps.googleusercontent.com";
-const CLIENT_SECRET = "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";
-const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN =
-  "1//04BI-0GZd5EqMCgYIARAAGAQSNwF-L9Ir5kLSNCFBgm_iCxILTvlQYMoojMhKDwHce5Lh3FF2RpDfH0fqN5nZfyKZARIQVqDl-9w";
-const ACCESS_TOKEN =
-  "ya29.a0AfB_byAuxwUB7m2fE3XeHqBxX_V3wpnHZI_oDRB3qa2xetRrq4R7NdfPJsJwRDob79_fWxU2q81uR0nFGYPPAjxMWEFoza-vhZz0l5HdIaWohq1Xv__vV4FaiAFqNxz4fOJNp1DnOFYmwqSKW1chY7yWiDsJO-15ybj9aCgYKAcASARESFQHGX2MiO6u3A84FWUepuQ8DAJyq8g0171";
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+console.log("🚀 ~ REFRESH_TOKEN:", REFRESH_TOKEN);
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -108,7 +107,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       { expiresIn: "24h" } // Token expires in 24 hours
     );
     // placeholder link for now
-    const invitationLink = `localhost/signup?token=${token}`;
+    const invitationLink = `http://localhost:5173/register?token=${token}`;
     const accesstoken = await oAuth2Client.getAccessToken();
 
     console.log("trying to send email...");

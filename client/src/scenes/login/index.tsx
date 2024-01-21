@@ -20,7 +20,6 @@ import { Link, useNavigate, useLocation, Location } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/authSlice";
 import { jwtDecode } from "jwt-decode";
-
 const validationSchema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
@@ -33,6 +32,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [hasToken, setHasToken] = useState(false);
   const state = location.state as LocationState | undefined;
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
