@@ -16,6 +16,8 @@ const Updates = () => {
       {updates.map((update, index) => (
         <div key={index}>
           <p>- {update.text}</p>
+
+          
         </div>
       ))}
     </div>

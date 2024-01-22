@@ -22,12 +22,22 @@ import {
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
 import { TransactionKinds } from "@/models/transaction";
-const validationSchema = yup.object({});
+import CloseableMessage from "../../components/Utilities/CloseableMessage";
+
+const validationSchema = yup.object({
+  project: yup.string().required("Parent project is required"),
+  amount: yup.number().min(0.01,"A transaction amount is required"),
+  category: yup.string().required("Transaction category is required"),
+  whatBrought: yup.string().required("Transaction subject is required"),
+  whatFor: yup.string().required("Transaction purpose is required")
+});
 
 const TransactionAdd = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null); // Add error state
   const textFieldProps = FormStyles();
+
+  const [submitSuccess, setSubmitSuccess] = useState<boolean | null>(null);
 
   const token = useSelector((state: RootState) => state.auth.token);
   let userId: string;
@@ -64,6 +74,7 @@ const TransactionAdd = () => {
   useEffect(() => {
     fetchUserProjects();
   }, []);
+  
   const formik = useFormik({
     initialValues: {
       project: "",
@@ -74,6 +85,7 @@ const TransactionAdd = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setSubmitSuccess(null);
       axios({
         method: "post",
         url: "http://localhost:1337/transaction",
@@ -85,9 +97,19 @@ const TransactionAdd = () => {
       })
         .then((response) => {
           console.log(response);
+          setSubmitSuccess(true);
+          formik.setValues({
+            project: "",
+            amount: 0,
+            category: "",
+            whatBrought: "", // what did you pay for?
+            whatFor: "", // what did you use it for?
+          });
+
         })
         .catch((error) => {
           console.log(error);
+          setSubmitSuccess(false);
         });
     },
   });
@@ -265,9 +287,20 @@ const TransactionAdd = () => {
           </Grid>
           <Button type="submit" variant="contained" color="primary">
             Submit
-          </Button>
+          </Button>        
         </Grid>
       </form>
+      <div>
+        {/* FadingMessage component 
+              TODO fix sticky position to bottom of screen - wrap in div to fix sizing - also of submit button
+        */}
+        {submitSuccess !== null && (
+          <CloseableMessage sx={{position: 'fixed', bottom: 0}}
+            message={submitSuccess ? 'Transaction submitted successfully' : 'Failed to submit transaction'}
+            type={submitSuccess ? 'success' : 'error'}
+          />
+        )}
+      </div>
     </>
   );
 };
