@@ -37,11 +37,12 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     });
 
     res.status(201).json({
+      message: "Transaction posted successfully!",
       transaction: newTransaction,
     });
   } catch (error) {
     console.error("Failed to add transaction:", error);
-    res.status(400).json({ error: "Failed to add transaction" });
+    res.status(500).json({ error: "Failed to add transaction" });
   }
 });
 

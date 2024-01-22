@@ -1,7 +1,13 @@
 import { useMemo } from "react";
 import { themeSettings } from "./theme";
 import { createTheme } from "@mui/material/styles";
-import { ThemeProvider, CssBaseline, Box } from "@mui/material";
+import {
+  ThemeProvider,
+  CssBaseline,
+  Box,
+  PaletteColor,
+  SimplePaletteColorOptions,
+} from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "@/scenes/register";
 import Navbar from "@/scenes/navbar";
@@ -13,7 +19,15 @@ import TransactionAdd from "./scenes/transactionAdd";
 import Explore from "./scenes/explore";
 import ProjectPage from "./scenes/XProject";
 import Profile from "./scenes/profile";
+declare module "@mui/material/styles" {
+  interface Palette {
+    white: PaletteColor;
+  }
 
+  interface PaletteOptions {
+    white: SimplePaletteColorOptions;
+  }
+}
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
 

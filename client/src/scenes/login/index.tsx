@@ -75,8 +75,11 @@ const Login = () => {
           navigate(from);
         })
         .catch((error) => {
+          console.log(error.response.data.message);
           // Handle error
-          setLoginError("There was an error during login: " + error.response);
+          setLoginError(
+            "There was an error during login: " + error.response.data.message
+          );
           // You can display an error message to the user based on the error response
         });
     },

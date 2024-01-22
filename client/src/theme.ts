@@ -1,3 +1,8 @@
+// Useful video for themes: https://www.youtube.com/watch?v=SUEkAOuQZTQ
+// look into: mode (color mode)
+
+import { PaletteColor, SimplePaletteColorOptions } from "@mui/material/styles";
+
 export const tokens = {
   grey: {
     100: "#f0f0f3",
@@ -154,7 +159,7 @@ const themeSettings = {
           minWidth: "100px",
           height: "55px",
           fontSize: 16,
-          textTransform: "none",
+          textTransform: "none" as const,
           fontWeight: 500,
           lineHeight: "24px",
           borderRadius: "var(--radius-full, 1000px)",

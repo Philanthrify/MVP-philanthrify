@@ -161,7 +161,7 @@ router.post("/login", async (req, res) => {
     include: { charity: true, projects: true },
   });
   if (!user) {
-    return res.status(401).json({ error: "Invalid email or password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
   // check password
   const isPasswordValid = await passwordMiddleware.verifyPassword(
@@ -169,7 +169,7 @@ router.post("/login", async (req, res) => {
     user.password
   );
   if (!isPasswordValid) {
-    return res.status(401).json({ error: "Invalid email or password" });
+    return res.status(401).json({ message: "Invalid email or password" });
   }
   console.log(
     "🚀 ~ router.post ~ user.charity[0].charityId:",

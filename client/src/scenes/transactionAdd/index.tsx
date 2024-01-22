@@ -178,6 +178,7 @@ const TransactionAdd = () => {
                 label="Amount"
                 id="amount"
                 name="amount"
+                width="100%"
               />{" "}
             </Grid>
 

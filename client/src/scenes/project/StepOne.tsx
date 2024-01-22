@@ -109,12 +109,6 @@ const StepOne = (props: StepOneProps) => {
         alignItems="center"
         width="70%"
       >
-        {/* Date picker */}
-        <CustomDatePicker
-          value={formik.values.endDate}
-          onChange={handleEndDateChange}
-        />
-
         <TextField
           fullWidth
           id="title"
@@ -227,6 +221,15 @@ const StepOne = (props: StepOneProps) => {
           label="Target Amount"
           id="targetAmount"
           name="targetAmount"
+          width="70%"
+        />
+        <TypographyTitle variant="h4" align="center" padding="15px 0">
+          When are you hoping to raise by?
+        </TypographyTitle>
+        {/* Date picker */}
+        <CustomDatePicker
+          value={formik.values.endDate}
+          onChange={handleEndDateChange}
         />
         <TypographyTitle variant="h4" align="center" padding="15px 0">
           Add links to social media:
