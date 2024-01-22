@@ -1,7 +1,6 @@
-import React from "react";
 import InfoIcon from "@mui/icons-material/Info";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 type InfoTooltipProps = {
   title: string | null;
 };

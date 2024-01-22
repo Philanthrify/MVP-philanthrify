@@ -83,3 +83,13 @@ export const TagValuesObj = {
   Education: "Education",
   CleanWater: "Clean Water",
 };
+type TagValueKey = keyof typeof TagValuesObj;
+
+// a 'guard function' which ensures that any key is one of the allowed tags
+export function isTagValueKey(key: any): key is TagValueKey {
+  return key in TagValuesObj;
+}
+
+export function mapValues(values: string[]): string[] {
+  return values.map((key) => (isTagValueKey(key) ? TagValuesObj[key] : key));
+}

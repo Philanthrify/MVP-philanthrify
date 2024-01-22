@@ -1,21 +1,17 @@
+import { setSearchTerm } from "@/redux/exploreSlice";
+import { RootState } from "@/redux/store"; // Import the type for RootState
+import SearchIcon from "@mui/icons-material/Search";
+import TuneIcon from "@mui/icons-material/Tune";
 import {
   Button,
-  Drawer,
   Grid,
   InputAdornment,
   TextField,
-  Typography,
   useTheme,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import FormStyles from "../FormsUI";
-import SearchIcon from "@mui/icons-material/Search";
-import TuneIcon from "@mui/icons-material/Tune";
-import FilterDrawer from "./FilterDrawer";
-import { SearchFilters } from "@/models/searchFilters";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm } from "@/redux/exploreSlice";
-import { RootState } from "@/redux/store"; // Import the type for RootState
+import FormStyles from "../FormsUI";
 
 type SearchTextFieldProps = {
   fetchProjects: () => Promise<void>;

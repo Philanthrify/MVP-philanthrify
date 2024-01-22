@@ -1,8 +1,5 @@
-import { RootState } from "@/redux/store";
-import React from "react";
-import { useSelector } from "react-redux";
+import { Divider, Grid, useTheme } from "@mui/material";
 import TypographyTitle from "../Title";
-import { Divider, Grid, Typography, useTheme } from "@mui/material";
 
 type SectionHeaderProps = {
   header: string;

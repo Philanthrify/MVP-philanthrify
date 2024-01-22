@@ -1,14 +1,10 @@
-import { Box, Button, Divider, Grid, styled, useTheme } from "@mui/material";
-import React from "react";
-import { useDispatch, useSelector } from "@/redux/hooks";
-import { RootState } from "@/redux/store";
 import TypographySmallText from "@/components/SmallText";
-import ProgressBar from "@/components/ProgressBar";
-import { PieChart } from "@mui/x-charts/PieChart";
-import { useDrawingArea } from "@mui/x-charts/hooks";
-import ProgressRing from "./ProgressRing";
-import PhilanthrifyLogo from "../Icons/PhilanthrifyLogo";
+import { useSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
+import { Divider, Grid, useTheme } from "@mui/material";
 import PrimaryButton from "../Button/PrimaryButton";
+import PhilanthrifyLogo from "../Icons/PhilanthrifyLogo";
+import ProgressRing from "./ProgressRing";
 
 const SideFloater = () => {
   const { palette } = useTheme();

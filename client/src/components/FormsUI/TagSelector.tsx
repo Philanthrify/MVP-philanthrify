@@ -1,3 +1,4 @@
+import { TagValuesObj, mapValues } from "@/models/tagValues";
 import {
   Checkbox,
   FormControl,
@@ -7,11 +8,9 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
-  useTheme,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import FormStyles from ".";
-import { TagValuesObj } from "@/models/tagValues";
 
 // takes the value and the onChange func as props and
 // will handle value changes accordingly
@@ -39,9 +38,7 @@ const TagSelector = (props: TagSelectorProps) => {
     );
   }, [props.value]);
   const renderValue = (selectedKeys: string[]) => {
-    return selectedKeys
-      .map((key) => TagValuesObj[key] || key) // Map each key to its value from TagValuesObj
-      .join(", ");
+    return mapValues(selectedKeys).join(", ");
   };
   console.log(
     "🚀 ~ file: TagSelector.tsx:66 ~ TagSelector ~ props.handleChange:",

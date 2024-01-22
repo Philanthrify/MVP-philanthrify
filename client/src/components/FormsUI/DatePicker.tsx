@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { Dayjs } from "dayjs";
+import React from "react";
 import FormStyles from ".";
-import { useTheme } from "@mui/material";
 
 interface DatePickerProps {
   value: Dayjs | null;

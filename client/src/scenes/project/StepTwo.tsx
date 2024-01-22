@@ -1,12 +1,8 @@
 import { Project } from "@/models/project";
 
-import { Button, Grid } from "@mui/material";
-import FormStyles from "@/components/FormsUI";
-import React, { useState, useCallback } from "react";
-import TypographyTitle from "@/components/Title";
-import SmallText from "@/components/SmallText";
-import { useDropzone } from "react-dropzone";
 import DragAndDrop from "@/components/FormsUI/DragAndDrop";
+import TypographyTitle from "@/components/Title";
+import { Button, Grid } from "@mui/material";
 
 type StepTwoProps = {
   projectData: Project;

@@ -1,10 +1,7 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Project } from "@/models/project";
-import ResultBox from "./ResultBox";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import ResultBox from "./ResultBox";
 
 // TODO: reset page number when you do a new search
 

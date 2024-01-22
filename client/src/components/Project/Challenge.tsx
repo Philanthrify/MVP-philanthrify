@@ -1,12 +1,11 @@
+import { mapValues } from "@/models/tagValues";
 import { RootState } from "@/redux/store";
 import { Box, Grid, useTheme } from "@mui/material";
-import React from "react";
 import { useSelector } from "react-redux";
+import ChallengeStars from "../Icons/ChallengeStars";
 import TypographySmallText from "../SmallText";
 import TypographyTitle from "../Title";
-import ChallengeStars from "../Icons/ChallengeStars";
 import Tag from "./Tag";
-import { TagValuesObj } from "@/models/tagValues";
 
 const Challenge = () => {
   const { palette } = useTheme();
@@ -15,7 +14,7 @@ const Challenge = () => {
     // get into list of values
     const values = Object.values(projectTags).map((item) => item.value);
     // get values from TagValuesObj
-    return values.map((key) => TagValuesObj[key] || key);
+    return mapValues(values);
   };
   var tags: string[] = [];
   if (project?.tag) {

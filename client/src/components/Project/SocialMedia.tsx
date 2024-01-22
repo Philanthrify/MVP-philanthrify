@@ -1,10 +1,9 @@
+import { RootState } from "@/redux/store";
 import { Grid } from "@mui/material";
-import React from "react";
+import { useSelector } from "react-redux";
 import Facebook from "../Icons/Links/Facebook";
 import Instagram from "../Icons/Links/Instagram";
 import LinkedIn from "../Icons/Links/LinkedIn";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import Twitter from "../Icons/Links/Twitter";
 
 const Links = () => {

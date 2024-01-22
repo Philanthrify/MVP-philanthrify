@@ -9,17 +9,17 @@ sometimes need partial aspects of project data meaning that I left all fields as
 export interface Project {
   id?: string;
   title?: string;
-  country?: string;
-  challenge?: string;
-  solution?: string;
+  country: string;
+  challenge: string;
+  solution: string;
   donationUsage?: string;
   futureImpact?: string;
-  link?: Link[];
-  tag?: string[];
-  targetAmount?: number;
-  currentAmount?: number;
+  link: Link[];
+  tag: string[];
+  targetAmount: number;
+  currentAmount?: number; // isn't defined for first making a project
   startDate?: Dayjs | null;
-  endDate?: Dayjs | null;
+  endDate: Dayjs | null;
   image?: File | null;
   updates?: Update[];
   charityId?: string;

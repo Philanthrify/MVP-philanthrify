@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import {
-  Button,
-  Box,
-  Typography,
-  useTheme,
-  Grid,
-  TextField,
-  FormHelperText,
-  IconButton,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
 import FormBox from "@/components/FormBox";
-import FormStyles from "@/components/FormsUI";
 import TypographyTitle from "@/components/Title";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import axios from "axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import SignupButton from "@/components/Button/SignupButton";
-import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Signup } from "@/models/Signup";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
+import axios from "axios";
+import { JwtPayload, jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StepTwo from "./StepTwo";
 
 // a custom type for the payload
 interface MyTokenPayload extends JwtPayload {

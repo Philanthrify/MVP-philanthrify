@@ -1,8 +1,7 @@
 import SignupButton from "@/components/Button/SignupButton";
-import React, { useEffect } from "react";
 
-import GivingHand from "@/components/Icons/Signup/GivingHand";
 import Buildings from "@/components/Icons/Signup/Buildings";
+import GivingHand from "@/components/Icons/Signup/GivingHand";
 import { Signup } from "@/models/Signup";
 import { Button, Grid } from "@mui/material";
 

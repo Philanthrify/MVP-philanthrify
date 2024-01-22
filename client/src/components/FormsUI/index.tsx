@@ -14,7 +14,7 @@ type FormStylesReturnType = {
 
 const FormStyles = (): FormStylesReturnType => {
   const { palette } = useTheme();
-  const defaultTextColor = palette.grey.main;
+  const defaultTextColor = palette.grey[500];
 
   const getTextFieldStyles = (): SxProps => ({
     "& .MuiInputLabel-outlined": {
@@ -46,14 +46,14 @@ const FormStyles = (): FormStylesReturnType => {
 
   const getSelectStyles = (): SxProps => ({
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: palette.grey.main,
+      borderColor: palette.grey[500],
     },
     "& .MuiSelect-select": {
       // Target the text inside the select
-      color: palette.grey.main, // Replace with the color you want for the text
+      color: palette.grey[500], // Replace with the color you want for the text
       // If the above doesn't work, try targeting the child span explicitly
       "& > span": {
-        color: palette.grey.main, // Replace with the color you want for the text
+        color: palette.grey[500], // Replace with the color you want for the text
       },
     },
     "& .MuiInputLabel-root.Mui-focused": {
@@ -72,7 +72,7 @@ const FormStyles = (): FormStylesReturnType => {
       },
       // Apply colors for text and icons when focused and not focused
       "& input": {
-        color: palette.grey.main, // default text color
+        color: palette.grey[500], // default text color
       },
       "& input.Mui-focused": {
         color: palette.primary.main, // text color when focused
@@ -91,22 +91,22 @@ const FormStyles = (): FormStylesReturnType => {
     "&.Mui-focused": {
       color: palette.primary.main,
     },
-    color: palette.grey.main,
+    color: palette.grey[500],
   });
   const getStepper = (): SxProps => ({
     // Custom styles here
     ".MuiStepLabel-label": {
       // Style for the step label
-      color: palette.grey.main, // Example color
+      color: palette.grey[500], // Example color
     },
     ".MuiStepIcon-root": {
       // Style for the step icon
-      color: palette.grey.main, // Example color for untried steps
+      color: palette.grey[500], // Example color for untried steps
     },
   });
   const getSelectClasses = () => ({
-    root: palette.grey.main,
-    icon: palette.grey.main,
+    root: palette.grey[500],
+    icon: palette.grey[500],
   });
   return {
     textField: getTextFieldStyles(),

@@ -1,22 +1,15 @@
-import AmountInput from "@/components/FormsUI/AmountInput";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import FormStyles from "@/components/FormsUI";
+import { Signup } from "@/models/Signup";
 import {
   Button,
-  FormControl,
-  FormControlLabel,
   FormHelperText,
-  FormLabel,
   Grid,
-  IconButton,
-  Radio,
-  RadioGroup,
   TextField,
   useTheme,
 } from "@mui/material";
-import FormStyles from "@/components/FormsUI";
-import { useEffect, useState } from "react";
-import { Signup } from "@/models/Signup";
+import { useFormik } from "formik";
+import { useEffect } from "react";
+import * as yup from "yup";
 type StepTwoProps = {
   data: Signup; // signup data store
   updateData: (updatedData: Signup) => void; // updates the parent comp with the new data

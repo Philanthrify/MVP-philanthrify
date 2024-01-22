@@ -1,25 +1,24 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import FormBox from "@/components/FormBox";
+import ErrorComponent from "@/components/FormError";
+import FormStyles from "@/components/FormsUI";
+import TypographyTitle from "@/components/Title";
+import { login } from "@/redux/authSlice";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   Button,
   Grid,
-  TextField,
   IconButton,
-  useTheme,
+  TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
-import FormBox from "@/components/FormBox";
-import FormStyles from "@/components/FormsUI";
-import ErrorComponent from "@/components/FormError";
-import TypographyTitle from "@/components/Title";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
-import { Link, useNavigate, useLocation, Location } from "react-router-dom";
+import { useFormik } from "formik";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "@/redux/authSlice";
-import { jwtDecode } from "jwt-decode";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import * as yup from "yup";
 const validationSchema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),

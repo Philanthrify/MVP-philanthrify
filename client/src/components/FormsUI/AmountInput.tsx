@@ -1,6 +1,5 @@
 import React from "react";
-import { TextField, InputAdornment } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { TextField, InputAdornment, useTheme } from "@mui/material";
 import FormStyles from ".";
 
 // TODO (Tomos): commas between the digits
@@ -27,11 +26,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
   label,
   id,
   name,
-  width,
 }) => {
-  const theme = useTheme();
+  const palette = useTheme();
   const textFieldProps = FormStyles();
-  const defaultTextColor = theme.palette.grey.main;
 
   return (
     <TextField
@@ -48,10 +45,13 @@ const AmountInput: React.FC<AmountInputProps> = ({
         startAdornment: (
           <InputAdornment
             position="start"
-            sx={{
-              color: defaultTextColor,
-              "& .MuiTypography-root": { color: defaultTextColor },
-            }}
+            sx={
+              {
+                // TODO: not working for some reason
+                // color: palette.primary.main,
+                // "& .MuiTypography-root": { color: palette.grey[700] },
+              }
+            }
           >
             $
           </InputAdornment>

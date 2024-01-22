@@ -1,8 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/authSlice";
+import { RootState } from "@/redux/store";
+import { PersonAdd, Settings } from "@mui/icons-material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Logout from "@mui/icons-material/Logout";
+import PaidIcon from "@mui/icons-material/Paid";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   Avatar,
-  Box,
   Button,
   Divider,
   Grid,
@@ -14,19 +22,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { PersonAdd, Settings } from "@mui/icons-material";
-import Logout from "@mui/icons-material/Logout";
-import { RootState } from "@/redux/store";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AddTeamMemberModal from "./AddTeamMemberModal";
-import PaidIcon from "@mui/icons-material/Paid";
 type AccountMenuProps = {
   setSelected: (value: string) => void;
 };

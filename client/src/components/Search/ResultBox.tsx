@@ -1,8 +1,6 @@
 import { Project } from "@/models/project";
 import { Box, useTheme } from "@mui/material";
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ProgressBar from "../ProgressBar";
 import LocationText from "../Project/LocationText";
 

@@ -1,32 +1,19 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Paper,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { Project } from "@/models/project";
-import { RootState } from "@/redux/store";
 import { fetchProject } from "@/redux/projectSlice";
+import { RootState } from "@/redux/store";
+import { Box, CircularProgress, Grid, useTheme } from "@mui/material";
 
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { selectToken } from "@/redux/authSlice";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import TypographyTitle from "@/components/Title";
-import { useDispatch, useSelector } from "@/redux/hooks";
-import SideFloater from "@/components/Project/SideFloater";
 import Challenge from "@/components/Project/Challenge";
-import SectionHeader from "@/components/Project/SectionHeader";
-import SectionText from "@/components/Project/SectionText";
-import Links from "@/components/Project/SocialMedia";
 import LocationText from "@/components/Project/LocationText";
 import ProjectTitle from "@/components/Project/ProjectTitle";
-import Updates from "@/components/Project/Updates";
+import SectionHeader from "@/components/Project/SectionHeader";
+import SectionText from "@/components/Project/SectionText";
+import SideFloater from "@/components/Project/SideFloater";
+import Links from "@/components/Project/SocialMedia";
 import Transactions from "@/components/Project/Transactions";
+import Updates from "@/components/Project/Updates";
+import { useDispatch, useSelector } from "@/redux/hooks";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {

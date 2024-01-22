@@ -1,26 +1,25 @@
-import { Alert, Grid, Snackbar, Step, StepLabel, Stepper } from "@mui/material";
 import FormBox from "@/components/FormBox";
+import { Alert, Grid, Snackbar, Step, StepLabel, Stepper } from "@mui/material";
 
 import TypographyTitle from "@/components/Title";
 import { v4 as uuidv4 } from "uuid";
 
-import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/authSlice";
+import { useSelector } from "react-redux";
 
-import StepOne from "./StepOne";
 import { Project } from "@/models/project";
-import { useEffect, useState } from "react";
-import StepTwo from "./StepTwo";
-import axios from "axios";
-import { useTheme } from "@mui/material";
 import { RootState } from "@/redux/store";
+import { useTheme } from "@mui/material";
+import axios from "axios";
+import { useState } from "react";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
-  const userCharites = useSelector((state: RootState) => state.auth.charities);
+  const charity = useSelector((state: RootState) => state.auth.charity);
   const [data, setData] = useState<Project>({
-    charityId:
-      userCharites && userCharites.length >= 1 ? userCharites[0]["id"] : "",
+    charityId: charity ? charity.ukCharityNumber : "",
     // WARNING: for now assuming that the user has only one charity, this project will be posted for the first charity
     // which appears in the users list of charities, database output will not be as expected if user has more than one
     // charity
@@ -128,16 +127,16 @@ const CreateProjectForm = () => {
               // TODO: set these to be a nicer colourscheme later
               sx={{
                 ".MuiStepLabel-label": {
-                  color: palette.grey.main,
+                  color: palette.grey[500],
                 },
                 ".MuiStepIcon-root": {
-                  color: palette.grey.main,
+                  color: palette.grey[500],
                 },
                 ".MuiStepLabel-label.Mui-active": {
-                  color: palette.grey.main,
+                  color: palette.grey[500],
                 },
                 ".MuiStepLabel-label.Mui-completed": {
-                  color: palette.grey.main,
+                  color: palette.grey[500],
                 },
 
                 width: "70%",

@@ -1,5 +1,4 @@
 import { Button, useTheme } from "@mui/material";
-import React from "react";
 
 type PrimaryButtonProps = {
   text: string;

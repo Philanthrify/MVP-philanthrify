@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
-import SearchTextField from "@/components/Search/SearchTextField";
-import { Grid, Pagination, Typography, useTheme } from "@mui/material";
-import TypographyTitle from "@/components/Title";
-import SearchResult from "@/components/Search/SearchResults";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { Project } from "@/models/project";
 import PageBox from "@/components/PageBox";
-import { SearchFilters } from "@/models/searchFilters";
-import { setSearchResults, setPage } from "@/redux/exploreSlice";
 import FilterDrawer from "@/components/Search/FilterDrawer";
+import SearchResult from "@/components/Search/SearchResults";
+import SearchTextField from "@/components/Search/SearchTextField";
+import TypographyTitle from "@/components/Title";
+import { setPage, setSearchResults } from "@/redux/exploreSlice";
+import { RootState } from "@/redux/store";
+import { Grid, Pagination, Typography, useTheme } from "@mui/material";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const Explore = () => {
   const { palette } = useTheme();

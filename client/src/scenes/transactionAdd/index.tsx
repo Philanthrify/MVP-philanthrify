@@ -1,12 +1,9 @@
-import { Project } from "@/models/project";
-import { RootState } from "@/redux/store";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { jwtDecode } from "jwt-decode";
+import FormStyles from "@/components/FormsUI";
+import AmountInput from "@/components/FormsUI/AmountInput";
 import { DecodedToken } from "@/models/auth";
-import { useFormik } from "formik";
-import * as yup from "yup";
+import { Project } from "@/models/project";
+import { TransactionKinds } from "@/models/transaction";
+import { RootState } from "@/redux/store";
 import {
   Button,
   FormControl,
@@ -19,17 +16,20 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import FormStyles from "@/components/FormsUI";
-import AmountInput from "@/components/FormsUI/AmountInput";
-import { TransactionKinds } from "@/models/transaction";
+import axios from "axios";
+import { useFormik } from "formik";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import * as yup from "yup";
 import CloseableMessage from "../../components/Utilities/CloseableMessage";
 
 const validationSchema = yup.object({
   project: yup.string().required("Parent project is required"),
-  amount: yup.number().min(0.01,"A transaction amount is required"),
+  amount: yup.number().min(0.01, "A transaction amount is required"),
   category: yup.string().required("Transaction category is required"),
   whatBrought: yup.string().required("Transaction subject is required"),
-  whatFor: yup.string().required("Transaction purpose is required")
+  whatFor: yup.string().required("Transaction purpose is required"),
 });
 
 const TransactionAdd = () => {
@@ -74,7 +74,7 @@ const TransactionAdd = () => {
   useEffect(() => {
     fetchUserProjects();
   }, []);
-  
+
   const formik = useFormik({
     initialValues: {
       project: "",
@@ -105,7 +105,6 @@ const TransactionAdd = () => {
             whatBrought: "", // what did you pay for?
             whatFor: "", // what did you use it for?
           });
-
         })
         .catch((error) => {
           console.log(error);
@@ -288,7 +287,7 @@ const TransactionAdd = () => {
           </Grid>
           <Button type="submit" variant="contained" color="primary">
             Submit
-          </Button>        
+          </Button>
         </Grid>
       </form>
       <div>
@@ -296,9 +295,14 @@ const TransactionAdd = () => {
               TODO fix sticky position to bottom of screen - wrap in div to fix sizing - also of submit button
         */}
         {submitSuccess !== null && (
-          <CloseableMessage sx={{position: 'fixed', bottom: 0}}
-            message={submitSuccess ? 'Transaction submitted successfully' : 'Failed to submit transaction'}
-            type={submitSuccess ? 'success' : 'error'}
+          <CloseableMessage
+            sx={{ position: "fixed", bottom: 0 }}
+            message={
+              submitSuccess
+                ? "Transaction submitted successfully"
+                : "Failed to submit transaction"
+            }
+            type={submitSuccess ? "success" : "error"}
           />
         )}
       </div>

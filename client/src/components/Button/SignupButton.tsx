@@ -1,16 +1,7 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Typography,
-  Box,
-  Grid,
-  useTheme,
-} from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import SchoolIcon from "@mui/icons-material/School";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import { Button, Checkbox, Grid, Typography, useTheme } from "@mui/material";
+import React from "react";
 
 interface SignupButtonProps {
   selected: boolean;

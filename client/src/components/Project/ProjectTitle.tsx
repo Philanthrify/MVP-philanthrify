@@ -1,14 +1,10 @@
-import React from "react";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Grid, Typography, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 import TypographyTitle from "../Title";
 
 // This component is for the project title
 const ProjectTitle = () => {
   const project = useSelector((state: RootState) => state.project.project);
-  const { palette } = useTheme();
   return (
     <>
       {project?.title && (

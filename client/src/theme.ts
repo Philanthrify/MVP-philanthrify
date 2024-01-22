@@ -1,8 +1,6 @@
 // Useful video for themes: https://www.youtube.com/watch?v=SUEkAOuQZTQ
 // look into: mode (color mode)
 
-import { PaletteColor, SimplePaletteColorOptions } from "@mui/material/styles";
-
 export const tokens = {
   grey: {
     100: "#f0f0f3",

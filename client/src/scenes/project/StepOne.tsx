@@ -1,33 +1,22 @@
-import AmountInput from "@/components/FormsUI/AmountInput";
-import { ProjectFormData } from "./Project";
-import { useFormik } from "formik";
-import axios from "axios";
-import * as yup from "yup";
-import { v4 as uuidv4 } from "uuid";
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  Grid,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
 import FormStyles from "@/components/FormsUI";
-import React, { useEffect, useState } from "react";
-import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
-import TypographyTitle from "@/components/Title";
+import AmountInput from "@/components/FormsUI/AmountInput";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
-import TagSelector from "@/components/FormsUI/TagSelector";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import CustomDatePicker from "@/components/FormsUI/DatePicker";
-import { Dayjs } from "dayjs";
-import { useSelector } from "react-redux";
+import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
+import TagSelector from "@/components/FormsUI/TagSelector";
+import TypographyTitle from "@/components/Title";
+import { Project } from "@/models/project";
 import { RootState } from "@/redux/store";
+import { Button, Grid, SelectChangeEvent, TextField } from "@mui/material";
+import { Dayjs } from "dayjs";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import * as yup from "yup";
 type StepOneProps = {
-  projectData: ProjectFormData;
-  onSubmit: (updatedData: ProjectFormData) => void;
+  projectData: Project;
+  onSubmit: (updatedData: Project) => void;
 };
 
 // TODO: add validation for links including the 'http...' format
@@ -37,7 +26,6 @@ const validationSchema = yup.object({
 
 const StepOne = (props: StepOneProps) => {
   // console.log("🚀 ~ file: StepOne.tsx:47 ~ StepOne ~ props:", props);
-  const userProjects = useSelector((state: RootState) => state.auth.projects); // using this later for some charity selector when we want to have projects submit for any charity
 
   const formik = useFormik({
     initialValues: props.projectData,

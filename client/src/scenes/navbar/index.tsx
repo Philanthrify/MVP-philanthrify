@@ -1,18 +1,13 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material";
-import FlexBetween from "@/components/FlexBetween";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 import AccountMenu from "@/components/AccountMenu";
+import PrimaryButton from "@/components/Button/PrimaryButton";
+import PhilanthrifyLogoWithText from "@/components/Icons/PhilanthrifyLogoWithText";
 import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
-import BasicMenu from "@/components/BasicMenu";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import PrimaryButton from "@/components/Button/PrimaryButton";
-import PhilanthrifyLogo from "@/components/Icons/PhilanthrifyLogo";
-import PhilanthrifyLogoWithText from "@/components/Icons/PhilanthrifyLogoWithText";
+import { Button, Grid, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const Navbar = (props: Props) => {

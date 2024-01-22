@@ -1,31 +1,22 @@
+import { selectToken } from "@/redux/authSlice";
+import { RootState } from "@/redux/store";
 import {
   Box,
   Button,
   Checkbox,
-  FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
-  ListItemText,
-  MenuItem,
   Modal,
-  Select,
-  SelectChangeEvent,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { CharityUserTypeObj } from "@/models/Signup";
-import { WidthFull } from "@mui/icons-material";
-import FormStyles from "./FormsUI";
-import SubMenu from "./FormsUI/SubMenu";
 import axios from "axios";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectToken } from "@/redux/authSlice";
-import { RootState } from "@/redux/store";
+import * as yup from "yup";
+import FormStyles from "./FormsUI";
 
 interface AddTeamMemberModalProps {
   open: boolean;

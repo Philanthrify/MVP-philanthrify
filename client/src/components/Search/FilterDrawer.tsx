@@ -1,3 +1,5 @@
+import { setFilters } from "@/redux/exploreSlice";
+import { RootState } from "@/redux/store";
 import {
   Box,
   Button,
@@ -7,15 +9,12 @@ import {
   SelectChangeEvent,
   useTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import TypographyTitle from "../Title";
-import TypographySmallText from "../SmallText";
-import { SearchFilters } from "@/models/searchFilters";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import CountrySelect from "../FormsUI/CountrySelector";
-import { setFilters } from "@/redux/exploreSlice";
 import TagSelector from "../FormsUI/TagSelector";
+import TypographySmallText from "../SmallText";
+import TypographyTitle from "../Title";
 
 type FilterDrawerProps = {
   drawerOpen: boolean;
