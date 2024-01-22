@@ -142,29 +142,33 @@ const StepThree = (props: StepThreeProps) => {
             </Grid>{" "}
           </Grid>
         </Grid>
+        {!formik.values.token && (
+          <>
+            <TextField
+              fullWidth
+              id="email"
+              name="email"
+              label="Email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={""}
+              sx={{
+                ...textFieldProps.textField,
+                width: textFieldProps.textFieldWidth,
+              }}
+            />
+            <Grid xs={10}>
+              <FormHelperText
+                error={formik.touched.email && Boolean(formik.errors.email)}
+              >
+                {formik.touched.email && formik.errors.email}
+              </FormHelperText>
+            </Grid>
+          </>
+        )}
 
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={""}
-          sx={{
-            ...textFieldProps.textField,
-            width: textFieldProps.textFieldWidth,
-          }}
-        />
-        <Grid xs={10}>
-          <FormHelperText
-            error={formik.touched.email && Boolean(formik.errors.email)}
-          >
-            {formik.touched.email && formik.errors.email}
-          </FormHelperText>
-        </Grid>
         <TextField
           fullWidth
           id="password"

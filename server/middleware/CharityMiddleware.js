@@ -13,7 +13,9 @@ const getCharities = async (req, res, next) => {
       projects: true,
     },
   });
+  // now we add to req and can access this later
   req.charity = userCharities.charity;
+  req.projects = userCharities.projects;
   next();
 };
 
@@ -21,11 +23,10 @@ const getCharities = async (req, res, next) => {
 // will return a charity number or false - useful for if testing
 function hasCharityHeadRights(req) {
   const { charityId } = req.body;
-  console.log("req.charity", req.charity);
   for (const charity of req.charity) {
     // if same charity and
-    console.log(charityId, charity.id); // these will be actually the charity membership id
-    if (charityId === charity.id && charity.charityHead === true) {
+    console.log(charityId, charity.charityId); // these will be actually the charity membership id
+    if (charityId === charity.charityId && charity.charityHead === true) {
       return charity.charityId; // Person has access rights for this charity, continue with the next middleware or route handler
     }
   }

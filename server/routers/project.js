@@ -62,7 +62,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     // check access rights, needs to be a charity head for that charity
     const charityId = hasCharityHeadRights(req); // uk charity number (or false)
     if (!charityId) {
-      res.status(403).json({ error: "Access denied" });
+      return res.status(403).json({ error: "Access denied" });
     }
 
     const newProject = await prisma.project.create({

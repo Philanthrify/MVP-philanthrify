@@ -8,7 +8,9 @@ export interface Signup {
   ukCharityNumber?: string | null; // at this stage it can be null
   charityName?: string;
   charityHead?: boolean;
-  // when onboarding a charity, the root is always CHARITYHEAD
+  // when onboarding a new charity, the root is always CHARITYHEAD
+  charityId?: string;
+  token?: string;
 }
 
 export enum CharityUserType {

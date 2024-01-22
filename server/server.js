@@ -35,14 +35,13 @@ app.use("/auth", authenticationRoutes);
 const projectRoutes = require("./routers/project");
 app.use("/project", projectRoutes);
 
+const teamInvitesRoutes = require("./routers/teamInvites");
+app.use("/team-invite", teamInvitesRoutes);
 // all routes chronologically below this are protected by authentication
 app.use(authMiddleware);
 
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
-
-const teamInvitesRoutes = require("./routers/teamInvites");
-app.use("/team-invite", teamInvitesRoutes);
 
 const projectUpdateRoutes = require("./routers/projectUpdates");
 app.use("/projectUpdate", projectUpdateRoutes);

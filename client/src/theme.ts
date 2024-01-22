@@ -132,6 +132,13 @@ const themeSettings = {
       lineHeight: "20px",
       color: tokens.grey[700],
     },
+
+    caption: {
+      fontSize: 12,
+      fontWeight: 400,
+      lineHeight: "18px",
+      color: tokens.grey[700],
+    },
   },
   // place for setting global themes for buttons
   components: {
