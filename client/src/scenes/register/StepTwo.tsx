@@ -37,7 +37,6 @@ const validationSchemaDonor = yup.object({
 const StepTwo = (props: StepTwoProps) => {
   // console.log("🚀 ~ file: StepTwo.tsx:47 ~ StepTwo ~ props:", props);
   const textFieldProps = FormStyles();
-  const { palette } = useTheme();
   const formik = useFormik({
     initialValues: props.data,
     validationSchema:
