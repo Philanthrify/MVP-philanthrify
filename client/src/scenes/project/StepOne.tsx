@@ -9,7 +9,7 @@ import { Project } from "@/models/project";
 import { Button, Grid, SelectChangeEvent, TextField } from "@mui/material";
 import { Dayjs } from "dayjs";
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
 type StepOneProps = {

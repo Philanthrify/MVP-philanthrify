@@ -37,7 +37,7 @@ const Explore = () => {
   );
   const filters = useSelector((state: RootState) => state.explore.filters);
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _: React.ChangeEvent<unknown>, // intentionally unused
     page: number
   ): void => {
     dispatch(setPage(page));
