@@ -27,7 +27,7 @@ const FilterDrawer = (props: FilterDrawerProps) => {
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.explore.filters);
   const handleCountryChange = (
-    event: React.SyntheticEvent,
+    _event: React.SyntheticEvent,
     newValue: string
   ) => {
     dispatch(setFilters({ ...filters, country: newValue }));
