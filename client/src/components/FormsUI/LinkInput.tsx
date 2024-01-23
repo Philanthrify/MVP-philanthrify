@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  useTheme,
 } from "@mui/material";
 import React from "react";
 
@@ -30,7 +29,6 @@ const LinkInput: React.FC<LinkInputProps> = ({
   onChange,
   onDelete,
 }) => {
-  const { palette } = useTheme();
   const textFieldProps = FormStyles();
   return (
     <Grid container spacing={2} alignItems="center" justifyContent="center">

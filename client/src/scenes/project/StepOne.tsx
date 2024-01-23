@@ -6,12 +6,10 @@ import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TagSelector from "@/components/FormsUI/TagSelector";
 import TypographyTitle from "@/components/Title";
 import { Project } from "@/models/project";
-import { RootState } from "@/redux/store";
 import { Button, Grid, SelectChangeEvent, TextField } from "@mui/material";
 import { Dayjs } from "dayjs";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import * as yup from "yup";
 type StepOneProps = {

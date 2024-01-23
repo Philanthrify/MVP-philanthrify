@@ -57,7 +57,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
       charityHead: false,
     },
     validationSchema: validationSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values) => {
       console.log(values);
       axios({
         method: "post",

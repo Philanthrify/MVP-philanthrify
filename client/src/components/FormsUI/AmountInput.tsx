@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, InputAdornment, useTheme } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import FormStyles from ".";
 
 // TODO (Tomos): commas between the digits
@@ -27,7 +27,6 @@ const AmountInput: React.FC<AmountInputProps> = ({
   id,
   name,
 }) => {
-  const palette = useTheme();
   const textFieldProps = FormStyles();
 
   return (

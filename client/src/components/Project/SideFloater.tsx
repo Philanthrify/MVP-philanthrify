@@ -9,11 +9,7 @@ import ProgressRing from "./ProgressRing";
 const SideFloater = () => {
   const { palette } = useTheme();
   const project = useSelector((state: RootState) => state.project.project);
-  const buttonStyles = {
-    minWidth: "80px",
-    height: "60%",
-    borderRadius: "1rem",
-  };
+
   console.log(project);
   console.log(project?.currentAmount);
   console.log(project?.targetAmount);

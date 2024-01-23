@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import SmallText from "../SmallText";
 import { useDropzone } from "react-dropzone";
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import UploadFile from "../Icons/UploadFile";
 import TypographySmallText from "../SmallText";
 const allowedExtensions = ["image/jpeg", "image/png", "image/gif"];

@@ -1,5 +1,5 @@
 import { Alert, AlertColor, Collapse, IconButton } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 
 type FadingMessageProps = {
@@ -9,14 +9,12 @@ type FadingMessageProps = {
   duration?: number; //milliseconds
 };
 
-
 // the button with the primary color e.g. 'Donate'
 const FadingMessage = (props: FadingMessageProps) => {
-
   const [open, setOpen] = React.useState(true);
   const [showElement, setShowElement] = useState(true);
 
-  const backgroundColor = props.type=='success' ? '#1DC39' : '#1D917';
+  const backgroundColor = props.type === "success" ? "#1DC39" : "#1D917";
   const timeoutDuration = props.duration ?? 1000; // Default is 1 second
 
   useEffect(() => {
