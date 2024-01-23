@@ -1,21 +1,15 @@
 import FormStyles from "@/components/FormsUI";
 import { Signup } from "@/models/Signup";
-import {
-  Button,
-  FormHelperText,
-  Grid,
-  TextField,
-  useTheme,
-} from "@mui/material";
+import { Button, FormHelperText, Grid, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import * as yup from "yup";
-type StepTwoProps = {
+interface StepTwoProps {
   data: Signup; // signup data store
   updateData: (updatedData: Signup) => void; // updates the parent comp with the new data
   handleNext: (updatedData: Signup) => void;
   handleBack: () => void;
-};
+}
 
 // TODO: check charity number
 const validationSchemaCharity = yup.object({

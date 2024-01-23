@@ -21,7 +21,7 @@ export const fetchProject = createAsyncThunk<
   Project, // Return type of the payload creator
   string, // First argument to the payload creator
   { state: RootState } // Types for ThunkAPI
->("project/fetchProject", async (projectId, { getState, rejectWithValue }) => {
+>("project/fetchProject", async (projectId, { rejectWithValue }) => {
   try {
     const response = await axios.get<Project>(
       `http://localhost:1337/project/${projectId}`,
