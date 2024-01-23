@@ -6,6 +6,7 @@ type FadingMessageProps = {
   sx?: any;
   type: AlertColor; //success, alert, warning, error ONLY
   message: String;
+};
 
 // the button with the primary color e.g. 'Donate'
 const FadingMessage = (props: FadingMessageProps) => {

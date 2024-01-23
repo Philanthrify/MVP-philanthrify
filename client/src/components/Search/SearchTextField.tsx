@@ -9,7 +9,7 @@ import {
   TextField,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormStyles from "../FormsUI";
 
@@ -31,10 +31,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
       props.fetchProjects();
     }
   };
-  const openFilterMenu = () => {
-    setDrawerOpen(!drawerOpen);
-  };
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
   const searchTerm = useSelector(
     (state: RootState) => state.explore.searchTerm
   );

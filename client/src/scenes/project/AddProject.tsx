@@ -37,7 +37,7 @@ const CreateProjectForm = () => {
   const [open, setOpen] = useState(false);
   const token = useSelector(selectToken);
   const [currentStep, setCurrentStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set<number>());
+  const [skipped] = useState(new Set<number>());
 
   const handleClose = (
     _event?: React.SyntheticEvent | Event,

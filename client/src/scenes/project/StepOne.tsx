@@ -64,6 +64,7 @@ const StepOne = (props: StepOneProps) => {
     console.log(updatedLinks);
   };
   const handleCountryChange = (
+    _: React.SyntheticEvent<Element, Event>,
     newValue: String | null
   ) => {
     formik.setFieldValue("country", newValue ? newValue : "");

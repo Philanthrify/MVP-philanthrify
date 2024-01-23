@@ -5,9 +5,7 @@ import ResultBox from "./ResultBox";
 
 // TODO: reset page number when you do a new search
 
-interface SearchResultProps {}
-
-const SearchResult = (props: SearchResultProps) => {
+const SearchResult = () => {
   const searchResults = useSelector(
     (state: RootState) => state.explore.searchResults
   );
