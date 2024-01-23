@@ -8,40 +8,14 @@ import { Button, Grid, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-type Props = {};
 
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const { palette } = useTheme();
   const [selected, setSelected] = useState("explore");
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const userType = useSelector((state: RootState) => state.auth.userType);
 
-  const navbarStyles = {
-    display: "flex",
-    justifyContent: "space-between", // Distributes space evenly
-    alignItems: "center",
-    // mb: "0.25",
-    p: "0rem 3rem",
-    color: palette.grey[300],
-    height: "80px",
-  };
-
-  const leftBoxStyle = {
-    height: "100%",
-    width: "auto",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-  };
-
-  const rightBoxStyle = {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: "0.75rem",
-  };
   useEffect(() => {
     console.log(selected);
   }, [selected]);

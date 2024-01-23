@@ -31,7 +31,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [hasToken, setHasToken] = useState(false);
   const state = location.state as LocationState | undefined;
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");

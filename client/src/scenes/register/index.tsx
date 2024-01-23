@@ -35,7 +35,6 @@ const Register = () => {
   const [regError, setRegError] = useState("");
   const { palette } = useTheme();
   const [currentStep, setCurrentStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set<number>());
   useEffect(() => {
     // Validate token and set initial step
     if (token) {

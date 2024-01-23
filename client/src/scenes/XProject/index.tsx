@@ -20,7 +20,6 @@ const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const project = useSelector((state: RootState) => state.project.project);
-  const loading = useSelector((state: RootState) => state.project.loading);
   const { projectId } = useParams<{ projectId: string }>();
   useEffect(() => {
     console.log(project);
