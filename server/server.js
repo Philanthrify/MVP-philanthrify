@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const { PrismaClient } = require("@prisma/client");
 const authMiddleware = require("./middleware/JWTVerification");
+const path = require("path"); // Changed from 'import' to 'require'
 
 dotenv.config();
 
@@ -18,13 +19,15 @@ app.use(helmet()); // Helps set some security headers
 app.use(
   cors({
     origin: "*",
-    // origin: "http://127.0.0.1:5173",
-    // credentials: true,
   })
 ); // Enable CORS for all routes
 app.use(bodyParser.json()); // Parses incoming requests with JSON payloads
 app.use(bodyParser.urlencoded({ extended: false })); // Parses incoming requests with URL-encoded payloads
 app.use(morgan("dev")); // Logs incoming requests
+
+if (process.env.NODE_ENV !== "development") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+}
 
 // importing all endpoints from routes
 // all below auth route require token
@@ -38,7 +41,6 @@ app.use("/project", projectRoutes);
 const teamInvitesRoutes = require("./routers/teamInvites");
 app.use("/team-invite", teamInvitesRoutes);
 // all routes chronologically below this are protected by authentication
-app.use(authMiddleware);
 
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
@@ -51,8 +53,16 @@ app.use("/transaction", transactionRoutes);
 
 app.use("/project-photo", express.static("assets/projectPhotos"));
 
+if (process.env.NODE_ENV !== "development") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  });
+}
+
 // Start the server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(
+    `Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`
+  );
 });
