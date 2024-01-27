@@ -12,6 +12,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 const Explore = () => {
+  console.log("VITE_API_URL", import.meta.env.VITE_API_URL);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ const Explore = () => {
       console.log({ ...filters });
       axios({
         method: "post",
-        url: "http://localhost:1337/project/search",
+        url: `${import.meta.env.VITE_API_URL}/project/search`,
         headers: {
           "Content-Type": "application/json",
         },

@@ -47,7 +47,7 @@ const Login = () => {
     onSubmit: (values) => {
       axios({
         method: "post",
-        url: "http://localhost:1337/auth/login",
+        url: `${import.meta.env.VITE_API_URL}/auth/login`,
         headers: {
           "Content-Type": "application/json",
         },

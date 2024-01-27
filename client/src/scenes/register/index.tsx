@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
+// import dotenv from "dotenv";
 
 // a custom type for the payload
 interface MyTokenPayload extends JwtPayload {
@@ -90,7 +91,7 @@ const Register = () => {
       if (linkSignup) {
         axios({
           method: "post",
-          url: "http://localhost:1337/team-invite/signup-with-link",
+          url: `${import.meta.env.VITE_API_URL}/team-invite/signup-with-link`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -111,7 +112,7 @@ const Register = () => {
         updatedData.charityHead = true;
         axios({
           method: "post",
-          url: "http://localhost:1337/auth/signup-charity",
+          url: `${import.meta.env.VITE_API_URL}/auth/signup-charity`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -131,7 +132,7 @@ const Register = () => {
     } else if (updatedData.userType === "DONOR") {
       axios({
         method: "post",
-        url: "http://localhost:1337/auth/signup-donor",
+        url: `${import.meta.env.VITE_API_URL}/auth/signup-donor`,
         headers: {
           "Content-Type": "application/json",
         },

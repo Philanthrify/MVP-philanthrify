@@ -106,7 +106,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );
-    // placeholder link for now
+    // placeholder link for now TODO: need to change to getting link from .env
     const invitationLink = `http://localhost:5173/register?token=${token}`;
     const accesstoken = await oAuth2Client.getAccessToken();
 

@@ -54,7 +54,7 @@ const TransactionAdd = () => {
     try {
       axios({
         method: "get",
-        url: "http://localhost:1337/project",
+        url: `${import.meta.env.VITE_API_URL}/project`,
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
@@ -88,7 +88,7 @@ const TransactionAdd = () => {
       setSubmitSuccess(null);
       axios({
         method: "post",
-        url: "http://localhost:1337/transaction",
+        url: `${import.meta.env.VITE_API_URL}/transaction`,
         headers: {
           "Content-Type": "application/json",
           Authorization: token,
