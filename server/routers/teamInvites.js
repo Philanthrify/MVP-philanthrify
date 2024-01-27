@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const {
   getCharities,
   hasCharityHeadRights,
+  isProjectLeadOrReporter,
 } = require("../middleware/CharityMiddleware");
 // we need these two for these
 const nodemailer = require("nodemailer");
@@ -29,7 +30,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-async function sendMail(email, accesstoken, link) {
+async function sendMail(email, accesstoken, link, teamName) {
   try {
     // getting access token from refresh token
     console.log("email: ", email);
@@ -43,16 +44,20 @@ async function sendMail(email, accesstoken, link) {
     <title>Invitation to Join Philanthrify Team</title>
 </head>
 <body>
-    <h1>Invitation to Join Philanthrify Team</h1>
+    <h1>Invitation to join ${teamName}</h1>
+    <p></>
     <p>Hello,</p>
-    <p>You have been invited to join a Philanthrify team. Click the button below to accept the invitation:</p>
-    
+    <p></>
+    <p>You have been invited to join a team on Philanthrify. Click the button below to accept the invitation:</p>
+    <p></>
+    <p></>
     <a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Accept Invitation</a>
-    
+    <p></>
+    <p></>
     <p>If the button above doesn't work, you can also copy and paste the following link into your web browser:</p>
     <p><a href="${link}">${link}</a></p>
-
-    <p>Thank you for joining Philanthrify!</p>
+    <p></>
+    <p>Thank you for joining us and we hope you enjoy our website!</p>
 </body>
 </html>
 `;
@@ -72,7 +77,7 @@ async function sendMail(email, accesstoken, link) {
     const mailOptions = {
       from: "Philanthrify 💖 <smtp.philanthrify@gmail.com>",
       to: email,
-      subject: "Hello from Website",
+      subject: "Hello from Philanthrify",
       // text: "Hello world!", // can use html instead
       html: emailHtml,
     };
@@ -86,11 +91,11 @@ async function sendMail(email, accesstoken, link) {
 // creating an invite link for the new user
 router.post("/", authMiddleware, getCharities, async (req, res) => {
   try {
+    //
     const {
       email,
       charityHead, // also need charity Id (uk number) but not extracted here
     } = req.body;
-    // TODO: check if email already in DB!!
 
     // check if they have the permissions for this charity
     // check access rights, needs to be a charity head for that charity
@@ -105,16 +110,9 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );
-    let invitationLink;
-    // the invitation link will depend on whether in dev or on VM
-    if (process.env.NODE_ENV !== "development") {
-      invitationLink = `${process.env.URL_ROOT_ADDRESS}/register?token=${token}`;
-    } else {
-      invitationLink = `${process.env.DEV_ROOT_ADDRESS}/register?token=${token}`;
-    }
-    // can either load access token (expire quickly or use refresh token (7 days expiry)
+    // placeholder link for now TODO: need to change to getting link from .env
+    const invitationLink = `http://localhost:5173/register?token=${token}`;
     const accesstoken = await oAuth2Client.getAccessToken();
-    // const accesstoken = process.env.ACCESS_TOKEN;
 
     console.log("trying to send email...");
     sendMail(email, accesstoken, (link = invitationLink))
