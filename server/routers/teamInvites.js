@@ -86,11 +86,11 @@ async function sendMail(email, accesstoken, link) {
 // creating an invite link for the new user
 router.post("/", authMiddleware, getCharities, async (req, res) => {
   try {
-    //
     const {
       email,
       charityHead, // also need charity Id (uk number) but not extracted here
     } = req.body;
+    // TODO: check if email already in DB!!
 
     // check if they have the permissions for this charity
     // check access rights, needs to be a charity head for that charity
@@ -105,9 +105,13 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );
-    // placeholder link for now TODO: need to change to getting link from .env
-    const invitationLink = `http://localhost:5173/register?token=${token}`;
-
+    let invitationLink;
+    // the invitation link will depend on whether in dev or on VM
+    if (process.env.NODE_ENV !== "development") {
+      invitationLink = `${process.env.URL_ROOT_ADDRESS}/register?token=${token}`;
+    } else {
+      invitationLink = `${process.env.DEV_ROOT_ADDRESS}/register?token=${token}`;
+    }
     // can either load access token (expire quickly or use refresh token (7 days expiry)
     const accesstoken = await oAuth2Client.getAccessToken();
     // const accesstoken = process.env.ACCESS_TOKEN;
