@@ -105,15 +105,13 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
                 variant="body1"
                 sx={{ mt: 2 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Maecenas elementum fringilla metus, ac hendrerit nunc mattis ut.
-                Etiam orci erat, ultrices et tincidunt sit amet, auctor et
-                ligula. Curabitur fermentum tincidunt placerat. Pellentesque
-                habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Quisque massa justo, egestas eget semper a,
-                interdum vitae mi. Suspendisse diam elit, rutrum sit amet
-                iaculis id, feugiat at erat. Pellentesque risus urna, semper et
-                neque vitae, suscipit cursus ex. Donec sed metus elit.
+                Enter the email of the person you wish to invite to your charity
+                team. Then pick whether they will be given 'Charity Head' access
+                rights. This means that they can edit, add transactions for all
+                projects accross the charity. If this user is just indended for
+                working on a single project within the charity then we suggest
+                to not give these access rights and add them just to that
+                project.
               </Typography>
             </Grid>
             <Grid item sx={{ width: "100%" }}>
@@ -147,7 +145,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
                 variant="body1"
                 sx={{ mt: 2 }}
               >
-                Some kind of description of the roles. Witter witter witter.
+                Add this user to 'Charity Head' access rights group?
               </Typography>
             </Grid>
             <Grid item sx={{ width: "100%" }}>
