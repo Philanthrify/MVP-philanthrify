@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const {
   getCharities,
   hasCharityHeadRights,
-  isProjectLeadOrReporter,
 } = require("../middleware/CharityMiddleware");
 // we need these two for these
 const nodemailer = require("nodemailer");
@@ -108,7 +107,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     );
     // placeholder link for now TODO: need to change to getting link from .env
     const invitationLink = `http://localhost:5173/register?token=${token}`;
+
+    // can either load access token (expire quickly or use refresh token (7 days expiry)
     const accesstoken = await oAuth2Client.getAccessToken();
+    // const accesstoken = process.env.ACCESS_TOKEN;
 
     console.log("trying to send email...");
     sendMail(email, accesstoken, (link = invitationLink))
