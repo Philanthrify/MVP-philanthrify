@@ -179,7 +179,7 @@ const AccountMenu = (props: AccountMenuProps) => {
               justifyContent="center"
               alignItems="flex-start"
             >
-              <Typography variant="h6" sx={{ color: palette.white.light }}>
+              <Typography variant="body1" sx={{ color: palette.white.light }}>
                 {firstname}
               </Typography>
               {charity && (

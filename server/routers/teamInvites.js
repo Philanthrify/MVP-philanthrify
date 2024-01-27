@@ -100,13 +100,19 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     // check if they have the permissions for this charity
     // check access rights, needs to be a charity head for that charity
     console.log("charity access rights: ", hasCharityHeadRights(req));
-    charityId = hasCharityHeadRights(req); // uk charity number (or false)
-    if (!charityId) {
+    charity = hasCharityHeadRights(req); // uk charity number (or false)
+    if (!charity) {
       // for now only charity heads can do invites
       return res.status(403).json({ error: "Access denied" });
     }
+    // Todo: query db -get charity name
     const token = jwt.sign(
-      { email, charityHead, charityId },
+      {
+        email: email,
+        charityHead: charityHead,
+        charityId: charity.charityId,
+        charityName: charity.charityName,
+      },
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );

@@ -19,6 +19,7 @@ import TransactionAdd from "./scenes/transactionAdd";
 import Explore from "./scenes/explore";
 import ProjectPage from "./scenes/XProject";
 import Profile from "./scenes/profile";
+import HowItWorks from "./scenes/howItWorks";
 declare module "@mui/material/styles" {
   interface Palette {
     white: PaletteColor;
@@ -40,7 +41,8 @@ function App() {
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Explore />} />{" "}
+            <Route path="/" element={<Explore />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />

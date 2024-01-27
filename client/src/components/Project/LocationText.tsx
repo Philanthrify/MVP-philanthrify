@@ -20,7 +20,7 @@ const LocationText = (props: LocationTextProps) => {
             <LocationOnOutlinedIcon sx={{ color: palette.primary.main }} />
           </Grid>
           <Grid item>
-            <Typography variant="h6" color={palette.primary.main}>
+            <Typography variant="body1" color={palette.primary.main}>
               {props.text}
             </Typography>
           </Grid>

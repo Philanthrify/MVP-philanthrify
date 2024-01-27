@@ -77,7 +77,11 @@ const FilterDrawer = (props: FilterDrawerProps) => {
             <TypographyTitle variant="h4" align="center" padding="15px 0">
               Country
             </TypographyTitle>
-            <TypographySmallText variant="h6" align="center" padding="15px 0">
+            <TypographySmallText
+              variant="body1"
+              align="center"
+              padding="15px 0"
+            >
               Select any country worldwide.
             </TypographySmallText>
             <CountrySelect
@@ -88,7 +92,11 @@ const FilterDrawer = (props: FilterDrawerProps) => {
             <TypographyTitle variant="h4" align="center" padding="15px 0">
               Categories
             </TypographyTitle>
-            <TypographySmallText variant="h6" align="center" padding="15px 0">
+            <TypographySmallText
+              variant="body1"
+              align="center"
+              padding="15px 0"
+            >
               What kind of project are you looking for?
             </TypographySmallText>
             <TagSelector

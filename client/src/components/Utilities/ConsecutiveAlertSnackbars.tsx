@@ -6,7 +6,7 @@ import { Alert, AlertColor, Button, IconButton, Snackbar } from "@mui/material";
 export interface SnackbarMessage {
   message: string;
   key: number;
-  status: 
+  status: AlertColor;
 }
 
 export default function ConsecutiveSnackbars() {
@@ -28,8 +28,8 @@ export default function ConsecutiveSnackbars() {
     }
   }, [snackPack, messageInfo, open]);
 
-  const handleClick = (message: string, status: ) => () => {
-    setSnackPack((prev) => [...prev, { message, key: new Date().getTime() }]);
+  const handleClick = (message: string, status: AlertColor) => () => {
+    setSnackPack((prev) => [...prev, { message, key: new Date().getTime(), status }]);
   };
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
@@ -45,8 +45,8 @@ export default function ConsecutiveSnackbars() {
 
   return (
     <div>
-      <Button onClick={handleClick('Message A')}>Show message A</Button>
-      <Button onClick={handleClick('Message B')}>Show message B</Button>
+      <Button onClick={handleClick('Message A', "success")}>Show message A</Button>
+      <Button onClick={handleClick('Message B', "error")}>Show message B</Button>
       <Snackbar
         key={messageInfo ? messageInfo.key : undefined}
         open={open}
