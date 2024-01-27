@@ -126,6 +126,14 @@ const themeSettings = {
       lineHeight: "30px",
       color: tokens.white.light,
     },
+    // e.g. How it works title - extra large title!
+    h7: {
+      fontSize: 60,
+      fontWeight: 500,
+      lineHeight: "60px",
+      letterSpacing: " -1.2px",
+      color: tokens.white.light,
+    },
 
     // Main body text - can be overwritten on the color
     body1: {
