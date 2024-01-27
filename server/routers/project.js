@@ -60,8 +60,8 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     console.log(endDate);
     console.log("charity access rights: ", hasCharityHeadRights(req));
     // check access rights, needs to be a charity head for that charity
-    const charityId = hasCharityHeadRights(req); // uk charity number (or false)
-    if (!charityId) {
+    const charity = hasCharityHeadRights(req); // uk charity number (or false)
+    if (!charity) {
       return res.status(403).json({ error: "Access denied" });
     }
 
@@ -75,7 +75,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
         futureImpact: futureImpact,
         targetAmount: Number(targetAmount),
         currentAmount: currentAmount,
-        charityId: charityId, // actual charity ID here
+        charityId: charity.charityId, // actual charity ID here
         endDate: endDate, // comes out as ISO 8641 which is compat with figma
       },
     });

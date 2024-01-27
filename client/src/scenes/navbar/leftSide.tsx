@@ -78,19 +78,19 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
           // variant="text"
           sx={{
             color:
-              selected === "howWorks"
+              selected === "how-it-works"
                 ? palette.white.light
                 : palette.white.middle,
             backgroundColor:
-              selected === "howWorks" ? palette.background.light : null,
+              selected === "how-it-works" ? palette.background.light : null,
             "&:hover": {
               backgroundColor: "transparent",
               color: palette.white.light,
             },
           }}
           onClick={() => {
-            setSelected("howWorks");
-            navigate("/howWorks");
+            setSelected("how-it-works");
+            navigate("/how-it-works");
           }}
         >
           <MenuBookIcon sx={{ marginRight: "8px" }} />

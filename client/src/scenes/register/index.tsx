@@ -15,6 +15,7 @@ import StepTwo from "./StepTwo";
 interface MyTokenPayload extends JwtPayload {
   email?: string;
   charityId?: string;
+  charityName?: string;
   // ... add any other custom fields that your token might have
 }
 
@@ -53,7 +54,7 @@ const Register = () => {
         });
         setLinkSignup(true);
         setPersonalizedMessage(
-          `Thanks for following the link, ${decoded.email}! We'd just like to gather some quick details about you.`
+          `Thanks for following the link, ${decoded.email} to join ${decoded.charityName}! We'd just like to gather some quick details about you.`
         );
         // Move directly to step 3
         setCurrentStep(2);

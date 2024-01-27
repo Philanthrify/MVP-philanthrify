@@ -119,13 +119,12 @@ const themeSettings = {
       color: tokens.grey[500],
       lineHeight: "24px",
     },
-    // lowerMainText - stuff a bit smaller than the mainText (e.g. on project page the tags and the targetAmount on sideFloater)
-    // TODO: for this one color varies a bit more so set lower
+    // e.g. Accordion headers
     h6: {
-      fontSize: 14,
+      fontSize: 20,
       fontWeight: 500,
-      lineHeight: "20px",
-      color: tokens.grey[700],
+      lineHeight: "30px",
+      color: tokens.white.light,
     },
 
     // Main body text - can be overwritten on the color
@@ -149,6 +148,8 @@ const themeSettings = {
     MuiButtonBase: {
       defaultProps: { disableRipple: true },
     },
+    ///// General components higher
+    //// Buttons
     MuiButton: {
       styleOverrides: {
         // Name of the slot
@@ -161,6 +162,46 @@ const themeSettings = {
           fontWeight: 500,
           lineHeight: "24px",
           borderRadius: "var(--radius-full, 1000px)",
+        },
+      },
+    },
+    ////// For Icons unless otherwise set
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: tokens.white.light,
+        },
+      },
+    },
+    /////// Accordians:
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent", // Set Accordion background to transparent
+          boxShadow: "none", // Remove any shadows
+          "&:before": {
+            display: "none", // Remove the pseudo-element used for the default border
+          },
+          "&.Mui-expanded": {
+            margin: 0, // Remove the default margin applied when expanded
+          },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          // Optional: Adjust the AccordionSummary as needed
+          minHeight: "48px", // Example height, adjust as necessary
+          "&.Mui-expanded": {
+            minHeight: "48px", // Keep consistent height when expanded
+          },
+        },
+        content: {
+          margin: "0", // Remove the default vertical margins
+          "&.Mui-expanded": {
+            margin: "0", // Keep margins consistent when expanded
+          },
         },
       },
     },

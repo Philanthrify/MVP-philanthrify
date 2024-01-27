@@ -27,7 +27,7 @@ function hasCharityHeadRights(req) {
     // if same charity and
     console.log(charityId, charity.charityId); // these will be actually the charity membership id
     if (charityId === charity.charityId && charity.charityHead === true) {
-      return charity.charityId; // Person has access rights for this charity, continue with the next middleware or route handler
+      return charity; // Person has access rights for this charity, continue with the next middleware or route handler
     }
   }
   // If no access rights were found, respond false

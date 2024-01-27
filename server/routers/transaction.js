@@ -9,10 +9,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const dayjs = require("dayjs");
-const {
-  getCharities,
-  hasCharityHeadRights,
-} = require("../middleware/CharityMiddleware");
+const { getCharities } = require("../middleware/CharityMiddleware");
 
 // Add a new project for a user
 router.post("/", authMiddleware, getCharities, async (req, res) => {
