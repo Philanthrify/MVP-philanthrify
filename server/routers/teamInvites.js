@@ -125,6 +125,8 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
   }
 });
 
+
+//TODO - make it so if a user already exists we skip this register step and just add them to the team
 router.post("/signup-with-link", async (req, res) => {
   // username is the name of the person
   const { firstname, lastname, password, token } = req.body;
