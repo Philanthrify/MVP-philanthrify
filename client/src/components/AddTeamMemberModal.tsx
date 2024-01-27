@@ -61,7 +61,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
       console.log(values);
       axios({
         method: "post",
-        url: "http://localhost:1337/team-invite",
+        url: `${import.meta.env.VITE_API_URL}/team-invite`,
         headers: {
           "Content-Type": "application/json",
           Authorization: token,

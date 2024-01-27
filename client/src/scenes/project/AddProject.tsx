@@ -70,7 +70,7 @@ const CreateProjectForm = () => {
 
     axios({
       method: "post",
-      url: "http://localhost:1337/project",
+      url: `${import.meta.env.VITE_API_URL}/project`,
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
@@ -86,7 +86,7 @@ const CreateProjectForm = () => {
           setOpen(true);
           return axios({
             method: "post",
-            url: `http://localhost:1337/project/upload-project-image`, // Change to your image upload endpoint
+            url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`, // Change to your image upload endpoint
             params: { projectId: response.data.project.id },
             headers: {
               Authorization: token,

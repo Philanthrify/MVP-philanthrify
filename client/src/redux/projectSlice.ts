@@ -24,7 +24,7 @@ export const fetchProject = createAsyncThunk<
 >("project/fetchProject", async (projectId, { rejectWithValue }) => {
   try {
     const response = await axios.get<Project>(
-      `http://localhost:1337/project/${projectId}`,
+      `${import.meta.env.VITE_API_URL}/project/${projectId}`,
       {
         headers: {
           "Content-Type": "application/json",

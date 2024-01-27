@@ -102,6 +102,7 @@ router.post("/signup-charity", async (req, res) => {
   };
 
   try {
+    console.log(typeof ukCharityNumber);
     // Check if username and email already exist
     const existingNumber = await prisma.charity.findUnique({
       where: {
