@@ -137,6 +137,9 @@ const TransactionAdd = () => {
   if (error) {
     return <div>Error: {error}</div>; // Show error if present
   }
+
+
+  
   return (
     <>
       <form
