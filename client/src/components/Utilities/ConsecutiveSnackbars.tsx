@@ -1,10 +1,9 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { Alert, AlertColor, Snackbar } from "@mui/material";
+import { Snackbar } from "@mui/material";
 
 export interface SnackbarMessage {
   message: string;
   key: number;
-  status: AlertColor;
 }
 
 interface ConsecutiveAlertSnackbarsProps {
@@ -51,13 +50,6 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
         TransitionProps={{ onExited: handleExited }}
         anchorOrigin={{ vertical:"bottom", horizontal:"center" }}
       >
-        <Alert
-          onClose={handleClose}
-          severity={messageInfo ? messageInfo.status : undefined}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >{messageInfo ? messageInfo.message : undefined}
-        </Alert>
       </Snackbar>
   );
 }
