@@ -5,3 +5,6 @@ node_modules/
 
 # Ignore logs
 logs/
+
+#ignore prisma migrations directory
+prisma/migrations/
