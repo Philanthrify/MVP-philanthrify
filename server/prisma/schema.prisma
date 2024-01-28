@@ -54,8 +54,8 @@ model CharityMembership {
   userId    String
   charityId String
   charityHead Boolean
-  user      User    @relation(fields: [userId], references: [id])
-  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
   @@unique([userId, charityId])
 }
 model ProjectMembership {
@@ -63,8 +63,8 @@ model ProjectMembership {
   userId    String
   projectId String
   projectLead Boolean
-  user      User    @relation(fields: [userId], references: [id])
-  project   Project @relation(fields: [projectId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   @@unique([userId, projectId])
 }
 
@@ -102,7 +102,7 @@ model Project {
   // userId        String // Foreign key reference to the User model
   startDate     DateTime @default(now()) // Auto-generated field capturing today's date
   endDate       DateTime // This field should be set to a date after startDate
-    charity   Charity @relation(fields: [charityId], references: [ukCharityNumber])
+    charity   Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 }
 
 model ProjectUpdate {
@@ -123,6 +123,7 @@ model Link {
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
+// TODO: onDelete of project, does transaction get deleted?
 model Transaction {
   id          String  @id @default(uuid())
   type         String
@@ -132,7 +133,7 @@ model Transaction {
   projectId   String // Foreign key reference to the Project model
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   posterId   String // Foreign key reference to the Project model
-  poster     User @relation(fields: [posterId], references: [id], onDelete: Cascade)
+  poster     User @relation(fields: [posterId], references: [id], onDelete: NoAction) // keep the record if the account is deleted
   dateTime     DateTime @default(now())
 }
 
