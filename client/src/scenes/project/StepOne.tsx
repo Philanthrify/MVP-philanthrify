@@ -111,6 +111,9 @@ const StepOne = (props: StepOneProps) => {
           }}
         />
         {/* setting the country via formik */}
+        <TypographyTitle variant="h4" align="center" padding="15px 0">
+          Select the main country which this project is taking place:
+        </TypographyTitle>
         <CountrySelect
           value={formik.values.country}
           onChange={handleCountryChange}

@@ -93,7 +93,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
             }}
           >
             <Button variant="contained" sx={{}} onClick={props.openFilterMenu}>
-              <TuneIcon />
+              <TuneIcon sx={{ color: "black" }} />
               Filters
             </Button>
           </Grid>

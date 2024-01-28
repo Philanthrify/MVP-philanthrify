@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import FormStyles from "@/components/FormsUI";
 import { useEffect, useState } from "react";
 import { countries } from "@/models/country";
-import { useTheme } from "@mui/material";
+import { InputLabel, useTheme } from "@mui/material";
 
 interface CountrySelectProps {
   value: string | null;
@@ -36,56 +36,57 @@ export default function CountrySelect(props: CountrySelectProps) {
     console.log("Selected Country Changed:", props.value);
   }, [props.value]);
   return (
-    <Autocomplete
-      id="country-select-demo"
-      sx={{
-        width: "100%",
-        margin: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        color: palette.white.light,
-      }}
-      options={countries}
-      autoHighlight
-      getOptionLabel={(option) => option.label}
-      value={findSelectedCountryByCode(country)}
-      onChange={(event, newValue) => {
-        // Call the onChange prop with null when the new value is null
-        props.onChange(event, newValue ? newValue.label : "");
-      }}
-      renderOption={(props, option) => (
-        <Box
-          component="li"
-          sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-          {...props}
-        >
-          <img
-            loading="lazy"
-            width="20"
-            srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-            src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-            alt=""
+    <>
+      <Autocomplete
+        id="country-select-demo"
+        sx={{
+          width: "100%",
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: palette.white.light,
+        }}
+        options={countries}
+        autoHighlight
+        getOptionLabel={(option) => option.label}
+        value={findSelectedCountryByCode(country)}
+        onChange={(event, newValue) => {
+          // Call the onChange prop with null when the new value is null
+          props.onChange(event, newValue ? newValue.label : "");
+        }}
+        renderOption={(props, option) => (
+          <Box
+            component="li"
+            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+            {...props}
+          >
+            <img
+              loading="lazy"
+              width="20"
+              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+              alt=""
+            />
+            {option.label} ({option.code})
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: "new-password", // disable autocomplete and autofill
+            }}
+            classes={{ ...textFieldProps.selectClasses }}
+            sx={{
+              ...textFieldProps.select,
+              width: textFieldProps.textFieldWidth,
+              margin: "auto",
+            }}
           />
-          {option.label} ({option.code})
-        </Box>
-      )}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choose a country"
-          inputProps={{
-            ...params.inputProps,
-            autoComplete: "new-password", // disable autocomplete and autofill
-          }}
-          classes={{ ...textFieldProps.selectClasses }}
-          sx={{
-            ...textFieldProps.select,
-            width: textFieldProps.textFieldWidth,
-            margin: "auto",
-          }}
-        />
-      )}
-    />
+        )}
+      />
+    </>
   );
 }
