@@ -195,7 +195,7 @@ const StepThree = (props: StepThreeProps) => {
                   onTouchEnd={handleMouseUpPassword}
                   size="small" // Set size to small
                 >
-                  <VisibilityIcon />
+                  <VisibilityIcon sx={{ color: "primary.main" }} />
                 </IconButton>
               </>
             ),
@@ -238,7 +238,7 @@ const StepThree = (props: StepThreeProps) => {
                 onTouchEnd={handleMouseUpConfirmPassword}
                 size="small"
               >
-                <VisibilityIcon />
+                <VisibilityIcon sx={{ color: "primary.main" }} />
               </IconButton>
             ),
           }}

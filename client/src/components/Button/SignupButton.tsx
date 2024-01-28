@@ -88,7 +88,9 @@ const SignupButton: React.FC<SignupButtonProps> = ({
           {" "}
           <Checkbox
             icon={<RadioButtonUncheckedIcon />}
-            checkedIcon={<CheckCircleOutlineIcon />}
+            checkedIcon={
+              <CheckCircleOutlineIcon sx={{ color: "primary.main" }} />
+            }
             checked={selected}
           />
         </Grid>

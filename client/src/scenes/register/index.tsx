@@ -69,8 +69,10 @@ const Register = () => {
   };
   // getting to next page (first page only)
   const handleNextStepOne = () => {
-    if (currentStep <= 2) {
+    if (currentStep <= 2 && data.userType === "CHARITY") {
       setCurrentStep(currentStep + 1);
+    } else {
+      setCurrentStep(2);
     }
   };
   // getting to next page (other pages need to work with formik)

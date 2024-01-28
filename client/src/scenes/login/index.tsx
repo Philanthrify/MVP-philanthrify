@@ -164,9 +164,9 @@ const Login = () => {
                       size="small" // Set size to small
                     >
                       {showPassword ? (
-                        <VisibilityOffIcon />
+                        <VisibilityOffIcon sx={{ color: "primary.main" }} />
                       ) : (
-                        <VisibilityIcon />
+                        <VisibilityIcon sx={{ color: "primary.main" }} />
                       )}
                     </IconButton>
                   ),
