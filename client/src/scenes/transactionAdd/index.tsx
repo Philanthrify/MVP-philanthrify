@@ -5,7 +5,6 @@ import { Project } from "@/models/project";
 import { TransactionKinds } from "@/models/transaction";
 import { RootState } from "@/redux/store";
 import {
-  AlertColor,
   Button,
   FormControl,
   FormHelperText,
