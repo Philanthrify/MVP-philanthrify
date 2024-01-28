@@ -106,32 +106,24 @@ const themeSettings = {
       lineHeight: "28px",
       color: tokens.grey[200],
     },
-
     h4: {
       fontSize: 14,
       fontWeight: 600,
       color: tokens.grey[300],
     },
-    // mainText (e.g. section writings fo on project page)
+    // Bit title
     h5: {
-      fontSize: 16,
-      fontWeight: 400,
-      color: tokens.grey[500],
-      lineHeight: "24px",
+      fontSize: 60,
+      fontWeight: 500,
+      lineHeight: "60px",
+      letterSpacing: " -1.2px",
+      color: tokens.white.light,
     },
     // e.g. Accordion headers
     h6: {
       fontSize: 20,
       fontWeight: 500,
       lineHeight: "30px",
-      color: tokens.white.light,
-    },
-    // e.g. How it works title - extra large title!
-    h7: {
-      fontSize: 60,
-      fontWeight: 500,
-      lineHeight: "60px",
-      letterSpacing: " -1.2px",
       color: tokens.white.light,
     },
 
@@ -141,6 +133,13 @@ const themeSettings = {
       // fontWeight: 600,
       lineHeight: "20px",
       color: tokens.grey[700],
+    },
+    // slightly bigger text, mostly darker
+    body2: {
+      fontSize: 16,
+      fontWeight: 400,
+      color: tokens.grey[500],
+      lineHeight: "24px",
     },
 
     caption: {

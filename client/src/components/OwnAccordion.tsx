@@ -41,7 +41,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
               {value.map((elem, lineIndex) => (
                 <Typography
                   key={lineIndex}
-                  variant="h5"
+                  variant="body2"
                   sx={{
                     color: palette.grey[600],
                     marginBottom: lineIndex < value.length - 1 ? 2 : 0,

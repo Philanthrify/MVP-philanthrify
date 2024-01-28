@@ -63,7 +63,7 @@ const Challenge = () => {
 
           <Grid item>
             <TypographySmallText
-              variant="h5"
+              variant="body2"
               // align="center"
               sx={{ wordWrap: "break-word" }}
             >

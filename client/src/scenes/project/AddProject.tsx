@@ -14,10 +14,12 @@ import axios from "axios";
 import { useState } from "react";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
+import { useNavigate } from "react-router-dom";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
   const charity = useSelector((state: RootState) => state.auth.charity);
+  const navigate = useNavigate();
   const [data, setData] = useState<Project>({
     charityId: charity ? charity.ukCharityNumber : "",
     // WARNING: for now assuming that the user has only one charity, this project will be posted for the first charity
@@ -95,6 +97,7 @@ const CreateProjectForm = () => {
             data: formData,
           });
         }
+        navigate("/"); // TODO: make success snackbar which persists for a bit, maybe put in whole app such that it persists
       })
       .catch((error) => {
         console.log(error);

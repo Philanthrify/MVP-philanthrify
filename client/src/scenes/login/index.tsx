@@ -56,8 +56,8 @@ const Login = () => {
       })
         .then((response) => {
           console.log(
-            "🚀 ~ .then ~ response.data.charity:",
-            response.data.charity
+            "🚀 ~ .then ~ response.data.loggedInCharity:",
+            response.data.loggedInCharity
           );
           dispatch(
             login({
@@ -65,7 +65,7 @@ const Login = () => {
               firstname: response.data.firstname,
               email: response.data.email,
               userType: response.data.userType,
-              charity: response.data.charity,
+              charity: response.data.loggedInCharity ?? null,
               charities: response.data.charity,
               projects: response.data.projects,
             })

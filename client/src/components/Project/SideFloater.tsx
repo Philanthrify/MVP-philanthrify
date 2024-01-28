@@ -33,7 +33,7 @@ const SideFloater = () => {
           height: "auto",
           backgroundColor: palette.background.light,
           position: "sticky",
-          top: "20px",
+          top: "25px",
           // Add any additional styling you need here
         }}
       >
@@ -43,36 +43,40 @@ const SideFloater = () => {
           spacing={2}
           direction="column"
           justifyContent="flex-start"
-          alignItems="flex-start"
+          alignItems="center"
         >
           <Grid item>
             <TypographySmallText variant="h3" align="center" padding="15px 0">
               £{project.targetAmount.toLocaleString()} target
             </TypographySmallText>
           </Grid>
-          <Divider
-            sx={{
-              alignSelf: "center",
-              borderColor: palette.white.middle,
-              width: "90%",
-            }}
-          />
+          <Grid
+            item
+            sx={{ width: "90%", padding: "15px 0", alignItems: "center" }}
+          >
+            <Divider
+              sx={{
+                alignSelf: "center",
+                borderColor: palette.white.middle,
+                width: "90%",
+              }}
+            />
+          </Grid>
+
           <Grid
             item
             container
             direction="row"
-            justifyContent="flex-start"
-            alignItems="flex-start"
+            justifyContent="center"
+            spacing={2}
           >
-            <Grid item lg={6} md={6}>
-              <ProgressRing
-                percentage={percentRaised}
-                doneColour="#099250"
-                unDoneColour="#3B3B41"
-                innerColour="#3B3B4166"
-                radius={50}
-              ></ProgressRing>
-            </Grid>{" "}
+            <ProgressRing
+              percentage={percentRaised}
+              doneColour="#099250"
+              unDoneColour="#3B3B41"
+              innerColour="#3B3B4166"
+              radius={50}
+            />
             {project.currentAmount === 0 ? (
               <Grid item container lg={6} md={6} direction="column">
                 <Grid item>
@@ -120,9 +124,9 @@ const SideFloater = () => {
               <PrimaryButton
                 text="Share"
                 onClick={() => {
-                  console.log("");
+                  console.log("Share");
                 }}
-                sx={{ width: "90%" }}
+                sx={{ width: "80%" }}
               />
             </Grid>{" "}
             <Grid
@@ -135,7 +139,7 @@ const SideFloater = () => {
                 onClick={() => {
                   console.log("");
                 }}
-                sx={{ width: "90%" }}
+                sx={{ width: "80%" }}
               />
             </Grid>{" "}
           </Grid>
