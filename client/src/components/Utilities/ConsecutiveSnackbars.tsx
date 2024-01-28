@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { Snackbar } from "@mui/material";
+import { Snackbar, Typography } from "@mui/material";
 
 export interface SnackbarMessage {
   message: string;
@@ -42,16 +42,17 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
   };
 
   return (
-      <Snackbar
-        key={messageInfo ? messageInfo.key : undefined}
-        open={open}
-        autoHideDuration={1250}
-        onClose={handleClose}
-        TransitionProps={{ onExited: handleExited }}
-        anchorOrigin={{ vertical:"bottom", horizontal:"center" }}
-      >
-      </Snackbar>
-  );
+    <Snackbar
+      key={messageInfo ? messageInfo.key : undefined}
+      open={open}
+      autoHideDuration={1250}
+      onClose={handleClose}
+      TransitionProps={{ onExited: handleExited }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+    >
+      {messageInfo ? <Typography>{messageInfo.message}</Typography> : undefined}
+    </Snackbar>
+  );  
 }
 
 export default ConsecutiveAlertSnackbars;

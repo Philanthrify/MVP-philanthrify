@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import FormStyles from "@/components/FormsUI";
 import { useEffect, useState } from "react";
 import { countries } from "@/models/country";
-import { InputLabel, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 interface CountrySelectProps {
   value: string | null;

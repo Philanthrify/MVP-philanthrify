@@ -5,7 +5,6 @@ import {
   AccordionSummary,
   Divider,
   Grid,
-  SxProps,
   Typography,
   useTheme,
 } from "@mui/material";
