@@ -182,10 +182,6 @@ const CreateProjectForm = () => {
           )}
         </FormBox>
       </Grid>
-      <ConsecutiveAlertSnackbars
-        snackPack={snackPack}
-        setSnackPack={setSnackPack}
-      />
     </Grid>
   );
 };
