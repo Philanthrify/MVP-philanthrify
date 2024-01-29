@@ -15,9 +15,14 @@ import { useState } from "react";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import { useNavigate } from "react-router-dom";
+import ConsecutiveAlertSnackbars, {
+  SnackbarMessage,
+} from "@/components/Utilities/ConsecutiveAlertSnackbars";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+
   const charity = useSelector((state: RootState) => state.auth.charity);
   const navigate = useNavigate();
   const [data, setData] = useState<Project>({
@@ -97,10 +102,26 @@ const CreateProjectForm = () => {
             data: formData,
           });
         }
+        setSnackPack((prev) => [
+          ...prev,
+          {
+            message: "Project submitted",
+            key: new Date().getTime(),
+            status: "success",
+          },
+        ]);
         navigate("/"); // TODO: make success snackbar which persists for a bit, maybe put in whole app such that it persists
       })
       .catch((error) => {
         console.log(error);
+        setSnackPack((prev) => [
+          ...prev,
+          {
+            message: "Something went wrong. Project not submitted",
+            key: new Date().getTime(),
+            status: "error",
+          },
+        ]);
       });
   };
 
@@ -176,6 +197,10 @@ const CreateProjectForm = () => {
           )}
         </FormBox>
       </Grid>
+      <ConsecutiveAlertSnackbars
+        snackPack={snackPack}
+        setSnackPack={setSnackPack}
+      />
     </Grid>
   );
 };

@@ -102,16 +102,26 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     console.log("charity access rights: ", hasCharityHeadRights(req));
     charity = hasCharityHeadRights(req); // uk charity number (or false)
     if (!charity) {
-      // for now only charity heads can do invites
+      // only charity heads can do invites
       return res.status(403).json({ error: "Access denied" });
     }
+    console.log(
+      "🚀 ~ router.post ~ charity.charityId:",
+      typeof charity.charityId
+    );
+
     // Todo: query db -get charity name
+    const charityObj = await prisma.charity.findUnique({
+      where: {
+        ukCharityNumber: charity.charityId,
+      },
+    });
     const token = jwt.sign(
       {
         email: email,
         charityHead: charityHead,
         charityId: charity.charityId,
-        charityName: charity.charityName,
+        charityName: charityObj.charityName,
       },
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
@@ -130,7 +140,6 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     res.status(400).json({ error: "Failed to send invitation" });
   }
 });
-
 
 //TODO - make it so if a user already exists we skip this register step and just add them to the team
 router.post("/signup-with-link", async (req, res) => {

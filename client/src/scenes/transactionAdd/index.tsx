@@ -22,7 +22,9 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
-import ConsecutiveAlertSnackbars, { SnackbarMessage } from "../../components/Utilities/ConsecutiveAlertSnackbars";
+import ConsecutiveAlertSnackbars, {
+  SnackbarMessage,
+} from "../../components/Utilities/ConsecutiveAlertSnackbars";
 
 const validationSchema = yup.object({});
 
@@ -41,7 +43,6 @@ const TransactionAdd = () => {
   const textFieldProps = FormStyles();
 
   const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
-
 
   const token = useSelector((state: RootState) => state.auth.token);
   let userId: string;
@@ -78,6 +79,9 @@ const TransactionAdd = () => {
   useEffect(() => {
     fetchUserProjects();
   }, []);
+  useEffect(() => {
+    console.log("🚀 ~ TransactionAdd ~ projects:", projects);
+  }, [projects]);
 
   const formik = useFormik({
     initialValues: {
@@ -101,7 +105,14 @@ const TransactionAdd = () => {
       })
         .then((response) => {
           console.log(response);
-          setSnackPack((prev) => [...prev, { message:"Transaction submitted", key: new Date().getTime(), status:"success" }]);
+          setSnackPack((prev) => [
+            ...prev,
+            {
+              message: "Transaction submitted",
+              key: new Date().getTime(),
+              status: "success",
+            },
+          ]);
           console.log(snackPack);
           formik.setValues({
             project: "",
@@ -113,7 +124,14 @@ const TransactionAdd = () => {
         })
         .catch((error) => {
           console.log(error);
-          setSnackPack((prev) => [...prev, { message:"Something went wrong. Transaction not submitted", key: new Date().getTime(), status:"error" }]);
+          setSnackPack((prev) => [
+            ...prev,
+            {
+              message: "Something went wrong. Transaction not submitted",
+              key: new Date().getTime(),
+              status: "error",
+            },
+          ]);
         });
     },
   });
@@ -296,7 +314,10 @@ const TransactionAdd = () => {
           </Button>
         </Grid>
       </form>
-      <ConsecutiveAlertSnackbars snackPack={snackPack} setSnackPack={setSnackPack} />
+      <ConsecutiveAlertSnackbars
+        snackPack={snackPack}
+        setSnackPack={setSnackPack}
+      />
     </>
   );
 };

@@ -51,6 +51,9 @@ app.use("/projectUpdate", projectUpdateRoutes);
 const transactionRoutes = require("./routers/transaction");
 app.use("/transaction", transactionRoutes);
 
+const projectMembershipRoutes = require("./routers/projectMembership");
+app.use("/project-membership", projectMembershipRoutes);
+
 app.use("/project-photo", express.static("assets/projectPhotos"));
 
 if (process.env.NODE_ENV !== "development") {
