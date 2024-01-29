@@ -19,12 +19,13 @@ import {
 import axios from "axios";
 import { useFormik } from "formik";
 import { jwtDecode } from "jwt-decode";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import ConsecutiveAlertSnackbars, { SnackbarMessage } from "../../components/Utilities/ConsecutiveAlertSnackbars";
 
 const validationSchema = yup.object({});
+
 //TODO need refresh in place for this to be worthwhile
 //const validationSchema = yup.object({
 //  project: yup.string().required("Parent project is required"),
@@ -39,7 +40,7 @@ const TransactionAdd = () => {
   const [error, setError] = useState<string | null>(null); // Add error state
   const textFieldProps = FormStyles();
 
-  const [snackPack, setSnackPack] = React.useState<readonly SnackbarMessage[]>([]);
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
 
 
   const token = useSelector((state: RootState) => state.auth.token);

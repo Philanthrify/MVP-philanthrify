@@ -42,6 +42,8 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
     setMessageInfo(undefined);
   };
 
+  console.log(snackPack);
+
   return (
       <Snackbar
         key={messageInfo ? messageInfo.key : undefined}
