@@ -6,12 +6,12 @@ export interface SnackbarMessage {
   key: number;
 }
 
-interface ConsecutiveAlertSnackbarsProps {
+interface ConsecutiveSnackbarsProps {
   snackPack: readonly SnackbarMessage[];
   setSnackPack: Dispatch<SetStateAction<readonly SnackbarMessage[]>>;
 }
 
-const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ snackPack, setSnackPack }) => {
+const ConsecutiveSnackbars: React.FC<ConsecutiveSnackbarsProps> = ({ snackPack, setSnackPack }) => {
 
   const [open, setOpen] = useState(false);
   const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(
@@ -57,4 +57,4 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
   );  
 }
 
-export default ConsecutiveAlertSnackbars;
+export default ConsecutiveSnackbars;

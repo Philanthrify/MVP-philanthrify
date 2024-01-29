@@ -1,5 +1,6 @@
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
+import { useSnackbar } from "@/contexts/snackbarContext";
 import { DecodedToken } from "@/models/auth";
 import { Project } from "@/models/project";
 import { TransactionKinds } from "@/models/transaction";
@@ -22,9 +23,6 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
-import ConsecutiveAlertSnackbars, {
-  SnackbarMessage,
-} from "../../components/Utilities/ConsecutiveAlertSnackbars";
 
 const validationSchema = yup.object({});
 
@@ -42,7 +40,7 @@ const TransactionAdd = () => {
   const [error, setError] = useState<string | null>(null); // Add error state
   const textFieldProps = FormStyles();
 
-  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+  const { openAlertSnackbar } = useSnackbar();
 
   const token = useSelector((state: RootState) => state.auth.token);
   let userId: string;
@@ -105,15 +103,9 @@ const TransactionAdd = () => {
       })
         .then((response) => {
           console.log(response);
-          setSnackPack((prev) => [
-            ...prev,
-            {
-              message: "Transaction submitted",
-              key: new Date().getTime(),
-              status: "success",
-            },
-          ]);
-          console.log(snackPack);
+
+          openAlertSnackbar("Transaction submitted", "success");
+
           formik.setValues({
             project: "",
             amount: 0,
@@ -124,14 +116,11 @@ const TransactionAdd = () => {
         })
         .catch((error) => {
           console.log(error);
-          setSnackPack((prev) => [
-            ...prev,
-            {
-              message: "Something went wrong. Transaction not submitted",
-              key: new Date().getTime(),
-              status: "error",
-            },
-          ]);
+
+          openAlertSnackbar(
+            "Something went wrong. Transaction not submitted",
+            "error"
+          );
         });
     },
   });
@@ -314,10 +303,6 @@ const TransactionAdd = () => {
           </Button>
         </Grid>
       </form>
-      <ConsecutiveAlertSnackbars
-        snackPack={snackPack}
-        setSnackPack={setSnackPack}
-      />
     </>
   );
 };

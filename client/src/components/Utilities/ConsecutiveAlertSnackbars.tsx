@@ -1,21 +1,21 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { Alert, AlertColor, Snackbar } from "@mui/material";
 
-export interface SnackbarMessage {
+export interface AlertSnackbarMessage {
   message: string;
   key: number;
   status: AlertColor;
 }
 
 interface ConsecutiveAlertSnackbarsProps {
-  snackPack: readonly SnackbarMessage[];
-  setSnackPack: Dispatch<SetStateAction<readonly SnackbarMessage[]>>;
+  snackPack: readonly AlertSnackbarMessage[];
+  setSnackPack: Dispatch<SetStateAction<readonly AlertSnackbarMessage[]>>;
 }
 
 const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ snackPack, setSnackPack }) => {
 
   const [open, setOpen] = useState(false);
-  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(
+  const [messageInfo, setMessageInfo] = useState<AlertSnackbarMessage | undefined>(
     undefined,
   );
 

@@ -15,9 +15,7 @@ import { useState } from "react";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import { useNavigate } from "react-router-dom";
-import ConsecutiveAlertSnackbars, {
-  SnackbarMessage,
-} from "@/components/Utilities/ConsecutiveAlertSnackbars";
+import { useSnackbar } from "@/contexts/snackbarContext";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
@@ -45,6 +43,7 @@ const CreateProjectForm = () => {
   const token = useSelector(selectToken);
   const [currentStep, setCurrentStep] = useState(0);
   const [skipped] = useState(new Set<number>());
+  const { openAlertSnackbar } = useSnackbar();
 
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
@@ -102,26 +101,12 @@ const CreateProjectForm = () => {
             data: formData,
           });
         }
-        setSnackPack((prev) => [
-          ...prev,
-          {
-            message: "Project submitted",
-            key: new Date().getTime(),
-            status: "success",
-          },
-        ]);
+        openAlertSnackbar("Project created", "success");
         navigate("/"); // TODO: make success snackbar which persists for a bit, maybe put in whole app such that it persists
       })
       .catch((error) => {
         console.log(error);
-        setSnackPack((prev) => [
-          ...prev,
-          {
-            message: "Something went wrong. Project not submitted",
-            key: new Date().getTime(),
-            status: "error",
-          },
-        ]);
+        openAlertSnackbar("Something went wrong. Project not created", "error");
       });
   };
 
