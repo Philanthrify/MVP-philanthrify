@@ -44,6 +44,7 @@ const SignupButton: React.FC<SignupButtonProps> = ({
         width: "100%",
         maxWidth: "360px", // don't want it bigger than this
         height: "auto",
+        padding: "0 16px"
         // boxShadow: "none",
       }}
     >

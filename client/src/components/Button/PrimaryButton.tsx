@@ -20,6 +20,8 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
         "&:hover": {
           backgroundColor: palette.primary.main,
         },
+        padding: "0 24px", // Add padding left and right
+
       }}
       onClick={props.onClick}
     >

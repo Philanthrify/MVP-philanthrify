@@ -28,6 +28,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
       spacing={2}
       justifyContent="flex-start"
       alignItems="center"
+      
     >
       {includeLogo && (
         <Grid item>
@@ -37,6 +38,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               minWidth: 0, // Allows the button to shrink to the size of its contents
               "&:hover": {
                 backgroundColor: "transparent", // Keeps the background transparent on hover
+                
               },
             }}
             onClick={() => {
@@ -63,6 +65,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               backgroundColor: "transparent",
               color: palette.white.light,
             },
+            padding: "0 18px",
           }}
           onClick={() => {
             setSelected("explore");
@@ -87,6 +90,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               backgroundColor: "transparent",
               color: palette.white.light,
             },
+            padding: "0 18px",
           }}
           onClick={() => {
             setSelected("how-it-works");
