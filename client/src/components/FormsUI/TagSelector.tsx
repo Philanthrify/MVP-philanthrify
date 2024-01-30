@@ -8,6 +8,7 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
+  useTheme,
 } from "@mui/material";
 import { useEffect } from "react";
 import FormStyles from ".";
@@ -30,6 +31,7 @@ type TagSelectorProps = {
 };
 
 const TagSelector = (props: TagSelectorProps) => {
+  const { palette } = useTheme();
   const textFieldProps = FormStyles();
   useEffect(() => {
     console.log(
@@ -76,7 +78,10 @@ const TagSelector = (props: TagSelectorProps) => {
         >
           {Object.entries(TagValuesObj).map(([key, value]) => (
             <MenuItem key={key} value={key}>
-              <Checkbox checked={(props.value ?? []).indexOf(key) > -1} />
+              <Checkbox
+                checked={(props.value ?? []).indexOf(key) > -1}
+                sx={{ color: palette.primary.main }}
+              />
               <ListItemText primary={value} />{" "}
               {/* Display the value with spaces */}
             </MenuItem>

@@ -153,7 +153,9 @@ const themeSettings = {
   components: {
     // Name of the component
     MuiButtonBase: {
-      defaultProps: { disableRipple: true },
+      defaultProps: {
+        disableRipple: true,
+      },
     },
     ///// General components higher
     //// Buttons
@@ -171,10 +173,13 @@ const themeSettings = {
           borderRadius: "var(--radius-full, 1000px)",
         },
       },
+      defaultProps: {
+        root: { backgroundColor: tokens.primary[500] },
+      },
     },
     ////// For Icons unless otherwise set
     MuiSvgIcon: {
-      styleOverrides: {
+      defaultProps: {
         root: {
           color: tokens.white.light,
         },

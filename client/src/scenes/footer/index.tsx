@@ -118,7 +118,7 @@ const Footer = () => {
           >
             <Grid item>
               <Typography variant="body1">
-                © 2023 All rights reserved.{" "}
+                © 2024 All rights reserved.{" "}
               </Typography>
             </Grid>
             <Grid item>
