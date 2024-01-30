@@ -21,6 +21,7 @@ import ProjectPage from "./scenes/XProject";
 import Profile from "./scenes/profile";
 import HowItWorks from "./scenes/howItWorks";
 import { SnackbarProvider } from "./contexts/snackbarContext";
+import Footer from "./scenes/footer";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -40,22 +41,35 @@ function App() {
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
           <CssBaseline />
-          <Box width="100%" height="100%" padding="1rem 2rem 4rem 2rem">
-            <Navbar />
-            <Routes>
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Explore />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/project/:projectId" element={<ProjectPage />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/addproject" element={<AddProject />} />
-                <Route path="/addtransaction" element={<TransactionAdd />} />
-    
-                <Route path="/profile" element={<Profile />} />
-              </Route>
-            </Routes>
+          <Box
+            display="flex"
+            flexDirection="column"
+            minHeight="100vh"
+            padding="1rem 2rem"
+          >
+            {" "}
+            <Box flexShrink={0}>
+              <Navbar />
+            </Box>
+            <Box flex="1 0 auto" padding="2rem 2rem">
+              <Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Explore />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/project/:projectId" element={<ProjectPage />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/addproject" element={<AddProject />} />
+                  <Route path="/addtransaction" element={<TransactionAdd />} />
+
+                  <Route path="/profile" element={<Profile />} />
+                </Route>
+              </Routes>{" "}
+            </Box>
+            <Box flexShrink={0}>
+              <Footer />
+            </Box>
           </Box>
         </SnackbarProvider>
       </ThemeProvider>

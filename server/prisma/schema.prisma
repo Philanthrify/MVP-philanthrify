@@ -19,8 +19,8 @@ model Charity {
   projects         Project[]
   charityName     String
   email           String
+  about String @db.LongText // latterly added
 }
-
 
 model CharityCountry {
   id        String   @id @default(uuid())
@@ -30,7 +30,6 @@ model CharityCountry {
 
   @@unique([charityId, value])
 }
-
 
 model CharityTag {
   id        String   @id @default(uuid())

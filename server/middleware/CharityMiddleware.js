@@ -14,7 +14,7 @@ const getCharities = async (req, res, next) => {
     },
   });
   // now we add to req and can access this later
-  req.charity = userCharities.charity;
+  req.charity = userCharities.charity; // charity memberships!!!
   req.projects = userCharities.projects;
   next();
 };

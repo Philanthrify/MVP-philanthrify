@@ -126,12 +126,23 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       SECRET,
       { expiresIn: "24h" } // Token expires in 24 hours
     );
+    let invitationLink;
+
+    if (process.env.NODE_ENV !== "development") {
+      invitationLink = `${process.env.DEV_ROOT_ADDRESS}register?token=${token}`;
+    }
+    invitationLink = `${process.env.URL_ROOT_ADDRESS}register?token=${token}`;
+
     // placeholder link for now TODO: need to change to getting link from .env
-    const invitationLink = `http://localhost:5173/register?token=${token}`;
     const accesstoken = await oAuth2Client.getAccessToken();
 
     console.log("trying to send email...");
-    sendMail(email, accesstoken, (link = invitationLink))
+    sendMail(
+      email,
+      accesstoken,
+      (link = invitationLink),
+      (teamName = charityObj.charityName)
+    )
       .then((result) => console.log("Email sent...", result))
       .catch((error) => console.log(error.message));
     res.status(201).json(invitationLink);
@@ -164,7 +175,6 @@ router.post("/signup-with-link", async (req, res) => {
         email: decoded.email,
       },
     });
-
     console.log(decoded);
 
     console.log("🚀 ~ router.post ~ existingEmail:", existingEmail);
