@@ -95,7 +95,7 @@ const Explore = () => {
             height="100%"
           >
             <TypographyTitle variant="h1" align="center" padding="15px 0">
-              Explore away!
+            Explore all our projects
             </TypographyTitle>
             <SearchTextField
               fetchProjects={fetchProjects}
