@@ -4,6 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const multer = require("multer");
 const path = require("path");
+const authJWT = require("../middleware/JWTVerification");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -38,4 +39,41 @@ router.post(
     }
   }
 );
+// get information on charity, teammates from charity Id
+// twice nested query to get only needed information, including only what is needed
+// returns: their charity access rights, id, name, email
+router.get("/:ukCharityNumber", async (req, res) => {
+  try {
+    const { ukCharityNumber } = req.params;
+
+    const charity = await prisma.charity.findUnique({
+      where: { ukCharityNumber: ukCharityNumber },
+      select: {
+        members: {
+          select: {
+            charityHead: true,
+            user: {
+              select: {
+                id: true,
+                firstname: true,
+                lastname: true,
+                email: true,
+              },
+            },
+          },
+        },
+        projects: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+    res.status(200).json(charity);
+  } catch (error) {
+    console.error("Failed to get charity information:", error);
+    res.status(500).json({ error: "Failed to get charity information" });
+  }
+});
 module.exports = router;

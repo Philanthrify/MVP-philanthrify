@@ -21,14 +21,15 @@ const ProjectPage = () => {
   const dispatch = useDispatch();
   const project = useSelector((state: RootState) => state.project.project);
   const { projectId } = useParams<{ projectId: string }>();
-  useEffect(() => {
-    console.log(project);
-  }, [project]);
+  const userCharity = useSelector((state: RootState) => state.auth.charity);
+  useEffect(() => {}, [userCharity]);
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
   }, [dispatch, projectId]);
+  console.log("🚀 ~ useEffect ~ userCharity:", userCharity);
+
   // if not found the project yet then return loading screen
   if (!project) {
     return (
