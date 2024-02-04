@@ -129,9 +129,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     let invitationLink;
 
     if (process.env.NODE_ENV !== "development") {
+      invitationLink = `${process.env.URL_ROOT_ADDRESS}register?token=${token}`;
+    } else {
       invitationLink = `${process.env.DEV_ROOT_ADDRESS}register?token=${token}`;
     }
-    invitationLink = `${process.env.URL_ROOT_ADDRESS}register?token=${token}`;
 
     // placeholder link for now TODO: need to change to getting link from .env
     const accesstoken = await oAuth2Client.getAccessToken();

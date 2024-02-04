@@ -14,6 +14,7 @@ import Updates from "@/components/Project/Updates";
 import { useDispatch, useSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import InviteProjectMate from "@/components/Project/InviteProjectMate";
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {
@@ -28,7 +29,7 @@ const ProjectPage = () => {
       dispatch(fetchProject(projectId));
     }
   }, [dispatch, projectId]);
-  console.log("🚀 ~ useEffect ~ userCharity:", userCharity);
+  console.log("🚀 ~ project:", project, " ~ userCharity:", userCharity);
 
   // if not found the project yet then return loading screen
   if (!project) {
@@ -186,6 +187,20 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <Updates />
           </Grid>
+          {/* The teammates bit is only for those in said charity.*/}
+          {userCharity?.ukCharityNumber &&
+            project.charityId === userCharity?.ukCharityNumber && (
+              <>
+                <Grid item sx={{ width: "100%" }}>
+                  <SectionHeader header="Project Team" />
+                </Grid>
+                <Grid item sx={{ width: "100%" }}>
+                  <InviteProjectMate
+                    ukCharityNumber={userCharity.ukCharityNumber}
+                  />
+                </Grid>
+              </>
+            )}
         </Grid>
         <Grid item xs={4}>
           <SideFloater />

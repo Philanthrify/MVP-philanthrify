@@ -93,5 +93,31 @@ router.post(
     }
   }
 );
+// for any specific project Id
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const memberships = await prisma.projectMembership.findMany({
+      where: { projectId: id },
+      select: {
+        projectLead: true,
+        user: {
+          select: { id: true, firstname: true, lastname: true, email: true },
+        },
+      },
+    });
+    // warping into a better shape for frontend
+    const transformedMemberships = memberships.map((membership) => ({
+      id: membership.user.id,
+      firstname: membership.user.firstname,
+      lastname: membership.user.lastname,
+      email: membership.user.email,
+      projectLead: membership.projectLead,
+    }));
+    return res.status(200).json(transformedMemberships);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
 
 module.exports = router;
