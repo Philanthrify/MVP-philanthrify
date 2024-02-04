@@ -39,7 +39,7 @@ const AccountMenu = (props: AccountMenuProps) => {
   const open = Boolean(anchorEl);
   const userType = useSelector((state: RootState) => state.auth.userType);
   const firstname = useSelector((state: RootState) => state.auth.firstname);
-  const email = useSelector((state: RootState) => state.auth.email);
+  //const email = useSelector((state: RootState) => state.auth.email); 
   const charity = useSelector((state: RootState) => state.auth.charity);
   console.log("🚀 ~ AccountMenu ~ charity:", charity);
 
@@ -108,6 +108,7 @@ const AccountMenu = (props: AccountMenuProps) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 gap: "0.3rem",
+                padding: "12px 12px", 
               }}
             >
               <Avatar sx={{ width: 32, height: 32 }}>
@@ -130,13 +131,13 @@ const AccountMenu = (props: AccountMenuProps) => {
               backgroundColor: palette.background.light,
               color: palette.white.middle,
               borderRadius: "1rem", // Rounded edges
-              width: "200px",
+              width: "230px",
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
               mt: 1.5,
               "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
+                width: 42,
+                height: 42,
                 ml: -0.5,
                 mr: 1,
               },
@@ -186,12 +187,16 @@ const AccountMenu = (props: AccountMenuProps) => {
                 <Typography variant="caption">{charity.charityName}</Typography>
               )}
 
-              <Typography variant="caption" sx={{ color: palette.white.light }}>
-                {email}
-              </Typography>
+               {/* I remove the email line because is too long and we can add it to the profile page later Commented out the line to display email */}
+  {/* {charity && (
+    <Typography variant="caption">{charity.charityName}</Typography>
+  )} */}
+  {/* <Typography variant="caption" sx={{ color: palette.white.light }}>
+    {email}
+  </Typography> */}
             </Grid>
           </Grid>
-          <Divider sx={{ borderColor: palette.white.middle }} />
+          <Divider sx={{ borderColor: palette.grey[800] }} />
           <MenuItem onClick={goToDashboard} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <DashboardIcon fontSize="small" />
@@ -237,7 +242,7 @@ const AccountMenu = (props: AccountMenuProps) => {
             </ListItemIcon>
             View Profile
           </MenuItem>
-          <Divider sx={{ borderColor: palette.white.middle }} />
+          <Divider sx={{ borderColor: palette.grey[800] }} />
           <MenuItem onClick={handleClose} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <ContactSupportIcon fontSize="small" />
@@ -250,7 +255,7 @@ const AccountMenu = (props: AccountMenuProps) => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <Divider sx={{ borderColor: palette.white.middle }} />
+          <Divider sx={{ borderColor: palette.grey[800] }} />
           <MenuItem onClick={handleLogout} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <Logout fontSize="small" />

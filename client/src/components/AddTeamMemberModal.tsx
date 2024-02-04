@@ -4,7 +4,7 @@ import {
   Box,
   Button,
   Checkbox,
-  FormHelperText,
+  //FormHelperText,
   Grid,
   Modal,
   TextField,
@@ -22,20 +22,18 @@ interface AddTeamMemberModalProps {
   open: boolean;
   onClose: () => void;
 }
+
 const validationSchema = yup.object({
-  email: yup.string().required("email is required"),
+  email: yup.string().required("Email is required"),
 });
+
 const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
   open,
   onClose,
 }) => {
   const token = useSelector(selectToken);
   const charity = useSelector((state: RootState) => state.auth.charity);
-
   const { palette } = useTheme();
-  useEffect(() => {
-    console.log("🚀 ~ open:", open);
-  }, [open]);
 
   const style = {
     position: "absolute" as "absolute",
@@ -45,11 +43,12 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
     width: 500,
     color: palette.white.light,
     bgcolor: palette.background.default,
-    border: "2px solid #000",
+    border: "0px solid #000",
     boxShadow: 24,
     p: 4,
     borderRadius: "1rem",
   };
+
   const formik = useFormik({
     initialValues: {
       charityId: charity?.ukCharityNumber,
@@ -78,10 +77,13 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
         });
     },
   });
+
   const textFieldProps = FormStyles();
+
   useEffect(() => {
     console.log("Formik values changed:", formik.values);
   }, [formik.values]);
+
   return (
     <Modal
       open={open}
@@ -93,22 +95,16 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item>
-              {" "}
-              <Typography id="modal-modal-title" variant="h2" component="h2">
+              <Typography variant="h2" component="h2">
                 Add a Team Member
               </Typography>
-            </Grid>{" "}
+            </Grid>
             <Grid item>
-              {" "}
-              <Typography
-                id="modal-modal-description"
-                variant="body1"
-                sx={{ mt: 2 }}
-              >
+              <Typography variant="body1" sx={{ mt: 2 }}>
                 Enter the email of the person you wish to invite to your charity
                 team. Then pick whether they will be given 'Charity Head' access
                 rights. This means that they can edit, add transactions for all
-                projects accross the charity. If this user is just indended for
+                projects across the charity. If this user is just intended for
                 working on a single project within the charity then we suggest
                 to not give these access rights and add them just to that
                 project.
@@ -124,49 +120,32 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                  width: "100%",
-                }}
+                helperText={formik.touched.email && formik.errors.email}
+                sx={{ ...textFieldProps.textField, width: "100%" }}
               />
-              <Grid item>
-                <FormHelperText
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                >
-                  {formik.touched.email && formik.errors.email}
-                </FormHelperText>
-              </Grid>
-            </Grid>
-            <Grid item>
-              {" "}
-              <Typography
-                id="modal-modal-description"
-                variant="body1"
-                sx={{ mt: 2 }}
-              >
-                Add this user to 'Charity Head' access rights group?
-              </Typography>
             </Grid>
             <Grid item sx={{ width: "100%" }}>
-              {" "}
-              <Checkbox
-                checked={formik.values.charityHead}
-                onChange={() =>
-                  formik.setFieldValue(
-                    "charityHead",
-                    !formik.values.charityHead
-                  )
-                }
-                inputProps={{ "aria-label": "controlled" }}
-              />
+              <Grid container alignItems="center">
+                <Checkbox
+                  checked={formik.values.charityHead}
+                  onChange={() =>
+                    formik.setFieldValue(
+                      "charityHead",
+                      !formik.values.charityHead
+                    )
+                  }
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                  Add this user to 'Charity Head' access rights group?
+                </Typography>
+              </Grid>
             </Grid>
             <Grid container item alignItems="center" justifyContent="center">
-              {" "}
               <Button type="submit" variant="contained" color="primary">
                 Submit
               </Button>
-            </Grid>{" "}
+            </Grid>
           </Grid>
         </form>
       </Box>
