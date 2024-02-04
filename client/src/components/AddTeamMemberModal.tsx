@@ -31,7 +31,8 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
 }) => {
   const token = useSelector(selectToken);
   const charity = useSelector((state: RootState) => state.auth.charity);
-
+  const teammates = useSelector((state: RootState) => state.project.teammates);
+  console.log("🚀 ~ teammates:", teammates);
   const { palette } = useTheme();
   useEffect(() => {
     console.log("🚀 ~ open:", open);

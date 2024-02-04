@@ -1,22 +1,14 @@
 import { RootState } from "@/redux/store";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-//
-interface User {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  projectLead?: boolean;
-}
-interface CharityMember {
-  userType: string;
-  user: User; // Assuming 'User' is your existing interface
-}
+import AddProjectTeammateModal from "./AddProjectTeammateModal";
+import SectionHeader from "./SectionHeader";
+import PrimaryButton from "../Button/PrimaryButton";
+import { User, CharityMember } from "@/models/User";
+import { setTeammates, setCharityTeammates } from "@/redux/projectSlice";
 
 interface InviteProjectMateProps {
   ukCharityNumber: string;
@@ -25,11 +17,17 @@ interface InviteProjectMateProps {
 const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
   ukCharityNumber,
 }) => {
-  const project = useSelector((state: RootState) => state.project.project);
+  const dispatch = useDispatch();
+  const [isModalOpen, setModalOpen] = useState(false);
   const { projectId } = useParams<{ projectId: string }>();
   const [teamMates, setTeamMates] = useState<User[]>([]);
   const [charityMates, setCharityMates] = useState<User[]>([]); // a func which finds the project members
-
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
   const loadTeamMates = async () => {
     try {
       const response = await axios.get<User[]>(
@@ -41,11 +39,12 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
         }
       );
       setTeamMates(response.data);
+      dispatch(setTeammates(response.data));
     } catch (error: any) {
       console.error("Failed to load team mates:", error.message);
     }
   };
-  // TODO: currently is loading excess Matesrmation
+  // TODO: currently is loading excess information
   const loadCharityTeam = async () => {
     try {
       const response = await axios.get<{ members: CharityMember[] }>(
@@ -62,6 +61,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
         lastname: member.user.lastname,
         email: member.user.email,
       }));
+      dispatch(setCharityTeammates(transformedMemberships));
 
       console.log("Transformed Memberships:", transformedMemberships);
       setCharityMates(transformedMemberships);
@@ -69,6 +69,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
       console.error("Failed to load charity team:", error.message);
     }
   };
+
   useEffect(() => {
     loadTeamMates();
     loadCharityTeam();
@@ -78,24 +79,40 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
   }, [teamMates]);
   return (
     <>
-      <Typography variant="body2">Project Team Members:</Typography>
-      <ul>
-        {teamMates.map((mate) => (
-          <li key={mate.id}>
-            {mate.firstname} {mate.lastname} - {mate.email} -{" "}
-            {mate.projectLead && "Project Lead"}
-          </li>
-        ))}
-      </ul>
-      <Typography variant="body2">Charity Team Members:</Typography>
-
-      <ul>
-        {charityMates.map((mate) => (
-          <li key={mate.id}>
-            {mate.firstname} {mate.lastname}
-          </li>
-        ))}
-      </ul>
+      <AddProjectTeammateModal open={isModalOpen} onClose={handleCloseModal} />
+      <Grid item container direction="row" sx={{ width: "100%" }}>
+        <Grid item container direction="row" sx={{ width: "100%" }}>
+          <SectionHeader
+            header="Project Team"
+            buttons={[
+              <PrimaryButton
+                text="Edit team members"
+                onClick={handleOpenModal}
+              />,
+            ]}
+          />
+        </Grid>
+        <Grid item sx={{ width: "100%" }}>
+          {" "}
+          <Typography variant="body2">Project Team Members:</Typography>
+          <ul>
+            {teamMates.map((mate) => (
+              <li key={mate.id}>
+                {mate.firstname} {mate.lastname} - {mate.email} -{" "}
+                {mate.projectLead && "Project Lead"}
+              </li>
+            ))}
+          </ul>
+          <Typography variant="body2">Charity Team Members:</Typography>
+          <ul>
+            {charityMates.map((mate) => (
+              <li key={mate.id}>
+                {mate.firstname} {mate.lastname}
+              </li>
+            ))}
+          </ul>{" "}
+        </Grid>
+      </Grid>
     </>
   );
 };

@@ -2,18 +2,23 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { Project } from "@/models/project";
 import axios from "axios";
+import { User } from "@/models/User";
 
 // Define a type for the slice state
 interface ProjectState {
   project: Project | null;
   loading: boolean;
   error: string | null;
+  teammates: User[];
+  charityTeammates: User[];
 }
 // Define the initial state using that type
 const initialState: ProjectState = {
   project: null,
   loading: false,
   error: null,
+  teammates: [],
+  charityTeammates: [],
 };
 
 // Create the thunk for fetching project data
@@ -42,6 +47,12 @@ export const projectSlice = createSlice({
   initialState,
   reducers: {
     // Reducers for other actions
+    setTeammates: (state, action: PayloadAction<User[]>) => {
+      state.teammates = action.payload;
+    },
+    setCharityTeammates: (state, action: PayloadAction<User[]>) => {
+      state.charityTeammates = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,6 +74,8 @@ export const projectSlice = createSlice({
       });
   },
 });
+
+export const { setTeammates, setCharityTeammates } = projectSlice.actions;
 
 // Export the reducer as default
 export default projectSlice.reducer;

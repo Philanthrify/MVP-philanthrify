@@ -1,6 +1,6 @@
 import { fetchProject } from "@/redux/projectSlice";
 import { RootState } from "@/redux/store";
-import { Box, CircularProgress, Grid, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, useTheme } from "@mui/material";
 
 import Challenge from "@/components/Project/Challenge";
 import LocationText from "@/components/Project/LocationText";
@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InviteProjectMate from "@/components/Project/InviteProjectMate";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {
@@ -190,16 +191,9 @@ const ProjectPage = () => {
           {/* The teammates bit is only for those in said charity.*/}
           {userCharity?.ukCharityNumber &&
             project.charityId === userCharity?.ukCharityNumber && (
-              <>
-                <Grid item sx={{ width: "100%" }}>
-                  <SectionHeader header="Project Team" />
-                </Grid>
-                <Grid item sx={{ width: "100%" }}>
-                  <InviteProjectMate
-                    ukCharityNumber={userCharity.ukCharityNumber}
-                  />
-                </Grid>
-              </>
+              <InviteProjectMate
+                ukCharityNumber={userCharity.ukCharityNumber}
+              />
             )}
         </Grid>
         <Grid item xs={4}>

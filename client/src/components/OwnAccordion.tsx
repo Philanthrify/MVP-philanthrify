@@ -31,7 +31,9 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
         <>
           <Accordion key={index} sx={{ width: "60%" }}>
             <AccordionSummary
-              expandIcon={<ArrowDownwardIcon />}
+              expandIcon={
+                <ArrowDownwardIcon sx={{ color: palette.grey[600] }} />
+              }
               aria-controls={`panel${index}-content`}
               id={`panel${index}-header`}
             >
