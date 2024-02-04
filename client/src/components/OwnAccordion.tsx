@@ -55,6 +55,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
               ))}
             </AccordionDetails>
           </Accordion>
+
           <Divider />
         </>
       ))}

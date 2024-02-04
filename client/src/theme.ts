@@ -45,7 +45,7 @@ export const tokens = {
     figma: "#3B3B41",
     lighter: "#36363e",
     light: "#2d2d34",
-    main: "#1f2026",
+    main: "#1A1A1E",
   },
   white: {
     light: "#ffffff",

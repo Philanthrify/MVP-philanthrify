@@ -21,9 +21,11 @@ const Footer = () => {
         justifyContent="center"
         alignItems="center"
         spacing={4}
+        sx={{ paddingBottom: "14px" }} // Add bottom padding here
+
       >
         <Grid item sx={{ width: "85%" }}>
-          <Divider sx={{ borderColor: palette.white.middle }} />
+          <Divider sx={{ borderColor: palette.grey[800] }} />
         </Grid>
         <Grid
           item
@@ -62,7 +64,7 @@ const Footer = () => {
             <Grid item container justifyContent="flex-start" width="450px">
               {" "}
               <Typography variant="body1" sx={{ color: palette.white.light }}>
-                Stay up to date:
+                Stay up to date
               </Typography>
             </Grid>
             <Grid item container justifyContent="flex-end" spacing={2}>
@@ -87,6 +89,8 @@ const Footer = () => {
                       color: palette.background.default,
                       backgroundColor: palette.primary.main,
                     },
+                    padding: "24px 24px", // Add padding left and right
+
                   }}
                 >
                   Subscribe
@@ -97,7 +101,7 @@ const Footer = () => {
           </Grid>
         </Grid>{" "}
         <Grid item sx={{ width: "85%" }}>
-          <Divider sx={{ borderColor: palette.white.middle }} />
+          <Divider sx={{ borderColor: palette.grey[800] }} />
         </Grid>
         <Grid
           item

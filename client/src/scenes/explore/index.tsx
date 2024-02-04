@@ -93,6 +93,7 @@ const Explore = () => {
             alignItems="center"
             width="100%"
             height="100%"
+            
           >
             <TypographyTitle variant="h1" align="center" padding="15px 0">
               Explore all our projects
