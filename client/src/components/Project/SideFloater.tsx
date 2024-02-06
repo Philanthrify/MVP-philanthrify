@@ -33,6 +33,7 @@ const SideFloater = () => {
           height: "auto",
           backgroundColor: palette.background.light,
           position: "sticky",
+          //marginLeft: "20px",
           top: "25px",
           // Add any additional styling you need here
         }}

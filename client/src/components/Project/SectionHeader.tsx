@@ -11,7 +11,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
     <Grid container direction="column" alignItems="flex-start">
       <Grid item container direction="row" justifyContent="space-between">
         <Grid item>
-          <TypographyTitle variant="h3" align="center" padding="15px 0">
+          <TypographyTitle variant="h3" align="center" sx={{ marginBottom: "15px", marginTop: "30px", }}>
             {props.header}
           </TypographyTitle>
         </Grid>
@@ -30,7 +30,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
         </Grid>
       </Grid>
 
-      <Divider sx={{ borderColor: palette.white.middle, width: "100%" }} />
+      <Divider sx={{ borderColor: palette.grey[800], width: "95%" }} />
     </Grid>
   );
 };

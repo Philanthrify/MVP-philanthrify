@@ -26,12 +26,12 @@ const Challenge = () => {
     return (
       <Box
         sx={{
-          width: "90%",
+          width: "95%",
           // maxWidth: "400px",
           // height: "230px",
-          borderRadius: "1rem",
-          border: "2px solid", // Set the border thickness and style
-          borderColor: palette.white.middle, // Use a color from your theme
+          borderRadius: "1.75rem",
+          border: "1px solid", // Set the border thickness and style
+          borderColor: palette.grey[800] , // Use a color from your theme
           // Add any additional styling you need here
           display: "flex", // Make Box a flex container
           justifyContent: "center", // Horizontally center the content
@@ -43,7 +43,7 @@ const Challenge = () => {
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
-          sx={{ width: "90%", padding: "5px 0px 5px 0px" }}
+          sx={{ width: "90%", padding: "40px 0px 40px 0px" }}
         >
           <Grid container item direction="row" spacing={2}>
             <Grid item>
@@ -54,9 +54,10 @@ const Challenge = () => {
               <TypographyTitle
                 variant="h3"
                 align="left"
-                //   padding="0px 0px px 0px"
+                
+                padding="0px 0px 0px 0px"
               >
-                Challenge
+                The challenge
               </TypographyTitle>
             </Grid>
           </Grid>

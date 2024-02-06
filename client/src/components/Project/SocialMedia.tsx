@@ -27,7 +27,7 @@ const Links = () => {
   if (project?.link) {
     return (
       <>
-        <Grid container direction="row" spacing={4}>
+        <Grid container direction="row" spacing={2} >
           {project?.link.map((linkItem, index) => (
             <Grid item key={index}>
               {renderSocialIcon(linkItem.socialMedia, linkItem.webLink)}
