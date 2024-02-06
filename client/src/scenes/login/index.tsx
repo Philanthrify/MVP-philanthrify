@@ -90,10 +90,12 @@ const Login = () => {
       alignItems="center"
       width="100%"
       height="100%"
+      paddingTop="10px"
+      paddingBottom="32px"
     >
       <Grid xs={8}>
-        <FormBox>
-          <TypographyTitle variant="h1" align="center" padding="15px 0">
+        <FormBox >
+          <TypographyTitle variant="h1" align="center" paddingTop= "64px">
             Log In
           </TypographyTitle>
           <TypographyTitle variant="h4" align="center" padding="15px 0">
@@ -173,7 +175,7 @@ const Login = () => {
                 }}
               />
 
-              <Grid item xs={12} padding="10px 0px">
+              <Grid item xs={12} paddingTop= "30px" paddingBottom= "0px">
                 <Button
                   color="primary"
                   variant="contained"
@@ -183,10 +185,12 @@ const Login = () => {
                   Log In
                 </Button>
               </Grid>
-              <Grid xs={10} padding="10px 0px">
+              <Grid xs={10} padding="0px 0px">
                 <Typography
                   variant="body2"
                   align="center"
+                  paddingTop= "30px"
+                  paddingBottom= "64px"
                   color={palette.grey[500]}
                 >
                   Don't have an account yet?{" "}
