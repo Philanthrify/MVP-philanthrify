@@ -3,6 +3,7 @@ import { RootState } from "@/redux/store";
 import {
   Autocomplete,
   Box,
+  Checkbox,
   Grid,
   Modal,
   TextField,
@@ -10,11 +11,16 @@ import {
   useTheme,
 } from "@mui/material";
 import axios from "axios";
-import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import * as yup from "yup";
+import PrimaryButton from "../Button/PrimaryButton";
+
+interface AddProjectTeammatePayload {
+  addUserId: string;
+  projectId: string;
+  projectLead: boolean;
+}
 
 interface AddProjectTeammateModalProps {
   open: boolean;
@@ -33,13 +39,19 @@ const findCharityTeammatesNotInProject = function (
   );
 };
 
-const validationSchema = yup.object({});
 const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
   open,
   onClose,
 }) => {
+  const token = useSelector((state: RootState) => state.auth.token);
   const { palette } = useTheme();
   const { projectId } = useParams<{ projectId: string }>();
+  const [inviteMatePayload, setInviteMatePayload] =
+    useState<AddProjectTeammatePayload>({
+      addUserId: "",
+      projectId: projectId ? projectId : "",
+      projectLead: false,
+    });
   const teammates = useSelector((state: RootState) => state.project.teammates);
   const charityTeammates = useSelector(
     (state: RootState) => state.project.charityTeammates
@@ -49,6 +61,12 @@ const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
     teammates,
     charityTeammates
   );
+  const handleToggleProjectLead = () => {
+    setInviteMatePayload((prevState: AddProjectTeammatePayload) => ({
+      ...prevState,
+      projectLead: !prevState.projectLead,
+    }));
+  };
   console.log("charityTeammates: ", charityMatesNotInProject);
   const style = {
     position: "absolute" as "absolute",
@@ -66,33 +84,30 @@ const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
     borderRadius: "1rem",
     overflowY: "auto",
   };
-  const formik = useFormik({
-    initialValues: {
-      addUserId: "",
-      projectId: projectId,
-      projectLead: false,
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      axios({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/project-membership`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(values),
-        // withCredentials: true,
+
+  const onSubmit = () => {
+    axios({
+      method: "post",
+      url: `${import.meta.env.VITE_API_URL}/project-membership`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: JSON.stringify(inviteMatePayload),
+      // withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response);
+        onClose();
       })
-        .then((response) => {
-          console.log(response);
-          onClose();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  });
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    console.log(inviteMatePayload);
+  }, [inviteMatePayload]);
+
   return (
     <Modal
       open={open}
@@ -143,12 +158,36 @@ const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
                   }}
                 />
               )}
-              onChange={(event, value) => {
-                // Handle selection. 'value' will be the user object if not in freeSolo mode
-                // In freeSolo mode, you might want to handle it differently
-                console.log("Selected user ID:", value?.id); // Assuming you want to do something with the selected user's ID
+              onChange={(_event, value) => {
+                if (value) {
+                  setInviteMatePayload(
+                    (prevState: AddProjectTeammatePayload) => ({
+                      ...prevState,
+                      addUserId: value.id,
+                    })
+                  );
+                }
               }}
             />
+          </Grid>
+          <Grid item container direction="row" alignItems="center">
+            <Grid item>
+              <Typography id="modal-modal-description" variant="body1">
+                Will this person be a Project Lead?
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Checkbox
+                checked={inviteMatePayload.projectLead}
+                onChange={handleToggleProjectLead}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item justifyContent="center">
+            <Grid item>
+              {" "}
+              <PrimaryButton type="submit" text="Submit" onClick={onSubmit} />
+            </Grid>
           </Grid>
         </Grid>{" "}
       </Box>

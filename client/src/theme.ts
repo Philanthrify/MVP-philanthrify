@@ -173,17 +173,16 @@ const themeSettings = {
           borderRadius: "var(--radius-full, 1000px)",
         },
       },
-      defaultProps: {
-        root: { backgroundColor: tokens.primary[500] },
+      defaultProps: {},
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: { color: tokens.grey[500], borderRadius: "1rem" },
       },
     },
     ////// For Icons unless otherwise set
     MuiSvgIcon: {
-      defaultProps: {
-        root: {
-          color: tokens.white.light,
-        },
-      },
+      styleOverrides: {},
     },
     /////// Accordians:
     MuiAccordion: {

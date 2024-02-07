@@ -42,7 +42,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 500,
+    width: 800,
     color: palette.white.light,
     bgcolor: palette.background.default,
     border: "0px solid #000",
@@ -128,19 +128,24 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
             </Grid>
             <Grid item sx={{ width: "100%" }}>
               <Grid container alignItems="center">
-                <Checkbox
-                  checked={formik.values.charityHead}
-                  onChange={() =>
-                    formik.setFieldValue(
-                      "charityHead",
-                      !formik.values.charityHead
-                    )
-                  }
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-                <Typography variant="body1" sx={{ mt: 2 }}>
-                  Add this user to 'Charity Head' access rights group?
-                </Typography>
+                <Grid item>
+                  <Typography variant="body1">
+                    Add this user to 'Charity Head' access rights group?
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Checkbox
+                    checked={formik.values.charityHead}
+                    onChange={() =>
+                      formik.setFieldValue(
+                        "charityHead",
+                        !formik.values.charityHead
+                      )
+                    }
+                    inputProps={{ "aria-label": "controlled" }}
+                    sx={{ color: "white" }}
+                  />
+                </Grid>
               </Grid>
             </Grid>
             <Grid container item alignItems="center" justifyContent="center">

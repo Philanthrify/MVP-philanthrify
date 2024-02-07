@@ -28,6 +28,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
   const handleOpenModal = () => {
     setModalOpen(true);
   };
+  // getting a list of said project team
   const loadTeamMates = async () => {
     try {
       const response = await axios.get<User[]>(
@@ -45,6 +46,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
     }
   };
   // TODO: currently is loading excess information
+  // getting a list of charity team
   const loadCharityTeam = async () => {
     try {
       const response = await axios.get<{ members: CharityMember[] }>(
@@ -88,6 +90,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
               <PrimaryButton
                 text="Edit team members"
                 onClick={handleOpenModal}
+                sx={{}}
               />,
             ]}
           />
