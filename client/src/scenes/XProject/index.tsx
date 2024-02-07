@@ -67,14 +67,18 @@ const ProjectPage = () => {
         container
         item
         xs={12}
-        spacing={2}
-        width="100%"
+        spacing={3}
+        width= "1280px"
         height="510px"
         sx={{
           backgroundColor: palette.background.light,
-          borderRadius: "1rem",
-          margin: "0 auto 20px",
-          padding: "20px",
+          borderRadius: "1.75rem",
+          maxWidth: "1280px",
+          minHeight: "510px",
+          marginTop: "28px",
+          marginBottom: "96px",
+          //margin: "0px 0px",
+          //padding: "0px",
         }}
       >
         {/* Left Side */}
@@ -86,6 +90,7 @@ const ProjectPage = () => {
               backgroundColor: "#063970",
               justifyContent: "center",
               alignItems: "center",
+              
               // Add any additional styling you need here
             }}
           >
@@ -130,7 +135,7 @@ const ProjectPage = () => {
         item
         xs={12}
         spacing={2}
-        sx={{ width: "90%" }}
+        sx={{ width: "90%", marginBottom: "200px" }}
       >
         <Grid
           container
@@ -138,7 +143,7 @@ const ProjectPage = () => {
           justifyContent="flex-start"
           alignItems="flex-end"
           item
-          spacing={2}
+          spacing={3}
           xs={8}
         >
           <Grid item sx={{ width: "100%" }}>

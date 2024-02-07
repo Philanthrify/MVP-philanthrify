@@ -54,7 +54,7 @@ const gridTemplateLargeScreen = `
       gridTemplateAreas: generateGridTemplateAreas(numRows),
       justifyContent: "center",
       alignItems: "center",
-      gap: "1.5rem",
+      gap: "1.75rem",
     };
 
     return (

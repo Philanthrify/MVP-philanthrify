@@ -15,6 +15,7 @@ import CountrySelect from "../FormsUI/CountrySelector";
 import TagSelector from "../FormsUI/TagSelector";
 import TypographySmallText from "../SmallText";
 import TypographyTitle from "../Title";
+import LeftSide from "@/scenes/navbar/leftSide";
 
 type FilterDrawerProps = {
   drawerOpen: boolean;
@@ -70,43 +71,49 @@ const FilterDrawer = (props: FilterDrawerProps) => {
           maxWidth="100%"
         >
           <Grid item xs={12} maxWidth="100%">
-            <TypographyTitle variant="h3" align="center" padding="15px 0">
+            <TypographyTitle variant="h3" align="left" marginTop={1} >
               Filters
             </TypographyTitle>
-            <Divider sx={{ borderColor: palette.white.middle, marginY: 2 }} />
-            <TypographyTitle variant="h4" align="center" padding="15px 0">
+            <Divider sx={{ borderColor: palette.grey[800], marginY: 4 }} />
+            <TypographyTitle variant="h4" align="left" padding="0px 0" >
               Country
             </TypographyTitle>
             <TypographySmallText
               variant="body1"
-              align="center"
-              padding="15px 0"
+              align="left"
+              sx={{ marginBottom: 1 }}
+            
             >
               Select any country worldwide.
             </TypographySmallText>
-            <CountrySelect
+            <CountrySelect 
               value={filters.country}
               onChange={handleCountryChange}
+              
             />
-            <Divider sx={{ borderColor: palette.white.middle, marginY: 2 }} />
-            <TypographyTitle variant="h4" align="center" padding="15px 0">
+            <Divider sx={{ borderColor: palette.grey[800], marginY: 4 }} />
+            <TypographyTitle variant="h4" align="left" padding="0px 0" >
               Categories
             </TypographyTitle>
             <TypographySmallText
+            
               variant="body1"
-              align="center"
-              padding="15px 0"
+              align="left"
+              padding="0px 0px"
+              sx={{ marginBottom: 3 }}
             >
               What kind of project are you looking for?
             </TypographySmallText>
-            <TagSelector
-              value={filters.listOfTags}
-              handleChange={handleTagChange}
-            />
+            <Box sx={{ Widt: "100%" }}> {/* Add Box wrapper with width 100% */}
+              <TagSelector
+                value={filters.listOfTags}
+                handleChange={handleTagChange}
+              />
+            </Box>
           </Grid>
-          <Grid item xs={12}>
-            <Button onClick={props.fetchProjects}>Search</Button>
-            <Button onClick={clearFilters}>Clear Filters</Button>
+          <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+          <Button onClick={clearFilters} sx={{ marginTop: 6 }}>Clear Filters</Button>
+            <Button onClick={props.fetchProjects} sx={{ marginTop: 6 }}>Search</Button>
           </Grid>
         </Grid>
       </Box>

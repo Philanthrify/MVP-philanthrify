@@ -17,6 +17,7 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
   const navigate = useNavigate();
   const includeLogo = useMediaQuery("@media (min-width: 745px)");
 
+  
   return (
     <Grid
       item
