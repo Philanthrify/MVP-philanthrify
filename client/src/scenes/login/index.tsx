@@ -96,10 +96,11 @@ const Login = () => {
       <Grid xs={8}>
         <FormBox >
           <TypographyTitle variant="h1" align="center" paddingTop= "64px">
-            Log In
+            Log in
           </TypographyTitle>
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
-            Welcome back to our community!
+          <TypographyTitle variant="body2" align="center" padding="0px 0px">
+            
+            Welcome back to our community
           </TypographyTitle>
           {loginError && (
             // <Typography color="error" align="center" padding="15px 0">
@@ -135,7 +136,10 @@ const Login = () => {
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{
                   ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
+                  //width: textFieldProps.textFieldWidth,
+                  width: "100%", // Set the width to 100%
+                  maxWidth: "320px", // Set the maximum width
+                  marginTop: "10px",
                 }}
               />
 
@@ -154,7 +158,10 @@ const Login = () => {
                 helperText={formik.touched.password && formik.errors.password}
                 sx={{
                   ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
+                  //width: textFieldProps.textFieldWidth,
+                  width: "100%", // Set the width to 100%
+                  maxWidth: "320px", // Set the maximum width
+                  marginTop: "10px",
                 }}
                 InputProps={{
                   endAdornment: (
@@ -175,7 +182,7 @@ const Login = () => {
                 }}
               />
 
-              <Grid item xs={12} paddingTop= "30px" paddingBottom= "0px">
+              <Grid item xs={12} paddingTop= "25px" paddingBottom= "0px">
                 <Button
                   color="primary"
                   variant="contained"
@@ -189,7 +196,7 @@ const Login = () => {
                 <Typography
                   variant="body2"
                   align="center"
-                  paddingTop= "30px"
+                  paddingTop= "20px"
                   paddingBottom= "64px"
                   color={palette.grey[500]}
                 >
