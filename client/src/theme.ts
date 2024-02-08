@@ -173,11 +173,15 @@ const themeSettings = {
           borderRadius: "var(--radius-full, 1000px)",
         },
       },
-      defaultProps: {},
     },
     MuiCheckbox: {
       styleOverrides: {
         root: { color: tokens.grey[500], borderRadius: "1rem" },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: { borderColor: tokens.grey[800] },
       },
     },
     ////// For Icons unless otherwise set

@@ -5,9 +5,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import FormStyles from "@/components/FormsUI";
 import { useEffect, useState } from "react";
 import { countries } from "@/models/country";
-import { useTheme } from "@mui/material";
+import { SxProps, useTheme } from "@mui/material";
 
 interface CountrySelectProps {
+  sxProps: SxProps;
   value: string | null;
   onChange: (event: React.SyntheticEvent, newValue: string) => void; // Function to update Formik's value
 }
@@ -80,9 +81,7 @@ export default function CountrySelect(props: CountrySelectProps) {
             }}
             classes={{ ...textFieldProps.selectClasses }}
             sx={{
-              ...textFieldProps.select,
-              width: textFieldProps.textFieldWidth,
-              margin: "auto",
+              ...props.sxProps,
             }}
           />
         )}

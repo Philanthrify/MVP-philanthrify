@@ -97,7 +97,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item>
-              <Typography variant="h2" component="h2" >
+              <Typography variant="h2" component="h2">
                 Add a team member
               </Typography>
             </Grid>
@@ -143,7 +143,6 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
                       )
                     }
                     inputProps={{ "aria-label": "controlled" }}
-                    sx={{ color: "white" }}
                   />
                 </Grid>
               </Grid>

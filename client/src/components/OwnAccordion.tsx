@@ -55,8 +55,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
               ))}
             </AccordionDetails>
           </Accordion>
-
-          <Divider />
+          <Divider sx={{ width: "70%" }} />
         </>
       ))}
     </Grid>
