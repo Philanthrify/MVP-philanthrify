@@ -12,7 +12,7 @@ const HowItWorks = () => {
         justifyContent="center"
         alignItems="center"
         spacing={2}
-        sx={{ marginTop: "128px" }} // Adding margin top
+        sx={{ marginTop: "64px" }} // Adding margin top
       >
         <Grid item>
           <PhilanthrifyLogoWithPinkCircle />

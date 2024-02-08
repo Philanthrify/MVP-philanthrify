@@ -29,7 +29,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
     >
       {Object.entries(data).map(([key, value], index) => (
         <>
-          <Accordion key={index} sx={{ width: "60%" }}>
+          <Accordion key={index} sx={{ width: "60%", marginTop: "0px", marginBottom: "0px" }}>
             <AccordionSummary
               expandIcon={
                 <ArrowDownwardIcon sx={{ color: palette.grey[600] }} />
@@ -45,8 +45,9 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
                   key={lineIndex}
                   variant="body2"
                   sx={{
+                  
                     color: palette.grey[600],
-                    marginBottom: lineIndex < value.length - 1 ? 2 : 0,
+                    marginBottom: "lineIndex < value.length - 1 ? 2 : 0",
                     ...elem.sxProps, // Dump in the sx props which may have been defined for that elem
                   }}
                 >
@@ -55,7 +56,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
               ))}
             </AccordionDetails>
           </Accordion>
-          <Divider sx={{ width: "70%" }} />
+          <Divider sx={{ width: "58%", marginTop: "20px", marginBottom: "20px" }} />
         </>
       ))}
     </Grid>
