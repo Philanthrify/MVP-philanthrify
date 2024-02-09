@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const cookie = require("cookie");
 require("dotenv").config();
 
 const { PrismaClient } = require("@prisma/client");
@@ -186,6 +187,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     }
   );
+
   // want charities for charity users
   if (user.userType === "CHARITY") {
     // getting charity from database, for now assuming only one charity a user

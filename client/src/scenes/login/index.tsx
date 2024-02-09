@@ -19,6 +19,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import Cookies from 'universal-cookie';
+import { JwtPayload, jwtDecode } from "jwt-decode";
+import { Charity, CharityMembership } from "@/models/charity";
+
 const validationSchema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
@@ -27,7 +31,23 @@ interface LocationState {
   from: string;
 }
 
+interface UserToken extends JwtPayload {
+  user: any;
+}
+
+interface CookiesToken extends UserToken {
+  firstname: string;
+  useremail: string;
+  userType: string;
+  loggedInCharity?: Charity;
+  charity: CharityMembership[];
+  projects: any[];
+  exp: number;
+  iat: number;
+}
+
 const Login = () => {
+  const cookies = new Cookies();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -38,6 +58,31 @@ const Login = () => {
   const textFieldProps = FormStyles();
   const from = state?.from || "/";
   console.log(from);
+
+  //CHECK EXISTENCE OF COOKIES FROM PREVIOUS SESSION
+  //if exists a cookie then log in without having to log in
+  const cookie = cookies.get("jwt_authorisation");
+  if (cookie) {
+
+    console.log(cookie);
+    const decoded = jwtDecode<CookiesToken>(cookie);
+    console.log(decoded);
+    console.log(decoded.firstname);
+//
+    dispatch(
+      login({
+        token: cookie,
+        firstname: decoded.user.firstname,
+        email: decoded.user.email,
+        userType: decoded.user.userType,
+        charity: decoded.user.loggedInCharity ?? null,
+        charities: decoded.user.charity,
+        projects: decoded.user.projects,
+      })
+    );
+    navigate(from);
+  }
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -45,20 +90,24 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      axios({
-        method: "post",
-        url: `${import.meta.env.VITE_API_URL}/auth/login`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify(values),
-        // withCredentials: true,
-      })
+      axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        JSON.stringify(values),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
         .then((response) => {
+          console.log('response');
+          console.log(response.headers);
           console.log(
             "🚀 ~ .then ~ response.data.loggedInCharity:",
             response.data.loggedInCharity
           );
+
           dispatch(
             login({
               token: response.data.token,
@@ -70,7 +119,13 @@ const Login = () => {
               projects: response.data.projects,
             })
           );
+
+          const oneHourFromNow = new Date();
+          oneHourFromNow.setTime(oneHourFromNow.getTime() + 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 milliseconds
+          cookies.set("jwt_authorisation", response.data.token, {expires: oneHourFromNow});
+
           navigate(from);
+
         })
         .catch((error) => {
           console.log(error.response.data.message);

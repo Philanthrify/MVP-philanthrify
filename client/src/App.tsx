@@ -21,6 +21,7 @@ import ProjectPage from "./scenes/XProject";
 import Profile from "./scenes/profile";
 import HowItWorks from "./scenes/howItWorks";
 import { SnackbarProvider } from "./contexts/snackbarContext";
+import { CookiesProvider } from "./contexts/cookiesContext";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -39,24 +40,26 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
-          <CssBaseline />
-          <Box width="100%" height="100%" padding="1rem 2rem 4rem 2rem">
-            <Navbar />
-            <Routes>
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Explore />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/project/:projectId" element={<ProjectPage />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/addproject" element={<AddProject />} />
-                <Route path="/addtransaction" element={<TransactionAdd />} />
-    
-                <Route path="/profile" element={<Profile />} />
-              </Route>
-            </Routes>
-          </Box>
+          <CookiesProvider>
+            <CssBaseline />
+            <Box width="100%" height="100%" padding="1rem 2rem 4rem 2rem">
+              <Navbar />
+              <Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Explore />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/project/:projectId" element={<ProjectPage />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/addproject" element={<AddProject />} />
+                  <Route path="/addtransaction" element={<TransactionAdd />} />
+      
+                  <Route path="/profile" element={<Profile />} />
+                </Route>
+              </Routes>
+            </Box>
+          </CookiesProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </BrowserRouter>

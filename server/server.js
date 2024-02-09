@@ -14,11 +14,15 @@ dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
 
+let origin = 'https://philanthrify.co.uk/';
+if (process.env.NODE_ENV === "development") { origin = 'http://localhost:5173'; }
+
 // Middlewares
 app.use(helmet()); // Helps set some security headers
 app.use(
   cors({
-    origin: "*",
+    origin,
+    credentials: true,
   })
 ); // Enable CORS for all routes
 app.use(bodyParser.json()); // Parses incoming requests with JSON payloads

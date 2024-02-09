@@ -19,7 +19,6 @@ import { useSnackbar } from "@/contexts/snackbarContext";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
-  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
 
   const charity = useSelector((state: RootState) => state.auth.charity);
   const navigate = useNavigate();
