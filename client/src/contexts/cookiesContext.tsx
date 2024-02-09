@@ -3,12 +3,7 @@ import { login } from '@/redux/authSlice';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 import React, { createContext, ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-
-interface LocationState {
-    from: string;
-  }
 
 interface UserToken extends JwtPayload {
   user: any;
@@ -31,10 +26,6 @@ export const CookiesProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const cookies = new Cookies();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const state = location.state as LocationState | undefined;
-  const from = state?.from || "/";
 
   //CHECK EXISTENCE OF COOKIES FROM PREVIOUS SESSION
   //if exists a cookie then log in without having to log in
