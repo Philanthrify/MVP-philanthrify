@@ -97,7 +97,9 @@ const themeSettings = {
     },
     // underMainTitle (e.g. the text under the 'explore' on the explore page)
     h2: {
-      fontSize: 24,
+      fontSize: 38,
+      fontWeight: 500,
+      color: tokens.grey[500],
     },
     // lowerTitle (e.g.'challenge' in project page)
     h3: {

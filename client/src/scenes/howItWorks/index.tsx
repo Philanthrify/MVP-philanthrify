@@ -1,7 +1,10 @@
 import OwnAccordion from "@/components/OwnAccordion";
 import { accordionData } from "./howItWorks";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/PhilanthrifyLogoWithPinkCircle";
+import PageBox from "@/components/PageBox";
+import TypographyTitle from "@/components/Title";
+
 
 const HowItWorks = () => {
   return (
@@ -12,7 +15,7 @@ const HowItWorks = () => {
         justifyContent="center"
         alignItems="center"
         spacing={2}
-        sx={{ marginTop: "64px" }} // Adding margin top
+        sx={{ marginTop: "96px" }} // Adding margin top
       >
         <Grid item>
           <PhilanthrifyLogoWithPinkCircle />
@@ -51,11 +54,46 @@ const HowItWorks = () => {
         </Grid>{" "}
         <Grid
           item
-          sx={{ marginTop: "96px", marginBottom: "192px", maxWidth: "800px" }}
+          sx={{ marginTop: "96px", marginBottom: "128px", maxWidth: "800px" }}
         >
           {" "}
           {/* Adding margin top */}
           <OwnAccordion data={accordionData} />
+
+          <PageBox sx={{ marginTop: "170px" }}>
+          <Grid
+            container
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            width="100%"
+            height="100%"
+            display= "flex"
+            flexDirection= "column"
+  
+          >
+            <TypographyTitle variant="h2" align="center" >
+            Still have questions?
+            </TypographyTitle>
+
+            <Typography
+              variant="h6" align="center"
+              sx={{ fontWeight: 300,
+                color: "grey.600", marginTop: '10px', marginBottom: '42px'  }}
+            >
+              Can’t find the answer you’re looking for? Please contact our friendly team.
+            </Typography>
+            <Button
+                  color="primary"
+                  variant="contained"
+                  sx={{ width: '130px' }} // Set the width to 300px
+                  type="submit"
+                >
+                  Contact us
+                </Button>
+
+          </Grid>{" "}
+        </PageBox  >
         </Grid>
         <Grid item></Grid>
         <Grid item></Grid>
