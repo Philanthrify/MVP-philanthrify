@@ -1,8 +1,9 @@
 import { fetchProject } from "@/redux/projectSlice";
 import { RootState } from "@/redux/store";
-import { Box, CircularProgress, Grid, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, useTheme } from "@mui/material";
 
 import Challenge from "@/components/Project/Challenge";
+import InviteProjectMate from "@/components/Project/InviteProjectMate";
 import LocationText from "@/components/Project/LocationText";
 import ProjectTitle from "@/components/Project/ProjectTitle";
 import SectionHeader from "@/components/Project/SectionHeader";
@@ -13,22 +14,25 @@ import Transactions from "@/components/Project/Transactions";
 import Updates from "@/components/Project/Updates";
 import { useDispatch, useSelector } from "@/redux/hooks";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import EditButton from "@/components/Button/EditButton";
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const project = useSelector((state: RootState) => state.project.project);
   const { projectId } = useParams<{ projectId: string }>();
-  useEffect(() => {
-    console.log(project);
-  }, [project]);
+  const userCharity = useSelector((state: RootState) => state.auth.charity);
+  useEffect(() => {}, [userCharity]);
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
   }, [dispatch, projectId]);
+  console.log("🚀 ~ project:", project, " ~ userCharity:", userCharity);
+
   // if not found the project yet then return loading screen
   if (!project) {
     return (
@@ -45,6 +49,10 @@ const ProjectPage = () => {
     );
   }
 
+  const goToCharity = () => {
+    // navigate(`/project/${props.project.id}`);
+    navigate(`/charity/${project.charityId}`);
+  };
   return (
     <Grid
       container
@@ -64,30 +72,44 @@ const ProjectPage = () => {
         container
         item
         xs={12}
-        spacing={2}
-        width="100%"
+        spacing={3}
+        width="1280px"
         height="510px"
         sx={{
           backgroundColor: palette.background.light,
-          borderRadius: "1rem",
-          margin: "0 auto 20px",
-          padding: "20px",
+          borderRadius: "1.75rem",
+          maxWidth: "1280px",
+          minHeight: "510px",
+          marginTop: "28px",
+          marginBottom: "96px",
+          //margin: "0px 0px",
+          //padding: "0px",
         }}
       >
         {/* Left Side */}
-        <Grid item md={6} xs={6}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "#063970",
-              justifyContent: "center",
-              alignItems: "center",
-              // Add any additional styling you need here
-            }}
-          >
-            Image Here
-          </Box>
+        <Grid
+          container
+          item
+          md={6}
+          xs={6}
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-end"
+        >
+          <Grid item sx={{ width: "90%", height: "90%" }}>
+            <Box
+              sx={{
+                height: "100%",
+                backgroundColor: "#063970",
+                justifyContent: "center",
+                alignItems: "center",
+
+                // Add any additional styling you need here
+              }}
+            >
+              Image Here
+            </Box>
+          </Grid>
         </Grid>
 
         {/* Right Side */}
@@ -97,7 +119,7 @@ const ProjectPage = () => {
           md={6}
           xs={6}
           direction="column"
-          justifyContent="flex-start"
+          justifyContent="center"
         >
           {" "}
           {/* the location of the project */}
@@ -109,13 +131,18 @@ const ProjectPage = () => {
             <ProjectTitle />
           </Grid>
           <Grid item>
-            <Box
-              height="100px"
-              width="100%"
-              sx={{ backgroundColor: "#64F2A4" }}
+            <Button
+              onClick={goToCharity}
+              sx={{
+                color: "black",
+
+                backgroundColor: "#64F2A4",
+                // height: "100px",
+                // width: "100%",
+              }}
             >
               Charity Logo Here
-            </Box>
+            </Button>
           </Grid>
         </Grid>
       </Grid>
@@ -127,7 +154,7 @@ const ProjectPage = () => {
         item
         xs={12}
         spacing={2}
-        sx={{ width: "90%" }}
+        sx={{ width: "90%", marginBottom: "200px" }}
       >
         <Grid
           container
@@ -135,7 +162,7 @@ const ProjectPage = () => {
           justifyContent="flex-start"
           alignItems="flex-end"
           item
-          spacing={2}
+          spacing={3}
           xs={8}
         >
           <Grid item sx={{ width: "100%" }}>
@@ -180,11 +207,19 @@ const ProjectPage = () => {
             <Transactions />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
+            <EditButton />
             <SectionHeader header="Updates" />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
             <Updates />
           </Grid>
+          {/* The teammates bit is only for those in said charity.*/}
+          {userCharity?.ukCharityNumber &&
+            project.charityId === userCharity?.ukCharityNumber && (
+              <InviteProjectMate
+                ukCharityNumber={userCharity.ukCharityNumber}
+              />
+            )}
         </Grid>
         <Grid item xs={4}>
           <SideFloater />

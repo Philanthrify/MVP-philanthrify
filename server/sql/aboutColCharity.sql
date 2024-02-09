@@ -1,0 +1,2 @@
+ALTER TABLE Charity
+ADD COLUMN about LONGTEXT;

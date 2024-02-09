@@ -145,14 +145,17 @@ const Login = () => {
       alignItems="center"
       width="100%"
       height="100%"
+      paddingTop="10px"
+      paddingBottom="32px"
     >
       <Grid xs={8}>
-        <FormBox>
-          <TypographyTitle variant="h1" align="center" padding="15px 0">
-            Log In
+        <FormBox >
+          <TypographyTitle variant="h1" align="center" paddingTop= "64px">
+            Log in
           </TypographyTitle>
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
-            Welcome back to our community!
+          <TypographyTitle variant="body2" align="center" padding="0px 0px">
+            
+            Welcome back to our community
           </TypographyTitle>
           {loginError && (
             // <Typography color="error" align="center" padding="15px 0">
@@ -188,7 +191,10 @@ const Login = () => {
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{
                   ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
+                  //width: textFieldProps.textFieldWidth,
+                  width: "100%", // Set the width to 100%
+                  maxWidth: "320px", // Set the maximum width
+                  marginTop: "10px",
                 }}
               />
 
@@ -207,7 +213,10 @@ const Login = () => {
                 helperText={formik.touched.password && formik.errors.password}
                 sx={{
                   ...textFieldProps.textField,
-                  width: textFieldProps.textFieldWidth,
+                  //width: textFieldProps.textFieldWidth,
+                  width: "100%", // Set the width to 100%
+                  maxWidth: "320px", // Set the maximum width
+                  marginTop: "10px",
                 }}
                 InputProps={{
                   endAdornment: (
@@ -228,7 +237,7 @@ const Login = () => {
                 }}
               />
 
-              <Grid item xs={12} padding="10px 0px">
+              <Grid item xs={12} paddingTop= "25px" paddingBottom= "0px">
                 <Button
                   color="primary"
                   variant="contained"
@@ -238,10 +247,12 @@ const Login = () => {
                   Log In
                 </Button>
               </Grid>
-              <Grid xs={10} padding="10px 0px">
+              <Grid xs={10} padding="0px 0px">
                 <Typography
                   variant="body2"
                   align="center"
+                  paddingTop= "20px"
+                  paddingBottom= "64px"
                   color={palette.grey[500]}
                 >
                   Don't have an account yet?{" "}

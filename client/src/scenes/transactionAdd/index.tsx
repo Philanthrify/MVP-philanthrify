@@ -157,41 +157,157 @@ const TransactionAdd = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: "100px",
+          marginBottom: "150px"
+          
         }}
         onSubmit={formik.handleSubmit}
       >
-        <FormBox width="70%">
-          <TypographyTitle variant="h2" align="center" padding="15px">
-            Submit New Transaction:
-          </TypographyTitle>
-          <Grid container >
-            <Grid
-              item
-              spacing={2}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="space-between"
-              width="70%"
-            >
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={formik.values.project}
-              label="Select project?"
-              onChange={changeProject}
-            >
-              {projects.map((project) => (
-                <MenuItem key={project.id} value={project.id}>
-                  <ListItemText primary={project.title} />
-                </MenuItem>
-              ))}
-            </Select>
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          maxWidth= "640px"
+
+          justifyContent="space-between"
+          alignItems="space-between"
+        >
+          <Grid item>
+            {" "}
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Which project is this for?
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formik.values.project}
+                label="Which project is this for?"
+                onChange={changeProject}
+              >
+                {projects.map((project) => (
+                  <MenuItem key={project.id} value={project.id}>
+                    <ListItemText primary={project.title} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid
+            item
+            container
+            spacing={2}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="space-between"
+          >
+            <Grid item xs={6}>
+              {" "}
+              <AmountInput 
+                value={formik.values.amount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.amount && Boolean(formik.errors.amount)}
+                helperText={
+                  formik.touched.amount && formik.errors.amount
+                    ? formik.errors.amount
+                    : undefined
+                }
+                label="Amount"
+                id="amount"
+                name="amount"
+                width="100%"
+                
+              />{" "}
+            </Grid>
+
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  What Kind of Transaction
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formik.values.category}
+                  label="Type of Transaction"
+                  onChange={changeCategory}
+                >
+                  {Object.entries(TransactionKinds).map(([key, value]) => (
+                    <MenuItem key={key} value={key}>
+                      <ListItemText primary={value} />{" "}
+                      {/* Display the value with spaces */}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
           </Grid>
+          <Grid
+            item
+            container
+            spacing={2}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="space-between"
+          >
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                id="whatBrought"
+                name="whatBrought"
+                label="What did you pay for?"
+                value={formik.values.whatBrought}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.whatBrought &&
+                  Boolean(formik.errors.whatBrought)
+                }
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                }}
+              />
+              <Grid xs={10}>
+                <FormHelperText
+                  error={
+                    formik.touched.whatBrought &&
+                    Boolean(formik.errors.whatBrought)
+                  }
+                ></FormHelperText>{" "}
+              </Grid>{" "}
+            </Grid>{" "}
+            <Grid item xs={6}>
+              {" "}
+              <TextField
+                fullWidth
+                id="whatFor"
+                name="whatFor"
+                label="What will it be used for?"
+                value={formik.values.whatFor}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.whatFor && Boolean(formik.errors.whatFor)}
+                helperText={""}
+                sx={{
+                  ...textFieldProps.textField,
+                }}
+              />
+              <Grid xs={10}>
+                <FormHelperText
+                  error={
+                    formik.touched.whatFor && Boolean(formik.errors.whatFor)
+                  }
+                ></FormHelperText>{" "}
+              </Grid>{" "}
+            </Grid>{" "}
+          </Grid>
+          <Button type="submit" variant="contained" color="primary" style={{ margin: '40px auto 0', display: 'block', width: '150px' }}>
+           Submit
+           </Button>
 
-
-
-        </FormBox>
+        </Grid>
       </form>
     </>
   );

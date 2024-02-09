@@ -28,11 +28,13 @@ const ResultBox = (props: ResultBoxProps) => {
         flexDirection: "column", // Stack children vertically
         justifyContent: "flex-start", // Distribute space
         alignItems: "flex-start",
+        
+        
         color: palette.grey[500], // Text color
         "&:hover": {
           backgroundColor: palette.background.lighter, // Hover background color
         },
-        borderRadius: "1rem",
+        borderRadius: "1.5rem",
         boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,.8",
       }}
       onClick={goToProject}
@@ -46,7 +48,7 @@ const ResultBox = (props: ResultBoxProps) => {
           justifyContent: "center",
           alignContent: "center",
           backgroundColor: "#063970", // Placeholder color
-          borderRadius: "1rem 1rem 0 0", // Top corners rounded
+          borderRadius: "1.5rem 1.5rem 0 0", // Top corners rounded
           // Add any additional styling for the placeholder here
         }}
       >

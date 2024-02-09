@@ -16,7 +16,6 @@ interface MyTokenPayload extends JwtPayload {
   email?: string;
   charityId?: string;
   charityName?: string;
-  // ... add any other custom fields that your token might have
 }
 
 const Register = () => {

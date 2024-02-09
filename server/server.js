@@ -49,6 +49,8 @@ app.use("/team-invite", teamInvitesRoutes);
 const tagRoutes = require("./routers/tag");
 app.use("/tag", tagRoutes);
 
+const charityRoutes = require("./routers/charity");
+app.use("/charity", charityRoutes);
 const projectUpdateRoutes = require("./routers/projectUpdates");
 app.use("/projectUpdate", projectUpdateRoutes);
 

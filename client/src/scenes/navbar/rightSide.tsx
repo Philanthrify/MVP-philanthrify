@@ -17,6 +17,7 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
   const navigate = useNavigate();
   const includeLogo = useMediaQuery("@media (min-width: 745px)");
 
+  
   return (
     <Grid
       item
@@ -37,6 +38,7 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
           <Button
             // variant="text"
             sx={{
+              padding: "0 24px",
               color: palette.background.light,
               backgroundColor: palette.primary.main,
               "&:hover": {
@@ -57,6 +59,7 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
 
               console.log("");
             }}
+
           />
         )}
       </Grid>{" "}

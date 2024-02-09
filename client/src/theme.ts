@@ -45,7 +45,7 @@ export const tokens = {
     figma: "#3B3B41",
     lighter: "#36363e",
     light: "#2d2d34",
-    main: "#1f2026",
+    main: "#1A1A1E",
   },
   white: {
     light: "#ffffff",
@@ -97,7 +97,9 @@ const themeSettings = {
     },
     // underMainTitle (e.g. the text under the 'explore' on the explore page)
     h2: {
-      fontSize: 24,
+      fontSize: 38,
+      fontWeight: 500,
+      color: tokens.grey[500],
     },
     // lowerTitle (e.g.'challenge' in project page)
     h3: {
@@ -153,7 +155,9 @@ const themeSettings = {
   components: {
     // Name of the component
     MuiButtonBase: {
-      defaultProps: { disableRipple: true },
+      defaultProps: {
+        disableRipple: true,
+      },
     },
     ///// General components higher
     //// Buttons
@@ -172,13 +176,19 @@ const themeSettings = {
         },
       },
     },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: { color: tokens.grey[500], borderRadius: "1rem" },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: { borderColor: tokens.grey[800] },
+      },
+    },
     ////// For Icons unless otherwise set
     MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          color: tokens.white.light,
-        },
-      },
+      styleOverrides: {},
     },
     /////// Accordians:
     MuiAccordion: {
