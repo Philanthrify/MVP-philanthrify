@@ -1,5 +1,6 @@
 import { Divider, Grid, useTheme } from "@mui/material";
 import TypographyTitle from "../Title";
+import EditIcon from "@mui/icons-material/Edit";
 
 type SectionHeaderProps = {
   header: string;
@@ -11,7 +12,11 @@ const SectionHeader = (props: SectionHeaderProps) => {
     <Grid container direction="column" alignItems="flex-start">
       <Grid item container direction="row" justifyContent="space-between">
         <Grid item>
-          <TypographyTitle variant="h3" align="center" sx={{ marginBottom: "15px", marginTop: "30px", }}>
+          <TypographyTitle
+            variant="h3"
+            align="center"
+            sx={{ marginBottom: "15px", marginTop: "30px" }}
+          >
             {props.header}
           </TypographyTitle>
         </Grid>

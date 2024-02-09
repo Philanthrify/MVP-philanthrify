@@ -157,6 +157,7 @@ router.post("/signup-charity", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  // rid user password, don't send password to frontend (security reasons)
   const user = await prisma.user.findUnique({
     where: { email },
     include: { charity: true, projects: true },

@@ -25,20 +25,20 @@ const SearchTextField = (props: SearchTextFieldProps) => {
 
   const { palette } = useTheme();
 
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      console.log("searching!");
-      props.fetchProjects();
-    }
-  };
-
   const searchTerm = useSelector(
     (state: RootState) => state.explore.searchTerm
   );
-
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      if (searchTerm) {
+        props.fetchProjects();
+      }
+    }
+  };
   useEffect(() => {
-    console.log("searchTerm in Redux Store:", searchTerm);
-  }, [searchTerm]);
+    props.fetchProjects();
+  }, []);
+
   return (
     <>
       <Grid

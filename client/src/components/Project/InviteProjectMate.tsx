@@ -1,14 +1,13 @@
-import { RootState } from "@/redux/store";
+import { CharityMember, User } from "@/models/User";
+import { setCharityTeammates, setTeammates } from "@/redux/projectSlice";
 import { Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import PrimaryButton from "../Button/PrimaryButton";
 import AddProjectTeammateModal from "./AddProjectTeammateModal";
 import SectionHeader from "./SectionHeader";
-import PrimaryButton from "../Button/PrimaryButton";
-import { User, CharityMember } from "@/models/User";
-import { setTeammates, setCharityTeammates } from "@/redux/projectSlice";
 
 interface InviteProjectMateProps {
   ukCharityNumber: string;
@@ -102,7 +101,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
             {teamMates.map((mate) => (
               <li key={mate.id}>
                 {mate.firstname} {mate.lastname} - {mate.email} -{" "}
-                {mate.projectLead && "Project Lead"}
+                {mate.projectLead ? "Project Lead" : "Project Reporter"}
               </li>
             ))}
           </ul>

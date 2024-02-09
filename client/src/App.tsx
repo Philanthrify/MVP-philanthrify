@@ -22,6 +22,7 @@ import Profile from "./scenes/profile";
 import HowItWorks from "./scenes/howItWorks";
 import { SnackbarProvider } from "./contexts/snackbarContext";
 import Footer from "./scenes/footer";
+import CharityPage from "./scenes/XCharity";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -58,6 +59,8 @@ function App() {
                 <Route path="/" element={<Explore />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/project/:projectId" element={<ProjectPage />} />
+                <Route path="/charity/:charityId" element={<CharityPage />} />
+
                 <Route element={<PrivateRoute />}>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/addproject" element={<AddProject />} />
