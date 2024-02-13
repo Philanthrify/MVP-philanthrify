@@ -72,11 +72,11 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
           <Button
             // variant="text"
             sx={{
-              color: palette.white.middle,
-              backgroundColor: palette.background.light,
+              color: palette.white.light,
+              backgroundColor: "#3B3B41",
               "&:hover": {
                 color: palette.white.light,
-                backgroundColor: palette.background.light,
+                backgroundColor: "#53535B",
               },
             }}
             onClick={() => {

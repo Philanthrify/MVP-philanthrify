@@ -14,10 +14,11 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
     <Button
       type={props.type}
       sx={{
-        color: palette.background.light,
-        backgroundColor: palette.primary.main,
+        color: palette.white.light,
+        backgroundColor: 'primary.700',
+        
         "&:hover": {
-          backgroundColor: palette.primary.main,
+          backgroundColor: 'primary.900',
         },
         padding: "0 24px", // Add padding left and right
         ...props.sx,

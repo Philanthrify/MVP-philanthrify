@@ -4,6 +4,8 @@ import { Grid, Typography, Button } from "@mui/material";
 import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/PhilanthrifyLogoWithPinkCircle";
 import PageBox from "@/components/PageBox";
 import TypographyTitle from "@/components/Title";
+import PrimaryButton from "@/components/Button/PrimaryButton";
+
 
 
 const HowItWorks = () => {
@@ -54,7 +56,7 @@ const HowItWorks = () => {
           {/* Adding margin top */}
           <OwnAccordion data={accordionData} />
 
-          <PageBox sx={{ marginTop: "170px" }}>
+          <PageBox sx={{ margin: "0px auto", marginTop: "170px" }}>
           <Grid
             container
             direction="column"
@@ -78,14 +80,16 @@ const HowItWorks = () => {
             >
               Can’t find the answer you’re looking for? Please contact our friendly team.
             </Typography>
-            <Button
-                  color="primary"
-                  variant="contained"
-                  sx={{ width: '130px' }} // Set the width to 300px
-                  type="submit"
-                >
-                  Contact us
-                </Button>
+
+            <PrimaryButton
+            text="Contact us"
+            onClick={() => { 
+              //setSelected("donate");
+
+              console.log("");
+            }}
+
+          />
 
           </Grid>{" "}
         </PageBox  >

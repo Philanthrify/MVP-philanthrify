@@ -83,11 +83,11 @@ const Footer = () => {
                 <Button
                   // variant="text"
                   sx={{
-                    color: palette.background.default,
-                    backgroundColor: palette.primary.main,
+                    color: "#ffffff",
+                    backgroundColor: 'primary.700',
                     "&:hover": {
-                      color: palette.background.default,
-                      backgroundColor: palette.primary.main,
+                      color: "#ffffff",
+                      backgroundColor: 'primary.900',
                     },
                     padding: "24px 24px", // Add padding left and right
 
