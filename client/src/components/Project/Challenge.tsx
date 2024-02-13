@@ -1,13 +1,21 @@
 import { mapValues } from "@/models/tagValues";
 import { RootState } from "@/redux/store";
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid, useTheme, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import ChallengeStars from "../Icons/ChallengeStars";
 import TypographySmallText from "../SmallText";
 import TypographyTitle from "../Title";
 import Tag from "./Tag";
+import { ProjectPageFields } from "@/scenes/XProject/Project";
 
-const Challenge = () => {
+type ChallengeProps = {
+  editing: boolean;
+  buttons?: React.ReactNode[];
+  projectFields: ProjectPageFields;
+  updateField: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+};
+
+const Challenge = (props: ChallengeProps) => {
   const { palette } = useTheme();
   const project = useSelector((state: RootState) => state.project.project);
   const transformKeysToValues = (projectTags: object): string[] => {
@@ -31,7 +39,7 @@ const Challenge = () => {
           // height: "230px",
           borderRadius: "1.75rem",
           border: "1px solid", // Set the border thickness and style
-          borderColor: palette.grey[800] , // Use a color from your theme
+          borderColor: palette.grey[800], // Use a color from your theme
           // Add any additional styling you need here
           display: "flex", // Make Box a flex container
           justifyContent: "center", // Horizontally center the content
@@ -54,23 +62,45 @@ const Challenge = () => {
               <TypographyTitle
                 variant="h3"
                 align="left"
-                
                 padding="0px 0px 0px 0px"
               >
                 The challenge
               </TypographyTitle>
             </Grid>
+            {props.buttons && (
+              <Grid item>
+                {props.buttons.map((button, index) => (
+                  <Grid item key={index}>
+                    {button}
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </Grid>
+          <Grid item>
+            {" "}
+            {!props.editing ? (
+              <TypographySmallText
+                variant="body2"
+                // align="center"
+                sx={{ wordWrap: "break-word" }}
+              >
+                {project.challenge}
+              </TypographySmallText>
+            ) : (
+              <TextField
+                name="challenge"
+                multiline
+                rows={4}
+                value={props.projectFields.challenge.current}
+                onChange={props.updateField}
+                sx={{
+                  width: "80%",
+                }}
+              />
+            )}{" "}
           </Grid>
 
-          <Grid item>
-            <TypographySmallText
-              variant="body2"
-              // align="center"
-              sx={{ wordWrap: "break-word" }}
-            >
-              {project.challenge}
-            </TypographySmallText>
-          </Grid>
           <Grid container item direction="row" spacing={2}>
             {tags.map((value: string) => (
               <Grid item>

@@ -33,3 +33,15 @@ export interface ProjectShort {
   id: string;
   title: string;
 }
+
+export type UpdateProjectFieldPayload = {
+  field: UpdatableStringFieldsOfProject;
+  value: string;
+};
+type UpdatableStringFieldsOfProject =
+  | "title"
+  | "challenge"
+  | "solution"
+  | "donationUsage"
+  | "futureImpact"
+  | "charityId";

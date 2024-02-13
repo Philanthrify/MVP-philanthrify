@@ -1,6 +1,13 @@
 import { fetchProject } from "@/redux/projectSlice";
 import { RootState } from "@/redux/store";
-import { Box, Button, CircularProgress, Grid, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  useTheme,
+} from "@mui/material";
 
 import Challenge from "@/components/Project/Challenge";
 import InviteProjectMate from "@/components/Project/InviteProjectMate";
@@ -13,19 +20,32 @@ import Links from "@/components/Project/SocialMedia";
 import Transactions from "@/components/Project/Transactions";
 import Updates from "@/components/Project/Updates";
 import { useDispatch, useSelector } from "@/redux/hooks";
-import { useEffect } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EditButton from "@/components/Button/EditButton";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { ProjectPageFields } from "./Project";
+import { updateProjectField } from "@/redux/projectSlice";
+
 // import Transactions from "@/components/Project/Transactions";
 
 const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [projectFields, setProjectFields] = useState<ProjectPageFields>({
+    title: { current: "", edit: false },
+    challenge: { current: "", edit: false },
+    solution: { current: "", edit: false },
+    donationUsage: { current: "", edit: false },
+    futureImpact: { current: "", edit: false },
+  });
   const project = useSelector((state: RootState) => state.project.project);
   const { projectId } = useParams<{ projectId: string }>();
   const userCharity = useSelector((state: RootState) => state.auth.charity);
-  useEffect(() => {}, [userCharity]);
+  useEffect(() => {
+    console.log("🚀 ~ ProjectPage ~ projectFields:", projectFields);
+  }, [projectFields]);
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
@@ -33,6 +53,77 @@ const ProjectPage = () => {
   }, [dispatch, projectId]);
   console.log("🚀 ~ project:", project, " ~ userCharity:", userCharity);
 
+  // This function runs when the user clicks the edit button on each field in order to edit
+  // it handles flipping the field into editing mode
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const fieldName = event.currentTarget.name as keyof ProjectPageFields;
+    console.log("🚀 ~ handleButtonClick ~ fieldName:", fieldName);
+
+    if (project) {
+      // get current value from project field so that it can be edited
+      const current = project[fieldName];
+      // flipping edit mode for this field
+      if (fieldName in projectFields) {
+        setProjectFields((prevState) => {
+          const isEditing = prevState[fieldName].edit;
+          // if currently editing then this is saving the new data so we want to update the backend
+          if (isEditing) {
+            // if we're saving the new text then we do api call first
+            const res = sendNewValue(
+              fieldName,
+              projectFields[fieldName].current
+            );
+            dispatch(
+              updateProjectField({
+                field: fieldName,
+                value: projectFields[fieldName].current,
+              })
+            );
+          }
+          return {
+            ...prevState,
+            [fieldName]: {
+              // If it's not in editing mode, use the 'current' value from 'project'
+              // Otherwise, keep the 'current' value as it is in 'prevState'
+              current: isEditing ? prevState[fieldName].current : current,
+              edit: !isEditing,
+            },
+          };
+        });
+      }
+    }
+  };
+  const updateField: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
+    const fieldName = event.currentTarget.name as keyof ProjectPageFields;
+    console.log("🚀 ~ UpdateField ~ fieldName:", fieldName);
+
+    if (fieldName in projectFields) {
+      const newValue = event.currentTarget.value;
+      setProjectFields((prevState) => ({
+        ...prevState,
+        [fieldName]: {
+          ...prevState[fieldName],
+          current: newValue,
+        },
+      }));
+    }
+  };
+  // the api call to update the values in backend
+  const sendNewValue = async (fieldName: string, newVal: string) => {
+    axios
+      .put(`${import.meta.env.VITE_API_URL}/project/${projectId}`, {
+        [fieldName]: newVal,
+      })
+      .then((answer: AxiosResponse) => {
+        console.log(answer.data.project);
+        return answer.data.project;
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  };
   // if not found the project yet then return loading screen
   if (!project) {
     return (
@@ -128,7 +219,16 @@ const ProjectPage = () => {
             {project.country && <LocationText text={project.country} />}
           </Grid>
           <Grid item>
-            <ProjectTitle />
+            <ProjectTitle
+              editing={projectFields.title.edit}
+              buttons={[
+                <EditButton
+                  name="title"
+                  done={projectFields.title.edit}
+                  onClick={handleButtonClick}
+                />,
+              ]}
+            />
           </Grid>
           <Grid item>
             <Button
@@ -166,32 +266,108 @@ const ProjectPage = () => {
           xs={8}
         >
           <Grid item sx={{ width: "100%" }}>
-            <Challenge />
+            <Challenge
+              editing={projectFields.challenge.edit}
+              buttons={[
+                <EditButton
+                  name="challenge"
+                  done={projectFields.challenge.edit}
+                  onClick={handleButtonClick}
+                />,
+              ]}
+              projectFields={projectFields}
+              updateField={updateField}
+            />
           </Grid>
           {/* Solution */}
           <Grid item sx={{ width: "100%" }}>
-            <SectionHeader header="Solution" />
+            <SectionHeader
+              header="Solution"
+              buttons={[
+                <EditButton
+                  name="solution"
+                  done={projectFields.solution.edit}
+                  onClick={handleButtonClick}
+                />,
+              ]}
+            />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
-            {project.solution && <SectionText text={project.solution} />}
+            {project.solution && !projectFields.solution.edit && (
+              <SectionText text={project.solution} />
+            )}
+            {project.solution && projectFields.solution.edit && (
+              <TextField
+                name="solution"
+                multiline
+                rows={4}
+                value={projectFields.solution.current}
+                onChange={updateField}
+                sx={{
+                  width: "80%",
+                }}
+              />
+            )}
           </Grid>
 
           {/* Donation Usage */}
           <Grid item sx={{ width: "100%" }}>
-            <SectionHeader header="Donation Usage" />
+            <SectionHeader
+              header="Donation Usage"
+              buttons={[
+                <EditButton
+                  name="donationUsage"
+                  done={projectFields.donationUsage.edit}
+                  onClick={handleButtonClick}
+                />,
+              ]}
+            />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
-            {project.donationUsage && (
+            {project.donationUsage && !projectFields.donationUsage.edit && (
               <SectionText text={project.donationUsage} />
+            )}
+            {project.donationUsage && projectFields.donationUsage.edit && (
+              <TextField
+                name="donationUsage"
+                multiline
+                rows={4}
+                value={projectFields.donationUsage.current}
+                onChange={updateField}
+                sx={{
+                  width: "80%",
+                }}
+              />
             )}
           </Grid>
           {/* Future Impact */}
           <Grid item sx={{ width: "100%" }}>
-            <SectionHeader header="Future Impact" />
+            <SectionHeader
+              header="Future Impact"
+              buttons={[
+                <EditButton
+                  name="futureImpact"
+                  done={projectFields.futureImpact.edit}
+                  onClick={handleButtonClick}
+                />,
+              ]}
+            />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
-            {project.futureImpact && (
+            {project.futureImpact && !projectFields.futureImpact.edit && (
               <SectionText text={project.futureImpact} />
+            )}
+            {project.futureImpact && projectFields.futureImpact.edit && (
+              <TextField
+                name="futureImpact"
+                multiline
+                rows={4}
+                value={projectFields.futureImpact.current}
+                onChange={updateField}
+                sx={{
+                  width: "80%",
+                }}
+              />
             )}
           </Grid>
           <Grid item sx={{ width: "100%" }}>
@@ -207,7 +383,6 @@ const ProjectPage = () => {
             <Transactions />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
-            <EditButton />
             <SectionHeader header="Updates" />
           </Grid>
           <Grid item sx={{ width: "100%" }}>

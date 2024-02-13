@@ -105,49 +105,52 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
 });
 
 // TODO: put request to edit one project for now anyone can do so
-router.put("/:projectId", authMiddleware, async (req, res) => {
-  // TODO: check if they can edit this project, for now only charity heads
-  // if (!canEditProject(userId, projectId)) {
-  //   return res.status(403).json({ error: "Access denied" });
-  // }
+router.put(
+  "/:projectId", //authMiddleware,
+  async (req, res) => {
+    // TODO: check if they can edit this project, for now only charity heads
+    // if (!canEditProject(userId, projectId)) {
+    //   return res.status(403).json({ error: "Access denied" });
+    // }
 
-  const { projectId } = req.params;
+    const { projectId } = req.params;
 
-  const {
-    title,
-    country,
-    challenge,
-    solution,
-    donationUsage,
-    futureImpact,
-    endDate,
-    // Other fields except currentAmount
-  } = req.body;
-  try {
-    const updatedProject = await prisma.project.update({
-      where: {
-        id: projectId,
-      },
-      data: {
-        title,
-        country,
-        challenge,
-        solution,
-        donationUsage,
-        futureImpact,
-        endDate,
-      },
-    });
+    const {
+      title,
+      country,
+      challenge,
+      solution,
+      donationUsage,
+      futureImpact,
+      endDate,
+      // Other fields except currentAmount
+    } = req.body;
+    try {
+      const updatedProject = await prisma.project.update({
+        where: {
+          id: projectId,
+        },
+        data: {
+          title,
+          country,
+          challenge,
+          solution,
+          donationUsage,
+          futureImpact,
+          endDate,
+        },
+      });
 
-    res.status(200).json({
-      message: "Project updated successfully",
-      project: updatedProject,
-    });
-  } catch (error) {
-    console.error("Failed to add project:", error);
-    res.status(500).json({ error: "Failed to add project" });
+      res.status(200).json({
+        message: "Project updated successfully",
+        project: updatedProject,
+      });
+    } catch (error) {
+      console.error("Failed to add project:", error);
+      res.status(500).json({ error: "Failed to add project" });
+    }
   }
-});
+);
 
 // Explore page searchbar
 router.post("/search", async (req, res) => {

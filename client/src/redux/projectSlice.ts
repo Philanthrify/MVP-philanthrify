@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { Project } from "@/models/project";
+import { Project, UpdateProjectFieldPayload } from "@/models/project";
 import axios from "axios";
 import { User } from "@/models/User";
 
@@ -53,6 +53,16 @@ export const projectSlice = createSlice({
     setCharityTeammates: (state, action: PayloadAction<User[]>) => {
       state.charityTeammates = action.payload;
     },
+    // only for predefined fields
+    updateProjectField: (
+      state,
+      action: PayloadAction<UpdateProjectFieldPayload>
+    ) => {
+      const { field, value } = action.payload;
+      if (state.project) {
+        state.project[field] = value;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,7 +85,8 @@ export const projectSlice = createSlice({
   },
 });
 
-export const { setTeammates, setCharityTeammates } = projectSlice.actions;
+export const { setTeammates, setCharityTeammates, updateProjectField } =
+  projectSlice.actions;
 
 // Export the reducer as default
 export default projectSlice.reducer;

@@ -20,6 +20,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
             {props.header}
           </TypographyTitle>
         </Grid>
+        {/* DESIGN NOTE: Buttons are looking a bit far to the right, even going past dividerr */}
         <Grid item>
           {props.buttons && (
             <Grid item>

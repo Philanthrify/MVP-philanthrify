@@ -1,10 +1,24 @@
 import { Button } from "@mui/material";
 import Edit from "../Icons/Edit";
+import DoneIcon from "@mui/icons-material/Done";
+import { ProjectPageFields } from "@/scenes/XProject/Project";
+// DESIGN TIP: Button might need to be smaller
+interface EditButtonProps {
+  name: string;
+  done: boolean;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-const EditButton = () => {
+const EditButton: React.FunctionComponent<EditButtonProps> = ({
+  name,
+  done,
+  onClick,
+}) => {
   return (
     // in order to make the button a circle the width and height need to be set and minwidth undone
     <Button
+      name={name}
+      onClick={onClick}
       sx={{
         borderRadius: "50%",
         minWidth: 0,
@@ -14,7 +28,7 @@ const EditButton = () => {
         "&:hover": { backgroundColor: "background.main" },
       }}
     >
-      <Edit />
+      {done ? <DoneIcon /> : <Edit />}
     </Button>
   );
 };
