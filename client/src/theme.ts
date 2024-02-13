@@ -93,7 +93,7 @@ const themeSettings = {
     h1: {
       fontSize: 48,
       fontWeight: 500,
-      color: tokens.grey[500],
+      color: tokens.grey[100],
     },
     // underMainTitle (e.g. the text under the 'explore' on the explore page)
     h2: {
@@ -103,29 +103,30 @@ const themeSettings = {
     },
     // lowerTitle (e.g.'challenge' in project page)
     h3: {
-      fontSize: 18,
+      fontSize: 20,
       fontWeight: 500,
-      lineHeight: "28px",
-      color: tokens.grey[200],
+      lineHeight: "30px",
+      color: tokens.grey[100],
     },
     h4: {
-      fontSize: 14,
-      fontWeight: 600,
-      color: tokens.grey[300],
+      fontSize: 20,
+      fontWeight: 300,
+      lineHeight: "30px",
+      color: tokens.grey[600],
     },
     // Bit title
     h5: {
       fontSize: 60,
-      fontWeight: 500,
+      fontWeight: 700,
       lineHeight: "60px",
       letterSpacing: " -1.2px",
       color: tokens.white.light,
     },
     // e.g. Accordion headers
     h6: {
-      fontSize: 20,
+      fontSize: 16,
       fontWeight: 500,
-      lineHeight: "30px",
+      lineHeight: "24px",
       color: tokens.white.light,
     },
 
@@ -140,7 +141,7 @@ const themeSettings = {
     body2: {
       fontSize: 16,
       fontWeight: 400,
-      color: tokens.grey[500],
+      color: tokens.grey[600],
       lineHeight: "24px",
     },
 

@@ -113,7 +113,7 @@ const Explore = () => {
             </TypographyTitle>
 
             <Typography
-              variant="h6" align="center"
+              variant="h3" align="center"
               sx={{ fontWeight: 300, color: "grey.600", marginTop: '10px', marginBottom: '50px'  }}
             >
               Find the right project to support and give a transparent donation

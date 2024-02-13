@@ -37,7 +37,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
               aria-controls={`panel${index}-content`}
               id={`panel${index}-header`}
             >
-              <Typography variant="h6">{key}</Typography>
+              <Typography variant="h3">{key}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               {value.map((elem, lineIndex) => (
@@ -46,7 +46,7 @@ const OwnAccordion: React.FC<OwnAccordionProps> = ({ data }) => {
                   variant="body2"
                   sx={{
                   
-                    color: palette.grey[600],
+                    
                     marginBottom: "lineIndex < value.length - 1 ? 2 : 0",
                     ...elem.sxProps, // Dump in the sx props which may have been defined for that elem
                   }}

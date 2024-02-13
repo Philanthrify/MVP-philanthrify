@@ -30,20 +30,14 @@ const HowItWorks = () => {
           sx={{ width: "800px" }}
         >
           <Grid item>
-            <Typography variant="h5" align="center">
+            <Typography variant="h1" align="center">
               How Philanthrify works
             </Typography>
           </Grid>
           <Grid item>
             <Typography
-              variant="h6"
+              variant="h4"
               align="center"
-              sx={{
-                fontWeight: 300,
-                color: "grey.600",
-                marginTop: "20px",
-                maxWidth: "800px",
-              }}
             >
               Philanthrify is a platform designed to aid charities in raising
               funds for impactful causes. Whether you're an individual, a group,
@@ -72,14 +66,15 @@ const HowItWorks = () => {
             flexDirection= "column"
   
           >
+
+            
             <TypographyTitle variant="h2" align="center" >
             Still have questions?
             </TypographyTitle>
 
             <Typography
-              variant="h6" align="center"
-              sx={{ fontWeight: 300,
-                color: "grey.600", marginTop: '10px', marginBottom: '42px'  }}
+              variant="h4" align="center"
+              sx={{ marginTop: '10px', marginBottom: '42px'  }}
             >
               Can’t find the answer you’re looking for? Please contact our friendly team.
             </Typography>
