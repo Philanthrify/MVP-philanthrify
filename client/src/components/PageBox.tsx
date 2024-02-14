@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 //import line from 'MVP-philanthrify/client/dist/assets/line.png';
-import line from "/Users/benjaminvimont/Documents/GitHub/MVP-philanthrify/client/src/assets/line.png";
-
+import line from "@/assets/line.png";
 
 const PageBox = styled(Box)(({ theme }) => ({
   backgroundColor: "#0F0F13",
