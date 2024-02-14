@@ -77,6 +77,10 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
               "&:hover": {
                 color: palette.white.light,
                 backgroundColor: "#53535B",
+                transform: 'scale(0.96)', 
+          transition: 'transform 0.17s',
+          easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          
               },
             }}
             onClick={() => {

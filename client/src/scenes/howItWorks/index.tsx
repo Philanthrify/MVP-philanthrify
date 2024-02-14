@@ -5,6 +5,8 @@ import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/Philanthr
 import PageBox from "@/components/PageBox";
 import TypographyTitle from "@/components/Title";
 import PrimaryButton from "@/components/Button/PrimaryButton";
+import avatar_group from "/Users/benjaminvimont/Documents/GitHub/MVP-philanthrify/client/src/assets/avatar_group.png";
+
 
 
 
@@ -69,8 +71,10 @@ const HowItWorks = () => {
   
           >
 
-            
+<img src={avatar_group} alt="Avatar Group" style={{ marginBottom: "20px", width: "101px", height: "47px" }} />
+
             <TypographyTitle variant="h2" align="center" >
+              
             Still have questions?
             </TypographyTitle>
 

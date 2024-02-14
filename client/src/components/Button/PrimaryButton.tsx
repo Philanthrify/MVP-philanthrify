@@ -19,8 +19,10 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
         
         "&:hover": {
           backgroundColor: 'primary.900',
-          transform: "scale(0.97)",
-          transition: 'transform 0.16s ease-in-out',
+          transform: 'scale(0.96)', 
+          transition: 'transform 0.17s',
+          easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          
         },
         padding: "0 24px", // Add padding left and right
         ...props.sx,

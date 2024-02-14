@@ -60,10 +60,12 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
                 ? palette.white.light
                 : palette.white.middle,
             backgroundColor:
-              selected === "explore" ? palette.background.light : null,
+              selected === "explore" ? "#3B3B41" : null,
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: "#3B3B41",
               color: palette.white.light,
+              transform: "scale(0.97)",
+          transition: 'transform 0.16s ease-in-out',
             },
             padding: "0 18px",
           }}
@@ -85,10 +87,12 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
                 ? palette.white.light
                 : palette.white.middle,
             backgroundColor:
-              selected === "how-it-works" ? palette.background.light : null,
+              selected === "how-it-works" ? "#3B3B41" : null,
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: "#3B3B41",
               color: palette.white.light,
+              transform: "scale(0.97)",
+          transition: 'transform 0.15s ease-in-out',
             },
             padding: "0 18px",
           }}
