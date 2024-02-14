@@ -59,15 +59,17 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               selected === "explore"
                 ? palette.white.light
                 : palette.white.middle,
+                height: "50px",
             backgroundColor:
               selected === "explore" ? "#3B3B41" : null,
             "&:hover": {
               backgroundColor: "#3B3B41",
               color: palette.white.light,
               transform: "scale(0.97)",
+              
           transition: 'transform 0.16s ease-in-out',
             },
-            padding: "0 18px",
+            padding: "0 17px",
           }}
           onClick={() => {
             setSelected("explore");
@@ -86,6 +88,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               selected === "how-it-works"
                 ? palette.white.light
                 : palette.white.middle,
+                height: "50px",
             backgroundColor:
               selected === "how-it-works" ? "#3B3B41" : null,
             "&:hover": {
@@ -94,7 +97,7 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               transform: "scale(0.97)",
           transition: 'transform 0.15s ease-in-out',
             },
-            padding: "0 18px",
+            padding: "0 17px",
           }}
           onClick={() => {
             setSelected("how-it-works");
