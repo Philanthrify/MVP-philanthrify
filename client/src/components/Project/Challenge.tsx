@@ -77,7 +77,7 @@ const Challenge = (props: ChallengeProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid item>
+          <Grid item sx={{ width: "95%" }}>
             {" "}
             {!props.editing ? (
               <TypographySmallText

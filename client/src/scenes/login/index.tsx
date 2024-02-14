@@ -19,7 +19,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Charity, CharityMembership } from "@/models/charity";
 
@@ -63,19 +63,18 @@ const Login = () => {
   //if exists a cookie then log in without having to log in
   const cookie = cookies.get("jwt_authorisation");
   if (cookie) {
-
     console.log(cookie);
     const decoded = jwtDecode<CookiesToken>(cookie);
-    console.log(decoded);
-    console.log(decoded.firstname);
-//
+    console.log("🚀 ~ Login ~ decoded:", decoded);
+
+    //
     dispatch(
       login({
         token: cookie,
         firstname: decoded.user.firstname,
         email: decoded.user.email,
         userType: decoded.user.userType,
-        charity: decoded.user.loggedInCharity ?? null,
+        charity: decoded.loggedInCharity ?? null,
         charities: decoded.user.charity,
         projects: decoded.user.projects,
       })
@@ -90,18 +89,19 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
-        JSON.stringify(values),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
+      axios
+        .post(
+          `${import.meta.env.VITE_API_URL}/auth/login`,
+          JSON.stringify(values),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        )
         .then((response) => {
-          console.log('response');
+          console.log("response");
           console.log(response.headers);
           console.log(
             "🚀 ~ .then ~ response.data.loggedInCharity:",
@@ -122,10 +122,11 @@ const Login = () => {
 
           const oneHourFromNow = new Date();
           oneHourFromNow.setTime(oneHourFromNow.getTime() + 60 * 60 * 1000); // 60 minutes * 60 seconds * 1000 milliseconds
-          cookies.set("jwt_authorisation", response.data.token, {expires: oneHourFromNow});
+          cookies.set("jwt_authorisation", response.data.token, {
+            expires: oneHourFromNow,
+          });
 
           navigate(from);
-
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -149,12 +150,11 @@ const Login = () => {
       paddingBottom="32px"
     >
       <Grid xs={8}>
-        <FormBox >
-          <TypographyTitle variant="h1" align="center" paddingTop= "64px">
+        <FormBox>
+          <TypographyTitle variant="h1" align="center" paddingTop="64px">
             Log in
           </TypographyTitle>
           <TypographyTitle variant="body2" align="center" padding="0px 0px">
-            
             Welcome back to our community
           </TypographyTitle>
           {loginError && (
@@ -237,7 +237,7 @@ const Login = () => {
                 }}
               />
 
-              <Grid item xs={12} paddingTop= "25px" paddingBottom= "0px">
+              <Grid item xs={12} paddingTop="25px" paddingBottom="0px">
                 <Button
                   color="primary"
                   variant="contained"
@@ -251,8 +251,8 @@ const Login = () => {
                 <Typography
                   variant="body2"
                   align="center"
-                  paddingTop= "20px"
-                  paddingBottom= "64px"
+                  paddingTop="20px"
+                  paddingBottom="64px"
                   color={palette.grey[500]}
                 >
                   Don't have an account yet?{" "}

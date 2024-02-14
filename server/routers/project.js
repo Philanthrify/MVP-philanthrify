@@ -4,7 +4,9 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const tagMiddleware = require("../middleware/tag");
 const authMiddleware = require("../middleware/JWTVerification");
-
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const SECRET = process.env.JWT_SECRET;
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
@@ -265,6 +267,27 @@ router.get("/:id", async (req, res) => {
 
     // Fetch projects based on the constructed query
     const projects = await prisma.project.findUnique(queryOptions);
+    //
+    const token = req.headers["authorization"];
+    if (token) {
+      // withdrawing userId to test if this user is a project member
+      const decoded = await verifyToken(token);
+      const userId = decoded.user.id;
+      const theirProjectMembership = projects.members.find(
+        (object) => object.userId === userId
+      );
+      // if they are a
+      if (theirProjectMembership) {
+        if (theirProjectMembership.projectLead) {
+          projects.membershipBool = "ProjectLead";
+        } else {
+          projects.membershipBool = "ProjectWorker";
+        }
+      }
+
+      // // check if requesting user is a "project lead" on this project (only if token provided)
+      // return res.status(200).json(foundObject);
+    }
     if (projects) {
       res.status(200).json(projects);
     } else {
@@ -275,6 +298,16 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch project(s)" });
   }
 });
+const verifyToken = (token) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(decoded);
+    });
+  });
+};
 
 // gets the projects which the user has rights to
 // Retrieve full project information (CRUD) - TODO: currently only works for charity heads

@@ -174,20 +174,18 @@ router.post("/login", async (req, res) => {
   if (!isPasswordValid) {
     return res.status(401).json({ message: "Invalid email or password" });
   }
-  console.log(
-    "🚀 ~ router.post ~ user.userType === CHARITY",
-    user.userType === "CHARITY"
-  );
+  var jwtPayload = { user };
 
-  const token = jwt.sign(
-    {
-      user,
-    },
-    SECRET,
-    {
-      expiresIn: "1h",
-    }
-  );
+  // want charities for charity users
+  if (user.userType === "CHARITY") {
+    const charity = await prisma.charity.findUnique({
+      where: { ukCharityNumber: user.charity[0].charityId },
+    });
+    jwtPayload["loggedInCharity"] = charity;
+  }
+  const token = jwt.sign(jwtPayload, SECRET, {
+    expiresIn: "1h",
+  });
 
   // want charities for charity users
   if (user.userType === "CHARITY") {
