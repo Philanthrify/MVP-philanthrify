@@ -71,11 +71,11 @@ const FilterDrawer = (props: FilterDrawerProps) => {
           maxWidth="100%"
         >
           <Grid item xs={12} maxWidth="100%">
-            <TypographyTitle variant="h3" align="left" marginTop={1}>
+            <TypographyTitle variant="h3" align="left" marginTop={1.5}>
               Filters
             </TypographyTitle>
             <Divider sx={{ borderColor: palette.grey[800], marginY: 4 }} />
-            <TypographyTitle variant="h4" align="left" padding="0px 0">
+            <TypographyTitle variant="h6" align="left" padding="0px 0">
               Country
             </TypographyTitle>
             <TypographySmallText
@@ -88,10 +88,10 @@ const FilterDrawer = (props: FilterDrawerProps) => {
             <CountrySelect
               value={filters.country}
               onChange={handleCountryChange}
-              sxProps={{ width: "100%" }}
+              sxProps={{ width: "100%", marginTop: "15px", }}
             />
             <Divider sx={{ borderColor: palette.grey[800], marginY: 4 }} />
-            <TypographyTitle variant="h4" align="left" padding="0px 0">
+            <TypographyTitle variant="h6" align="left" padding="0px 0">
               Categories
             </TypographyTitle>
             <TypographySmallText
