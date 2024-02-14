@@ -158,8 +158,7 @@ const TransactionAdd = () => {
           justifyContent: "center",
           alignItems: "center",
           marginTop: "100px",
-          marginBottom: "150px"
-          
+          marginBottom: "150px",
         }}
         onSubmit={formik.handleSubmit}
       >
@@ -167,8 +166,7 @@ const TransactionAdd = () => {
           container
           spacing={3}
           direction="column"
-          maxWidth= "640px"
-
+          maxWidth="640px"
           justifyContent="space-between"
           alignItems="space-between"
         >
@@ -203,7 +201,7 @@ const TransactionAdd = () => {
           >
             <Grid item xs={6}>
               {" "}
-              <AmountInput 
+              <AmountInput
                 value={formik.values.amount}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -217,7 +215,6 @@ const TransactionAdd = () => {
                 id="amount"
                 name="amount"
                 width="100%"
-                
               />{" "}
             </Grid>
 
@@ -303,10 +300,14 @@ const TransactionAdd = () => {
               </Grid>{" "}
             </Grid>{" "}
           </Grid>
-          <Button type="submit" variant="contained" color="primary" style={{ margin: '40px auto 0', display: 'block', width: '150px' }}>
-           Submit
-           </Button>
-
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ margin: "40px auto 0", display: "block", width: "150px" }}
+          >
+            Submit
+          </Button>
         </Grid>
       </form>
     </>

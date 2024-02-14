@@ -46,6 +46,7 @@ export const tokens = {
     lighter: "#36363e",
     light: "#2d2d34",
     main: "#1A1A1E",
+    dark: "#0F0F13",
   },
   white: {
     light: "#ffffff",
@@ -55,6 +56,15 @@ export const tokens = {
 
 // mui theme settings
 const themeSettings = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
       ...tokens.primary,
@@ -160,6 +170,15 @@ const themeSettings = {
         disableRipple: true,
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          backgroundColor: tokens.background.dark,
+        },
+      },
+    },
     ///// General components higher
     //// Buttons
     MuiButton: {
@@ -208,6 +227,12 @@ const themeSettings = {
     },
     ////// For Icons unless otherwise set
     MuiSvgIcon: {
+      styleOverrides: {
+        borderColor: tokens.white.light,
+        backgroundColor: tokens.white.light,
+      },
+    },
+    MuiMenuIcon: {
       styleOverrides: {},
     },
     /////// Accordians:

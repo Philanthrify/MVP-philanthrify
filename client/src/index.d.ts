@@ -18,6 +18,7 @@ declare module "@mui/material/styles/createPalette" {
     light: string;
     lighter: string;
     figma: string;
+    dark: string;
   }
   interface Color {
     main: string;

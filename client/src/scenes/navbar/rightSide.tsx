@@ -3,8 +3,9 @@ import PrimaryButton from "@/components/Button/PrimaryButton";
 import { RootState } from "@/redux/store";
 import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 
 interface RightSideProps {
   setSelected: (value: string) => void;
@@ -16,20 +17,18 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
   const { palette } = useTheme();
   const navigate = useNavigate();
   const includeLogo = useMediaQuery("@media (min-width: 745px)");
+  const dispatch = useDispatch();
 
-  
   return (
     <Grid
       item
-      xs={12}
-      sm={4}
-      md={4}
-      lg={6}
       container
+      xs={5}
       direction="row"
       spacing={2}
       justifyContent={includeLogo ? "flex-end" : "flex-start"}
       alignItems="center"
+      wrap="nowrap"
     >
       <Grid item>
         {" "}
@@ -56,10 +55,10 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
             text="Donate"
             onClick={() => {
               setSelected("donate");
+              dispatch(setNavbarSelected("donate"));
 
               console.log("");
             }}
-
           />
         )}
       </Grid>{" "}
@@ -77,14 +76,14 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
               "&:hover": {
                 color: palette.white.light,
                 backgroundColor: "#53535B",
-                transform: 'scale(0.96)', 
-          transition: 'transform 0.17s',
-          easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
-          
+                transform: "scale(0.96)",
+                transition: "transform 0.17s",
+                easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
               },
             }}
             onClick={() => {
               setSelected("login");
+              dispatch(setNavbarSelected("login"));
               navigate("/login");
             }}
           >
