@@ -26,6 +26,7 @@ import EditButton from "@/components/Button/EditButton";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ProjectPageFields } from "./Project";
 import { updateProjectField } from "@/redux/projectSlice";
+import { useSnackbar } from "@/contexts/snackbarContext";
 
 // import Transactions from "@/components/Project/Transactions";
 
@@ -33,6 +34,8 @@ const ProjectPage = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { openAlertSnackbar } = useSnackbar();
+
   const [projectFields, setProjectFields] = useState<ProjectPageFields>({
     title: { current: "", edit: false },
     challenge: { current: "", edit: false },
@@ -73,6 +76,7 @@ const ProjectPage = () => {
               fieldName,
               projectFields[fieldName].current
             );
+
             dispatch(
               updateProjectField({
                 field: fieldName,
@@ -118,10 +122,12 @@ const ProjectPage = () => {
       })
       .then((answer: AxiosResponse) => {
         console.log(answer.data.project);
+        openAlertSnackbar(`${fieldName} successfully changed!`, "success");
         return answer.data.project;
       })
       .catch((error: AxiosError) => {
         console.log(error);
+        openAlertSnackbar("Something went wrong. Change rejected.", "error");
       });
   };
   // if not found the project yet then return loading screen

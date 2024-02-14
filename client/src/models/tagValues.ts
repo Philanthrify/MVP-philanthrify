@@ -56,8 +56,37 @@ export const TagValues = [
   "EconomicEmpowerment",
 ];
 export const TagValuesObj = {
-  Farming: "Farming",
-  Wildlife: "Wildlife",
+  Business: "💼 Business",
+  CleanWater: "💧 Clean Water",
+  Climate: "☀️ Climate",
+  Community: "🧑🏽‍🧑‍🧒🏻 Community",
+  Crisis: "⛑️ Crisis",
+  Culture: "🎭 Culture",
+  Development: "🏗️ Development", // have a think
+  Economy: "💵 Economic Empowerment",
+  Education: "🖊️ Education",
+  ElderCare: "👴🏽 Elder Care",
+  Energy: "⚡ Energy",
+  Environment: "🌿 Environment",
+  Farming: "🧑‍🌾 Farming",
+  Food: "🍇 Food",
+  Healthcare: "❤️‍🩹 Healthcare",
+  Housing: "🏡 Housing",
+  HumanRights: "⚖️ Human Rights",
+  Innovation: "🤖 Innovation",
+  Medical: "😷 Medical",
+  Rewilding: "🐅 Rewilding",
+  Security: "🔒 Security", // vague?
+  Sports: "🏈 Sports",
+  Technology: "💻 Technology",
+  Wildlife: "🫎 Wildlife", // add 'animal' because there is some difference between these
+  Women: "👩‍🦰 Women",
+  Youth: "👦 Youth",
+};
+
+export const TagEmojis = {
+  Farming: "🧑‍🌾",
+  Wildlife: "🫎",
   Business: "Business",
   Climate: "Climate",
   Community: "Community",

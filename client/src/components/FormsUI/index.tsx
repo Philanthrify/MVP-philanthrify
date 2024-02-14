@@ -115,7 +115,7 @@ const FormStyles = (): FormStylesReturnType => {
     select: getSelectStyles(),
     inputLabel: getInputLabel(),
     stepper: getStepper(),
-    textFieldWidth: "70%",
+    textFieldWidth: "10%",
     searchTextFieldWidth: "40%",
     // classes
     selectClasses: getSelectClasses(),

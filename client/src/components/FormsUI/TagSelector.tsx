@@ -49,9 +49,7 @@ const TagSelector = (props: TagSelectorProps) => {
   return (
     <>
       {" "}
-      <FormControl
-        sx={{ width: textFieldProps.textFieldWidth, maxWidth: "80%" }}
-      >
+      <FormControl sx={{ width: "85%" }}>
         <InputLabel
           id="demo-multiple-checkbox-label"
           sx={{
