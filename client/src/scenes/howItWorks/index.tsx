@@ -4,6 +4,8 @@ import { Grid, Typography, Button } from "@mui/material";
 import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/PhilanthrifyLogoWithPinkCircle";
 import PageBox from "@/components/PageBox";
 import TypographyTitle from "@/components/Title";
+import PrimaryButton from "@/components/Button/PrimaryButton";
+import avatar_group from "/Users/benjaminvimont/Documents/GitHub/MVP-philanthrify/client/src/assets/avatar_group.png";
 
 const HowItWorks = () => {
   return (
@@ -50,46 +52,49 @@ const HowItWorks = () => {
           alignItems="center"
           sx={{ marginTop: "96px", marginBottom: "128px", maxWidth: "800px" }}
         >
-          <Grid item>
-            {" "}
-            {/* Adding margin top */}
-            <OwnAccordion data={accordionData} />
-          </Grid>
-          <Grid item>
-            <PageBox sx={{ marginTop: "170px" }}>
-              <Grid
-                container
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="center"
-                width="100%"
-                height="100%"
-                display="flex"
-                flexDirection="column"
-              >
-                <TypographyTitle variant="h2" align="center">
-                  Still have questions?
-                </TypographyTitle>
+          {" "}
+          {/* Adding margin top */}
+          <OwnAccordion data={accordionData} />
+          <PageBox sx={{ margin: "0px auto", marginTop: "170px" }}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center"
+              width="100%"
+              height="100%"
+              display="flex"
+              flexDirection="column"
+            >
+              <img
+                src={avatar_group}
+                alt="Avatar Group"
+                style={{ marginBottom: "20px", width: "101px", height: "47px" }}
+              />
 
-                <Typography
-                  variant="h4"
-                  align="center"
-                  sx={{ marginTop: "10px", marginBottom: "42px" }}
-                >
-                  Can’t find the answer you’re looking for? Please contact our
-                  friendly team.
-                </Typography>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  sx={{ width: "130px" }} // Set the width to 300px
-                  type="submit"
-                >
-                  Contact us
-                </Button>
-              </Grid>{" "}
-            </PageBox>
-          </Grid>
+              <TypographyTitle variant="h2" align="center">
+                Still have questions?
+              </TypographyTitle>
+
+              <Typography
+                variant="h4"
+                align="center"
+                sx={{ marginTop: "10px", marginBottom: "42px" }}
+              >
+                Can’t find the answer you’re looking for? Please contact our
+                friendly team.
+              </Typography>
+
+              <PrimaryButton
+                text="Contact us"
+                onClick={() => {
+                  //setSelected("donate");
+
+                  console.log("");
+                }}
+              />
+            </Grid>{" "}
+          </PageBox>
         </Grid>
         <Grid item></Grid>
         <Grid item></Grid>

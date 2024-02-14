@@ -10,6 +10,8 @@ const Navbar = () => {
   useEffect(() => {
     console.log(selected);
   }, [selected]);
+
+  
   return (
     <div>
       <Grid
