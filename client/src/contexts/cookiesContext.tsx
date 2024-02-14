@@ -1,14 +1,14 @@
-import { Charity, CharityMembership } from '@/models/charity';
-import { login } from '@/redux/authSlice';
-import { JwtPayload, jwtDecode } from 'jwt-decode';
-import React, { createContext, ReactNode } from 'react';
-import { useDispatch } from 'react-redux';
-import Cookies from 'universal-cookie';
+import { Charity, CharityMembership } from "@/models/charity";
+import { login } from "@/redux/authSlice";
+import { JwtPayload, jwtDecode } from "jwt-decode";
+import React, { createContext, ReactNode } from "react";
+import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
 
 interface UserToken extends JwtPayload {
   user: any;
 }
-  
+
 interface CookiesToken extends UserToken {
   firstname: string;
   useremail: string;
@@ -22,8 +22,9 @@ interface CookiesToken extends UserToken {
 
 const CookiesContext = createContext<CookiesToken | undefined>(undefined);
 
-export const CookiesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-
+export const CookiesProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
 
@@ -31,14 +32,11 @@ export const CookiesProvider: React.FC<{ children: ReactNode }> = ({ children })
   //if exists a cookie then log in without having to log in
   const cookie = cookies.get("jwt_authorisation");
 
-  const decoded = cookie
-  ? jwtDecode<CookiesToken>(cookie)
-  : undefined;
+  const decoded = cookie ? jwtDecode<CookiesToken>(cookie) : undefined;
 
   console.log(decoded);
 
   if (cookie) {
-
     console.log(cookie);
     dispatch(
       login({
@@ -46,7 +44,7 @@ export const CookiesProvider: React.FC<{ children: ReactNode }> = ({ children })
         firstname: decoded?.user.firstname,
         email: decoded?.user.email,
         userType: decoded?.user.userType,
-        charity: decoded?.user.loggedInCharity ?? null,
+        charity: decoded?.loggedInCharity ?? null,
         charities: decoded?.user.charity,
         projects: decoded?.user.projects,
       })
