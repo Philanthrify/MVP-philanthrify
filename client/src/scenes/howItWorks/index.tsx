@@ -5,7 +5,7 @@ import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/Philanthr
 import PageBox from "@/components/PageBox";
 import TypographyTitle from "@/components/Title";
 import PrimaryButton from "@/components/Button/PrimaryButton";
-import avatar_group from "/Users/benjaminvimont/Documents/GitHub/MVP-philanthrify/client/src/assets/avatar_group.png";
+import avatar_group from "@/assets/avatar_group.png";
 
 const HowItWorks = () => {
   return (
