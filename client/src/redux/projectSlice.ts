@@ -3,6 +3,7 @@ import { RootState } from "./store";
 import { Project, UpdateProjectFieldPayload } from "@/models/project";
 import axios from "axios";
 import { User } from "@/models/User";
+import { useSelector } from "react-redux";
 
 // Define a type for the slice state
 interface ProjectState {
@@ -26,19 +27,27 @@ export const fetchProject = createAsyncThunk<
   Project, // Return type of the payload creator
   string, // First argument to the payload creator
   { state: RootState } // Types for ThunkAPI
->("project/fetchProject", async (projectId, { rejectWithValue }) => {
+>("project/fetchProject", async (projectId, thunkAPI) => {
+  // TODO: need to get this from cookie
+  const token = thunkAPI.getState().auth.token;
+  // Construct headers conditionally based on the being of the token
+  var headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = token;
+  }
+
   try {
     const response = await axios.get<Project>(
       `${import.meta.env.VITE_API_URL}/project/${projectId}`,
       {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
       }
     );
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.response.data);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 

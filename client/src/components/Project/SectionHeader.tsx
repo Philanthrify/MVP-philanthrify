@@ -10,7 +10,13 @@ const SectionHeader = (props: SectionHeaderProps) => {
   const { palette } = useTheme();
   return (
     <Grid container direction="column" alignItems="flex-start">
-      <Grid item container direction="row" justifyContent="space-between">
+      <Grid
+        item
+        container
+        direction="row"
+        justifyContent="space-between"
+        sx={{ width: "95%" }}
+      >
         <Grid item>
           <TypographyTitle
             variant="h3"
@@ -20,23 +26,33 @@ const SectionHeader = (props: SectionHeaderProps) => {
             {props.header}
           </TypographyTitle>
         </Grid>
-        {/* DESIGN NOTE: Buttons are looking a bit far to the right, even going past dividerr */}
-        <Grid item>
-          {props.buttons && (
-            <Grid item>
-              <Grid container spacing={1}>
-                {props.buttons.map((button, index) => (
-                  <Grid item key={index}>
-                    {button}
-                  </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-      </Grid>
+        {/* DESIGN NOTE: Buttons are looking a bit far to the right, even going past divider */}
 
-      <Divider sx={{ borderColor: palette.grey[800], width: "95%" }} />
+        {props.buttons && (
+          <Grid
+            item
+            container
+            direction="row"
+            spacing={2}
+            sm={6}
+            justifyContent="flex-end"
+          >
+            {props.buttons.map((button, index) => (
+              <Grid
+                item
+                key={index}
+                direction="column"
+                justifyContent="flex-end"
+              >
+                {button}
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Grid>
+      <Grid item sx={{ width: "100%" }}>
+        <Divider sx={{ borderColor: palette.grey[800], width: "95%" }} />
+      </Grid>
     </Grid>
   );
 };

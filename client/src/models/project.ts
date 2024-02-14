@@ -2,6 +2,7 @@ import { Link } from "@/components/FormsUI/LinkInput";
 import { Dayjs } from "dayjs";
 import { Update } from "./update";
 import { Transaction } from "./transaction";
+import { ProjectMembership } from "./ProjectMembership";
 
 /*
 sometimes need partial aspects of project data meaning that I left all fields as optional.
@@ -24,6 +25,7 @@ export interface Project {
   updates?: Update[];
   charityId?: string;
   transactions?: Transaction[];
+  membershipBool?: ProjectMembership; // tells us whether this user is a member of this project
 }
 
 // a project list is a list of the users current projects including database references

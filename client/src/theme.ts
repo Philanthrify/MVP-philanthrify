@@ -177,6 +177,25 @@ const themeSettings = {
         },
       },
     },
+    // Fergus: added these to style every textfield appwide
+    MuiTextField: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: tokens.grey[500],
+          },
+          "& .MuiInputBase-input": {
+            color: tokens.grey[500],
+            "&:-webkit-autofill": {
+              WebkitTextFillColor: tokens.grey[500],
+              WebkitBoxShadow: "0 0 0px 1000px white inset",
+            },
+          },
+        },
+      },
+    },
     MuiCheckbox: {
       styleOverrides: {
         root: { color: tokens.grey[500], borderRadius: "1rem" },

@@ -106,7 +106,7 @@ router.get("/:id", async (req, res) => {
         },
       },
     });
-    // warping into a better shape for frontend
+    // wrixling the data structure for better shape in frontend
     const transformedMemberships = memberships.map((membership) => ({
       id: membership.user.id,
       firstname: membership.user.firstname,
