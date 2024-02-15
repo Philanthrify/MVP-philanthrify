@@ -59,7 +59,7 @@ const StepTwo = (props: StepTwoProps) => {
         alignItems="center"
       >
         {props.data.userType === "CHARITY" && (
-          <>
+          <Grid item sx={{ width: "80%" }}>
             <TextField
               fullWidth
               id="charityName"
@@ -72,10 +72,6 @@ const StepTwo = (props: StepTwoProps) => {
                 formik.touched.charityName && Boolean(formik.errors.charityName)
               }
               helperText={""}
-              sx={{
-                ...textFieldProps.textField,
-                width: textFieldProps.textFieldWidth,
-              }}
             />
             <Grid xs={10}>
               <FormHelperText
@@ -87,11 +83,11 @@ const StepTwo = (props: StepTwoProps) => {
                 {formik.touched.charityName && formik.errors.charityName}
               </FormHelperText>
             </Grid>
-          </>
+          </Grid>
         )}
 
         {props.data.userType === "CHARITY" && (
-          <>
+          <Grid item sx={{ width: "80%" }}>
             <TextField
               fullWidth
               id="ukCharityNumber"
@@ -105,10 +101,6 @@ const StepTwo = (props: StepTwoProps) => {
                 Boolean(formik.errors.ukCharityNumber)
               }
               helperText={""}
-              sx={{
-                ...textFieldProps.textField,
-                width: textFieldProps.textFieldWidth,
-              }}
             />
             <Grid xs={10}>
               <FormHelperText
@@ -121,7 +113,7 @@ const StepTwo = (props: StepTwoProps) => {
                   formik.errors.ukCharityNumber}
               </FormHelperText>
             </Grid>
-          </>
+          </Grid>
         )}
         <Grid container item direction="row" justifyContent="center">
           <Button
