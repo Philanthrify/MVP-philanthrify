@@ -23,7 +23,7 @@ const EditButton: React.FunctionComponent<EditButtonProps> = ({
         minWidth: 0,
         width: "48px",
         height: "48px",
-        backgroundColor: "primary.700",
+        backgroundColor: "grey.800",
         "&:hover": { backgroundColor: "background.main" },
       }}
     >
