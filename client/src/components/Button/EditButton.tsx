@@ -1,7 +1,6 @@
+import DoneIcon from "@mui/icons-material/Done";
 import { Button } from "@mui/material";
 import Edit from "../Icons/Edit";
-import DoneIcon from "@mui/icons-material/Done";
-import { ProjectPageFields } from "@/scenes/XProject/Project";
 // DESIGN TIP: Button might need to be smaller
 interface EditButtonProps {
   name: string;
@@ -24,7 +23,7 @@ const EditButton: React.FunctionComponent<EditButtonProps> = ({
         minWidth: 0,
         width: "48px",
         height: "48px",
-        backgroundColor: 'primary.700',
+        backgroundColor: "primary.700",
         "&:hover": { backgroundColor: "background.main" },
       }}
     >

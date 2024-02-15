@@ -268,6 +268,9 @@ const StepOne = (props: StepOneProps) => {
           sx={{ width: "100%" }}
         >
           {" "}
+          <TypographyTitle variant="h4" align="center" padding="15px 0">
+            How much are you hoping to raise?
+          </TypographyTitle>{" "}
           <AmountInput
             value={formik.values.targetAmount}
             onChange={formik.handleChange}
@@ -283,7 +286,7 @@ const StepOne = (props: StepOneProps) => {
             label="Target Amount"
             id="targetAmount"
             name="targetAmount"
-            width="70%"
+            width="100%"
           />
         </Grid>{" "}
         <Grid
@@ -291,7 +294,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "60%" }}
         >
           <TypographyTitle variant="h4" align="center" padding="15px 0">
             When are you hoping to raise by?

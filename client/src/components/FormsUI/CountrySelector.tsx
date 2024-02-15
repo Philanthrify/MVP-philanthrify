@@ -8,7 +8,7 @@ import { countries } from "@/models/country";
 import { SxProps, useTheme } from "@mui/material";
 
 interface CountrySelectProps {
-  sxProps: SxProps;
+  sxProps?: SxProps;
   value: string | null;
   onChange: (event: React.SyntheticEvent, newValue: string) => void; // Function to update Formik's value
 }
@@ -84,8 +84,6 @@ export default function CountrySelect(props: CountrySelectProps) {
               ...props.sxProps,
               "&:hover": {
                 //backgroundColor: 'grey.900',
-                
-                
               },
             }}
           />

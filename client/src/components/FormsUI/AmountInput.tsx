@@ -15,7 +15,6 @@ interface AmountInputProps {
   id: string; // when using formik we need to match this with the name of the formik value
   name: string; // when using formik we need to match this with the name of the formik value
   width: any; // string/number
-  
 }
 
 const AmountInput: React.FC<AmountInputProps> = ({
@@ -57,11 +56,7 @@ const AmountInput: React.FC<AmountInputProps> = ({
           </InputAdornment>
         ),
       }}
-      sx={{
-        ...textFieldProps.textField,
-        width: textFieldProps.textFieldWidth,
-        
-      }}
+      sx={{}}
     />
   );
 };

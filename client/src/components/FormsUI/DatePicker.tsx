@@ -31,7 +31,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   }, [cleared]);
 
   return (
-    <Box sx={{ width: textFieldProps.textFieldWidth }}>
+    <Box sx={{ width: "100%" }}>
       {" "}
       {/* Outer container with controlled width */}
       <LocalizationProvider dateAdapter={AdapterDayjs}>
