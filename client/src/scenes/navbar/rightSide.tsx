@@ -54,7 +54,6 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
           <PrimaryButton
             text="Donate"
             onClick={() => {
-              setSelected("donate");
               dispatch(setNavbarSelected("donate"));
 
               console.log("");
@@ -66,7 +65,7 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
         {" "}
         {/* Depending on login status */}
         {isLoggedIn ? (
-          <AccountMenu setSelected={setSelected} />
+          <AccountMenu />
         ) : (
           <Button
             // variant="text"
@@ -82,7 +81,6 @@ const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
               },
             }}
             onClick={() => {
-              setSelected("login");
               dispatch(setNavbarSelected("login"));
               navigate("/login");
             }}

@@ -26,10 +26,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AddTeamMemberModal from "./AddTeamMemberModal";
-type AccountMenuProps = {
-  setSelected: (value: string) => void;
-};
-const AccountMenu = (props: AccountMenuProps) => {
+import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
+
+const AccountMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -39,7 +38,7 @@ const AccountMenu = (props: AccountMenuProps) => {
   const open = Boolean(anchorEl);
   const userType = useSelector((state: RootState) => state.auth.userType);
   const firstname = useSelector((state: RootState) => state.auth.firstname);
-  //const email = useSelector((state: RootState) => state.auth.email); 
+  //const email = useSelector((state: RootState) => state.auth.email);
   const charity = useSelector((state: RootState) => state.auth.charity);
   console.log("🚀 ~ AccountMenu ~ charity:", charity);
 
@@ -57,22 +56,22 @@ const AccountMenu = (props: AccountMenuProps) => {
   };
   const goToProfile = () => {
     handleClose(); // Assuming this closes the menu
-    props.setSelected("profile");
+    dispatch(setNavbarSelected("profile"));
     navigate("/profile"); // Replace '/profile' with the path to your profile route
   };
   const goToDashboard = () => {
     handleClose(); // Assuming this closes the menu
-    props.setSelected("dashboard");
+    dispatch(setNavbarSelected("dashboard"));
     navigate("/dashboard"); // Replace '/profile' with the path to your profile route
   };
   const goToAddProject = () => {
     handleClose(); // Assuming this closes the menu
-    props.setSelected("addproject");
+    dispatch(setNavbarSelected("addproject"));
     navigate("/addproject"); // Replace '/profile' with the path to your profile route
   };
   const goToTransactionAdd = () => {
     handleClose(); // Assuming this closes the menu
-    props.setSelected("none");
+    dispatch(setNavbarSelected("add -transaction"));
     navigate("/addtransaction"); // Replace '/profile' with the path to your profile route
   };
   const handleOpenModal = () => {
@@ -108,7 +107,7 @@ const AccountMenu = (props: AccountMenuProps) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 gap: "0.3rem",
-                padding: "12px 12px", 
+                padding: "12px 12px",
               }}
             >
               <Avatar sx={{ width: 32, height: 32 }}>
@@ -187,11 +186,11 @@ const AccountMenu = (props: AccountMenuProps) => {
                 <Typography variant="caption">{charity.charityName}</Typography>
               )}
 
-               {/* I remove the email line because is too long and we can add it to the profile page later Commented out the line to display email */}
-  {/* {charity && (
+              {/* I remove the email line because is too long and we can add it to the profile page later Commented out the line to display email */}
+              {/* {charity && (
     <Typography variant="caption">{charity.charityName}</Typography>
   )} */}
-  {/* <Typography variant="caption" sx={{ color: palette.white.light }}>
+              {/* <Typography variant="caption" sx={{ color: palette.white.light }}>
     {email}
   </Typography> */}
             </Grid>

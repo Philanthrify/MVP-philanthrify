@@ -24,7 +24,7 @@ const Navbar = () => {
   useEffect(() => {
     console.log("🚀 ~ useEffect ~ isMobile:", isMobile);
   }, [isMobile]);
-  dispatch(setNavbarSelected("heleo"));
+
   return (
     <div>
       {isMobile ? (

@@ -3,17 +3,11 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import PhilanthrifyLogoWithText from "@/components/Icons/PhilanthrifyLogoWithText";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 import { RootState } from "@/redux/store";
 
-interface LeftSideProps {
-  selected: string;
-  setSelected: (value: string) => void;
-}
-
-const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
+const LeftSide = () => {
   const navigate = useNavigate();
   const { palette } = useTheme();
   // hide logo if page is too small
@@ -44,7 +38,6 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
               },
             }}
             onClick={() => {
-              setSelected("explore");
               dispatch(setNavbarSelected("explore"));
 
               navigate("/");
@@ -75,7 +68,6 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
             padding: "0 17px",
           }}
           onClick={() => {
-            setSelected("explore");
             dispatch(setNavbarSelected("explore"));
             navigate("/");
           }}
@@ -89,11 +81,12 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
           // variant="text"
           sx={{
             color:
-              selected === "how-it-works"
+              navbarSelected === "how-it-works"
                 ? palette.white.light
                 : palette.white.middle,
             height: "50px",
-            backgroundColor: selected === "how-it-works" ? "#3B3B41" : null,
+            backgroundColor:
+              navbarSelected === "how-it-works" ? "#3B3B41" : null,
             "&:hover": {
               backgroundColor: "#3B3B41",
               color: palette.white.light,
@@ -103,7 +96,8 @@ const LeftSide: React.FC<LeftSideProps> = ({ selected, setSelected }) => {
             padding: "0 17px",
           }}
           onClick={() => {
-            setSelected("how-it-works");
+            dispatch(setNavbarSelected("how-it-works"));
+
             navigate("/how-it-works");
           }}
         >

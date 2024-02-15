@@ -56,6 +56,7 @@ export const authSlice = createSlice({
       state.charity = null;
       state.charities = null;
       state.projects = null;
+      // TODO: unset the cookie as well
     },
     // This action can be used to set the login state and token at the same time
     login: (
