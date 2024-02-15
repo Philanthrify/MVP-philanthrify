@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { Alert, AlertColor, Snackbar } from "@mui/material";
 
 export interface AlertSnackbarMessage {
@@ -12,12 +12,14 @@ interface ConsecutiveAlertSnackbarsProps {
   setSnackPack: Dispatch<SetStateAction<readonly AlertSnackbarMessage[]>>;
 }
 
-const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ snackPack, setSnackPack }) => {
-
+const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({
+  snackPack,
+  setSnackPack,
+}) => {
   const [open, setOpen] = useState(false);
-  const [messageInfo, setMessageInfo] = useState<AlertSnackbarMessage | undefined>(
-    undefined,
-  );
+  const [messageInfo, setMessageInfo] = useState<
+    AlertSnackbarMessage | undefined
+  >(undefined);
 
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
@@ -32,7 +34,7 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
   }, [snackPack, messageInfo, open]);
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
@@ -45,23 +47,24 @@ const ConsecutiveAlertSnackbars: React.FC<ConsecutiveAlertSnackbarsProps> = ({ s
   console.log(snackPack);
 
   return (
-      <Snackbar
-        key={messageInfo ? messageInfo.key : undefined}
-        open={open}
-        autoHideDuration={1250}
+    <Snackbar
+      key={messageInfo ? messageInfo.key : undefined}
+      open={open}
+      autoHideDuration={5000}
+      onClose={handleClose}
+      TransitionProps={{ onExited: handleExited }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+    >
+      <Alert
         onClose={handleClose}
-        TransitionProps={{ onExited: handleExited }}
-        anchorOrigin={{ vertical:"bottom", horizontal:"center" }}
+        severity={messageInfo ? messageInfo.status : undefined}
+        variant="filled"
+        sx={{ width: "100%" }}
       >
-        <Alert
-          onClose={handleClose}
-          severity={messageInfo ? messageInfo.status : undefined}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >{messageInfo ? messageInfo.message : undefined}
-        </Alert>
-      </Snackbar>
+        {messageInfo ? messageInfo.message : undefined}
+      </Alert>
+    </Snackbar>
   );
-}
+};
 
 export default ConsecutiveAlertSnackbars;

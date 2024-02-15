@@ -1,7 +1,5 @@
-import FormBox from "@/components/FormBox";
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
-import TypographyTitle from "@/components/Title";
 import { useSnackbar } from "@/contexts/snackbarContext";
 import { DecodedToken } from "@/models/auth";
 import { Project } from "@/models/project";
@@ -18,7 +16,6 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
-  useTheme,
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -146,8 +143,6 @@ const TransactionAdd = () => {
   if (error) {
     return <div>Error: {error}</div>; // Show error if present
   }
-
-  const { palette } = useTheme();
 
   return (
     <>

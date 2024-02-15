@@ -87,6 +87,7 @@ const themeSettings = {
       light: tokens.background.light,
       lighter: tokens.background.lighter,
       figma: tokens.background.figma,
+      dark: tokens.background.dark,
     },
     white: {
       ...tokens.white,

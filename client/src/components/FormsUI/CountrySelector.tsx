@@ -13,6 +13,8 @@ interface CountrySelectProps {
   onChange: (event: React.SyntheticEvent, newValue: string) => void; // Function to update Formik's value
 }
 
+// TODO: make a
+
 export default function CountrySelect(props: CountrySelectProps) {
   const { palette } = useTheme();
   const [country, setCountry] = useState(props.value);
@@ -59,7 +61,15 @@ export default function CountrySelect(props: CountrySelectProps) {
         renderOption={(props, option) => (
           <Box
             component="li"
-            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+            sx={{
+              "& > img": { mr: 2, flexShrink: 0 },
+              backgroundColor: "background.dark",
+              color: palette.white.light,
+              "&:hover": {
+                backgroundColor: "background.dark",
+                color: "background.dark",
+              },
+            }}
             {...props}
           >
             <img
@@ -74,6 +84,7 @@ export default function CountrySelect(props: CountrySelectProps) {
         )}
         renderInput={(params) => (
           <TextField
+            autoComplete="off"
             {...params}
             inputProps={{
               ...params.inputProps,

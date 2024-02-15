@@ -9,9 +9,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
-// import dotenv from "dotenv";
+import { useSnackbar } from "@/contexts/snackbarContext";
 
-// a custom type for the payload
+// an own type for the payload
 interface MyTokenPayload extends JwtPayload {
   email?: string;
   charityId?: string;
@@ -19,6 +19,7 @@ interface MyTokenPayload extends JwtPayload {
 }
 
 const Register = () => {
+  const { openAlertSnackbar } = useSnackbar();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [linkSignup, setLinkSignup] = useState<boolean>(false); // boolean to know whether they're using a charity invite link
@@ -100,7 +101,8 @@ const Register = () => {
           data: JSON.stringify(updatedData),
         })
           .then((response) => {
-            console.log(response.data);
+            openAlertSnackbar("Success, you are now a member!", "success");
+
             navigate("/login");
           })
           .catch((error) => {
@@ -121,7 +123,7 @@ const Register = () => {
           data: JSON.stringify(updatedData),
         })
           .then((response) => {
-            console.log(response.data);
+            openAlertSnackbar("Success, you are now a member!", "success");
             navigate("/login");
           })
           .catch((error) => {

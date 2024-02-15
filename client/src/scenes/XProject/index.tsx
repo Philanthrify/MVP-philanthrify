@@ -35,7 +35,7 @@ const ProjectPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { openAlertSnackbar } = useSnackbar();
-
+  var projectLead = false;
   const [projectFields, setProjectFields] = useState<ProjectPageFields>({
     title: { current: "", edit: false },
     challenge: { current: "", edit: false },
@@ -44,11 +44,12 @@ const ProjectPage = () => {
     futureImpact: { current: "", edit: false },
   });
   const project = useSelector((state: RootState) => state.project.project);
+  const isProjectLead = project?.membershipBool || false;
   const { projectId } = useParams<{ projectId: string }>();
   const userCharity = useSelector((state: RootState) => state.auth.charity);
   useEffect(() => {
-    console.log("🚀 ~ ProjectPage ~ projectFields:", projectFields);
-  }, [projectFields]);
+    console.log("🚀 ~ ProjectPage ~ isProjectLead:", isProjectLead);
+  }, [isProjectLead]);
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
@@ -227,13 +228,19 @@ const ProjectPage = () => {
           <Grid item>
             <ProjectTitle
               editing={projectFields.title.edit}
-              buttons={[
-                <EditButton
-                  name="title"
-                  done={projectFields.title.edit}
-                  onClick={handleButtonClick}
-                />,
-              ]}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="title"
+                        done={projectFields.title.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
+              projectFields={projectFields}
+              updateField={updateField}
             />
           </Grid>
           <Grid item>
@@ -274,13 +281,17 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <Challenge
               editing={projectFields.challenge.edit}
-              buttons={[
-                <EditButton
-                  name="challenge"
-                  done={projectFields.challenge.edit}
-                  onClick={handleButtonClick}
-                />,
-              ]}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="challenge"
+                        done={projectFields.challenge.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
               projectFields={projectFields}
               updateField={updateField}
             />
@@ -289,13 +300,17 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader
               header="Solution"
-              buttons={[
-                <EditButton
-                  name="solution"
-                  done={projectFields.solution.edit}
-                  onClick={handleButtonClick}
-                />,
-              ]}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="solution"
+                        done={projectFields.solution.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
             />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
@@ -320,13 +335,17 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader
               header="Donation Usage"
-              buttons={[
-                <EditButton
-                  name="donationUsage"
-                  done={projectFields.donationUsage.edit}
-                  onClick={handleButtonClick}
-                />,
-              ]}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="donationUsage"
+                        done={projectFields.donationUsage.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
             />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
@@ -350,13 +369,17 @@ const ProjectPage = () => {
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader
               header="Future Impact"
-              buttons={[
-                <EditButton
-                  name="futureImpact"
-                  done={projectFields.futureImpact.edit}
-                  onClick={handleButtonClick}
-                />,
-              ]}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="futureImpact"
+                        done={projectFields.futureImpact.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
             />
           </Grid>
           <Grid item sx={{ width: "100%" }}>
