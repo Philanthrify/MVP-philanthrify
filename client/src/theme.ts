@@ -9,21 +9,21 @@ export const tokens = {
     400: "#c2c5ce",
     500: "#b3b6c2",
     600: "#8f929b",
-    700: "#6b6d74",
-    800: "#48494e",
+    700: "#A4A6AD",
+    800: "#383B46",
     900: "#242427",
   },
   primary: {
     // light green
-    100: "#B0EACE",
-    200: "#A9E2C6",
-    300: "#90D5B4",
-    400: "#70CDA0",
-    500: "#50C58D",
-    600: "#2DAF70",
-    700: "#099250",
-    800: "#087742",
-    900: "#016937",
+    100: "#EAF7ED",
+    200: "#C0E6CA",
+    300: "#97D4A9",
+    400: "#6FC28B",
+    500: "#49AE6F",
+    600: "#209958",
+    700: "#09864A",
+    800: "#006F33",
+    900: "#005927",
   },
   secondary: {
     // yellow
@@ -42,12 +42,19 @@ export const tokens = {
     500: "#8884d8",
   },
   background: {
-    figma: "#3B3B41",
+    figma: "#394056",
     lighter: "#36363e",
-    light: "#2d2d34",
-    main: "#1A1A1E",
-    dark: "#0F0F13",
+    light: "#222532",
+    main: "#15161E",
+    dark: "#161821",
   },
+
+  //input: {
+  //  figma: "#394056",
+  //  hover: "#4C5572",
+  //  activ: "#4C5572",
+  //}, I tried here to add input field color but doesn't work
+  
   white: {
     light: "#ffffff",
     middle: "#94969c",
@@ -123,7 +130,7 @@ const themeSettings = {
       fontSize: 20,
       fontWeight: 300,
       lineHeight: "30px",
-      color: tokens.grey[600],
+      color: tokens.grey[700],
     },
     // Bit title
     h5: {
@@ -152,7 +159,7 @@ const themeSettings = {
     body2: {
       fontSize: 16,
       fontWeight: 400,
-      color: tokens.grey[600],
+      color: tokens.grey[700],
       lineHeight: "24px",
     },
 

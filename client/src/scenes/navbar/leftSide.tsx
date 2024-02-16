@@ -57,9 +57,9 @@ const LeftSide = () => {
                 ? palette.white.light
                 : palette.white.middle,
             height: "50px",
-            backgroundColor: navbarSelected === "explore" ? "#3B3B41" : null,
+            backgroundColor: navbarSelected === "explore" ? "#394056" : null,
             "&:hover": {
-              backgroundColor: "#3B3B41",
+              backgroundColor: "#394056",
               color: palette.white.light,
               transform: "scale(0.97)",
 
@@ -86,9 +86,9 @@ const LeftSide = () => {
                 : palette.white.middle,
             height: "50px",
             backgroundColor:
-              navbarSelected === "how-it-works" ? "#3B3B41" : null,
+              navbarSelected === "how-it-works" ? "#394056" : null,
             "&:hover": {
-              backgroundColor: "#3B3B41",
+              backgroundColor: "#394056",
               color: palette.white.light,
               transform: "scale(0.97)",
               transition: "transform 0.15s ease-in-out",

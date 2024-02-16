@@ -28,39 +28,41 @@ const SideFloater = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
         sx={{
-          borderRadius: "1rem",
+          borderRadius: "1.75rem",
           maxWidth: "400px",
           height: "auto",
+          
           backgroundColor: palette.background.light,
           position: "sticky",
           //marginLeft: "20px",
-          top: "25px",
+          top: "40px",
           // Add any additional styling you need here
         }}
       >
         <Grid
           container
           item
-          spacing={2}
+          spacing={3}
           direction="column"
           justifyContent="flex-start"
-          alignItems="center"
-          sx={{ marginBottom: "25px" }}
+          alignItems="left"
+          sx={{ marginBottom: "30px"}}
         >
           <Grid item>
-            <TypographySmallText variant="h3" align="center" padding="15px 0">
+            <TypographySmallText variant="h3" align="left" marginTop= "30px" marginLeft= "30px" color= "#FFFFFF" >
               £{project.targetAmount.toLocaleString()} target
             </TypographySmallText>
           </Grid>
           <Grid
             item
-            sx={{ width: "90%", padding: "15px 0", alignItems: "center" }}
+            sx={{ width: "95%", padding: "15px 0px", alignItems: "center", marginLeft: "30px", marginRight: "30px" }}
           >
             <Divider
               sx={{
                 alignSelf: "center",
-                borderColor: palette.white.middle,
+                borderColor: "#535766",
                 width: "90%",
+          
               }}
             />
           </Grid>
@@ -70,15 +72,16 @@ const SideFloater = () => {
             container
             direction="row"
             justifyContent="center"
-            spacing={4}
+            spacing={3}
+            marginBottom={1}
           >
             <Grid item>
               {" "}
               <ProgressRing
                 percentage={percentRaised}
                 doneColour="#099250"
-                unDoneColour="#3B3B41"
-                innerColour="#3B3B4166"
+                unDoneColour="#394056"
+                innerColour="#292E3F"
                 radius={50}
               />
             </Grid>
@@ -101,7 +104,9 @@ const SideFloater = () => {
                   <TypographySmallText
                     variant="h3"
                     // align="center"
-                    padding="15px 0"
+                    padding="0px 0"
+                    color="#FFFFFF"
+                    
                   >
                     Be the first donor
                   </TypographySmallText>
@@ -126,7 +131,7 @@ const SideFloater = () => {
           <Grid
             item
             container
-            spacing={2}
+            spacing={0}
             direction="row"
             justifyContent="space-between"
           >
@@ -140,7 +145,16 @@ const SideFloater = () => {
                 onClick={() => {
                   console.log("Share");
                 }}
-                sx={{ width: "80%" }}
+                sx={{ color: palette.white.light,
+                  backgroundColor: "#394056",
+                  width: "162px",
+                  "&:hover": {
+                    color: palette.white.light,
+                    backgroundColor: "#4C5572",
+                    transform: "scale(0.96)",
+                    transition: "transform 0.17s",
+                    easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
+                  }, }}
               />
             </Grid>{" "}
             <Grid
@@ -153,7 +167,7 @@ const SideFloater = () => {
                 onClick={() => {
                   console.log("");
                 }}
-                sx={{ width: "80%" }}
+                sx={{ width: "162px", }}
               />
             </Grid>{" "}
           </Grid>

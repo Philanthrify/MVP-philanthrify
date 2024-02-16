@@ -59,7 +59,7 @@ const FilterDrawer = (props: FilterDrawerProps) => {
         textAlign="center"
         role="presentation"
         sx={{
-          backgroundColor: "#2C2C2E", // This is the color of the background in the photo
+          backgroundColor: "#1F2330", // This is the color of the background in the photo
           height: "100%",
         }}
       >

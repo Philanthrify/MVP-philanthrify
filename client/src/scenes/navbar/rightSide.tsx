@@ -66,10 +66,10 @@ const RightSide = () => {
             // variant="text"
             sx={{
               color: palette.white.light,
-              backgroundColor: "#3B3B41",
+              backgroundColor: "#394056",
               "&:hover": {
                 color: palette.white.light,
-                backgroundColor: "#53535B",
+                backgroundColor: "#4C5572",
                 transform: "scale(0.96)",
                 transition: "transform 0.17s",
                 easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",

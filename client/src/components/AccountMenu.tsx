@@ -99,14 +99,15 @@ const AccountMenu = () => {
               sx={{
                 minWidth: "80px",
                 // height: "48px",
-                color: palette.white.middle,
-                backgroundColor: palette.background.light,
+                color: "#A4A6AD",
+                backgroundColor: "#394056",
                 "&:hover": {
-                  backgroundColor: palette.background.light,
+                  backgroundColor: "#4C5572",
+                  color: palette.white.light,
                 },
                 justifyContent: "space-between",
                 alignItems: "center",
-                gap: "0.3rem",
+                gap: "0.7rem",
                 padding: "12px 12px",
               }}
             >
@@ -127,9 +128,9 @@ const AccountMenu = () => {
           PaperProps={{
             elevation: 0,
             sx: {
-              backgroundColor: palette.background.light,
+              backgroundColor: "#303548",
               color: palette.white.middle,
-              borderRadius: "1rem", // Rounded edges
+              borderRadius: "1.25rem", // Rounded edges
               width: "230px",
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
@@ -195,7 +196,7 @@ const AccountMenu = () => {
   </Typography> */}
             </Grid>
           </Grid>
-          <Divider sx={{ borderColor: palette.grey[800] }} />
+          <Divider sx={{ borderColor: "#535766" }} />
           <MenuItem onClick={goToDashboard} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <DashboardIcon fontSize="small" />
@@ -241,7 +242,7 @@ const AccountMenu = () => {
             </ListItemIcon>
             View Profile
           </MenuItem>
-          <Divider sx={{ borderColor: palette.grey[800] }} />
+          <Divider sx={{ borderColor: "#535766" }} />
           <MenuItem onClick={handleClose} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <ContactSupportIcon fontSize="small" />
@@ -254,7 +255,7 @@ const AccountMenu = () => {
             </ListItemIcon>
             Settings
           </MenuItem>
-          <Divider sx={{ borderColor: palette.grey[800] }} />
+          <Divider sx={{ borderColor: "#535766" }} />
           <MenuItem onClick={handleLogout} sx={{ color: palette.white.light }}>
             <ListItemIcon sx={{ color: palette.white.light }}>
               <Logout fontSize="small" />
