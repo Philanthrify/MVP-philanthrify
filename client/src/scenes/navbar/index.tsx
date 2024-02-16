@@ -1,24 +1,11 @@
-import {
-  AppBar,
-  Button,
-  Grid,
-  IconButton,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { useEffect, useState } from "react";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect } from "react";
+import OwnAppBar from "./AppBar";
 import LeftSide from "./leftSide";
 import RightSide from "./rightSide";
-import MenuIcon from "@mui/icons-material/Menu";
-import OwnAppBar from "./AppBar";
-import { useDispatch } from "react-redux";
-import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 const Navbar = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const [selected, setSelected] = useState<string>("explore");
+
   const includeLogo = useMediaQuery("@media (min-width: 745px)");
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   useEffect(() => {
@@ -44,12 +31,10 @@ const Navbar = () => {
             marginRight: "auto",
           }}
         >
-          <LeftSide selected={selected} setSelected={setSelected} />
-          <RightSide setSelected={setSelected} />
+          <LeftSide />
+          <RightSide />
         </Grid>
       )}
-
-      {/* </Box> */}
     </div>
   );
 };

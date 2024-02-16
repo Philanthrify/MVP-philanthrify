@@ -1,6 +1,5 @@
 import { Divider, Grid, useTheme } from "@mui/material";
 import TypographyTitle from "../Title";
-import EditIcon from "@mui/icons-material/Edit";
 
 type SectionHeaderProps = {
   header: string;

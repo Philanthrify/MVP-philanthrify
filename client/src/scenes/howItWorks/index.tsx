@@ -1,11 +1,11 @@
-import OwnAccordion from "@/components/OwnAccordion";
-import { accordionData } from "./howItWorks";
-import { Grid, Typography, Button } from "@mui/material";
+import avatar_group from "@/assets/avatar_group.png";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import PhilanthrifyLogoWithPinkCircle from "@/components/Icons/Artwork/PhilanthrifyLogoWithPinkCircle";
+import OwnAccordion from "@/components/OwnAccordion";
 import PageBox from "@/components/PageBox";
 import TypographyTitle from "@/components/Title";
-import PrimaryButton from "@/components/Button/PrimaryButton";
-import avatar_group from "@/assets/avatar_group.png";
+import { Grid, Typography } from "@mui/material";
+import { accordionData } from "./howItWorks";
 
 const HowItWorks = () => {
   return (

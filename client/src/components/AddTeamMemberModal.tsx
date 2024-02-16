@@ -1,3 +1,4 @@
+import { useSnackbar } from "@/contexts/snackbarContext";
 import { selectToken } from "@/redux/authSlice";
 import { RootState } from "@/redux/store";
 import {
@@ -11,13 +12,12 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import FormStyles from "./FormsUI";
-import { useSnackbar } from "@/contexts/snackbarContext";
 
 interface AddTeamMemberModalProps {
   open: boolean;

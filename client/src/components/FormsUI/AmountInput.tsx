@@ -1,6 +1,5 @@
+import { InputAdornment, TextField } from "@mui/material";
 import React from "react";
-import { TextField, InputAdornment } from "@mui/material";
-import FormStyles from ".";
 
 // TODO (Tomos): commas between the digits
 // TODO (Fergus): have dropdown for preferred currency
@@ -27,8 +26,6 @@ const AmountInput: React.FC<AmountInputProps> = ({
   id,
   name,
 }) => {
-  const textFieldProps = FormStyles();
-
   return (
     <TextField
       fullWidth

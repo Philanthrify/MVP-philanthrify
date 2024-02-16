@@ -1,17 +1,12 @@
 import AccountMenu from "@/components/AccountMenu";
 import PrimaryButton from "@/components/Button/PrimaryButton";
+import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 import { RootState } from "@/redux/store";
 import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 
-interface RightSideProps {
-  setSelected: (value: string) => void;
-}
-
-const RightSide: React.FC<RightSideProps> = ({ setSelected }) => {
+const RightSide = () => {
   const userType = useSelector((state: RootState) => state.auth.userType);
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const { palette } = useTheme();

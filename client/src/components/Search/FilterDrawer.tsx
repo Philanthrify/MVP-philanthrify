@@ -15,7 +15,6 @@ import CountrySelect from "../FormsUI/CountrySelector";
 import TagSelector from "../FormsUI/TagSelector";
 import TypographySmallText from "../SmallText";
 import TypographyTitle from "../Title";
-import LeftSide from "@/scenes/navbar/leftSide";
 
 type FilterDrawerProps = {
   drawerOpen: boolean;
@@ -88,7 +87,7 @@ const FilterDrawer = (props: FilterDrawerProps) => {
             <CountrySelect
               value={filters.country}
               onChange={handleCountryChange}
-              sxProps={{ width: "100%", marginTop: "15px", }}
+              sxProps={{ width: "100%", marginTop: "15px" }}
             />
             <Divider sx={{ borderColor: palette.grey[800], marginY: 4 }} />
             <TypographyTitle variant="h6" align="left" padding="0px 0">

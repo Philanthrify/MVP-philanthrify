@@ -7,7 +7,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { Dayjs } from "dayjs";
 import React from "react";
-import FormStyles from ".";
 
 interface DatePickerProps {
   value: Dayjs | null;
@@ -16,7 +15,6 @@ interface DatePickerProps {
 
 const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   // const [date, setDate] = useState<Dayjs | null>(null);
-  const textFieldProps = FormStyles();
   const { palette } = useTheme();
   const [cleared, setCleared] = React.useState<boolean>(false);
   React.useEffect(() => {

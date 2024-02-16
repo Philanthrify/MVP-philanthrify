@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 //import line from 'MVP-philanthrify/client/dist/assets/line.png';
 import line from "@/assets/line.png";
 
-const PageBox = styled(Box)(({ theme }) => ({
+const PageBox = styled(Box)(() => ({
   backgroundColor: "#0F0F13",
   borderRadius: "1.75rem",
   boxShadow: "0.15rem 0.15rem 0.45rem 0.15rem rgba(0,0,0,0.10)", // Increased blur and decreased opacity

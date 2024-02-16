@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 
+import EditButton from "@/components/Button/EditButton";
 import Challenge from "@/components/Project/Challenge";
 import InviteProjectMate from "@/components/Project/InviteProjectMate";
 import LocationText from "@/components/Project/LocationText";
@@ -19,14 +20,13 @@ import SideFloater from "@/components/Project/SideFloater";
 import Links from "@/components/Project/SocialMedia";
 import Transactions from "@/components/Project/Transactions";
 import Updates from "@/components/Project/Updates";
-import { useDispatch, useSelector } from "@/redux/hooks";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import EditButton from "@/components/Button/EditButton";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { ProjectPageFields } from "./Project";
-import { updateProjectField } from "@/redux/projectSlice";
 import { useSnackbar } from "@/contexts/snackbarContext";
+import { useDispatch, useSelector } from "@/redux/hooks";
+import { updateProjectField } from "@/redux/projectSlice";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ProjectPageFields } from "./Project";
 
 // import Transactions from "@/components/Project/Transactions";
 
@@ -76,6 +76,8 @@ const ProjectPage = () => {
               fieldName,
               projectFields[fieldName].current
             );
+            // TODO:WARNING: console.log() just to overcome problem XD
+            console.log(res);
 
             dispatch(
               updateProjectField({

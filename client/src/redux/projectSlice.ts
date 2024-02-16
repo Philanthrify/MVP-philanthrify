@@ -1,9 +1,8 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
 import { Project, UpdateProjectFieldPayload } from "@/models/project";
-import axios from "axios";
 import { User } from "@/models/User";
-import { useSelector } from "react-redux";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { RootState } from "./store";
 
 // Define a type for the slice state
 interface ProjectState {

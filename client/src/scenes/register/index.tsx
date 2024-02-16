@@ -100,7 +100,7 @@ const Register = () => {
           },
           data: JSON.stringify(updatedData),
         })
-          .then((response) => {
+          .then((_response) => {
             openAlertSnackbar("Success, you are now a member!", "success");
 
             navigate("/login");
@@ -122,7 +122,7 @@ const Register = () => {
           },
           data: JSON.stringify(updatedData),
         })
-          .then((response) => {
+          .then((_response) => {
             openAlertSnackbar("Success, you are now a member!", "success");
             navigate("/login");
           })

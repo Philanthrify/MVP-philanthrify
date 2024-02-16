@@ -1,18 +1,7 @@
-import React from "react";
-import {
-  AppBar,
-  Button,
-  Grid,
-  IconButton,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
 import { setSelected } from "@/redux/navbarSlice";
-interface OwnAppBar {}
+import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const OwnAppBar = () => {
   const navigate = useNavigate();
 

@@ -226,16 +226,7 @@ const themeSettings = {
         root: { borderColor: tokens.grey[800] },
       },
     },
-    ////// For Icons unless otherwise set
-    MuiSvgIcon: {
-      styleOverrides: {
-        borderColor: tokens.white.light,
-        backgroundColor: tokens.white.light,
-      },
-    },
-    MuiMenuIcon: {
-      styleOverrides: {},
-    },
+
     /////// Accordians:
     MuiAccordion: {
       styleOverrides: {
