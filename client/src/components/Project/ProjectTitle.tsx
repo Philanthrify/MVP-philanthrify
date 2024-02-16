@@ -17,7 +17,7 @@ const ProjectTitle = (props: ProjectTitleProps) => {
   return (
     <>
       {project?.title && (
-        <Grid container direction="row" spacing={2} alignItems="center">
+        <Grid container direction="row" spacing={4} alignItems="center">
           {!props.editing ? (
             <Grid item>
               <TypographyTitle
@@ -29,14 +29,18 @@ const ProjectTitle = (props: ProjectTitleProps) => {
               </TypographyTitle>
             </Grid>
           ) : (
-            <TextField
-              name="title"
-              value={props.projectFields.title.current}
-              onChange={props.updateField}
-              sx={{
-                width: "80%",
-              }}
-            />
+            <Grid item>
+              <TextField
+                multiline
+                maxRows={4}
+                name="title"
+                value={props.projectFields.title.current}
+                onChange={props.updateField}
+                sx={{
+                  width: "100%",
+                }}
+              />
+            </Grid>
           )}
           {props.buttons && (
             <Grid item>

@@ -35,7 +35,6 @@ const ProjectPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { openAlertSnackbar } = useSnackbar();
-  var projectLead = false;
   const [projectFields, setProjectFields] = useState<ProjectPageFields>({
     title: { current: "", edit: false },
     challenge: { current: "", edit: false },
@@ -216,6 +215,7 @@ const ProjectPage = () => {
           item
           md={6}
           xs={6}
+          spacing={2}
           direction="column"
           justifyContent="center"
         >

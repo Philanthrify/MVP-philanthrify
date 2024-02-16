@@ -75,7 +75,12 @@ router.post(
       );
       // is requester a charity head?
       if (!charityMembership || charityMembership.charityHead !== true) {
-        return res.status(403).json({ error: "Access denied" });
+        return res
+          .status(403)
+          .json({
+            error:
+              "Access denied - only Charity Heads can add project teammates",
+          });
       }
 
       const newProjectMembership = await prisma.projectMembership.create({

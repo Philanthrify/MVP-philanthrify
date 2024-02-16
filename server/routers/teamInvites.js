@@ -33,8 +33,7 @@ oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 async function sendMail(email, accesstoken, link, teamName) {
   try {
     // getting access token from refresh token
-    console.log("email: ", email);
-    console.log("access token: ", accesstoken);
+
     const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +90,6 @@ async function sendMail(email, accesstoken, link, teamName) {
 // creating an invite link for the new user
 router.post("/", authMiddleware, getCharities, async (req, res) => {
   try {
-    //
     const {
       email,
       charityHead, // also need charity Id (uk number) but not extracted here
@@ -103,12 +101,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     charity = hasCharityHeadRights(req); // uk charity number (or false)
     if (!charity) {
       // only charity heads can do invites
-      return res.status(403).json({ error: "Access denied" });
+      return res
+        .status(403)
+        .json({ error: "Access denied: Not a charity head" });
     }
-    console.log(
-      "🚀 ~ router.post ~ charity.charityId:",
-      typeof charity.charityId
-    );
 
     // Todo: query db -get charity name
     const charityObj = await prisma.charity.findUnique({
@@ -146,10 +142,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     )
       .then((result) => console.log("Email sent...", result))
       .catch((error) => console.log(error.message));
-    res.status(201).json(invitationLink);
+    res.status(201).json({ message: "Invitation send successfully!" });
   } catch (error) {
     console.error("Failed to send invitation:", error);
-    res.status(400).json({ error: "Failed to send invitation" });
+    res.status(500).json({ error: "Failed to send invitation" });
   }
 });
 

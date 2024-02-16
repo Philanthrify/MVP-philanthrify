@@ -313,21 +313,23 @@ const verifyToken = (token) => {
 // Retrieve full project information (CRUD) - TODO: currently only works for charity heads
 router.get("/", authMiddleware, getCharities, async (req, res) => {
   try {
+    console.log("🚀 ~ router.get ~ req.user.id:", req.user.id);
     // project id
     // TODO: searching by charity
     const userCharities = await prisma.user.findUnique({
       where: { id: req.user.id },
+
       include: {
         charity: true, // This will include the charities associated with the user
         projects: true, // TODO: This will include the projects associated with the user
       },
     });
     // filter out the ones where the user isn't charity head
-    const userCharitiesWhereHead = userCharities.charity.filter(
-      (charity) => charity.charityHead
-    );
+    // const userCharitiesWhereHead = userCharities.charity.filter(
+    //   (charity) => charity.charityHead
+    // );
     // Extract charityIds from the filtered charities
-    const charityIds = userCharitiesWhereHead.map(
+    const charityIds = userCharities.charity.map(
       (charity) => charity.charityId
     );
     console.log("charityIds", charityIds);

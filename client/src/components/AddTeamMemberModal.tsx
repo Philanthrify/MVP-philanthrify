@@ -11,12 +11,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import FormStyles from "./FormsUI";
+import { useSnackbar } from "@/contexts/snackbarContext";
 
 interface AddTeamMemberModalProps {
   open: boolean;
@@ -36,6 +37,7 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
   const teammates = useSelector((state: RootState) => state.project.teammates);
   console.log("🚀 ~ teammates:", teammates);
   const { palette } = useTheme();
+  const { openAlertSnackbar } = useSnackbar();
 
   const style = {
     position: "absolute" as "absolute",
@@ -72,10 +74,15 @@ const AddTeamMemberModal: React.FC<AddTeamMemberModalProps> = ({
       })
         .then((response) => {
           console.log(response);
+          openAlertSnackbar("Email was sent to your teammate!", "success");
           onClose();
         })
         .catch((error) => {
-          console.log(error);
+          console.log(
+            "🚀 ~ error.response.data.error:",
+            error.response?.data?.error
+          );
+          openAlertSnackbar(error.response?.data?.error, "error");
         });
     },
   });

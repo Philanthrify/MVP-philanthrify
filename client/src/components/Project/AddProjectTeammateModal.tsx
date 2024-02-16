@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PrimaryButton from "../Button/PrimaryButton";
+import { useSnackbar } from "@/contexts/snackbarContext";
 
 interface AddProjectTeammatePayload {
   addUserId: string;
@@ -43,6 +44,8 @@ const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
   open,
   onClose,
 }) => {
+  const { openAlertSnackbar } = useSnackbar();
+
   const token = useSelector((state: RootState) => state.auth.token);
   const { palette } = useTheme();
   const { projectId } = useParams<{ projectId: string }>();
@@ -98,10 +101,12 @@ const AddProjectTeammateModal: React.FC<AddProjectTeammateModalProps> = ({
     })
       .then((response) => {
         console.log(response);
+        openAlertSnackbar("New member added successfully", "success");
+
         onClose();
       })
       .catch((error) => {
-        console.log(error);
+        openAlertSnackbar(error.response?.data?.error, "error");
       });
   };
   useEffect(() => {

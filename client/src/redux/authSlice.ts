@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { Charity, CharityMembership } from "@/models/charity";
+import Cookies from "universal-cookie";
 
 // Define a type for the slice state
 interface AuthState {
@@ -57,6 +58,8 @@ export const authSlice = createSlice({
       state.charities = null;
       state.projects = null;
       // TODO: unset the cookie as well
+      const cookies = new Cookies();
+      cookies.remove("jwt_authorisation", { path: "/" });
     },
     // This action can be used to set the login state and token at the same time
     login: (

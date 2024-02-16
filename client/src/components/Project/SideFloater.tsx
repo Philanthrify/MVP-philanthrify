@@ -45,6 +45,7 @@ const SideFloater = () => {
           direction="column"
           justifyContent="flex-start"
           alignItems="center"
+          sx={{ marginBottom: "25px" }}
         >
           <Grid item>
             <TypographySmallText variant="h3" align="center" padding="15px 0">
@@ -69,17 +70,29 @@ const SideFloater = () => {
             container
             direction="row"
             justifyContent="center"
-            spacing={2}
+            spacing={4}
           >
-            <ProgressRing
-              percentage={percentRaised}
-              doneColour="#099250"
-              unDoneColour="#3B3B41"
-              innerColour="#3B3B4166"
-              radius={50}
-            />
+            <Grid item>
+              {" "}
+              <ProgressRing
+                percentage={percentRaised}
+                doneColour="#099250"
+                unDoneColour="#3B3B41"
+                innerColour="#3B3B4166"
+                radius={50}
+              />
+            </Grid>
+
             {project.currentAmount === 0 ? (
-              <Grid item container lg={6} md={6} direction="column">
+              <Grid
+                item
+                container
+                lg={6}
+                md={6}
+                direction="column"
+                justifyContent="center"
+                alignItems="flex-start"
+              >
                 <Grid item>
                   {" "}
                   <PhilanthrifyLogo width={"41"} height={"36"} />
@@ -87,7 +100,7 @@ const SideFloater = () => {
                 <Grid item>
                   <TypographySmallText
                     variant="h3"
-                    align="center"
+                    // align="center"
                     padding="15px 0"
                   >
                     Be the first donor
