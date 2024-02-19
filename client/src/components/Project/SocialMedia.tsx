@@ -5,6 +5,7 @@ import Facebook from "../Icons/Links/Facebook";
 import Instagram from "../Icons/Links/Instagram";
 import LinkedIn from "../Icons/Links/LinkedIn";
 import Twitter from "../Icons/Links/Twitter";
+import Youtube from "../Icons/Links/Youtube";
 
 const Links = () => {
   const project = useSelector((state: RootState) => state.project.project);
@@ -20,6 +21,8 @@ const Links = () => {
         return <Instagram webLink={webLink} />;
       case "LinkedIn":
         return <LinkedIn webLink={webLink} />;
+      case "Youtube":
+        return <Youtube webLink={webLink} />;
       default:
         return null;
     }
@@ -27,7 +30,7 @@ const Links = () => {
   if (project?.link) {
     return (
       <>
-        <Grid container direction="row" spacing={2} >
+        <Grid container direction="row" spacing={2}>
           {project?.link.map((linkItem, index) => (
             <Grid item key={index}>
               {renderSocialIcon(linkItem.socialMedia, linkItem.webLink)}
