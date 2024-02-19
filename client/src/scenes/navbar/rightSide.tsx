@@ -1,5 +1,7 @@
 import AccountMenu from "@/components/AccountMenu";
 import PrimaryButton from "@/components/Button/PrimaryButton";
+import SecondaryButton from "@/components/Button/SecondaryButton";
+
 import { setSelected as setNavbarSelected } from "@/redux/navbarSlice";
 import { RootState } from "@/redux/store";
 import { Button, Grid, useMediaQuery, useTheme } from "@mui/material";
@@ -62,26 +64,14 @@ const RightSide = () => {
         {isLoggedIn ? (
           <AccountMenu />
         ) : (
-          <Button
-            // variant="text"
-            sx={{
-              color: palette.white.light,
-              backgroundColor: "#394056",
-              "&:hover": {
-                color: palette.white.light,
-                backgroundColor: "#4C5572",
-                transform: "scale(0.96)",
-                transition: "transform 0.17s",
-                easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-              },
-            }}
+          <SecondaryButton
+          text="Login"
             onClick={() => {
               dispatch(setNavbarSelected("login"));
               navigate("/login");
             }}
-          >
-            Login
-          </Button>
+          />
+           
         )}
       </Grid>
     </Grid>

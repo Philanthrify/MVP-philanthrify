@@ -15,10 +15,11 @@ const SecondaryButton = (props: SecondaryButtonProps) => {
       type={props.type}
       sx={{
         color: palette.white.light,
-        backgroundColor: '#3B3B41',
+        backgroundColor: '#394056',
         
         "&:hover": {
-          backgroundColor: '#53535B',
+          color: palette.white.light,
+          backgroundColor: '#4C5572',
           transform: "scale(0.96)",
           transition: 'transform 0.17s ease-in-out',
         },

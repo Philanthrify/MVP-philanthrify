@@ -1,3 +1,4 @@
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import FormStyles from "@/components/FormsUI";
 import PhilanthrifyLogoWithText from "@/components/Icons/PhilanthrifyLogoWithText";
 import {
@@ -21,11 +22,11 @@ const Footer = () => {
         justifyContent="center"
         alignItems="center"
         spacing={4}
-        sx={{ paddingBottom: "14px" }} // Add bottom padding here
+        sx={{ paddingBottom: "20px" }} // Add bottom padding here
 
       >
         <Grid item sx={{ width: "85%" }}>
-          <Divider sx={{ borderColor: palette.grey[800] }} />
+          <Divider sx={{ borderColor: palette.grey[800], marginBottom: "25px",  }} />
         </Grid>
         <Grid
           item
@@ -33,6 +34,7 @@ const Footer = () => {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          
           sx={{ width: "85%" }}
         >
           <Grid
@@ -41,13 +43,14 @@ const Footer = () => {
             direction="column"
             justifyContent="center"
             alignItems="flex-start"
+            
             md={6}
           >
             <Grid item>
               <PhilanthrifyLogoWithText />
             </Grid>
             <Grid item>
-              <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+              <Typography variant="body1" sx={{ fontStyle: "italic", marginTop: "5px", }}>
                 Helping transparent charity initiatives around the world
               </Typography>
             </Grid>
@@ -59,20 +62,20 @@ const Footer = () => {
             justifyContent="center"
             alignItems="flex-end"
             md={6}
-            spacing={2}
+            spacing={1}
           >
             <Grid item container justifyContent="flex-start" width="450px">
               {" "}
-              <Typography variant="body1" sx={{ color: palette.white.light }}>
+              <Typography variant="body1" sx={{ color: palette.white.light, fontWeight: 500, fontSize: 14,  }}>
                 Stay up to date
               </Typography>
             </Grid>
-            <Grid item container justifyContent="flex-end" spacing={2}>
-              <Grid item style={{ width: "350px" }}>
+            <Grid item container justifyContent="flex-end" spacing={4}>
+              <Grid item style={{ width: "320px" }}>
                 {" "}
                 <TextField
                   fullWidth
-                  label="Input your email here..."
+                  label="Enter your email"
                   sx={{
                     ...textFieldProps.textField,
                   }}
@@ -80,28 +83,23 @@ const Footer = () => {
               </Grid>{" "}
               <Grid item>
                 {" "}
-                <Button
-                  // variant="text"
-                  sx={{
-                    color: "#ffffff",
-                    backgroundColor: 'primary.700',
-                    "&:hover": {
-                      color: "#ffffff",
-                      backgroundColor: 'primary.900',
-                    },
-                    padding: "24px 24px", // Add padding left and right
+                <PrimaryButton
+                  text="Subscribe"
+                  
+            onClick={() => {
+              //dispatch(setNavbarSelected("donate"));
 
-                  }}
-                >
-                  Subscribe
-                </Button>
+              console.log("");
+            }}
+                  
+                  />
               </Grid>
             </Grid>
             <Grid item></Grid>
           </Grid>
         </Grid>{" "}
         <Grid item sx={{ width: "85%" }}>
-          <Divider sx={{ borderColor: palette.grey[800] }} />
+          <Divider sx={{ borderColor: palette.grey[800], marginTop: "25px", }} />
         </Grid>
         <Grid
           item

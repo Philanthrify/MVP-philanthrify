@@ -35,8 +35,7 @@ const Challenge = (props: ChallengeProps) => {
       <Box
         sx={{
           width: "95%",
-          // maxWidth: "400px",
-          // height: "230px",
+          
           borderRadius: "1.75rem",
           border: "1px solid", // Set the border thickness and style
           borderColor: palette.grey[800], // Use a color from your theme
@@ -47,13 +46,14 @@ const Challenge = (props: ChallengeProps) => {
       >
         <Grid
           container
-          spacing={2}
+          spacing={2.5}
+          
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
-          sx={{ width: "90%", padding: "40px 0px 40px 0px" }}
+          sx={{ width: "100%", padding: "45px 40px 45px 40px" }}
         >
-          <Grid container item direction="row" spacing={2}>
+          <Grid container item direction="row" spacing={1.5} alignItems="center">
             <Grid item>
               {" "}
               <ChallengeStars />
@@ -61,8 +61,12 @@ const Challenge = (props: ChallengeProps) => {
             <Grid item>
               <TypographyTitle
                 variant="h3"
-                align="left"
-                padding="0px 0px 0px 0px"
+                align="center"
+                sx={{
+                  marginBottom: "-3px", // Add a negative margin bottom
+                  display: "inline-block", // Allow margin to affect the surrounding elements
+                }}
+                
               >
                 The challenge
               </TypographyTitle>
@@ -77,7 +81,7 @@ const Challenge = (props: ChallengeProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid item sx={{ width: "95%" }}>
+          <Grid item sx={{ width: "95%", }}>
             {" "}
             {!props.editing ? (
               <TypographySmallText

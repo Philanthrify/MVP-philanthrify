@@ -33,6 +33,8 @@ const ResultBox = (props: ResultBoxProps) => {
         color: palette.grey[500], // Text color
         "&:hover": {
           backgroundColor: "#394056" , // Hover background color
+          transform: "scale(1.02)",
+          transition: 'transform 0.17s ease-in-out',
         },
         borderRadius: "1.5rem",
         boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,.8",

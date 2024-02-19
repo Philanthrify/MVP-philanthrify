@@ -20,7 +20,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
           <TypographyTitle
             variant="h3"
             align="center"
-            sx={{ marginBottom: "15px", marginTop: "30px" }}
+            sx={{ marginBottom: "15px", marginTop: "35px" }}
           >
             {props.header}
           </TypographyTitle>
@@ -50,7 +50,7 @@ const SectionHeader = (props: SectionHeaderProps) => {
         )}
       </Grid>
       <Grid item sx={{ width: "100%" }}>
-        <Divider sx={{ borderColor: palette.grey[800], width: "95%" }} />
+        <Divider sx={{ borderColor: "#383B46", width: "95%" }} />
       </Grid>
     </Grid>
   );

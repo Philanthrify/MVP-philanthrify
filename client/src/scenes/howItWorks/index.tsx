@@ -65,6 +65,7 @@ const HowItWorks = () => {
               height="100%"
               display="flex"
               flexDirection="column"
+              align="center"
             >
               <img
                 src={avatar_group}
