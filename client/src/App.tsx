@@ -43,39 +43,45 @@ function App() {
       <ThemeProvider theme={theme}>
         <SnackbarProvider>
           <CookiesProvider>
-          <CssBaseline />
-          <Box
-            display="flex"
-            flexDirection="column"
-            minHeight="100vh"
-            padding="1rem 2rem"
-          >
-            {" "}
-            <Box flexShrink={0}>
-              <Navbar />
-            </Box>
-            <Box flex="1 0 auto" padding="2rem 2rem">
-              <Routes>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Explore />} />
-                <Route path="/how-it-works" element={<HowItWorks />} />
-                <Route path="/project/:projectId" element={<ProjectPage />} />
-                <Route path="/charity/:charityId" element={<CharityPage />} />
+            <CssBaseline />
+            <Box
+              display="flex"
+              flexDirection="column"
+              minHeight="100vh"
+              padding="1rem 2rem"
+            >
+              {" "}
+              <Box flexShrink={0}>
+                <Navbar />
+              </Box>
+              <Box flex="1 0 auto" padding="2rem 2rem">
+                <Routes>
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/" element={<Explore />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
+                  <Route path="/project/:projectId" element={<ProjectPage />} />
+                  <Route
+                    path="/charity/:ukCharityNumber"
+                    element={<CharityPage />}
+                  />
 
-                <Route element={<PrivateRoute />}>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/addproject" element={<AddProject />} />
-                  <Route path="/addtransaction" element={<TransactionAdd />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/addproject" element={<AddProject />} />
+                    <Route
+                      path="/addtransaction"
+                      element={<TransactionAdd />}
+                    />
 
-                  <Route path="/profile" element={<Profile />} />
-                </Route>
-              </Routes>{" "}
+                    <Route path="/profile" element={<Profile />} />
+                  </Route>
+                </Routes>{" "}
+              </Box>
+              <Box flexShrink={0}>
+                <Footer />
+              </Box>
             </Box>
-            <Box flexShrink={0}>
-              <Footer />
-            </Box>
-          </Box>
           </CookiesProvider>
         </SnackbarProvider>
       </ThemeProvider>

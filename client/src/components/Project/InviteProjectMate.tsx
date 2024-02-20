@@ -54,6 +54,7 @@ const InviteProjectMate: React.FC<InviteProjectMateProps> = ({
           headers: {
             "Content-Type": "application/json",
           },
+          params: { members: true }, //only getting the members of the charity
         }
       );
       const transformedMemberships = response.data.members.map((member) => ({

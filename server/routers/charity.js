@@ -41,34 +41,52 @@ router.post(
 );
 // get information on charity, teammates from charity Id
 // twice nested query to get only needed information, including only what is needed
+
+// takes: params{uk charity number}, query{members:bool, projects: bool}}
 // returns: their charity access rights, id, name, email
+// currently called in:
+// - InviteProjectMate.tsx, to get just memberships
+
 router.get("/:ukCharityNumber", async (req, res) => {
   try {
     const { ukCharityNumber } = req.params;
-
-    const charity = await prisma.charity.findUnique({
-      where: { ukCharityNumber: ukCharityNumber },
-      select: {
-        members: {
-          select: {
-            charityHead: true,
-            user: {
-              select: {
-                id: true,
-                firstname: true,
-                lastname: true,
-                email: true,
-              },
+    const { members, projects } = req.query;
+    // add params to request
+    const selectQuery = {
+      ukCharityNumber: true,
+      charityName: true,
+      email: true,
+      about: true,
+    };
+    if (members) {
+      selectQuery["members"] = {
+        select: {
+          charityHead: true,
+          user: {
+            select: {
+              id: true,
+              firstname: true,
+              lastname: true,
+              email: true,
             },
           },
         },
-        projects: {
-          select: {
-            id: true,
-            title: true,
-          },
+      };
+    }
+    if (projects) {
+      selectQuery["projects"] = {
+        select: {
+          id: true,
+          title: true,
         },
-      },
+      };
+    }
+
+    console.log("🚀 ~ router.get ~ selectQuery:", JSON.stringify(selectQuery));
+
+    const charity = await prisma.charity.findUnique({
+      where: { ukCharityNumber: ukCharityNumber },
+      select: selectQuery,
     });
     res.status(200).json(charity);
   } catch (error) {
