@@ -9,7 +9,7 @@ interface PageBoxProps {
 }
 
 const PageBox = styled(Box)<PageBoxProps>(({ theme, backgroundColor }) => ({
-  backgroundColor: backgroundColor ? backgroundColor : theme.palette.grey[500],
+  backgroundColor: backgroundColor ? backgroundColor : "#1F2330",
   borderRadius: "1.75rem",
   boxShadow: "0.15rem 0.15rem 0.45rem 0.15rem rgba(0,0,0,0.10)", // Increased blur and decreased opacity
   width: "700%", // Set the width to 70% of the parent container

@@ -50,7 +50,7 @@ const HowItWorks = () => {
           direction="column"
           justifyContent="center"
           alignItems="center"
-          sx={{ marginTop: "96px", marginBottom: "128px", maxWidth: "800px" }}
+          sx={{ marginTop: "96px", marginBottom: "128px", maxWidth: "800px", backgroundcolor: "#1F2330", }}
         >
           {" "}
           {/* Adding margin top */}
@@ -59,13 +59,10 @@ const HowItWorks = () => {
             <Grid
               container
               direction="column"
+              //backgroundcolor= "#1F2330" 
               justifyContent="flex-start"
               alignItems="center"
-              width="100%"
-              height="100%"
-              display="flex"
-              flexDirection="column"
-              align="center"
+              style={{ width: "100%", height: "100%" }}
             >
               <img
                 src={avatar_group}
