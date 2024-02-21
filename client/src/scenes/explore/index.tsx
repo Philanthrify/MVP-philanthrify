@@ -85,10 +85,8 @@ const Explore = () => {
         width="100%"
         height="100%"
         marginTop="16px" // Add marginTop here for spacing
-        
-
       >
-        <PageBox>
+        <PageBox backgroundColor="background.light">
           <Grid
             container
             direction="column"
@@ -96,50 +94,49 @@ const Explore = () => {
             alignItems="center"
             width="100%"
             height="100%"
-            maxWidth= "620px"
-            display= "flex"
-            flexDirection= "column"
-  
-            
+            maxWidth="620px"
+            display="flex"
+            flexDirection="column"
+
             //sx={{
-              //width: "1280px",
-              //height: "510px",
-              //backgroundColor: "11111", // Replace "your_color_here" with your desired color
+            //width: "1280px",
+            //height: "510px",
+            //backgroundColor: "11111", // Replace "your_color_here" with your desired color
             //}}
-            
           >
-            <TypographyTitle variant="h1" align="center" >
+            <TypographyTitle variant="h1" align="center">
               Explore all our projects
             </TypographyTitle>
 
             <Typography
-              variant="h3" align="center"
-              sx={{ fontWeight: 300, color: "grey.600", marginTop: '10px', marginBottom: '50px'  }}
+              variant="h3"
+              align="center"
+              sx={{
+                fontWeight: 300,
+                color: "grey.600",
+                marginTop: "10px",
+                marginBottom: "50px",
+              }}
             >
               Find the right project to support and give a transparent donation
             </Typography>
-          
 
             <SearchTextField
               fetchProjects={fetchProjects}
               openFilterMenu={openFilterMenu}
-            
-              
             />
           </Grid>{" "}
-        </PageBox  >
-        <Grid 
+        </PageBox>
+        <Grid
           container
           direction="row"
           justifyContent="center"
           alignItems="center"
           //width="75%"
-          width= "1216px"
+          width="1216px"
           marginTop="64px"
           marginBottom="64px"
-        
-          
-          
+
           // height="100%" -- warning this was causing unreal bugs XD, the search
           // results were taking up the rest of the page and overflowing onto everythingafter!
         >

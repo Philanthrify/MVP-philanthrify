@@ -20,7 +20,9 @@ type SearchTextFieldProps = {
 
 const SearchTextField = (props: SearchTextFieldProps) => {
   const dispatch = useDispatch();
-
+  const searchResults = useSelector(
+    (state: RootState) => state.explore.searchResults
+  );
   const textFieldProps = FormStyles();
 
   const { palette } = useTheme();
@@ -35,9 +37,11 @@ const SearchTextField = (props: SearchTextFieldProps) => {
       }
     }
   };
-  useEffect(() => {
+  // upon page load we either have already got a search result or we want to load an initial one
+  if (!searchResults) {
+    console.log("bringing up default search...");
     props.fetchProjects();
-  }, []);
+  }
 
   return (
     <>

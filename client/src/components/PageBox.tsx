@@ -3,9 +3,13 @@ import { styled } from "@mui/system";
 //import line from 'MVP-philanthrify/client/dist/assets/line.png';
 import line from "@/assets/line.png";
 
+// Define an interface for your component's props
+interface PageBoxProps {
+  backgroundColor?: string; // Make it optional with a default value
+}
 
-const PageBox = styled(Box)(() => ({
-  backgroundColor: "#1F2330", // it' doesn't recognise this const palette.background.light,
+const PageBox = styled(Box)<PageBoxProps>(({ theme, backgroundColor }) => ({
+  backgroundColor: backgroundColor ? backgroundColor : theme.palette.grey[500],
   borderRadius: "1.75rem",
   boxShadow: "0.15rem 0.15rem 0.45rem 0.15rem rgba(0,0,0,0.10)", // Increased blur and decreased opacity
   width: "700%", // Set the width to 70% of the parent container

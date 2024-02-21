@@ -46,21 +46,17 @@ const ProjectPage = () => {
   const isProjectLead = project?.membershipBool || false;
   const { projectId } = useParams<{ projectId: string }>();
   const userCharity = useSelector((state: RootState) => state.auth.charity);
-  useEffect(() => {
-    console.log("🚀 ~ ProjectPage ~ isProjectLead:", isProjectLead);
-  }, [isProjectLead]);
+
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
     }
   }, [dispatch, projectId]);
-  console.log("🚀 ~ project:", project, " ~ userCharity:", userCharity);
 
   // This function runs when the user clicks the edit button on each field in order to edit
   // it handles flipping the field into editing mode
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const fieldName = event.currentTarget.name as keyof ProjectPageFields;
-    console.log("🚀 ~ handleButtonClick ~ fieldName:", fieldName);
 
     if (project) {
       // get current value from project field so that it can be edited
@@ -103,7 +99,6 @@ const ProjectPage = () => {
     HTMLInputElement | HTMLTextAreaElement
   > = (event) => {
     const fieldName = event.currentTarget.name as keyof ProjectPageFields;
-    console.log("🚀 ~ UpdateField ~ fieldName:", fieldName);
 
     if (fieldName in projectFields) {
       const newValue = event.currentTarget.value;

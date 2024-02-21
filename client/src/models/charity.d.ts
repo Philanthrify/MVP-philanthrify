@@ -1,3 +1,5 @@
+import { ProjectShort } from "./project";
+
 export interface CharityMembership {
   id: string;
   userId: string;
@@ -5,8 +7,10 @@ export interface CharityMembership {
   charityHead: boolean;
 }
 
-export interface Charity {
+export interface CharityPagePayload {
   ukCharityNumber: string;
   charityName: string;
   email: string;
+  about?: string;
+  projects: ProjectShort[];
 }
