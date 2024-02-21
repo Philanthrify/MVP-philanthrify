@@ -1,5 +1,9 @@
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
+import TypographyTitle from "@/components/Title";
+import TypographySmallText from "@/components/SmallText";
+import line2 from "@/assets/line2.png";
+import { Typography } from "@mui/material";
 import { useSnackbar } from "@/contexts/snackbarContext";
 import { DecodedToken } from "@/models/auth";
 import { Project } from "@/models/project";
@@ -23,6 +27,9 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "@/components/Button/PrimaryButton";
+import SecondaryButton from "@/components/Button/SecondaryButton";
+
 import * as yup from "yup";
 
 //const validationSchema = yup.object({});
@@ -90,6 +97,7 @@ const TransactionAdd = () => {
       category: "",
       whatBrought: "", // what did you pay for?
       whatFor: "", // what did you use it for?
+      
     },
     validationSchema: validationSchema,
 
@@ -146,14 +154,42 @@ const TransactionAdd = () => {
 
   return (
     <>
+
+<Grid
+      sx={{
+        backgroundImage: `url(${line2})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "fixed",
+        top: '120px',
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+    >
+      {/* ... rest of your component */}
+    </Grid>
+
+            <TypographyTitle variant="h2" align="center" marginTop={7}>
+            Confirm a transaction
+            </TypographyTitle>
+
+            <Typography variant="body2" align="center">
+            Build trust between your charity and donors by confirming your transactions.
+            </Typography>
+          
+    
       <form
         // onSubmit={formik.handleSubmit}
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          marginTop: "100px",
+          marginTop: "60px",
           marginBottom: "150px",
+          
         }}
         onSubmit={formik.handleSubmit}
       >
@@ -164,9 +200,11 @@ const TransactionAdd = () => {
           maxWidth="640px"
           justifyContent="space-between"
           alignItems="space-between"
+          
         >
           <Grid item>
             {" "}
+            
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Which project is this for?
@@ -189,7 +227,7 @@ const TransactionAdd = () => {
           <Grid
             item
             container
-            spacing={2}
+            spacing={3}
             direction="row"
             justifyContent="space-between"
             alignItems="space-between"
@@ -238,7 +276,7 @@ const TransactionAdd = () => {
           <Grid
             item
             container
-            spacing={2}
+            spacing={3}
             direction="row"
             justifyContent="space-between"
             alignItems="space-between"
@@ -249,6 +287,8 @@ const TransactionAdd = () => {
                 id="whatBrought"
                 name="whatBrought"
                 label="What did you pay for?"
+                placeholder="e.g. Brick, materials"
+
                 value={formik.values.whatBrought}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -277,6 +317,8 @@ const TransactionAdd = () => {
                 id="whatFor"
                 name="whatFor"
                 label="What will it be used for?"
+                placeholder="e.g. Building school"
+
                 value={formik.values.whatFor}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -294,15 +336,52 @@ const TransactionAdd = () => {
                 ></FormHelperText>{" "}
               </Grid>{" "}
             </Grid>{" "}
-          </Grid>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ margin: "40px auto 0", display: "block", width: "150px" }}
-          >
-            Submit
-          </Button>
+            </Grid>{" "}
+            <Grid
+              item
+              xs={true}
+              style={{ display: "flex", justifyContent: "center", marginTop: "40px"  }}
+            >
+
+              <SecondaryButton
+                text="Cancel"
+                onClick={() => {
+                  console.log("");
+                }}
+                sx={{ width: "240px", marginRight: "20px", }}
+              />
+
+              <PrimaryButton
+                text="Submit transaction"
+                type="submit"
+                onClick={() => {
+                  console.log("");
+                }}
+                sx={{ width: "240px", }}
+              />
+              
+            </Grid>{" "}
+
+
+        
+          <Grid sx={{ display: 'flex', justifyContent: 'center' }}>
+          <TypographySmallText
+                    variant="body2"
+                    align="center" 
+                    display= 'flex'
+                    justifyContent= "center"
+                    marginTop={4}
+                    maxWidth="380px"
+            
+                    
+                    sx={{ color: "#A4A6AD", fontWeight: 200, fontSize: 12, fontStyle: "italic" }} // Use sx prop to specify color
+
+                    
+                  >
+                    By submitting this transaction you accept responsibility for the validity of the information & confirm that all this information is accurate.
+                  </TypographySmallText>
+
+                  </Grid>
         </Grid>
       </form>
     </>

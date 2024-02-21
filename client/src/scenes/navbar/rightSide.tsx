@@ -31,14 +31,19 @@ const RightSide = () => {
         {" "}
         {/* Depending on charity or donor */}
         {userType === "CHARITY" && isLoggedIn ? (
+
+          
           <Button
             // variant="text"
             sx={{
               padding: "0 24px",
-              color: palette.background.light,
-              backgroundColor: palette.primary.main,
+              color: palette.white.light,
+        backgroundColor: 'primary.700',
               "&:hover": {
-                backgroundColor: palette.primary.main,
+                backgroundColor: 'primary.900',
+          transform: 'scale(0.96)', 
+          transition: 'transform 0.17s',
+          easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
               },
             }}
             onClick={() => {
@@ -46,6 +51,7 @@ const RightSide = () => {
             }}
           >
             Fund a project
+          
           </Button>
         ) : (
           <PrimaryButton
