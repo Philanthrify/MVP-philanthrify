@@ -104,6 +104,9 @@ const AccountMenu = () => {
                 "&:hover": {
                   backgroundColor: "#4C5572",
                   color: palette.white.light,
+                  transform: 'scale(0.96)', 
+          transition: 'transform 0.17s',
+          easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
                 },
                 justifyContent: "space-between",
                 alignItems: "center",
