@@ -44,10 +44,8 @@ async function sendMail(email, accesstoken, link, teamName) {
 </head>
 <body>
     <h1>Invitation to join ${teamName}</h1>
-    <p></>
-    <p>Hello,</p>
-    <p></>
-    <p>You have been invited to join a team on Philanthrify. Click the button below to accept the invitation:</p>
+    <p></p>
+    <p>Hello, you have been invited to join a team on Philanthrify. Click the button below to accept the invitation:</p>
     <p></>
     <p></>
     <a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Accept Invitation</a>
@@ -55,6 +53,8 @@ async function sendMail(email, accesstoken, link, teamName) {
     <p></>
     <p>If the button above doesn't work, you can also copy and paste the following link into your web browser:</p>
     <p><a href="${link}">${link}</a></p>
+    <p></>
+    <p>This link expires in 1 week. If you do not access it within this timeframe then a new link will need to be sent. </p>
     <p></>
     <p>Thank you for joining us and we hope you enjoy our website!</p>
 </body>
@@ -76,7 +76,7 @@ async function sendMail(email, accesstoken, link, teamName) {
     const mailOptions = {
       from: "Philanthrify 💖 <smtp.philanthrify@gmail.com>",
       to: email,
-      subject: "Hello from Philanthrify",
+      subject: "Do not reply: Hello from Philanthrify",
       // text: "Hello world!", // can use html instead
       html: emailHtml,
     };
@@ -120,7 +120,7 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
         charityName: charityObj.charityName,
       },
       SECRET,
-      { expiresIn: "24h" } // Token expires in 24 hours
+      { expiresIn: "168h" } // Token expires in 24 hours
     );
     let invitationLink;
 
