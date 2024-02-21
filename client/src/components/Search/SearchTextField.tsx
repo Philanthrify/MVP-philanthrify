@@ -1,4 +1,8 @@
-import { setSearchTerm } from "@/redux/exploreSlice";
+import {
+  clearFilterCountry,
+  deleteFilterTag,
+  setSearchTerm,
+} from "@/redux/exploreSlice";
 import { RootState } from "@/redux/store"; // Import the type for RootState
 import SearchIcon from "@mui/icons-material/Search";
 import TuneIcon from "@mui/icons-material/Tune";
@@ -7,11 +11,13 @@ import {
   Grid,
   InputAdornment,
   TextField,
+  Typography,
   useTheme,
 } from "@mui/material";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FormStyles from "../FormsUI";
+import FilterBox from "./FilterBox";
+import { useEffect, useState } from "react";
+import { isFilterEmpty } from "@/models/searchFilters";
 
 type SearchTextFieldProps = {
   fetchProjects: () => Promise<void>;
@@ -20,12 +26,13 @@ type SearchTextFieldProps = {
 
 const SearchTextField = (props: SearchTextFieldProps) => {
   const dispatch = useDispatch();
+  const [filterEmptiness, setFilterEmptiness] = useState<boolean>(true);
   const searchResults = useSelector(
     (state: RootState) => state.explore.searchResults
   );
-  const textFieldProps = FormStyles();
 
   const { palette } = useTheme();
+  const filters = useSelector((state: RootState) => state.explore.filters);
 
   const searchTerm = useSelector(
     (state: RootState) => state.explore.searchTerm
@@ -43,6 +50,24 @@ const SearchTextField = (props: SearchTextFieldProps) => {
     props.fetchProjects();
   }
 
+  const removeTag = (tagName: string) => {
+    dispatch(deleteFilterTag(tagName));
+  };
+  // every time the filters change then we check whether they're empty
+  // and if so hide filter header
+  useEffect(() => {
+    const emptiness = isFilterEmpty(filters);
+    setFilterEmptiness(emptiness);
+    // switch (isFilterEmpty(filters)) {
+    //   case true:
+    //     setFilterEmptiness(true);
+    //     break;
+    //   case false:
+    //     break;
+    // }
+    console.log("🚀 ~ SearchTextField ~ filterEmptiness:", filterEmptiness);
+  }, [filters]);
+
   return (
     <>
       <Grid
@@ -50,61 +75,100 @@ const SearchTextField = (props: SearchTextFieldProps) => {
         direction="column"
         justifyContent="center"
         alignItems="center"
+        spacing={2}
         sx={{ height: "100%" }}
       >
-        <Grid
-          container
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Grid
-            xs={8}
+        <Grid item sx={{ width: "100%" }}>
+          <TextField
+            label="Search"
+            variant="outlined"
+            onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+            onKeyDown={handleKeyPress}
             sx={{
-              height: "100%",
+              width: "100%",
             }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment
+                  position="start"
+                  sx={{
+                    color: palette.grey[500],
+                    "& .MuiTypography-root": { color: palette.grey[500] },
+                  }}
+                >
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+        {/* FiltersBox listof */}
+        {!filterEmptiness && (
+          <Grid
+            item
+            container
+            direction="row"
+            spacing={1}
+            justifyContent="center"
+            alignItems="center"
           >
-            <TextField
-              label="Search"
-              variant="outlined"
-              onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-              onKeyDown={handleKeyPress}
-              sx={{
-                ...textFieldProps.textField,
-                width: "100%",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment
-                    position="start"
-                    sx={{
-                      color: palette.grey[500],
-                      "& .MuiTypography-root": { color: palette.grey[500] },
+            <Grid item>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: 300,
+                  color: "grey.600",
+                }}
+              >
+                Filters:{" "}
+              </Typography>
+            </Grid>
+
+            {filters.country && (
+              <Grid item>
+                <FilterBox
+                  text={filters.country}
+                  onDelete={() => {
+                    dispatch(clearFilterCountry());
+                  }}
+                />
+              </Grid>
+            )}
+            {filters.listOfTags.map((tag) => {
+              return (
+                <Grid key={tag} item>
+                  <FilterBox
+                    text={tag}
+                    onDelete={() => {
+                      removeTag(tag);
                     }}
-                  >
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
-          <Grid
-            xs={3}
-            sx={{
-              height: "100%",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
+        )}
+
+        <Grid
+          item
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item>
+            {" "}
+            <Button variant="contained" onClick={props.fetchProjects}>
+              Search
+            </Button>
+          </Grid>
+          <Grid item>
             <Button variant="contained" sx={{}} onClick={props.openFilterMenu}>
               <TuneIcon sx={{ color: "black" }} />
               Filters
             </Button>
           </Grid>
         </Grid>
-        <Button variant="contained" onClick={props.fetchProjects}>
-          Search
-        </Button>
       </Grid>
     </>
   );

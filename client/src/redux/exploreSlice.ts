@@ -29,6 +29,14 @@ export const exploreSlice = createSlice({
     setFilters: (state, action: PayloadAction<SearchFilters>) => {
       state.filters = action.payload;
     },
+    deleteFilterTag: (state, action: PayloadAction<string>) => {
+      state.filters.listOfTags = state.filters.listOfTags.filter(
+        (tag) => tag !== action.payload
+      );
+    },
+    clearFilterCountry: (state) => {
+      state.filters.country = "";
+    },
     setSearchResults: (state, action: PayloadAction<Project[]>) => {
       state.searchResults = action.payload;
     },
@@ -38,7 +46,13 @@ export const exploreSlice = createSlice({
   },
 });
 
-export const { setSearchTerm, setFilters, setSearchResults, setPage } =
-  exploreSlice.actions;
+export const {
+  setSearchTerm,
+  setFilters,
+  deleteFilterTag,
+  clearFilterCountry,
+  setSearchResults,
+  setPage,
+} = exploreSlice.actions;
 
 export default exploreSlice.reducer;

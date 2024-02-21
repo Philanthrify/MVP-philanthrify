@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import PageBox from "@/components/PageBox";
 import FilterDrawer from "@/components/Search/FilterDrawer";
@@ -12,6 +12,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 const Explore = () => {
+  const isFirstlMount = useRef(true); // check if page has loaded for first time (for managing useEffect filter search)
+
   console.log("VITE_API_URL", import.meta.env.VITE_API_URL);
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -49,6 +51,15 @@ const Explore = () => {
       searchResults
     );
   }, [searchResults]);
+  useEffect(() => {
+    // Skip the first execution on initial mount
+    if (isFirstlMount.current) {
+      isFirstlMount.current = false;
+    } else {
+      // This code runs on subsequent renders, i.e., when filters change
+      fetchProjects();
+    }
+  }, [filters]); // Dependency array includes filters, change as needed
   const fetchProjects = async () => {
     try {
       console.log({ ...filters });
