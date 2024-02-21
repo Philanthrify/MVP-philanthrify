@@ -54,7 +54,7 @@ export const tokens = {
   //  hover: "#4C5572",
   //  activ: "#4C5572",
   //}, I tried here to add input field color but doesn't work
-  
+
   white: {
     light: "#ffffff",
     middle: "#94969c",
@@ -221,8 +221,35 @@ const themeSettings = {
             },
           },
         },
+        icon: {
+          fill: tokens.grey[500],
+        },
       },
     },
+
+    MuiSelect: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: tokens.grey[500],
+          },
+          "& .MuiInputBase-input": {
+            color: tokens.grey[500],
+            "&:-webkit-autofill": {
+              WebkitTextFillColor: tokens.grey[500],
+              WebkitBoxShadow: "0 0 0px 1000px white inset",
+            },
+          },
+        },
+        icon: {
+          fill: tokens.grey[500],
+        },
+      },
+    },
+    MuiSvgIcon: { styleOverrides: { root: { color: tokens.grey[500] } } }, // MUI icons are white unless overridden
+
     MuiCheckbox: {
       styleOverrides: {
         root: { color: tokens.grey[500], borderRadius: "1rem" },

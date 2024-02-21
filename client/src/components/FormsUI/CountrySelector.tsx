@@ -6,6 +6,7 @@ import FormStyles from "@/components/FormsUI";
 import { useEffect, useState } from "react";
 import { countries } from "@/models/country";
 import { SxProps, useTheme } from "@mui/material";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 interface CountrySelectProps {
   sxProps?: SxProps;
