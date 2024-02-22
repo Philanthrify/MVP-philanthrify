@@ -97,7 +97,6 @@ const TransactionAdd = () => {
       category: "",
       whatBrought: "", // what did you pay for?
       whatFor: "", // what did you use it for?
-      
     },
     validationSchema: validationSchema,
 
@@ -154,33 +153,32 @@ const TransactionAdd = () => {
 
   return (
     <>
+      <Grid
+        sx={{
+          backgroundImage: `url(${line2})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          position: "fixed",
+          top: "120px",
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -1,
+        }}
+      >
+        {/* ... rest of your component */}
+      </Grid>
 
-<Grid
-      sx={{
-        backgroundImage: `url(${line2})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        position: "fixed",
-        top: '120px',
-        left: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: -1,
-      }}
-    >
-      {/* ... rest of your component */}
-    </Grid>
+      <TypographyTitle variant="h2" align="center" marginTop={7}>
+        Confirm a transaction
+      </TypographyTitle>
 
-            <TypographyTitle variant="h2" align="center" marginTop={7}>
-            Confirm a transaction
-            </TypographyTitle>
+      <Typography variant="body2" align="center">
+        Build trust between your charity and donors by confirming your
+        transactions.
+      </Typography>
 
-            <Typography variant="body2" align="center">
-            Build trust between your charity and donors by confirming your transactions.
-            </Typography>
-          
-    
       <form
         // onSubmit={formik.handleSubmit}
         style={{
@@ -189,7 +187,6 @@ const TransactionAdd = () => {
           alignItems: "center",
           marginTop: "60px",
           marginBottom: "150px",
-          
         }}
         onSubmit={formik.handleSubmit}
       >
@@ -200,11 +197,9 @@ const TransactionAdd = () => {
           maxWidth="640px"
           justifyContent="space-between"
           alignItems="space-between"
-          
         >
           <Grid item>
             {" "}
-            
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Which project is this for?
@@ -232,29 +227,36 @@ const TransactionAdd = () => {
             justifyContent="space-between"
             alignItems="space-between"
           >
+            {" "}
             <Grid item xs={6}>
-              {" "}
-              <AmountInput
-                value={formik.values.amount}
+              <TextField
+                fullWidth
+                id="whatBrought"
+                name="whatBrought"
+                label="What did you pay for?"
+                placeholder="e.g. Brick, materials"
+                value={formik.values.whatBrought}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.amount && Boolean(formik.errors.amount)}
-                helperText={
-                  formik.touched.amount && formik.errors.amount
-                    ? formik.errors.amount
-                    : undefined
+                error={
+                  formik.touched.whatBrought &&
+                  Boolean(formik.errors.whatBrought)
                 }
-                label="Amount"
-                id="amount"
-                name="amount"
-                width="100%"
-              />{" "}
-            </Grid>
-
+                helperText={""}
+              />
+              <Grid xs={10}>
+                <FormHelperText
+                  error={
+                    formik.touched.whatBrought &&
+                    Boolean(formik.errors.whatBrought)
+                  }
+                ></FormHelperText>{" "}
+              </Grid>{" "}
+            </Grid>{" "}
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
-                  What Kind of Transaction
+                  What kind of transaction
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -281,52 +283,38 @@ const TransactionAdd = () => {
             justifyContent="space-between"
             alignItems="space-between"
           >
+            {" "}
             <Grid item xs={6}>
-              <TextField
-                fullWidth
-                id="whatBrought"
-                name="whatBrought"
-                label="What did you pay for?"
-                placeholder="e.g. Brick, materials"
-
-                value={formik.values.whatBrought}
+              {" "}
+              <AmountInput
+                value={formik.values.amount}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.whatBrought &&
-                  Boolean(formik.errors.whatBrought)
+                error={formik.touched.amount && Boolean(formik.errors.amount)}
+                helperText={
+                  formik.touched.amount && formik.errors.amount
+                    ? formik.errors.amount
+                    : undefined
                 }
-                helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                }}
-              />
-              <Grid xs={10}>
-                <FormHelperText
-                  error={
-                    formik.touched.whatBrought &&
-                    Boolean(formik.errors.whatBrought)
-                  }
-                ></FormHelperText>{" "}
-              </Grid>{" "}
-            </Grid>{" "}
+                label="Amount"
+                id="amount"
+                name="amount"
+                width="100%"
+              />{" "}
+            </Grid>
             <Grid item xs={6}>
               {" "}
               <TextField
                 fullWidth
                 id="whatFor"
                 name="whatFor"
-                label="What will it be used for?"
+                label="Further details (Optional)"
                 placeholder="e.g. Building school"
-
                 value={formik.values.whatFor}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.whatFor && Boolean(formik.errors.whatFor)}
                 helperText={""}
-                sx={{
-                  ...textFieldProps.textField,
-                }}
               />
               <Grid xs={10}>
                 <FormHelperText
@@ -336,52 +324,53 @@ const TransactionAdd = () => {
                 ></FormHelperText>{" "}
               </Grid>{" "}
             </Grid>{" "}
-            </Grid>{" "}
-            <Grid
-              item
-              xs={true}
-              style={{ display: "flex", justifyContent: "center", marginTop: "40px"  }}
+          </Grid>{" "}
+          <Grid
+            item
+            xs={true}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "40px",
+            }}
+          >
+            <SecondaryButton
+              text="Cancel"
+              onClick={() => {
+                console.log("");
+              }}
+              sx={{ width: "240px", marginRight: "20px" }}
+            />
+
+            <PrimaryButton
+              text="Submit transaction"
+              type="submit"
+              onClick={() => {
+                console.log("");
+              }}
+              sx={{ width: "240px" }}
+            />
+          </Grid>{" "}
+          <Grid sx={{ display: "flex", justifyContent: "center" }}>
+            <TypographySmallText
+              variant="body2"
+              align="center"
+              display="flex"
+              justifyContent="center"
+              marginTop={4}
+              maxWidth="380px"
+              sx={{
+                color: "#A4A6AD",
+                fontWeight: 200,
+                fontSize: 12,
+                fontStyle: "italic",
+              }} // Use sx prop to specify color
             >
-
-              <SecondaryButton
-                text="Cancel"
-                onClick={() => {
-                  console.log("");
-                }}
-                sx={{ width: "240px", marginRight: "20px", }}
-              />
-
-              <PrimaryButton
-                text="Submit transaction"
-                type="submit"
-                onClick={() => {
-                  console.log("");
-                }}
-                sx={{ width: "240px", }}
-              />
-              
-            </Grid>{" "}
-
-
-        
-          <Grid sx={{ display: 'flex', justifyContent: 'center' }}>
-          <TypographySmallText
-                    variant="body2"
-                    align="center" 
-                    display= 'flex'
-                    justifyContent= "center"
-                    marginTop={4}
-                    maxWidth="380px"
-            
-                    
-                    sx={{ color: "#A4A6AD", fontWeight: 200, fontSize: 12, fontStyle: "italic" }} // Use sx prop to specify color
-
-                    
-                  >
-                    By submitting this transaction you accept responsibility for the validity of the information & confirm that all this information is accurate.
-                  </TypographySmallText>
-
-                  </Grid>
+              By submitting this transaction you accept responsibility for the
+              validity of the information & confirm that all this information is
+              accurate.
+            </TypographySmallText>
+          </Grid>
         </Grid>
       </form>
     </>

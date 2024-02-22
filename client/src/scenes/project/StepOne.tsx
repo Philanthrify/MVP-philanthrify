@@ -123,6 +123,23 @@ const StepOne = (props: StepOneProps) => {
               ...textFieldProps.textField,
             }}
           />
+        </Grid>{" "}
+        <Grid item sx={{ width: "100%" }}>
+          <TextField
+            fullWidth
+            id="challenge"
+            placeholder="Highlight an important statistic of primary goal of this project."
+            name="challenge"
+            label="Subtitle"
+            value={formik.values.challenge}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.challenge && Boolean(formik.errors.challenge)}
+            helperText={formik.touched.challenge && formik.errors.challenge}
+            sx={{
+              ...textFieldProps.textField,
+            }}
+          />
         </Grid>
         <Grid
           item
@@ -172,7 +189,7 @@ const StepOne = (props: StepOneProps) => {
             id="challenge"
             placeholder="Please explain in 1 to 2 paragraphs the challenge that is being seen in the area you want to help. Provide as many facts & statistics as possible, and maybe someone’s personal story too."
             name="challenge"
-            label="Challenge"
+            label="Background and goals"
             value={formik.values.challenge}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -217,7 +234,7 @@ const StepOne = (props: StepOneProps) => {
             id="donationUsage"
             placeholder="In as much detail as you can give, please breakdown what the money will be used for. E.g:“The funds raised here will go to Constructing a custom ICT Centre in a slum in Uganda. Along with fitting the centre out with computers, furniture, WiFi and providing a year’s salary to 4 team members that will run the centre day-to-day”. "
             name="donationUsage"
-            label="Donation Usage"
+            label="Breakdown of where donations go"
             value={formik.values.donationUsage}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -233,36 +250,6 @@ const StepOne = (props: StepOneProps) => {
             }}
           />
         </Grid>
-        <Grid
-          item
-          container
-          direction="column"
-          alignItems="center"
-          sx={{ width: "100%" }}
-        >
-          {" "}
-          <TextField
-            fullWidth
-            multiline
-            rows={4}
-            id="futureImpact"
-            placeholder="Here you can explain in 1 to 2 paragraphs what impact this project will have on the beneficiaries of this project. Try to add a few facts of similar successes, or maybe just what this area is like comparatively in countries that have looked after the problem. Be Optimistic & let some of your passion come through ;)."
-            name="futureImpact"
-            label="Future Impact"
-            value={formik.values.futureImpact}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.futureImpact && Boolean(formik.errors.futureImpact)
-            }
-            helperText={
-              formik.touched.futureImpact && formik.errors.futureImpact
-            }
-            sx={{
-              ...textFieldProps.textField,
-            }}
-          />
-        </Grid>{" "}
         <Grid
           item
           container

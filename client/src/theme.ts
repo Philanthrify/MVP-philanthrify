@@ -208,30 +208,18 @@ const themeSettings = {
     MuiTextField: {
       styleOverrides: {
         // Name of the slot
-        root: {
-          // Some CSS
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: tokens.grey[500],
-          },
-          "& .MuiInputBase-input": {
-            color: tokens.grey[500],
-            "&:-webkit-autofill": {
-              WebkitTextFillColor: tokens.grey[500],
-              WebkitBoxShadow: "0 0 0px 1000px white inset",
-            },
-          },
-        },
+        // root: { height: "55px" },
         icon: {
           fill: tokens.grey[500],
         },
       },
     },
-
-    MuiSelect: {
+    // applies to outline of each input thing (e.g. textfield, select, autocorrect)
+    MuiOutlinedInput: {
       styleOverrides: {
-        // Name of the slot
         root: {
-          // Some CSS
+          minHeight: "55px",
+          borderRadius: "2rem", // Set the border radius here
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: tokens.grey[500],
           },
@@ -243,6 +231,12 @@ const themeSettings = {
             },
           },
         },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        // Name of the slot
+        root: {},
         icon: {
           fill: tokens.grey[500],
         },
