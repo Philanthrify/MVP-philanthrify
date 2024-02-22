@@ -19,7 +19,6 @@ import { useSnackbar } from "@/contexts/snackbarContext";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
-
   const charity = useSelector((state: RootState) => state.auth.charity);
   const navigate = useNavigate();
   const [data, setData] = useState<Project>({
@@ -29,10 +28,10 @@ const CreateProjectForm = () => {
     // charity
     title: "",
     country: "",
-    challenge: "",
+    backgroundAndGoals: "",
     solution: "",
     donationUsage: "",
-    futureImpact: "",
+    subtitle: "",
     link: [{ id: uuidv4(), webLink: "", socialMedia: "Facebook" }],
     tag: [],
     endDate: null,

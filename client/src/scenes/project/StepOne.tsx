@@ -126,15 +126,15 @@ const StepOne = (props: StepOneProps) => {
         <Grid item sx={{ width: "100%" }}>
           <TextField
             fullWidth
-            id="challenge"
+            id="subtitle"
             placeholder="Highlight an important statistic of primary goal of this project."
-            name="challenge"
+            name="subtitle"
             label="Subtitle"
-            value={formik.values.challenge}
+            value={formik.values.subtitle}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.challenge && Boolean(formik.errors.challenge)}
-            helperText={formik.touched.challenge && formik.errors.challenge}
+            error={formik.touched.subtitle && Boolean(formik.errors.subtitle)}
+            helperText={formik.touched.subtitle && formik.errors.subtitle}
             sx={{
               ...textFieldProps.textField,
             }}
@@ -183,15 +183,21 @@ const StepOne = (props: StepOneProps) => {
             fullWidth
             multiline
             rows={4}
-            id="challenge"
+            id="backgroundAndGoals"
             placeholder="Please explain in 1 to 2 paragraphs the challenge that is being seen in the area you want to help. Provide as many facts & statistics as possible, and maybe someone’s personal story too."
-            name="challenge"
+            name="backgroundAndGoals"
             label="Background and goals"
-            value={formik.values.challenge}
+            value={formik.values.backgroundAndGoals}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.challenge && Boolean(formik.errors.challenge)}
-            helperText={formik.touched.challenge && formik.errors.challenge}
+            error={
+              formik.touched.backgroundAndGoals &&
+              Boolean(formik.errors.backgroundAndGoals)
+            }
+            helperText={
+              formik.touched.backgroundAndGoals &&
+              formik.errors.backgroundAndGoals
+            }
             sx={{
               ...textFieldProps.textField,
             }}

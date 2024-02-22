@@ -27,6 +27,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProjectPageFields } from "./Project";
+import ProjectSubtitle from "@/components/Project/ProjectSubtitle";
 
 // import Transactions from "@/components/Project/Transactions";
 
@@ -37,10 +38,10 @@ const ProjectPage = () => {
   const { openAlertSnackbar } = useSnackbar();
   const [projectFields, setProjectFields] = useState<ProjectPageFields>({
     title: { current: "", edit: false },
-    challenge: { current: "", edit: false },
+    backgroundAndGoals: { current: "", edit: false },
     solution: { current: "", edit: false },
     donationUsage: { current: "", edit: false },
-    futureImpact: { current: "", edit: false },
+    subtitle: { current: "", edit: false },
   });
   const project = useSelector((state: RootState) => state.project.project);
   const isProjectLead = project?.membershipBool || false;
@@ -239,6 +240,24 @@ const ProjectPage = () => {
               projectFields={projectFields}
               updateField={updateField}
             />
+          </Grid>{" "}
+          <Grid item>
+            <ProjectSubtitle
+              editing={projectFields.subtitle.edit}
+              buttons={
+                isProjectLead
+                  ? [
+                      <EditButton
+                        name="subtitle"
+                        done={projectFields.subtitle.edit}
+                        onClick={handleButtonClick}
+                      />,
+                    ]
+                  : []
+              }
+              projectFields={projectFields}
+              updateField={updateField}
+            />
           </Grid>
           <Grid item>
             <Button
@@ -277,13 +296,13 @@ const ProjectPage = () => {
         >
           <Grid item sx={{ width: "100%" }}>
             <Challenge
-              editing={projectFields.challenge.edit}
+              editing={projectFields.backgroundAndGoals.edit}
               buttons={
                 isProjectLead
                   ? [
                       <EditButton
-                        name="challenge"
-                        done={projectFields.challenge.edit}
+                        name="backgroundAndGoals"
+                        done={projectFields.backgroundAndGoals.edit}
                         onClick={handleButtonClick}
                       />,
                     ]
@@ -331,7 +350,7 @@ const ProjectPage = () => {
           {/* Donation Usage */}
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader
-              header="Donation Usage"
+              header="Breakdown of where donations go"
               buttons={
                 isProjectLead
                   ? [
@@ -362,7 +381,7 @@ const ProjectPage = () => {
               />
             )}
           </Grid>
-          {/* Future Impact */}
+          {/* Future Impact
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader
               header="Future Impact"
@@ -378,8 +397,8 @@ const ProjectPage = () => {
                   : []
               }
             />
-          </Grid>
-          <Grid item sx={{ width: "100%" }}>
+          </Grid> */}
+          {/* <Grid item sx={{ width: "100%" }}>
             {project.futureImpact && !projectFields.futureImpact.edit && (
               <SectionText text={project.futureImpact} />
             )}
@@ -395,7 +414,7 @@ const ProjectPage = () => {
                 }}
               />
             )}
-          </Grid>
+          </Grid> */}
           <Grid item sx={{ width: "100%" }}>
             <SectionHeader header="Links" />
           </Grid>
