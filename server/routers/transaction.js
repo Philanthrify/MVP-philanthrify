@@ -18,6 +18,8 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       project, // projectId
       category, // type in db
       amount,
+      currency,
+      dollarAmount,
       whatBrought,
       whatFor,
     } = req.body;
@@ -28,6 +30,8 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
         whatFor: whatFor,
         whatBrought: whatBrought,
         amount: Number(amount),
+        currency: currency,
+        dollarAmount: Number(dollarAmount),
         projectId: project,
         posterId: req.user.id,
       },
