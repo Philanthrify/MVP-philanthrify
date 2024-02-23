@@ -76,6 +76,7 @@ const SearchTextField = (props: SearchTextFieldProps) => {
         justifyContent="center"
         alignItems="center"
         spacing={4}
+        
         sx={{ height: "100%", }}
       >
         <Grid item sx={{ width: "100%", }}>
@@ -84,6 +85,8 @@ const SearchTextField = (props: SearchTextFieldProps) => {
             variant="outlined"
             onChange={(e) => dispatch(setSearchTerm(e.target.value))}
             onKeyDown={handleKeyPress}
+            placeholder="Search a project"
+
             sx={{
               width: "100%", 
             }}
