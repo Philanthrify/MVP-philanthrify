@@ -75,17 +75,17 @@ const SearchTextField = (props: SearchTextFieldProps) => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        spacing={2}
-        sx={{ height: "100%" }}
+        spacing={4}
+        sx={{ height: "100%", }}
       >
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%", }}>
           <TextField
-            label="Search"
+            label=""
             variant="outlined"
             onChange={(e) => dispatch(setSearchTerm(e.target.value))}
             onKeyDown={handleKeyPress}
             sx={{
-              width: "100%",
+              width: "100%", 
             }}
             InputProps={{
               startAdornment: (
@@ -93,6 +93,8 @@ const SearchTextField = (props: SearchTextFieldProps) => {
                   position="start"
                   sx={{
                     color: palette.grey[500],
+                    marginLeft: "15px",
+                    
                     "& .MuiTypography-root": { color: palette.grey[500] },
                   }}
                 >

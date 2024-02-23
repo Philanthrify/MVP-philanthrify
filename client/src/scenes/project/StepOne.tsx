@@ -172,7 +172,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", marginLeft: "-50px", marginBottom: "10px", }}
+          sx={{ width: "100%", marginLeft: "0px", marginBottom: "10px", }}
         >
           {/* setting the tags via formik */}
           <TagSelector
