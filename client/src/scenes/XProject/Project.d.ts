@@ -1,9 +1,9 @@
 export interface ProjectPageFields {
   title: CurrentFieldValAndEdit;
-  challenge: CurrentFieldValAndEdit;
+  backgroundAndGoals: CurrentFieldValAndEdit;
   solution: CurrentFieldValAndEdit;
   donationUsage: CurrentFieldValAndEdit;
-  futureImpact: CurrentFieldValAndEdit;
+  subtitle: CurrentFieldValAndEdit;
 }
 
 interface CurrentFieldValAndEdit {

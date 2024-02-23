@@ -49,10 +49,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
     const {
       title,
       country,
-      challenge,
+      backgroundAndGoals,
       solution,
       donationUsage,
-      futureImpact,
+      subtitle,
       link,
       tag,
       targetAmount,
@@ -71,10 +71,10 @@ router.post("/", authMiddleware, getCharities, async (req, res) => {
       data: {
         title: title,
         country: country,
-        challenge: challenge,
+        backgroundAndGoals: backgroundAndGoals,
         solution: solution,
         donationUsage: donationUsage,
-        futureImpact: futureImpact,
+        subtitle: subtitle,
         targetAmount: Number(targetAmount),
         currentAmount: currentAmount,
         charityId: charity.charityId, // actual charity ID here
@@ -120,10 +120,10 @@ router.put(
     const {
       title,
       country,
-      challenge,
+      backgroundAndGoals,
       solution,
       donationUsage,
-      futureImpact,
+      subtitle,
       endDate,
       // Other fields except currentAmount
     } = req.body;
@@ -135,10 +135,10 @@ router.put(
         data: {
           title,
           country,
-          challenge,
+          backgroundAndGoals,
           solution,
           donationUsage,
-          futureImpact,
+          subtitle,
           endDate,
         },
       });
@@ -182,7 +182,7 @@ router.post("/search", async (req, res) => {
             },
           },
           {
-            challenge: {
+            backgroundAndGoals: {
               contains: search,
             },
           },

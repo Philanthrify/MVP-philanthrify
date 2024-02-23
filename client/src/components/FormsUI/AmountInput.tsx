@@ -42,8 +42,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
           <InputAdornment
             position="start"
             sx={
+              
               {
-                // TODO: not working for some reason
+                textAlign: 'center', marginLeft: '15px'// TODO: not working for some reason
                 // color: palette.primary.main,
                 // "& .MuiTypography-root": { color: palette.grey[700] },
               }

@@ -60,7 +60,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
 
           {cleared && (
             <Alert
-              sx={{ position: "absolute", bottom: 0, right: 0 }}
+              sx={{ position: "absolute", bottom: 0, right: 0  }}
               severity="success"
             >
               Field cleared!

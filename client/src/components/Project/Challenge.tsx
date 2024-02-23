@@ -30,12 +30,12 @@ const Challenge = (props: ChallengeProps) => {
     console.log(tags);
   }
 
-  if (project && project.challenge) {
+  if (project && project.backgroundAndGoals) {
     return (
       <Box
         sx={{
           width: "95%",
-          
+
           borderRadius: "1.75rem",
           border: "1px solid", // Set the border thickness and style
           borderColor: palette.grey[800], // Use a color from your theme
@@ -47,13 +47,18 @@ const Challenge = (props: ChallengeProps) => {
         <Grid
           container
           spacing={2.5}
-          
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
           sx={{ width: "100%", padding: "45px 40px 45px 40px" }}
         >
-          <Grid container item direction="row" spacing={1.5} alignItems="center">
+          <Grid
+            container
+            item
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+          >
             <Grid item>
               {" "}
               <ChallengeStars />
@@ -66,9 +71,8 @@ const Challenge = (props: ChallengeProps) => {
                   marginBottom: "-3px", // Add a negative margin bottom
                   display: "inline-block", // Allow margin to affect the surrounding elements
                 }}
-                
               >
-                The challenge
+                Project background and goals
               </TypographyTitle>
             </Grid>
             {props.buttons && (
@@ -81,7 +85,7 @@ const Challenge = (props: ChallengeProps) => {
               </Grid>
             )}
           </Grid>
-          <Grid item sx={{ width: "95%", }}>
+          <Grid item sx={{ width: "95%" }}>
             {" "}
             {!props.editing ? (
               <TypographySmallText
@@ -89,14 +93,14 @@ const Challenge = (props: ChallengeProps) => {
                 // align="center"
                 sx={{ wordWrap: "break-word" }}
               >
-                {project.challenge}
+                {project.backgroundAndGoals}
               </TypographySmallText>
             ) : (
               <TextField
-                name="challenge"
+                name="backgroundAndGoals"
                 multiline
                 rows={4}
-                value={props.projectFields.challenge.current}
+                value={props.projectFields.backgroundAndGoals.current}
                 onChange={props.updateField}
                 sx={{
                   width: "80%",

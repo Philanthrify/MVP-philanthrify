@@ -2,6 +2,8 @@ import FormBox from "@/components/FormBox";
 import { Alert, Grid, Snackbar, Step, StepLabel, Stepper } from "@mui/material";
 
 import TypographyTitle from "@/components/Title";
+import { Typography } from "@mui/material";
+
 import { v4 as uuidv4 } from "uuid";
 
 import { selectToken } from "@/redux/authSlice";
@@ -19,7 +21,6 @@ import { useSnackbar } from "@/contexts/snackbarContext";
 
 const steps = ["Project Information", "Upload Image"];
 const CreateProjectForm = () => {
-
   const charity = useSelector((state: RootState) => state.auth.charity);
   const navigate = useNavigate();
   const [data, setData] = useState<Project>({
@@ -29,10 +30,10 @@ const CreateProjectForm = () => {
     // charity
     title: "",
     country: "",
-    challenge: "",
+    backgroundAndGoals: "",
     solution: "",
     donationUsage: "",
-    futureImpact: "",
+    subtitle: "",
     link: [{ id: uuidv4(), webLink: "", socialMedia: "Facebook" }],
     tag: [],
     endDate: null,
@@ -117,6 +118,10 @@ const CreateProjectForm = () => {
       alignItems="center"
       width="100%"
       height="100%"
+      marginTop="16px" // Add marginTop here for spacing
+      marginBottom= "128px"
+
+      
     >
       {/* TODO: do this a bit later */}
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
@@ -126,9 +131,14 @@ const CreateProjectForm = () => {
       </Snackbar>
       <Grid xs={8}>
         <FormBox>
-          <TypographyTitle variant="h1" align="center" padding="15px 0">
-            Submit New Project:
+          <TypographyTitle variant="h1" align="center" paddingTop="110px">
+            Fund a project
           </TypographyTitle>
+
+          <Typography variant="body2" align="center" marginTop= "10px" marginBottom="50px">
+            Add details to your funding, this will help you to fund fast your project
+            </Typography>
+
           <Grid container justifyContent="center" padding="30px">
             <Stepper
               activeStep={currentStep}
@@ -136,9 +146,11 @@ const CreateProjectForm = () => {
               sx={{
                 ".MuiStepLabel-label": {
                   color: palette.grey[500],
+                  
                 },
                 ".MuiStepIcon-root": {
                   color: palette.grey[500],
+                  
                 },
                 ".MuiStepLabel-label.Mui-active": {
                   color: palette.grey[500],
@@ -147,7 +159,9 @@ const CreateProjectForm = () => {
                   color: palette.grey[500],
                 },
 
-                width: "70%",
+                width: "55%",
+                // marginTop: "100px",
+                marginBottom: "40px",
               }}
             >
               {steps.map((label, index) => {

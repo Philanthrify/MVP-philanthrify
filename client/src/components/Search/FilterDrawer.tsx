@@ -101,7 +101,7 @@ const FilterDrawer = (props: FilterDrawerProps) => {
             >
               What kind of project are you looking for?
             </TypographySmallText>
-            <Box sx={{ Widt: "100%" }}>
+            <Box sx={{ Widt: "100%", maxWidth: "360px" }}>
               {" "}
               {/* Add Box wrapper with width 100% */}
               <TagSelector

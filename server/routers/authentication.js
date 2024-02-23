@@ -91,6 +91,7 @@ router.post("/signup-charity", async (req, res) => {
     charityName: charityName,
     email: email,
     ukCharityNumber: ukCharityNumber.toString(),
+    about: "", // gets changed later in the charity profile page
   };
   const hashedPassword = await passwordMiddleware.hashPassword(password);
 
@@ -99,7 +100,7 @@ router.post("/signup-charity", async (req, res) => {
     lastname: lastname,
     password: hashedPassword,
     email: email,
-    userType: "CHARITY", // usertype is perhaps a bit outdated
+    userType: "CHARITY",
   };
 
   try {

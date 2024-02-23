@@ -11,10 +11,10 @@ export interface Project {
   id?: string;
   title?: string;
   country: string;
-  challenge: string;
+  backgroundAndGoals: string;
   solution: string;
   donationUsage?: string;
-  futureImpact?: string;
+  subtitle?: string;
   link: Link[];
   tag: string[];
   targetAmount: number;
@@ -42,8 +42,8 @@ export type UpdateProjectFieldPayload = {
 };
 type UpdatableStringFieldsOfProject =
   | "title"
-  | "challenge"
+  | "backgroundAndGoals"
   | "solution"
   | "donationUsage"
-  | "futureImpact"
+  | "subtitle"
   | "charityId";

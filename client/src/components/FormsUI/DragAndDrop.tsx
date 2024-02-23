@@ -35,16 +35,19 @@ const DragAndDrop: React.FC<FileUploadProps> = ({ onFileChange }) => {
     <div
       {...getRootProps()}
       style={{
-        border: "1px solid var(--Dark-mode-Dark-hover-input-colors, #53535B)",
+        border: "1px solid var(--Dark-mode-Dark-hover-input-colors, #383B46)",
         borderRadius: "var(--radius-4xl, 24px)",
         width: "70%",
-        height: "150px",
+        height: "260px",
         padding: "20px",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#1C1F2A",
       }}
     >
       <Grid
         container
-        spacing={2}
+        spacing={3}
         direction="column"
         justifyContent="center"
         alignItems="center"
@@ -53,13 +56,14 @@ const DragAndDrop: React.FC<FileUploadProps> = ({ onFileChange }) => {
         <Grid item>
           <Box
             sx={{
-              width: "40px",
-              height: "40px",
-              backgroundColor: "grey",
-              borderRadius: "var(--radius-md, 8px)",
+              width: "60px",
+              height: "60px",
+              backgroundColor: "#394056",
+              borderRadius: "var(--radius-md, 16px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              marginTop: "30px",
             }}
           >
             <UploadFile />
@@ -72,18 +76,34 @@ const DragAndDrop: React.FC<FileUploadProps> = ({ onFileChange }) => {
           ) : (
             <>
               <TypographySmallText
-                variant="body1"
+                variant="h3"
                 sx={{
                   fontWeight: 600,
+                  fontSize: "18px",
                   color: palette.white.light,
                   marginRight: "10px", // needed for having
                 }}
               >
                 Click to upload
               </TypographySmallText>{" "}
-              <SmallText>
+
+              <TypographySmallText
+                variant="h3"
+                sx={{
+                  fontWeight: 300,
+                  fontSize: "16px",
+                  color: "#A4A6AD",
+                  marginRight: "10px", // needed for having
+                }}
+              >
+                or drag 'n' drop a file here, or click to select a file
+              </TypographySmallText>{" "}
+
+
+
+              <TypographySmallText>
                 Drag 'n' drop a file here, or click to select a file
-              </SmallText>
+              </TypographySmallText>
               <SmallText>SVG, PNG, JPG or GIF (max. 800x400px)</SmallText>
             </>
           )}

@@ -5,6 +5,7 @@ import CustomDatePicker from "@/components/FormsUI/DatePicker";
 import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TagSelector from "@/components/FormsUI/TagSelector";
 import TypographyTitle from "@/components/Title";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import { Project } from "@/models/project";
 import {
   Button,
@@ -89,7 +90,7 @@ const StepOne = (props: StepOneProps) => {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "left",
       }}
       onSubmit={formik.handleSubmit}
     >
@@ -97,8 +98,8 @@ const StepOne = (props: StepOneProps) => {
         container
         spacing={2}
         direction="column"
-        justifyContent="center"
-        alignItems="center"
+        justifyContent="left"
+        alignItems="left"
         width="70%"
       >
         <Grid
@@ -106,7 +107,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", }}
         >
           <TextField
             fullWidth
@@ -126,15 +127,15 @@ const StepOne = (props: StepOneProps) => {
         <Grid item sx={{ width: "100%" }}>
           <TextField
             fullWidth
-            id="challenge"
+            id="subtitle"
             placeholder="Highlight an important statistic of primary goal of this project."
-            name="challenge"
+            name="subtitle"
             label="Subtitle"
-            value={formik.values.challenge}
+            value={formik.values.subtitle}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.challenge && Boolean(formik.errors.challenge)}
-            helperText={formik.touched.challenge && formik.errors.challenge}
+            error={formik.touched.subtitle && Boolean(formik.errors.subtitle)}
+            helperText={formik.touched.subtitle && formik.errors.subtitle}
             sx={{
               ...textFieldProps.textField,
             }}
@@ -145,20 +146,21 @@ const StepOne = (props: StepOneProps) => {
           container
           spacing={2}
           direction="column"
-          alignItems="center"
+          alignItems="flex-start"
           sx={{ width: "100%" }}
         >
           <Grid item>
             {/* setting the country via formik */}
             <Typography
-              variant="h4"
-              align="center"
-              sx={{ color: "white.light", width: "100%" }}
+              variant="h3"
+              align="left"
+              fontSize= "18px"
+              sx={{ color: "white.light", textAlign: "left", width: "100%", marginTop: "40px", marginBottom: "10px", }}
             >
-              Select the main country which this project is taking place:
+              Where the project is taking place?
             </Typography>
           </Grid>
-          <Grid item sx={{ width: "60%" }}>
+          <Grid item sx={{ width: "50%", marginBottom: "20px", }}>
             <CountrySelect
               value={formik.values.country}
               onChange={handleCountryChange}
@@ -170,34 +172,41 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", marginLeft: "0px", marginBottom: "10px", }}
         >
           {/* setting the tags via formik */}
           <TagSelector
             value={formik.values.tag}
             handleChange={handleTagChange}
+            
           />
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
           <TextField
             fullWidth
             multiline
             rows={4}
-            id="challenge"
+            id="backgroundAndGoals"
             placeholder="Please explain in 1 to 2 paragraphs the challenge that is being seen in the area you want to help. Provide as many facts & statistics as possible, and maybe someone’s personal story too."
-            name="challenge"
+            name="backgroundAndGoals"
             label="Background and goals"
-            value={formik.values.challenge}
+            value={formik.values.backgroundAndGoals}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.challenge && Boolean(formik.errors.challenge)}
-            helperText={formik.touched.challenge && formik.errors.challenge}
+            error={
+              formik.touched.backgroundAndGoals &&
+              Boolean(formik.errors.backgroundAndGoals)
+            }
+            helperText={
+              formik.touched.backgroundAndGoals &&
+              formik.errors.backgroundAndGoals
+            }
             sx={{
               ...textFieldProps.textField,
             }}
           />
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
           <TextField
             fullWidth
             multiline
@@ -221,7 +230,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", marginBottom: "10px", }}
         >
           {" "}
           <TextField
@@ -251,11 +260,11 @@ const StepOne = (props: StepOneProps) => {
           item
           container
           direction="column"
-          alignItems="center"
-          sx={{ width: "100%" }}
+          alignItems="flex-start"
+          sx={{ width: "100%", }}
         >
           {" "}
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
+          <TypographyTitle variant="h3" fontSize= "18px" align="center" marginTop= "30px" paddingBottom= "10px">
             How much are you hoping to raise?
           </TypographyTitle>{" "}
           <AmountInput
@@ -274,16 +283,17 @@ const StepOne = (props: StepOneProps) => {
             id="targetAmount"
             name="targetAmount"
             width="100%"
+          
           />
         </Grid>{" "}
         <Grid
           item
           container
           direction="column"
-          alignItems="center"
-          sx={{ width: "60%" }}
+          alignItems="flex-start"
+          sx={{ width: "50%" }}
         >
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
+          <TypographyTitle variant="h3" fontSize= "18px" align="left" marginTop= "40px" paddingBottom= "10px">
             When are you hoping to raise by?
           </TypographyTitle>
           {/* Date picker */}
@@ -296,10 +306,11 @@ const StepOne = (props: StepOneProps) => {
           item
           container
           direction="column"
-          alignItems="center"
+          justifyContent="center"
+          alignItems="flex-start"
           sx={{ width: "100%" }}
         >
-          <TypographyTitle variant="h4" align="center" padding="15px 0">
+          <TypographyTitle variant="h3" fontSize= "18px" align="left" marginTop= "40px" paddingBottom= "0px">
             Add links to social media:
           </TypographyTitle>
           {formik.values.link.map((link: Link) => (
@@ -312,11 +323,39 @@ const StepOne = (props: StepOneProps) => {
             />
           ))}
           <Button onClick={addLink}>Add Link</Button>
+
+          <Grid
+              item
+              xs={true}
+              style={{ display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "60px",
+              marginBottom: "96px", }}
+            >
+
+            
+
+              <PrimaryButton
+                text="Continue"
+                type="submit"
+                onClick={() => props.onSubmit(props.projectData)}
+                sx={{ width: "240px", }}
+              />
+              
+            </Grid>{" "}
+
+
+          
         </Grid>
-        <Button type="submit" variant="contained" color="primary">
-          Next
-        </Button>
-      </Grid>
+        <Grid item>
+
+
+
+        </Grid>
+        
+        
+        </Grid>
     </form>
   );
 };

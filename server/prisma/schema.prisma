@@ -19,7 +19,7 @@ model Charity {
   projects         Project[]
   charityName     String
   email           String
-  about String @db.LongText // latterly added
+  about String @db.LongText
 }
 
 model CharityCountry {
@@ -87,10 +87,10 @@ model Project {
   title   String
   country String? @default("Unknown")
   charityId String
-  challenge     String @db.LongText // A description of the challenge the project is addressing
+  backgroundAndGoals     String @db.LongText // A description of the challenge the project is addressing
   solution      String @db.LongText // The proposed solution for the challenge
   donationUsage String @db.LongText // A description of how the donations will be used
-  futureImpact  String @db.LongText // The anticipated future impact or end result of the project
+  subtitle  String // The anticipated future impact or end result of the project
   link          Link[] // Stores various links related to the project
   transactions          Transaction[] // Stores various links related to the project
   tag           Tag[] // Stores various tags related to the project
