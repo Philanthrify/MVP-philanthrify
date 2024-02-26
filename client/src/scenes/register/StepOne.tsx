@@ -62,9 +62,8 @@ const StepOne = (props: StepOneProps) => {
             <PrimaryButton
               text="Continue"
               type="submit"
-              onClick={() => {
-                console.log("");
-              }}
+              onClick={props.handleNext}
+          
               sx={{ width: "220px" }}
             />
           
