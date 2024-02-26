@@ -1,9 +1,10 @@
 import SignupButton from "@/components/Button/SignupButton";
-
+import TypographyTitle from "@/components/Title";
 import Buildings from "@/components/Icons/Signup/Buildings";
 import GivingHand from "@/components/Icons/Signup/GivingHand";
 import { Signup } from "@/models/Signup";
 import { Button, Grid } from "@mui/material";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 
 type StepOneProps = {
   data: Signup; // signup data store
@@ -22,7 +23,7 @@ const StepOne = (props: StepOneProps) => {
   return (
     <Grid
       container
-      spacing={1}
+      spacing={3}
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -31,31 +32,50 @@ const StepOne = (props: StepOneProps) => {
         <SignupButton
           selected={props.data.userType === "DONOR"}
           label={"Join as Donor"}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam"
+          description="Support a project and follow easily the impact of your donation."
           IconComponent={GivingHand}
           onClick={() => setData("DONOR")}
+          
         />
+       
       </Grid>
       <Grid item>
         <SignupButton
           selected={props.data.userType === "CHARITY"}
           label={"Join as Charity"}
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam"
+          description="Start & fund easily your project and provide transparency to your donors"
           IconComponent={Buildings}
           onClick={() => setData("CHARITY")}
         />
+
+<Grid
+            item
+            xs={true}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "40px",
+            }}
+          >
+            
+
+            <PrimaryButton
+              text="Continue"
+              type="submit"
+              onClick={() => {
+                console.log("");
+              }}
+              sx={{ width: "220px" }}
+            />
+          
+
+             
+              </Grid>
+
+
       </Grid>
       <Grid item>
-        {" "}
-        <Button
-          color="primary"
-          variant="contained"
-          type="submit"
-          onClick={props.handleNext}
-          sx={{ width: "100px" }}
-        >
-          Next
-        </Button>
+        
       </Grid>
     </Grid>
   );

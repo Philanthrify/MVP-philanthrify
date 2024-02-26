@@ -3,6 +3,7 @@ import TypographyTitle from "@/components/Title";
 import { Signup } from "@/models/Signup";
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 import axios from "axios";
+import TypographySmallText from "@/components/SmallText";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -168,10 +169,12 @@ const Register = () => {
       alignItems="center"
       width="100%"
       height="100%"
+      paddingTop="16px"
+      paddingBottom="96px"
     >
       <Grid xs={8}>
         <FormBox>
-          <TypographyTitle variant="h1" align="center" padding="15px 0">
+          <TypographyTitle variant="h1" align="center" paddingTop="64px">
             Sign Up
           </TypographyTitle>
 
@@ -180,7 +183,7 @@ const Register = () => {
               {personalizedMessage}
             </TypographyTitle>
           ) : (
-            <TypographyTitle variant="h4" align="center" padding="15px 0">
+            <TypographyTitle variant="body2" align="center" color= "#A4A6AD" paddingTop="5px" paddingBottom="15px">
               Join our community and explore the benefits!
             </TypographyTitle>
           )}
@@ -197,6 +200,8 @@ const Register = () => {
                 data={data}
                 updateData={updateData}
                 handleNext={handleNextStepOne}
+                style={{ marginBottom: '20px' }} // Add marginBottom here
+
               />
             )}
 
@@ -218,19 +223,38 @@ const Register = () => {
             )}
           </>
 
-          <Box display="flex" alignItems="center" justifyContent="center">
-            {" "}
-            {/* Box for TOS and Privacy Policy */}
-            <Typography variant="body2" color={palette.grey[500]}>
+          <Grid sx={{ display: "flex", justifyContent: "center",
+}}>
+            <TypographySmallText
+              variant="body2"
+              align="center"
+              display="flex"
+              justifyContent="center"
+              marginTop={0}
+              maxWidth="380px"
+              sx={{
+                color: "#A4A6AD",
+                fontWeight: 200,
+                fontSize: 12,
+                paddingBottom: "64px"
+                
+                
+              }} // Use sx prop to specify color
+            >
               By signing up, you agree to our
               <a href="/terms-of-service" color={palette.grey[500]}>
                 {" "}
-                Terms of Service{" "}
+                 Terms of Service{" "}
               </a>
-              and
-              <a href="/privacy-policy"> Privacy Policy</a>.
-            </Typography>
-          </Box>
+               and
+              <a href="/privacy-policy"> Privacy Policy</a>
+
+            </TypographySmallText>
+          </Grid>
+
+
+
+    
         </FormBox>
       </Grid>
     </Grid>
