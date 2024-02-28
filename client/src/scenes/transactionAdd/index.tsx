@@ -296,7 +296,7 @@ const TransactionAdd = () => {
             alignItems="space-between"
           >
             <Grid item xs={1}>
-              <InputLabel id="demo-simple-select-label">
+              <InputLabel id="demo-simple-select-label" >
                 Currency
               </InputLabel>
               <Select
@@ -305,6 +305,8 @@ const TransactionAdd = () => {
                 value={formik.values.currency}
                 label="In which currency is this transaction?"
                 onChange={changeCurrency}
+                sx={{ width: '290px', height: '55px' }} // Set width here
+
               >
                 {Object.keys(currencies).map((code) => (
                   <MenuItem key={code} value={code}>
