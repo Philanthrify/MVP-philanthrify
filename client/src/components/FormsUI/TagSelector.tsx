@@ -49,11 +49,11 @@ const TagSelector = (props: TagSelectorProps) => {
   return (
     <>
       {" "}
-      <FormControl sx={{ width: "100%", height: "55px", textAlign: 'center', }}>
+      <FormControl sx={{ width: "100%", height: "55px", textAlign: 'center',  }}>
         <InputLabel
           id="demo-multiple-checkbox-label"
           sx={{
-            ...textFieldProps.inputLabel, textAlign: 'center', marginLeft: '15px'
+            ...textFieldProps.inputLabel, textAlign: 'center', marginLeft: '10px', 
           }}
         >
           Select a category
@@ -70,8 +70,9 @@ const TagSelector = (props: TagSelectorProps) => {
           classes={{ ...textFieldProps.selectClasses }}
           sx={{
             ...textFieldProps.select,
+            borderColor: "#686E82",
             textAlign: 'left', 
-            paddingLeft: '15px',
+            paddingLeft: '10px',
             width: "100%",
             maxWidth: "100%", 
             

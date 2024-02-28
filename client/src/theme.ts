@@ -201,6 +201,8 @@ const themeSettings = {
           fontWeight: 500,
           lineHeight: "24px",
           borderRadius: "var(--radius-full, 1000px)",
+          
+          
         },
       },
     },
@@ -210,7 +212,7 @@ const themeSettings = {
         // Name of the slot
         // root: { height: "55px" },
         icon: {
-          fill: tokens.grey[500],
+          fill: "#ABAEBB",
         },
       },
     },
@@ -219,16 +221,41 @@ const themeSettings = {
       styleOverrides: {
         root: {
           minHeight: "55px",
-          borderRadius: "2rem", // Set the border radius here
+          borderRadius: "1.62rem", // Set the border radius here
+          
+          paddingLeft: '10px',
+          
+          
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: tokens.grey[500],
+            border: "1.25px solid", 
+            borderColor: "#686E82",
+            
           },
+
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            
+            border: "1.5px solid",        
+            backgroundColor: 'rgba(104, 110, 130, 0.1)',
+            borderColor: '#ABB3CE',
+            
+            
+          },
+          
+
           "& .MuiInputBase-input": {
-            color: tokens.grey[500],
+            color: "#FFFFFF",
             "&:-webkit-autofill": {
               WebkitTextFillColor: tokens.grey[500],
               WebkitBoxShadow: "0 0 0px 1000px white inset",
             },
+            
+          },
+
+          
+          "&:focus-within .MuiOutlinedInput-notchedOutline": {
+            borderColor: '#09864A', // Change border color when any descendant receives focus
+            backgroundColor: 'rgba(104, 110, 130, 0.1)',
+            
           },
         },
       },
@@ -238,11 +265,12 @@ const themeSettings = {
         // Name of the slot
         root: {},
         icon: {
-          fill: tokens.grey[500],
+          fill: "#ABAEBB",
+          
         },
       },
     },
-    MuiSvgIcon: { styleOverrides: { root: { color: tokens.grey[500] } } }, // MUI icons are white unless overridden
+    MuiSvgIcon: { styleOverrides: { root: { color: "#ABAEBB" } } }, // MUI icons are white unless overridden
 
     MuiCheckbox: {
       styleOverrides: {
