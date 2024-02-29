@@ -221,7 +221,7 @@ const themeSettings = {
       styleOverrides: {
         root: {
           minHeight: "55px",
-          borderRadius: "1.62rem", // Set the border radius here
+          borderRadius: "1.63rem", // Set the border radius here
           
           paddingLeft: '10px',
           
@@ -270,6 +270,47 @@ const themeSettings = {
         },
       },
     },
+
+    MuiInputLabel: {
+      styleOverrides: {
+        
+        root: {
+          marginLeft: '10px',
+
+         // '&:hover': {
+         //   color: 'white', // Color change on hover doesn't work for some reason
+         //   marginLeft: '100px',
+         // },
+        
+        },
+        icon: {
+          fill: "#ABAEBB",
+          
+        },
+      },
+    },
+
+
+    MuiPlaceholder: {
+      styleOverrides: {
+        
+        root: {
+          padding: '20px 20px 20px 20px',
+
+         // '&:hover': {
+         //   color: 'white', // Color change on hover doesn't work for some reason
+         //   marginLeft: '100px',
+         // },
+        
+        },
+        icon: {
+          fill: "#ABAEBB",
+          
+        },
+      },
+    },    
+
+
     MuiSvgIcon: { styleOverrides: { root: { color: "#ABAEBB" } } }, // MUI icons are white unless overridden
 
     MuiCheckbox: {

@@ -53,7 +53,7 @@ const TagSelector = (props: TagSelectorProps) => {
         <InputLabel
           id="demo-multiple-checkbox-label"
           sx={{
-            ...textFieldProps.inputLabel, textAlign: 'center', marginLeft: '10px', 
+          marginLeft: '10px', 
           }}
         >
           Select a category

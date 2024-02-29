@@ -113,18 +113,17 @@ const StepOne = (props: StepOneProps) => {
             fullWidth
             id="title"
             name="title"
+            placeholder="Use an clear & impactful title"
             label="Title"
             value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
-            sx={{
-              ...textFieldProps.textField,
-            }}
+            
           />
         </Grid>{" "}
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%", marginTop: "20px", }}>
           <TextField
             fullWidth
             id="subtitle"
@@ -136,9 +135,7 @@ const StepOne = (props: StepOneProps) => {
             onBlur={formik.handleBlur}
             error={formik.touched.subtitle && Boolean(formik.errors.subtitle)}
             helperText={formik.touched.subtitle && formik.errors.subtitle}
-            sx={{
-              ...textFieldProps.textField,
-            }}
+            
           />
         </Grid>
         <Grid
@@ -172,7 +169,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", marginLeft: "0px", marginBottom: "10px", }}
+          sx={{ width: "100%", marginLeft: "0px", marginBottom: "20px", }}
         >
           {/* setting the tags via formik */}
           <TagSelector
@@ -181,8 +178,9 @@ const StepOne = (props: StepOneProps) => {
             
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
-          <TextField
+        <Grid item sx={{ width: "100%", marginBottom: "20px",  }}>
+          <TextField 
+          
             fullWidth
             multiline
             rows={4}
@@ -201,12 +199,26 @@ const StepOne = (props: StepOneProps) => {
               formik.touched.backgroundAndGoals &&
               formik.errors.backgroundAndGoals
             }
+
             sx={{
-              ...textFieldProps.textField,
+              height: 'auto',
             }}
+
+            InputProps={{
+              sx: {
+                padding: '20px 20px 20px 20px',
+                height: '160px',
+              }
+            }}
+            
+            
+          
+
+
+
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
+        <Grid item sx={{ width: "100%", marginBottom: "20px", }}>
           <TextField
             fullWidth
             multiline
@@ -220,9 +232,18 @@ const StepOne = (props: StepOneProps) => {
             onBlur={formik.handleBlur}
             error={formik.touched.solution && Boolean(formik.errors.solution)}
             helperText={formik.touched.solution && formik.errors.solution}
+
             sx={{
-              ...textFieldProps.textField,
+              height: 'auto',
             }}
+
+            InputProps={{
+              sx: {
+                padding: '20px 20px 20px 20px',
+                height: '160px',
+              }
+            }}
+            
           />
         </Grid>
         <Grid
@@ -251,9 +272,18 @@ const StepOne = (props: StepOneProps) => {
             helperText={
               formik.touched.donationUsage && formik.errors.donationUsage
             }
+
             sx={{
-              ...textFieldProps.textField,
+              height: 'auto',
             }}
+
+            InputProps={{
+              sx: {
+                padding: '20px 20px 20px 20px',
+                height: '160px',
+              }
+            }}
+            
           />
         </Grid>
         <Grid

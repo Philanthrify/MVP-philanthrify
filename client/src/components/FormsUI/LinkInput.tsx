@@ -76,7 +76,7 @@ const LinkInput: React.FC<LinkInputProps> = ({
           }
           label="Link"
           classes={{ ...textFieldProps.selectClasses  }}
-          sx={{ ...textFieldProps.textField,   }}
+          
         />
       </Grid>
       <Grid item xs={1}>
