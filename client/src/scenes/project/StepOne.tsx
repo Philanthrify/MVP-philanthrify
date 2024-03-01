@@ -114,7 +114,7 @@ const StepOne = (props: StepOneProps) => {
             id="title"
             name="title"
             inputProps={{ maxLength: 90 }}
-            placeholder="Use an clear & impactful title"
+            placeholder="Use a clear & impactful title"
             label="Title"
             value={formik.values.title}
             onChange={formik.handleChange}

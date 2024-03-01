@@ -173,7 +173,7 @@ const TransactionAdd = () => {
           top: "120px",
           left: 0,
           width: "100%",
-          height: "100%",
+          height: "55px",
           zIndex: -1,
         }}
       >

@@ -277,7 +277,7 @@ const themeSettings = {
         
         root: {
           marginLeft: '10px',
-          color: "#A4A6AD"
+          color: "#"
 
          // '&:hover': {
          //   color: 'white', // Color change on hover doesn't work for some reason
@@ -317,7 +317,13 @@ const themeSettings = {
 
     MuiCheckbox: {
       styleOverrides: {
-        root: { color: tokens.grey[500], borderRadius: "1rem" },
+        root: { 
+          color: tokens.grey[800], 
+          borderRadius: "10rem",
+          '&:hover .MuiCheckbox:': {
+            color: '#09864A',
+          },
+        },
       },
     },
     MuiDivider: {
