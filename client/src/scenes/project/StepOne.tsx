@@ -113,6 +113,7 @@ const StepOne = (props: StepOneProps) => {
             fullWidth
             id="title"
             name="title"
+            inputProps={{ maxLength: 90 }}
             placeholder="Use an clear & impactful title"
             label="Title"
             value={formik.values.title}
@@ -128,6 +129,7 @@ const StepOne = (props: StepOneProps) => {
             fullWidth
             id="subtitle"
             placeholder="Highlight an important statistic of primary goal of this project."
+            inputProps={{ maxLength: 50 }}
             name="subtitle"
             label="Subtitle"
             value={formik.values.subtitle}
@@ -188,6 +190,7 @@ const StepOne = (props: StepOneProps) => {
             placeholder="Please explain in 1 to 2 paragraphs the challenge that is being seen in the area you want to help. Provide as many facts & statistics as possible, and maybe someone’s personal story too."
             name="backgroundAndGoals"
             label="Background and goals"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.backgroundAndGoals}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -227,6 +230,7 @@ const StepOne = (props: StepOneProps) => {
             placeholder="Please explain in 1 to 3 paragraphs, what the solution your organisation is suggesting? How you will accomplish it? What plans you have prepared to ensure its success? And Any Previous successful projects you have managed to show the likelihood of success?"
             name="solution"
             label="Solution"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.solution}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -262,6 +266,7 @@ const StepOne = (props: StepOneProps) => {
             placeholder="In as much detail as you can give, please breakdown what the money will be used for. E.g:“The funds raised here will go to Constructing a custom ICT Centre in a slum in Uganda. Along with fitting the centre out with computers, furniture, WiFi and providing a year’s salary to 4 team members that will run the centre day-to-day”. "
             name="donationUsage"
             label="Breakdown of where donations go"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.donationUsage}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

@@ -69,10 +69,10 @@ const TagSelector = (props: TagSelectorProps) => {
           MenuProps={MenuProps}
           classes={{ ...textFieldProps.selectClasses }}
           sx={{
-            ...textFieldProps.select,
-            borderColor: "#686E82",
-            textAlign: 'left', 
-            paddingLeft: '10px',
+            //...textFieldProps.select,
+            //borderColor: "#686E82",
+            //textAlign: 'left', 
+            //paddingLeft: '10px',
             width: "100%",
             maxWidth: "100%", 
             

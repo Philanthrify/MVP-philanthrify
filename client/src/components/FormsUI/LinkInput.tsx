@@ -55,7 +55,7 @@ const LinkInput: React.FC<LinkInputProps> = ({
                 socialMedia: e.target.value as string,
               })
             }
-            sx={{ ...textFieldProps.select, paddingY: "0px",textAlign: "left" }}
+            sx={{ textAlign: "left" }}
           >
             <MenuItem value="Facebook">Facebook</MenuItem>
             <MenuItem value="LinkedIn">LinkedIn</MenuItem>

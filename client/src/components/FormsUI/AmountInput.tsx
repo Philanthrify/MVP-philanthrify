@@ -31,6 +31,7 @@ const AmountInput: React.FC<AmountInputProps> = ({
       fullWidth
       id={id}
       name={name}
+      inputProps={{ maxLength: 11 }}
       label={label}
       value={value}
       onChange={onChange}

@@ -95,11 +95,13 @@ export default function CountrySelect(props: CountrySelectProps) {
             {...params}
             inputProps={{
               ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
+              autoComplete: "new-password",
+              // disable autocomplete and autofill
             }}
             classes={{ ...textFieldProps.selectClasses }}
             sx={{
               ...props.sxProps,
+              
               "&:hover": {
                 //backgroundColor: 'grey.900',
               },

@@ -230,6 +230,7 @@ const themeSettings = {
             border: "1.25px solid", 
             borderColor: "#686E82",
             
+            
           },
 
           "&:hover .MuiOutlinedInput-notchedOutline": {
@@ -276,6 +277,7 @@ const themeSettings = {
         
         root: {
           marginLeft: '10px',
+          color: "#A4A6AD"
 
          // '&:hover': {
          //   color: 'white', // Color change on hover doesn't work for some reason
@@ -295,7 +297,7 @@ const themeSettings = {
       styleOverrides: {
         
         root: {
-          padding: '20px 20px 20px 20px',
+          //padding: '20px 20px 20px 20px',
 
          // '&:hover': {
          //   color: 'white', // Color change on hover doesn't work for some reason
