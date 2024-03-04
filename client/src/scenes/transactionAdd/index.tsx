@@ -173,7 +173,7 @@ const TransactionAdd = () => {
           top: "120px",
           left: 0,
           width: "100%",
-          height: "55px",
+          height: "100%",
           zIndex: -1,
         }}
       >
@@ -220,6 +220,8 @@ const TransactionAdd = () => {
                 value={formik.values.project}
                 label="Which project is this for?"
                 onChange={changeProject}
+                sx={{ height: "55px", maxWidth: "620px", }} // Set height here
+
               >
                 {projects.map((project) => (
                   <MenuItem key={project.id} value={project.id}>
@@ -274,6 +276,8 @@ const TransactionAdd = () => {
                   value={formik.values.category}
                   label="Type of Transaction"
                   onChange={changeCategory}
+                  sx={{ height: "55px"}} // Set height here
+
                 >
                   {Object.entries(TransactionKinds).map(([key, value]) => (
                     <MenuItem key={key} value={key}>
