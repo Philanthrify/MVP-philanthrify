@@ -192,11 +192,11 @@ const Login = () => {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{
-                  ...textFieldProps.textField,
+                  //...textFieldProps.textField,
                   //width: textFieldProps.textFieldWidth,
                   width: "100%", // Set the width to 100%
                   maxWidth: "320px", // Set the maximum width
-                  marginTop: "10px",
+                  marginTop: "20px",
                 }}
               />
 
@@ -215,11 +215,11 @@ const Login = () => {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 sx={{
-                  ...textFieldProps.textField,
+                  //...textFieldProps.textField,
                   //width: textFieldProps.textFieldWidth,
                   width: "100%", // Set the width to 100%
                   maxWidth: "320px", // Set the maximum width
-                  marginTop: "10px",
+                  marginTop: "30px",
                 }}
                 InputProps={{
                   endAdornment: (
