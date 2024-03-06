@@ -34,6 +34,9 @@ export interface Project {
 export interface ProjectShort {
   id: string;
   title: string;
+  country: string;
+  targetAmount: number;
+  currentAmount: number;
 }
 
 export type UpdateProjectFieldPayload = {

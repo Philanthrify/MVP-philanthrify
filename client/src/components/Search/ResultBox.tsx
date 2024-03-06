@@ -6,7 +6,7 @@ import LocationText from "../Project/LocationText";
 
 type ResultBoxProps = {
   project: Project;
-  sx: any;
+  sx?: any;
 };
 
 const ResultBox = (props: ResultBoxProps) => {
@@ -28,13 +28,12 @@ const ResultBox = (props: ResultBoxProps) => {
         flexDirection: "column", // Stack children vertically
         justifyContent: "flex-start", // Distribute space
         alignItems: "flex-start",
-        
-        
+
         color: palette.grey[500], // Text color
         "&:hover": {
-          backgroundColor: "#394056" , // Hover background color
+          backgroundColor: "#394056", // Hover background color
           transform: "scale(1.02)",
-          transition: 'transform 0.17s ease-in-out',
+          transition: "transform 0.17s ease-in-out",
         },
         borderRadius: "1.5rem",
         boxShadow: "0.15rem 0.2rem 0.15rem 0.1rem rgba(0,0,0,.8",

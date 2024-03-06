@@ -112,7 +112,7 @@ export const TagEmojis = {
   Education: "Education",
   CleanWater: "Clean Water",
 };
-type TagValueKey = keyof typeof TagValuesObj;
+export type TagValueKey = keyof typeof TagValuesObj;
 
 // a 'guard function' which ensures that any key is one of the allowed tags
 export function isTagValueKey(key: any): key is TagValueKey {

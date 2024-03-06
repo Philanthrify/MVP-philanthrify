@@ -1,4 +1,3 @@
-import { TagValuesObj, mapValues } from "@/models/tagValues";
 import {
   Checkbox,
   FormControl,
@@ -12,31 +11,33 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import FormStyles from ".";
+import { countries, CountryType } from "@/models/country";
+import { mapValues } from "@/models/tagValues";
+// import { mapValues } from "@/models/WidespreadModels";
 
 // takes the value and the onChange func as props and
 // will handle value changes accordingly
-const ITEM_HEIGHT = 50;
-const ITEM_PADDING_TOP = 4;
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.95 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 250,
-      backgroundColor: "#161821", // Set your desired background color here
     },
   },
 };
-type TagSelectorProps = {
+type CountrySelectorProps = {
   value: string[];
   handleChange: (event: SelectChangeEvent<string[]>) => void;
 };
 
-const TagSelector = (props: TagSelectorProps) => {
+const CountrySelector = (props: CountrySelectorProps) => {
   const { palette } = useTheme();
   const textFieldProps = FormStyles();
   useEffect(() => {
     console.log(
-      "🚀 ~ file: TagSelector.tsx:37 ~ TagSelector ~ props.value:",
+      "🚀 ~ file: CountrySelector.tsx:37 ~ CountrySelector ~ props.value:",
       props.value
     );
   }, [props.value]);
@@ -44,20 +45,21 @@ const TagSelector = (props: TagSelectorProps) => {
     return mapValues(selectedKeys).join(", ");
   };
   console.log(
-    "🚀 ~ file: TagSelector.tsx:66 ~ TagSelector ~ props.handleChange:",
+    "🚀 ~ file: CountrySelector.tsx:66 ~ CountrySelector ~ props.handleChange:",
     props.handleChange
   );
   return (
     <>
-      {" "}
-      <FormControl sx={{ width: "100%", height: "55px", textAlign: "center" }}>
+      <FormControl sx={{ width: "85%" }}>
         <InputLabel
           id="demo-multiple-checkbox-label"
-          sx={{
-            marginLeft: "10px",
-          }}
+          sx={
+            {
+              // ...textFieldProps.inputLabel,
+            }
+          }
         >
-          Select a category
+          Contries
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -74,13 +76,13 @@ const TagSelector = (props: TagSelectorProps) => {
             maxWidth: "100%",
           }}
         >
-          {Object.entries(TagValuesObj).map(([key, value]) => (
-            <MenuItem key={key} value={key}>
+          {countries.map((country: CountryType) => (
+            <MenuItem key={country.code} value={country.code}>
               <Checkbox
-                checked={(props.value ?? []).indexOf(key) > -1}
-                sx={{}}
+                checked={(props.value ?? []).indexOf(country.code) > -1}
+                sx={{ color: palette.primary.main }}
               />
-              <ListItemText primary={value} />{" "}
+              <ListItemText primary={country.label} />{" "}
               {/* Display the value with spaces */}
             </MenuItem>
           ))}
@@ -90,4 +92,4 @@ const TagSelector = (props: TagSelectorProps) => {
   );
 };
 
-export default TagSelector;
+export default CountrySelector;

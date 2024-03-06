@@ -96,6 +96,7 @@ const ProjectPage = () => {
       }
     }
   };
+  // on change func for when the user is typeing into textboxes
   const updateField: React.ChangeEventHandler<
     HTMLInputElement | HTMLTextAreaElement
   > = (event) => {

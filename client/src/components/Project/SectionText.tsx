@@ -7,7 +7,10 @@ const SectionText = (props: SectionTextProps) => {
   return (
     <Grid container direction="column" alignItems="flex-start" width="95%">
       <Grid item>
-        <Typography variant="body2" sx={{ color: "#A4A6AD" }}>
+        <Typography
+          variant="body2"
+          sx={{ color: "#A4A6AD", whiteSpace: "pre-line" }}
+        >
           {props.text}
         </Typography>
       </Grid>

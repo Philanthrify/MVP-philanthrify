@@ -5,7 +5,7 @@ import Edit from "../Icons/Edit";
 interface EditButtonProps {
   name: string;
   done: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const EditButton: React.FunctionComponent<EditButtonProps> = ({
