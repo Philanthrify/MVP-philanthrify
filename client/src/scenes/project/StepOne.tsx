@@ -107,7 +107,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", }}
+          sx={{ width: "100%" }}
         >
           <TextField
             fullWidth
@@ -119,9 +119,11 @@ const StepOne = (props: StepOneProps) => {
             onBlur={formik.handleBlur}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
-            sx={{
-              ...textFieldProps.textField,
-            }}
+            sx={
+              {
+                // ...textFieldProps.textField,
+              }
+            }
           />
         </Grid>{" "}
         <Grid item sx={{ width: "100%" }}>
@@ -136,9 +138,11 @@ const StepOne = (props: StepOneProps) => {
             onBlur={formik.handleBlur}
             error={formik.touched.subtitle && Boolean(formik.errors.subtitle)}
             helperText={formik.touched.subtitle && formik.errors.subtitle}
-            sx={{
-              ...textFieldProps.textField,
-            }}
+            sx={
+              {
+                // ...textFieldProps.textField,
+              }
+            }
           />
         </Grid>
         <Grid
@@ -154,13 +158,19 @@ const StepOne = (props: StepOneProps) => {
             <Typography
               variant="h3"
               align="left"
-              fontSize= "18px"
-              sx={{ color: "white.light", textAlign: "left", width: "100%", marginTop: "40px", marginBottom: "10px", }}
+              fontSize="18px"
+              sx={{
+                color: "white.light",
+                textAlign: "left",
+                width: "100%",
+                marginTop: "40px",
+                marginBottom: "10px",
+              }}
             >
               Where the project is taking place?
             </Typography>
           </Grid>
-          <Grid item sx={{ width: "50%", marginBottom: "20px", }}>
+          <Grid item sx={{ width: "50%", marginBottom: "20px" }}>
             <CountrySelect
               value={formik.values.country}
               onChange={handleCountryChange}
@@ -172,16 +182,15 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", marginLeft: "-50px", marginBottom: "10px", }}
+          sx={{ width: "100%", marginLeft: "-50px", marginBottom: "10px" }}
         >
           {/* setting the tags via formik */}
           <TagSelector
             value={formik.values.tag}
             handleChange={handleTagChange}
-            
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
+        <Grid item sx={{ width: "100%", marginBottom: "10px" }}>
           <TextField
             fullWidth
             multiline
@@ -201,12 +210,14 @@ const StepOne = (props: StepOneProps) => {
               formik.touched.backgroundAndGoals &&
               formik.errors.backgroundAndGoals
             }
-            sx={{
-              ...textFieldProps.textField,
-            }}
+            sx={
+              {
+                // ...textFieldProps.textField,
+              }
+            }
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px", }}>
+        <Grid item sx={{ width: "100%", marginBottom: "10px" }}>
           <TextField
             fullWidth
             multiline
@@ -230,7 +241,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", marginBottom: "10px", }}
+          sx={{ width: "100%", marginBottom: "10px" }}
         >
           {" "}
           <TextField
@@ -261,10 +272,16 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="flex-start"
-          sx={{ width: "100%", }}
+          sx={{ width: "100%" }}
         >
           {" "}
-          <TypographyTitle variant="h3" fontSize= "18px" align="center" marginTop= "30px" paddingBottom= "10px">
+          <TypographyTitle
+            variant="h3"
+            fontSize="18px"
+            align="center"
+            marginTop="30px"
+            paddingBottom="10px"
+          >
             How much are you hoping to raise?
           </TypographyTitle>{" "}
           <AmountInput
@@ -283,7 +300,6 @@ const StepOne = (props: StepOneProps) => {
             id="targetAmount"
             name="targetAmount"
             width="100%"
-          
           />
         </Grid>{" "}
         <Grid
@@ -293,7 +309,13 @@ const StepOne = (props: StepOneProps) => {
           alignItems="flex-start"
           sx={{ width: "50%" }}
         >
-          <TypographyTitle variant="h3" fontSize= "18px" align="left" marginTop= "40px" paddingBottom= "10px">
+          <TypographyTitle
+            variant="h3"
+            fontSize="18px"
+            align="left"
+            marginTop="40px"
+            paddingBottom="10px"
+          >
             When are you hoping to raise by?
           </TypographyTitle>
           {/* Date picker */}
@@ -310,7 +332,13 @@ const StepOne = (props: StepOneProps) => {
           alignItems="flex-start"
           sx={{ width: "100%" }}
         >
-          <TypographyTitle variant="h3" fontSize= "18px" align="left" marginTop= "40px" paddingBottom= "0px">
+          <TypographyTitle
+            variant="h3"
+            fontSize="18px"
+            align="left"
+            marginTop="40px"
+            paddingBottom="0px"
+          >
             Add links to social media:
           </TypographyTitle>
           {formik.values.link.map((link: Link) => (
@@ -323,39 +351,26 @@ const StepOne = (props: StepOneProps) => {
             />
           ))}
           <Button onClick={addLink}>Add Link</Button>
-
           <Grid
-              item
-              xs={true}
-              style={{ display: "flex",
+            item
+            xs={true}
+            style={{
+              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               marginTop: "60px",
-              marginBottom: "96px", }}
-            >
-
-            
-
-              <PrimaryButton
-                text="Continue"
-                type="submit"
-                onClick={() => props.onSubmit(props.projectData)}
-                sx={{ width: "240px", }}
-              />
-              
-            </Grid>{" "}
-
-
-          
+              marginBottom: "96px",
+            }}
+          >
+            <PrimaryButton
+              text="Continue"
+              type="submit"
+              sx={{ width: "240px" }}
+            />
+          </Grid>{" "}
         </Grid>
-        <Grid item>
-
-
-
-        </Grid>
-        
-        
-        </Grid>
+        <Grid item></Grid>
+      </Grid>
     </form>
   );
 };

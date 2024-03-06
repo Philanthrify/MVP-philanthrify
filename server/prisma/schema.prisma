@@ -11,22 +11,28 @@ datasource db {
 }
 
 model Charity {
-  ukCharityNumber String                 @id
-  members         CharityMembership[]
-  links         CharityLink[]
-  tags         CharityTag[]
-  countriesActive         CharityCountry[]
-  projects         Project[]
-  charityName     String
-  email           String
-  about String @db.LongText
+  ukCharityNumber             String              @id
+  members                     CharityMembership[]
+  links                       CharityLink[]
+  tags                        CharityTag[]
+  countriesActive             CharityCountry[]
+  projects                    Project[]
+  charityName                 String
+  email                       String
+  about                       String?             @db.LongText
+  reachOutEmail               String?
+  foundedDate                 DateTime?
+  membershipConfirmed         Boolean?
+  membershipConfirmedDateTime DateTime?
+  tagline                     String? @db.VarChar(800)
+  website String?
 }
 
 model CharityCountry {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   charityId String
-  value     Country 
-  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+  value     Country
+  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 
   @@unique([charityId, value])
 }
@@ -35,88 +41,90 @@ model CharityTag {
   id        String   @id @default(uuid())
   charityId String
   value     TagValue
-  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+  charity   Charity  @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 
   @@unique([charityId, value])
 }
 
 model CharityLink {
   id          String  @id @default(uuid())
-  webLink         String
+  webLink     String
   socialMedia String // Type of link, e.g., social media, website, etc.
   charityId   String // Foreign key reference to the Project model
   charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 }
 
 model CharityMembership {
-  id        String  @id @default(uuid())
-  userId    String
-  charityId String
+  id          String  @id @default(uuid())
+  userId      String
+  charityId   String
   charityHead Boolean
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  charity   Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+
   @@unique([userId, charityId])
 }
+
 model ProjectMembership {
-  id        String  @id @default(uuid())
-  userId    String
-  projectId String
+  id          String  @id @default(uuid())
+  userId      String
+  projectId   String
   projectLead Boolean
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
   @@unique([userId, projectId])
 }
 
-
 // TODO (Fergus): multipage signup form for extra info such as bio, soc media links (redux)
 model User {
-  id       String              @id @default(uuid())
-  firstname String
-  lastname String
-  password String
-  email    String              @unique
-  userType UserType // This field determines whether the user is a Donor or a Charity
-  updates ProjectUpdate[]
-  charity  CharityMembership[]
-    projects ProjectMembership[]
-    transactions          Transaction[]
+  id           String              @id @default(uuid())
+  firstname    String
+  lastname     String
+  password     String
+  email        String              @unique
+  userType     UserType // This field determines whether the user is a Donor or a Charity
+  updates      ProjectUpdate[]
+  charity      CharityMembership[]
+  projects     ProjectMembership[]
+  transactions Transaction[]
 }
 
 model Project {
-  id      String  @id @default(uuid())
-  title   String
-  country String? @default("Unknown")
-  charityId String
-  backgroundAndGoals     String @db.LongText // A description of the challenge the project is addressing
-  solution      String @db.LongText // The proposed solution for the challenge
-  donationUsage String @db.LongText // A description of how the donations will be used
-  subtitle  String // The anticipated future impact or end result of the project
-  link          Link[] // Stores various links related to the project
-  transactions          Transaction[] // Stores various links related to the project
-  tag           Tag[] // Stores various tags related to the project
-  updates ProjectUpdate[]
-  members ProjectMembership[]
-  targetAmount  Float // The fundraising goal for the project
-  currentAmount Float // The current money raised
+  id                 String              @id @default(uuid())
+  title              String
+  country            String?             @default("Unknown")
+  charityId          String
+  backgroundAndGoals String              @db.LongText // A description of the challenge the project is addressing
+  solution           String              @db.LongText // The proposed solution for the challenge
+  donationUsage      String              @db.LongText // A description of how the donations will be used
+  subtitle           String // The anticipated future impact or end result of the project
+  link               Link[] // Stores various links related to the project
+  transactions       Transaction[] // Stores various links related to the project
+  tag                Tag[] // Stores various tags related to the project
+  updates            ProjectUpdate[]
+  members            ProjectMembership[]
+  targetAmount       Float // The fundraising goal for the project
+  currentAmount      Float // The current money raised
   // userId        String // Foreign key reference to the User model
-  startDate     DateTime @default(now()) // Auto-generated field capturing today's date
-  endDate       DateTime // This field should be set to a date after startDate
-    charity   Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
+  startDate          DateTime            @default(now()) // Auto-generated field capturing today's date
+  endDate            DateTime // This field should be set to a date after startDate
+  charity            Charity             @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
 }
 
 model ProjectUpdate {
-    id      String  @id @default(uuid())
-      text     String @db.LongText // text within the update which is displayed
+  id   String @id @default(uuid())
+  text String @db.LongText // text within the update which is displayed
 
-  userId        String // Foreign key reference to the User model
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    projectId   String // Foreign key reference to the Project model
-  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String // Foreign key reference to the User model
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String // Foreign key reference to the Project model
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Link {
   id          String  @id @default(uuid())
-  webLink         String
+  webLink     String
   socialMedia String // Type of link, e.g., social media, website, etc.
   projectId   String // Foreign key reference to the Project model
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -124,19 +132,17 @@ model Link {
 
 // TODO: onDelete of project, does transaction get deleted?
 model Transaction {
-  id          String  @id @default(uuid())
-  type         String
-    whatFor         String
-  whatBrought         String
-  amount         Float
+  id          String   @id @default(uuid())
+  type        String
+  whatFor     String
+  whatBrought String
+  amount      Float
   projectId   String // Foreign key reference to the Project model
-  project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  posterId   String // Foreign key reference to the Project model
-  poster     User @relation(fields: [posterId], references: [id], onDelete: NoAction) // TODO: bug - deletion of account will be restricted noAction isn't working for MySQL
-  dateTime     DateTime @default(now())
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  posterId    String // Foreign key reference to the Project model
+  poster      User     @relation(fields: [posterId], references: [id], onDelete: NoAction) // TODO: bug - deletion of account will be restricted noAction isn't working for MySQL
+  dateTime    DateTime @default(now())
 }
-
-
 
 model Tag {
   id        String   @id @default(uuid())
@@ -152,6 +158,7 @@ enum UserType {
   DONOR
   CHARITY
 }
+
 // Enum to represent the type of the user
 enum CharityUserType {
   CHARITYHEAD

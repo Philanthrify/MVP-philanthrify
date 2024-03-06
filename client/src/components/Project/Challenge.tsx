@@ -91,7 +91,7 @@ const Challenge = (props: ChallengeProps) => {
               <TypographySmallText
                 variant="body2"
                 // align="center"
-                sx={{ wordWrap: "break-word" }}
+                sx={{ wordWrap: "break-word", whiteSpace: "pre-line" }}
               >
                 {project.backgroundAndGoals}
               </TypographySmallText>
