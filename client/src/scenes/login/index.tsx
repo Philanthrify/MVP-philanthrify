@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import Cookies from "universal-cookie";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { Charity, CharityMembership } from "@/models/charity";
 
@@ -146,15 +147,15 @@ const Login = () => {
       alignItems="center"
       width="100%"
       height="100%"
-      paddingTop="10px"
-      paddingBottom="32px"
+      paddingTop="16px"
+      paddingBottom="96px"
     >
       <Grid xs={8}>
         <FormBox>
           <TypographyTitle variant="h1" align="center" paddingTop="64px">
             Log in
           </TypographyTitle>
-          <TypographyTitle variant="body2" align="center" padding="0px 0px">
+          <TypographyTitle variant="body2" align="center" color= "#A4A6AD" >
             Welcome back to our community
           </TypographyTitle>
           {loginError && (
@@ -184,17 +185,18 @@ const Login = () => {
                 id="email"
                 name="email"
                 label="Email"
+                placeholder="Enter your email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
                 sx={{
-                  ...textFieldProps.textField,
+                  //...textFieldProps.textField,
                   //width: textFieldProps.textFieldWidth,
                   width: "100%", // Set the width to 100%
                   maxWidth: "320px", // Set the maximum width
-                  marginTop: "10px",
+                  marginTop: "20px",
                 }}
               />
 
@@ -203,6 +205,7 @@ const Login = () => {
                 id="password"
                 name="password"
                 label="Password"
+                placeholder="**********"
                 type={showPassword ? "text" : "password"}
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -212,11 +215,11 @@ const Login = () => {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 sx={{
-                  ...textFieldProps.textField,
+                  //...textFieldProps.textField,
                   //width: textFieldProps.textFieldWidth,
                   width: "100%", // Set the width to 100%
                   maxWidth: "320px", // Set the maximum width
-                  marginTop: "10px",
+                  marginTop: "30px",
                 }}
                 InputProps={{
                   endAdornment: (
@@ -237,23 +240,39 @@ const Login = () => {
                 }}
               />
 
-              <Grid item xs={12} paddingTop="25px" paddingBottom="0px">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  fullWidth
-                  type="submit"
-                >
-                  Log In
-                </Button>
+            <Grid
+            item
+            xs={true}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "40px",
+            }}
+          >
+            
+
+            <PrimaryButton
+              text="Login"
+              type="submit"
+              onClick={() => {
+                console.log("");
+              }}
+              sx={{ width: "150px" }}
+            />
+          
+
+             
               </Grid>
               <Grid xs={10} padding="0px 0px">
                 <Typography
                   variant="body2"
                   align="center"
-                  paddingTop="20px"
+                  paddingTop="30px"
                   paddingBottom="64px"
-                  color={palette.grey[500]}
+                  color= "#A4A6AD"
+                  fontWeight= "200"
+                  fontSize= "14px"
+                
                 >
                   Don't have an account yet?{" "}
                   <Link to="/register">Register</Link>

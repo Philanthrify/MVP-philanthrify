@@ -29,6 +29,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "@/components/Button/PrimaryButton";
 import SecondaryButton from "@/components/Button/SecondaryButton";
+import { Currency, currencies } from "../../assets/currencies";
 
 import * as yup from "yup";
 
@@ -93,6 +94,7 @@ const TransactionAdd = () => {
   const formik = useFormik({
     initialValues: {
       project: "",
+      currency: "",
       amount: 0,
       category: "",
       whatBrought: "", // what did you pay for?
@@ -143,6 +145,14 @@ const TransactionAdd = () => {
     console.log(value);
 
     formik.setFieldValue("category", value);
+  };
+  const changeCurrency = (event: SelectChangeEvent<string>) => {
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+
+    formik.setFieldValue("currency", value);
   };
   if (loading) {
     return <div>Loading...</div>; // Show loading indicator while data is being fetched
@@ -210,6 +220,8 @@ const TransactionAdd = () => {
                 value={formik.values.project}
                 label="Which project is this for?"
                 onChange={changeProject}
+                sx={{ height: "55px", maxWidth: "620px", }} // Set height here
+
               >
                 {projects.map((project) => (
                   <MenuItem key={project.id} value={project.id}>
@@ -264,6 +276,8 @@ const TransactionAdd = () => {
                   value={formik.values.category}
                   label="Type of Transaction"
                   onChange={changeCategory}
+                  sx={{ height: "55px"}} // Set height here
+
                 >
                   {Object.entries(TransactionKinds).map(([key, value]) => (
                     <MenuItem key={key} value={key}>
@@ -275,19 +289,41 @@ const TransactionAdd = () => {
               </FormControl>
             </Grid>
           </Grid>
+
+
           <Grid
             item
             container
-            spacing={3}
+            spacing={1}
             direction="row"
             justifyContent="space-between"
             alignItems="space-between"
           >
-            {" "}
+            <Grid item xs={1}>
+              <InputLabel id="demo-simple-select-label" >
+                Currency
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formik.values.currency}
+                label="In which currency is this transaction?"
+                onChange={changeCurrency}
+                sx={{ width: '290px', height: '55px' }} // Set width here
+
+              >
+                {Object.keys(currencies).map((code) => (
+                  <MenuItem key={code} value={code}>
+                  <ListItemText primary={currencies[code].fullName + " (" + code + ")"} />
+                </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            
             <Grid item xs={6}>
-              {" "}
               <AmountInput
                 value={formik.values.amount}
+                //placeholder="0.00" -- much harder than anticipated
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.amount && Boolean(formik.errors.amount)}
@@ -302,6 +338,17 @@ const TransactionAdd = () => {
                 width="100%"
               />{" "}
             </Grid>
+          </Grid>
+
+
+          <Grid
+          item
+            container
+            spacing={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="space-between"
+          >
             <Grid item xs={6}>
               {" "}
               <TextField
@@ -325,6 +372,8 @@ const TransactionAdd = () => {
               </Grid>{" "}
             </Grid>{" "}
           </Grid>{" "}
+
+
           <Grid
             item
             xs={true}

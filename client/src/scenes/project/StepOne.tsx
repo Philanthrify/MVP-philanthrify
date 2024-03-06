@@ -113,24 +113,22 @@ const StepOne = (props: StepOneProps) => {
             fullWidth
             id="title"
             name="title"
+            inputProps={{ maxLength: 90 }}
+            placeholder="Use a clear & impactful title"
             label="Title"
             value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
-            sx={
-              {
-                // ...textFieldProps.textField,
-              }
-            }
           />
         </Grid>{" "}
-        <Grid item sx={{ width: "100%" }}>
+        <Grid item sx={{ width: "100%", marginTop: "20px" }}>
           <TextField
             fullWidth
             id="subtitle"
             placeholder="Highlight an important statistic of primary goal of this project."
+            inputProps={{ maxLength: 50 }}
             name="subtitle"
             label="Subtitle"
             value={formik.values.subtitle}
@@ -138,11 +136,6 @@ const StepOne = (props: StepOneProps) => {
             onBlur={formik.handleBlur}
             error={formik.touched.subtitle && Boolean(formik.errors.subtitle)}
             helperText={formik.touched.subtitle && formik.errors.subtitle}
-            sx={
-              {
-                // ...textFieldProps.textField,
-              }
-            }
           />
         </Grid>
         <Grid
@@ -182,7 +175,7 @@ const StepOne = (props: StepOneProps) => {
           container
           direction="column"
           alignItems="center"
-          sx={{ width: "100%", marginLeft: "-50px", marginBottom: "10px" }}
+          sx={{ width: "100%", marginLeft: "0px", marginBottom: "20px" }}
         >
           {/* setting the tags via formik */}
           <TagSelector
@@ -190,7 +183,7 @@ const StepOne = (props: StepOneProps) => {
             handleChange={handleTagChange}
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px" }}>
+        <Grid item sx={{ width: "100%", marginBottom: "20px" }}>
           <TextField
             fullWidth
             multiline
@@ -199,6 +192,7 @@ const StepOne = (props: StepOneProps) => {
             placeholder="Please explain in 1 to 2 paragraphs the challenge that is being seen in the area you want to help. Provide as many facts & statistics as possible, and maybe someone’s personal story too."
             name="backgroundAndGoals"
             label="Background and goals"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.backgroundAndGoals}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -210,14 +204,18 @@ const StepOne = (props: StepOneProps) => {
               formik.touched.backgroundAndGoals &&
               formik.errors.backgroundAndGoals
             }
-            sx={
-              {
-                // ...textFieldProps.textField,
-              }
-            }
+            sx={{
+              height: "auto",
+            }}
+            InputProps={{
+              sx: {
+                padding: "20px 20px 20px 20px",
+                height: "160px",
+              },
+            }}
           />
         </Grid>
-        <Grid item sx={{ width: "100%", marginBottom: "10px" }}>
+        <Grid item sx={{ width: "100%", marginBottom: "20px" }}>
           <TextField
             fullWidth
             multiline
@@ -226,13 +224,20 @@ const StepOne = (props: StepOneProps) => {
             placeholder="Please explain in 1 to 3 paragraphs, what the solution your organisation is suggesting? How you will accomplish it? What plans you have prepared to ensure its success? And Any Previous successful projects you have managed to show the likelihood of success?"
             name="solution"
             label="Solution"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.solution}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.solution && Boolean(formik.errors.solution)}
             helperText={formik.touched.solution && formik.errors.solution}
             sx={{
-              ...textFieldProps.textField,
+              height: "auto",
+            }}
+            InputProps={{
+              sx: {
+                padding: "20px 20px 20px 20px",
+                height: "160px",
+              },
             }}
           />
         </Grid>
@@ -252,6 +257,7 @@ const StepOne = (props: StepOneProps) => {
             placeholder="In as much detail as you can give, please breakdown what the money will be used for. E.g:“The funds raised here will go to Constructing a custom ICT Centre in a slum in Uganda. Along with fitting the centre out with computers, furniture, WiFi and providing a year’s salary to 4 team members that will run the centre day-to-day”. "
             name="donationUsage"
             label="Breakdown of where donations go"
+            inputProps={{ maxLength: 1400 }}
             value={formik.values.donationUsage}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -263,7 +269,13 @@ const StepOne = (props: StepOneProps) => {
               formik.touched.donationUsage && formik.errors.donationUsage
             }
             sx={{
-              ...textFieldProps.textField,
+              height: "auto",
+            }}
+            InputProps={{
+              sx: {
+                padding: "20px 20px 20px 20px",
+                height: "160px",
+              },
             }}
           />
         </Grid>

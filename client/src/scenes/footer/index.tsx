@@ -111,7 +111,7 @@ const Footer = () => {
             }}
 >
               {" "}
-              <Typography variant="body1" sx={{ color: palette.white.light, fontWeight: 500, fontSize: 14, marginTop: isMobile ? "60px" : "0px", textAlign: isMobile ? "left" : "center",  }}>
+              <Typography variant="body1" sx={{ color: palette.white.light, fontWeight: 500, fontSize: 14, marginTop: isMobile ? "60px" : "0px", textAlign: isMobile ? "left" : "center", marginBottom: "12px",  }}>
                 Stay up to date
               </Typography>
             </Grid>
@@ -121,9 +121,7 @@ const Footer = () => {
                 <TextField
                   fullWidth
                   label="Enter your email"
-                  sx={{
-                    ...textFieldProps.textField,
-                  }}
+                  
                 />{" "}
               </Grid>{" "}
               <Grid item>

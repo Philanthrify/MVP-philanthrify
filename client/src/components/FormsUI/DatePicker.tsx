@@ -45,11 +45,11 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
               sx={{
                 width: "100%",
                 "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                  borderColor: palette.primary.main,
+                  //borderColor: "#686E82",
                 },
                 "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
                   {
-                    borderColor: palette.primary.main,
+                    //borderColor: palette.primary.main,
                   },
               }}
               slotProps={{
@@ -60,7 +60,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
 
           {cleared && (
             <Alert
-              sx={{ position: "absolute", bottom: 0, right: 0 }}
+              sx={{ position: "absolute", bottom: 0, right: 0  }}
               severity="success"
             >
               Field cleared!

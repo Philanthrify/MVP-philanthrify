@@ -64,11 +64,13 @@ export default function CountrySelect(props: CountrySelectProps) {
             component="li"
             sx={{
               "& > img": { mr: 2, flexShrink: 0 },
+
               backgroundColor: "background.dark",
               color: palette.white.light,
+        
               "&:hover": {
                 backgroundColor: "background.dark",
-                color: "background.dark",
+                color: palette.white.light,
               },
             }}
             {...props}
@@ -86,14 +88,20 @@ export default function CountrySelect(props: CountrySelectProps) {
         renderInput={(params) => (
           <TextField
             autoComplete="off"
+            placeholder="Select a country"
+          
+            
             {...params}
             inputProps={{
               ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
+              autoComplete: "new-password",
+              // disable autocomplete and autofill
             }}
             classes={{ ...textFieldProps.selectClasses }}
             sx={{
-              ...props.sxProps,
+              //...props.sxProps,
+              //paddingLeft: '80px',
+              marginTop: '10px',
               "&:hover": {
                 //backgroundColor: 'grey.900',
               },

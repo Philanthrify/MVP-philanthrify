@@ -15,13 +15,14 @@ import FormStyles from ".";
 
 // takes the value and the onChange func as props and
 // will handle value changes accordingly
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 50;
+const ITEM_PADDING_TOP = 4;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      maxHeight: ITEM_HEIGHT * 4.95 + ITEM_PADDING_TOP,
       width: 250,
+      backgroundColor: "#161821", // Set your desired background color here
     },
   },
 };
@@ -49,14 +50,14 @@ const TagSelector = (props: TagSelectorProps) => {
   return (
     <>
       {" "}
-      <FormControl sx={{ width: "85%" }}>
+      <FormControl sx={{ width: "100%", height: "55px", textAlign: "center" }}>
         <InputLabel
           id="demo-multiple-checkbox-label"
           sx={{
-            ...textFieldProps.inputLabel,
+            marginLeft: "10px",
           }}
         >
-          Tags
+          Select a category
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -77,7 +78,7 @@ const TagSelector = (props: TagSelectorProps) => {
             <MenuItem key={key} value={key}>
               <Checkbox
                 checked={(props.value ?? []).indexOf(key) > -1}
-                sx={{ color: palette.primary.main }}
+                sx={{}}
               />
               <ListItemText primary={value} />{" "}
               {/* Display the value with spaces */}
