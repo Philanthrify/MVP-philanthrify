@@ -27,15 +27,17 @@ import {
   CircularProgress,
   Grid,
   SelectChangeEvent,
+  TextField,
   Typography,
 } from "@mui/material";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import LeftHandSide from "./LeftHandSide";
 import { TagValuesObj } from "@/models/tagValues";
 import dayjs from "dayjs";
+import OwnLink from "@/components/OwnLink";
 
 interface CharityUpdateTextFields {
   [key: string]: any; // This allows for any key of type string and any value type
@@ -104,6 +106,23 @@ const CharityPage = () => {
           countriesActive: listOfCountriesActive,
         }));
       }
+
+      // update weblink active payload
+      if (charity.weblink) {
+        setSideBarChange((prevState) => ({
+          ...prevState,
+          weblink: charity.weblink != null ? charity.weblink : "",
+        }));
+      }
+
+      // update reachOutEmail active payload
+      if (charity.reachOutEmail) {
+        setSideBarChange((prevState) => ({
+          ...prevState,
+          reachOutEmail:
+            charity.reachOutEmail != null ? charity.reachOutEmail : "",
+        }));
+      }
     }
   }, [charity]);
 
@@ -155,14 +174,19 @@ const CharityPage = () => {
     }
   };
 
-  const handleSidebarEditMode = (
+  const handleSidebarEditMode = async (
     _event: React.MouseEvent<HTMLButtonElement>
   ) => {
     if (charity) {
+      // only chaning values if coming from editing
+      if (editingSidebar) {
+        // TODO: validate inputs
+        const res = await sendNewTextValue(sideBarChange);
+        //TODO: check result for errors
+        console.log("🚀 ~ CharityPage ~ res:", res);
+        dispatch(updateSidebarCharityPage(sideBarChange));
+      }
       // flip whether editing the sidebar
-      const res = sendNewTextValue(sideBarChange);
-      console.log(res);
-      dispatch(updateSidebarCharityPage(sideBarChange));
       setEditingSidebar((prev) => !prev);
     }
   };
@@ -265,6 +289,29 @@ const CharityPage = () => {
       countriesActive: countries,
     }));
   };
+
+  // handles chaning the weblink
+  const handleWeblinkChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    setSideBarChange((prevState) => ({
+      ...prevState,
+      weblink: value,
+    }));
+  };
+
+  // handles chaning the weblink
+  const handleReachOutEmailChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    setSideBarChange((prevState) => ({
+      ...prevState,
+      reachOutEmail: value,
+    }));
+  };
+
   // if not found the project yet then return loading screen
   if (!charity) {
     return (
@@ -426,15 +473,78 @@ const CharityPage = () => {
               </Typography>
             </Grid>
 
-            <Grid item>
-              <Typography variant="h6" sx={{ color: "grey.main" }}>
-                Weblink
-              </Typography>
+            <Grid item container direction="column" spacing={1}>
+              {/* if weblink and not editing */}
+              {charity.weblink && (
+                <>
+                  {" "}
+                  <Grid item>
+                    <Typography variant="h6" sx={{ color: "grey.main" }}>
+                      Weblink
+                    </Typography>
+                  </Grid>{" "}
+                  <Grid item>
+                    {!editingSidebar && (
+                      <Grid item container>
+                        {" "}
+                        <Grid item>
+                          <OwnLink
+                            text={charity.weblink}
+                            weblink={charity.weblink}
+                          />
+                        </Grid>
+                      </Grid>
+                    )}
+                  </Grid>
+                </>
+              )}
+
+              {isCharityHead && editingSidebar && (
+                <Grid item>
+                  <TextField
+                    value={sideBarChange.weblink}
+                    onChange={handleWeblinkChange}
+                    placeholder="Input the link to website"
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              )}
             </Grid>
-            <Grid item>
-              <Typography variant="h6" sx={{ color: "grey.main" }}>
-                Email
-              </Typography>
+
+            <Grid item container direction="column" spacing={1}>
+              {charity.reachOutEmail && (
+                <>
+                  {" "}
+                  <Grid item>
+                    <Typography variant="h6" sx={{ color: "grey.main" }}>
+                      Email
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    {!editingSidebar && (
+                      <Grid item container>
+                        {" "}
+                        <Grid item>
+                          <OwnLink
+                            text={charity.reachOutEmail}
+                            weblink={"mailto:" + charity.reachOutEmail}
+                          />
+                        </Grid>
+                      </Grid>
+                    )}
+                  </Grid>
+                </>
+              )}
+              {isCharityHead && editingSidebar && (
+                <Grid item>
+                  <TextField
+                    value={sideBarChange.reachOutEmail}
+                    onChange={handleReachOutEmailChange}
+                    placeholder="Input the link to website"
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              )}
             </Grid>
           </Grid>{" "}
           {/* About */}

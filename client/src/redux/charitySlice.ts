@@ -38,11 +38,13 @@ export const charitySlice = createSlice({
       state,
       action: PayloadAction<CharityPageUpdatePayload>
     ) => {
-      const { tags, countriesActive } = action.payload;
+      const { tags, countriesActive, weblink, reachOutEmail } = action.payload;
       if (state.charity) {
         // Assuming you want to replace the existing arrays wholly
         state.charity.tags = tags;
         state.charity.countriesActive = countriesActive;
+        state.charity.weblink = weblink;
+        state.charity.reachOutEmail = reachOutEmail;
       }
     },
   },

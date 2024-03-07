@@ -125,6 +125,7 @@ router.get("/:ukCharityNumber", unrejectingTokenDecode, async (req, res) => {
       tagline: true,
       tags: true,
       countriesActive: true,
+      weblink: true,
     };
 
     // always want to check membership of project but won't always send it
@@ -239,6 +240,18 @@ router.put(
     .custom((tags) => {
       return tags.every((tag) => allowedTagValues.includes(tag));
     }),
+  // selfmade body validator for weblink
+  body("weblink").custom(async (value) => {
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    if (!urlRegex.test(value)) {
+      // Throw an error if the value does not match the regular expression
+      throw new Error("Web link is not in the correct format.");
+    }
+
+    // If the value matches the regular expression, it is considered valid
+    return true;
+  }),
   FindInputErrors,
 
   async (req, res) => {
@@ -255,6 +268,7 @@ router.put(
       tagline,
       tags,
       countriesActive,
+      weblink,
       // Other fields except currentAmount
     } = req.body;
 
@@ -300,6 +314,7 @@ router.put(
           membershipConfirmed,
           membershipConfirmedDateTime,
           tagline,
+          weblink,
         },
       });
       console.log(updatedCharity);
