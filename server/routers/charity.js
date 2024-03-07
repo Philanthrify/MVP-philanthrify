@@ -8,9 +8,8 @@ const authMiddleware = require("../middleware/JWTVerification");
 const { unrejectingTokenDecode } = require("../middleware/JWTVerification");
 const { body, validationResult } = require("express-validator");
 const { FindInputErrors } = require("../middleware/FindInputErrors");
-const aws = require('aws-sdk');
-const multerS3 = require('multer-s3');
-
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
 
 // Configure AWS SDK
 aws.config.update({
@@ -41,33 +40,39 @@ const s3 = new aws.S3();
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'philanthrify-image-testeroonie',
-    acl: 'public-read', // Adjust the ACL as needed
+    bucket: "philanthrify-image-testeroonie",
+    acl: "public-read", // Adjust the ACL as needed
     key: function (req, file, cb) {
       const projectId = req.query.projectId;
-      const fileName = `project_${projectId}/${Date.now()}_${file.originalname}`;
+      const fileName = `project_${projectId}/${Date.now()}_${
+        file.originalname
+      }`;
       cb(null, fileName);
     },
   }),
 });
 
-router.post('/upload-charity-avatar/', upload.single('avatar'), async (req, res) => {
-  try {
-    const file = req.file;
+router.post(
+  "/upload-charity-avatar/",
+  upload.single("avatar"),
+  async (req, res) => {
+    try {
+      const file = req.file;
 
-    if (!file) {
-      return res.status(400).json({ error: 'No file uploaded.' });
+      if (!file) {
+        return res.status(400).json({ error: "No file uploaded." });
+      }
+
+      // Access the S3 URL of the uploaded file
+      const s3Url = file.location;
+
+      res.status(200).json({ message: "File uploaded successfully.", s3Url });
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+      res.status(500).json({ error: "Failed to upload image" });
     }
-
-    // Access the S3 URL of the uploaded file
-    const s3Url = file.location;
-
-    res.status(200).json({ message: 'File uploaded successfully.', s3Url });
-  } catch (error) {
-    console.error('Failed to upload image:', error);
-    res.status(500).json({ error: 'Failed to upload image' });
   }
-});
+);
 
 //const upload = multer({ storage: storage });
 //router.post(
@@ -377,7 +382,7 @@ router.put(
           // Remove countries that are not in the new list
           await Promise.all(
             countriesToRemove.map((countryValue) =>
-              prisma.charityTag.deleteMany({
+              prisma.charityCountry.deleteMany({
                 where: {
                   charityId: ukCharityNumber,
                   value: countryValue,

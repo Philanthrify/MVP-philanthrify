@@ -55,7 +55,7 @@ export const TagValues = [
   "CleanWater",
   "EconomicEmpowerment",
 ];
-export const TagValuesObj = {
+export const TagValuesObj: { [key: string]: string } = {
   Business: "💼 Business",
   CleanWater: "💧 Clean Water",
   Climate: "☀️ Climate",

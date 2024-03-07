@@ -19,7 +19,7 @@ const Tagline = (props: TaglineProps) => {
     <Grid
       item
       container
-      spacing={2}
+      spacing={1}
       direction="row"
       alignItems="center"
       justifyContent="center"
@@ -42,14 +42,13 @@ const Tagline = (props: TaglineProps) => {
           </Typography>
         )}
       </Grid>
-      <Grid item>
-        {isCharityHead && !charity.tagline && !props.editing && (
+      {isCharityHead && !charity.tagline && !props.editing && (
+        <Grid item>
           <Typography variant="h4" color="grey.main">
             Add a tagline to your charity?
           </Typography>
-        )}
-      </Grid>
-
+        </Grid>
+      )}
       {props.buttons && (
         <>
           {props.buttons.map((button, index) => (

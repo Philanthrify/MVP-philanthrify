@@ -1,5 +1,6 @@
 import {
   CharityPagePayload,
+  CharityPageUpdatePayload,
   UpdateCharityFieldPayload,
 } from "@/models/charity";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -32,19 +33,22 @@ export const charitySlice = createSlice({
       }
     },
 
-    // only for textfields
+    // New reducer for handling CharityPageUpdatePayload
     updateSidebarCharityPage: (
       state,
-      action: PayloadAction<UpdateCharityFieldPayload>
+      action: PayloadAction<CharityPageUpdatePayload>
     ) => {
-      const { field, value } = action.payload;
+      const { tags, countriesActive } = action.payload;
       if (state.charity) {
-        state.charity[field] = value;
+        // Assuming you want to replace the existing arrays wholly
+        state.charity.tags = tags;
+        state.charity.countriesActive = countriesActive;
       }
     },
   },
 });
-export const { setCharity, updateCharityField } = charitySlice.actions;
+export const { setCharity, updateCharityField, updateSidebarCharityPage } =
+  charitySlice.actions;
 
 // Export the reducer as default
 export default charitySlice.reducer;

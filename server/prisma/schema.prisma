@@ -25,7 +25,7 @@ model Charity {
   membershipConfirmed         Boolean?
   membershipConfirmedDateTime DateTime?
   tagline                     String? @db.VarChar(800)
-  website String?
+  weblink String?
 }
 
 model CharityCountry {

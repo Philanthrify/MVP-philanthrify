@@ -338,11 +338,11 @@ const ProjectPage = () => {
               <TextField
                 name="solution"
                 multiline
-                rows={4}
+                maxRows={100}
                 value={projectFields.solution.current}
                 onChange={updateField}
                 sx={{
-                  width: "80%",
+                  width: "90%",
                 }}
               />
             )}
@@ -373,11 +373,11 @@ const ProjectPage = () => {
               <TextField
                 name="donationUsage"
                 multiline
-                rows={4}
+                maxRows={100}
                 value={projectFields.donationUsage.current}
                 onChange={updateField}
                 sx={{
-                  width: "80%",
+                  width: "90%",
                 }}
               />
             )}

@@ -11,10 +11,16 @@ import {
   CharityPagePayload,
   CharityPageUpdatePayload,
   CharityTag,
+  isCharityCountriesActive,
+  isCharityTag,
 } from "@/models/charity";
 import { countries } from "@/models/country";
 import { selectToken } from "@/redux/authSlice";
-import { setCharity, updateCharityField } from "@/redux/charitySlice";
+import {
+  setCharity,
+  updateCharityField,
+  updateSidebarCharityPage,
+} from "@/redux/charitySlice";
 import { RootState } from "@/redux/store";
 import {
   Box,
@@ -28,6 +34,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import LeftHandSide from "./LeftHandSide";
+import { TagValuesObj } from "@/models/tagValues";
+import dayjs from "dayjs";
 
 interface CharityUpdateTextFields {
   [key: string]: any; // This allows for any key of type string and any value type
@@ -51,6 +59,9 @@ const CharityPage = () => {
   const [sideBarChange, setSideBarChange] = useState<CharityPageUpdatePayload>({
     tags: [],
     countriesActive: [],
+    weblink: "",
+    reachOutEmail: "",
+    foundedDate: dayjs(),
   });
   useEffect(() => {
     console.log("🚀 ~ CharityPage ~ sideBarChange:", sideBarChange);
@@ -61,9 +72,15 @@ const CharityPage = () => {
     if (charity) {
       // update tags payload
       if (charity.tags) {
-        const listOfActiveTags = charity.tags.map((tagObj: CharityTag) => {
-          return tagObj.value;
-        });
+        const listOfActiveTags = charity.tags.map(
+          (tagObj: CharityTag | string) => {
+            if (isCharityTag(tagObj)) {
+              return tagObj.value;
+            } else {
+              return tagObj; // It's a string, so return it directly
+            }
+          }
+        );
 
         setSideBarChange((prevState) => ({
           ...prevState,
@@ -73,8 +90,12 @@ const CharityPage = () => {
       // update countries active payload
       if (charity.countriesActive) {
         const listOfCountriesActive = charity.countriesActive.map(
-          (countriesActive: CharityCountriesActive) => {
-            return countriesActive.value;
+          (countriesActive: CharityCountriesActive | string) => {
+            if (isCharityCountriesActive(countriesActive)) {
+              return countriesActive.value;
+            } else {
+              return countriesActive; // It's a string, so return it directly
+            }
           }
         );
 
@@ -140,6 +161,8 @@ const CharityPage = () => {
     if (charity) {
       // flip whether editing the sidebar
       const res = sendNewTextValue(sideBarChange);
+      console.log(res);
+      dispatch(updateSidebarCharityPage(sideBarChange));
       setEditingSidebar((prev) => !prev);
     }
   };
@@ -306,13 +329,16 @@ const CharityPage = () => {
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <Grid item alignSelf="flex-end">
-              <EditButton
-                name="SidebarEditButton"
-                done={editingSidebar}
-                onClick={handleSidebarEditMode}
-              />
-            </Grid>
+            {isCharityHead && (
+              <Grid item alignSelf="flex-end">
+                <EditButton
+                  name="SidebarEditButton"
+                  done={editingSidebar}
+                  onClick={handleSidebarEditMode}
+                />
+              </Grid>
+            )}
+
             <Grid item>
               <Typography variant="h6" sx={{ color: "grey.main" }}>
                 Focus
@@ -331,11 +357,18 @@ const CharityPage = () => {
               <Grid item container direction="row" spacing={2}>
                 {charity.tags && (
                   <>
-                    {charity.tags.map((value: CharityTag) => (
-                      <Grid item>
-                        <Tag text={value.value} />
-                      </Grid>
-                    ))}
+                    {charity.tags.map((value: CharityTag | string) => {
+                      // Determine the key to use for lookup in TagValuesObj
+                      const tagKey = isCharityTag(value) ? value.value : value;
+                      // Access the display value from TagValuesObj using the determined key
+                      const tagDisplayValue = TagValuesObj[tagKey] || tagKey; // Fallback to tagKey if no matching entry in TagValuesObj
+
+                      return (
+                        <Grid item>
+                          <Tag text={tagDisplayValue} />
+                        </Grid>
+                      );
+                    })}
                   </>
                 )}
               </Grid>
@@ -360,20 +393,48 @@ const CharityPage = () => {
               )}
               {!editingSidebar && (
                 <Grid item container direction="row" spacing={2}>
-                  {charity.countriesActive.map((country) => {
-                    // Using find to get the first matching country
-                    const matchingCountry = countries.find(
-                      (setCountry) => setCountry.code === country.value
-                    );
-                    // Return the label of the found country, or null if not found
-                    return (
-                      <Grid item>
-                        {matchingCountry ? matchingCountry.label : null}
-                      </Grid>
-                    );
-                  })}
+                  {charity.countriesActive.map(
+                    (country: CharityCountriesActive | string) => {
+                      var matchingVal = "";
+                      if (isCharityCountriesActive(country)) {
+                        matchingVal = country.value;
+                      } else {
+                        matchingVal = country;
+                      }
+                      // Using find to get the first matching country
+
+                      const matchingCountry = countries.find(
+                        (setCountry) => setCountry.code === matchingVal
+                      );
+                      // Return the label of the found country, or null if not found
+                      return (
+                        <Grid item>
+                          <Tag
+                            text={matchingCountry ? matchingCountry.label : ""}
+                          />
+                        </Grid>
+                      );
+                    }
+                  )}
                 </Grid>
               )}
+            </Grid>
+
+            <Grid item>
+              <Typography variant="h6" sx={{ color: "grey.main" }}>
+                Founded
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <Typography variant="h6" sx={{ color: "grey.main" }}>
+                Weblink
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h6" sx={{ color: "grey.main" }}>
+                Email
+              </Typography>
             </Grid>
           </Grid>{" "}
           {/* About */}

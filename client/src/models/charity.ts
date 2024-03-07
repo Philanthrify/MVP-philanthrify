@@ -15,17 +15,19 @@ export interface CharityPagePayload {
   email: string;
 
   projects: ProjectShort[];
-  tags: CharityTag[];
-  countriesActive: CharityCountriesActive[];
+  tags: CharityTag[] | string[];
+  countriesActive: CharityCountriesActive[] | string[];
   requesterCharityHead: boolean; // tells us whether they have rights to edit the charity page and see the charity members
 
   // following optional fields aren't intaken at the time of onboarding and therefore will be null upon first load of charity page
-  about?: string;
-  reachOutEmail?: string;
-  foundedDate?: Dayjs;
-  membershipConfirmed?: boolean;
-  membershipConfirmedDateTime?: Dayjs;
+
+  reachOutEmail: string | null;
+  foundedDate: Dayjs | null;
+  membershipConfirmed: boolean | null;
+  membershipConfirmedDateTime: Dayjs | null;
+  weblink: string | null;
   tagline?: string;
+  about?: string;
 }
 
 // editable fields on charity page
@@ -40,19 +42,33 @@ export type UpdateCharityFieldPayload = {
 };
 type UpdatableStringFieldsOfCharity = "about" | "reachOutEmail" | "tagline";
 
-type CharityTag = {
+export type CharityTag = {
   id: string;
   charityId: string;
   value: string;
 };
 
-type CharityCountriesActive = {
+// Custom type guard to check if a tag is a CharityTag
+export function isCharityTag(tag: CharityTag | string): tag is CharityTag {
+  return (tag as CharityTag).value !== undefined;
+}
+
+export type CharityCountriesActive = {
   id: string;
   charityId: string;
   value: string;
 };
+// Custom type guard to check if a tag is a CharityCountriesActive
+export function isCharityCountriesActive(
+  country: CharityCountriesActive | string
+): country is CharityCountriesActive {
+  return (country as CharityCountriesActive).value !== undefined;
+}
 
-type CharityPageUpdatePayload = {
+export type CharityPageUpdatePayload = {
   tags: string[];
   countriesActive: string[];
+  foundedDate: Dayjs | null;
+  weblink: string;
+  reachOutEmail: string;
 };

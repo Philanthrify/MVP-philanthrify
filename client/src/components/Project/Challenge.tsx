@@ -99,11 +99,12 @@ const Challenge = (props: ChallengeProps) => {
               <TextField
                 name="backgroundAndGoals"
                 multiline
-                rows={4}
+                // rows={8}
+                maxRows={100}
                 value={props.projectFields.backgroundAndGoals.current}
                 onChange={props.updateField}
                 sx={{
-                  width: "80%",
+                  width: "100%",
                 }}
               />
             )}{" "}
