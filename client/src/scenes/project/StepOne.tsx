@@ -1,7 +1,7 @@
 import FormStyles from "@/components/FormsUI";
 import AmountInput from "@/components/FormsUI/AmountInput";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
-import CustomDatePicker from "@/components/FormsUI/DatePicker";
+import OwnDatePicker from "@/components/FormsUI/DatePicker";
 import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TagSelector from "@/components/FormsUI/TagSelector";
 import TypographyTitle from "@/components/Title";
@@ -331,7 +331,7 @@ const StepOne = (props: StepOneProps) => {
             When are you hoping to raise by?
           </TypographyTitle>
           {/* Date picker */}
-          <CustomDatePicker
+          <OwnDatePicker
             value={formik.values.endDate}
             onChange={handleEndDateChange}
           />

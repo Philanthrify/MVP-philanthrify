@@ -58,7 +58,6 @@ const Tagline = (props: TaglineProps) => {
           ))}
         </>
       )}
-      {/* {isCharityHead && <EditButton name="tagline"/>} */}
     </Grid>
   );
 };

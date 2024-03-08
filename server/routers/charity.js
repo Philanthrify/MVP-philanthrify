@@ -241,17 +241,19 @@ router.put(
       return tags.every((tag) => allowedTagValues.includes(tag));
     }),
   // selfmade body validator for weblink
-  body("weblink").custom(async (value) => {
-    const urlRegex =
-      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-    if (!urlRegex.test(value)) {
-      // Throw an error if the value does not match the regular expression
-      throw new Error("Web link is not in the correct format.");
-    }
+  body("weblink")
+    .optional({ checkFalsy: true })
+    .custom(async (value) => {
+      const urlRegex =
+        /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      if (!urlRegex.test(value)) {
+        // Throw an error if the value does not match the regular expression
+        throw new Error("Web link is not in the correct format.");
+      }
 
-    // If the value matches the regular expression, it is considered valid
-    return true;
-  }),
+      // If the value matches the regular expression, it is considered valid
+      return true;
+    }),
   FindInputErrors,
 
   async (req, res) => {

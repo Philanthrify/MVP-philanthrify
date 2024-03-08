@@ -13,7 +13,7 @@ interface DatePickerProps {
   onChange: (newDate: Dayjs | null) => void;
 }
 
-const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
+const OwnDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   // const [date, setDate] = useState<Dayjs | null>(null);
   const { palette } = useTheme();
   const [cleared, setCleared] = React.useState<boolean>(false);
@@ -60,7 +60,7 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
 
           {cleared && (
             <Alert
-              sx={{ position: "absolute", bottom: 0, right: 0  }}
+              sx={{ position: "absolute", bottom: 0, right: 0 }}
               severity="success"
             >
               Field cleared!
@@ -72,4 +72,4 @@ const CustomDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   );
 };
 
-export default CustomDatePicker;
+export default OwnDatePicker;
