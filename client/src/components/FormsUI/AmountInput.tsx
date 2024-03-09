@@ -1,8 +1,8 @@
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, useTheme } from "@mui/material";
 import React from "react";
+import getSymbolFromCurrency from "currency-symbol-map";
 
 // TODO (Tomos): commas between the digits
-// TODO (Fergus): have dropdown for preferred currency
 
 interface AmountInputProps {
   value: number;
@@ -14,6 +14,7 @@ interface AmountInputProps {
   id: string; // when using formik we need to match this with the name of the formik value
   name: string; // when using formik we need to match this with the name of the formik value
   width: any; // string/number
+  currencyCode: string;
 }
 
 const AmountInput: React.FC<AmountInputProps> = ({
@@ -25,7 +26,9 @@ const AmountInput: React.FC<AmountInputProps> = ({
   label,
   id,
   name,
+  currencyCode,
 }) => {
+  const { palette } = useTheme();
   return (
     <TextField
       fullWidth
@@ -42,16 +45,13 @@ const AmountInput: React.FC<AmountInputProps> = ({
         startAdornment: (
           <InputAdornment
             position="start"
-            sx={
-              
-              {
-                textAlign: 'center', marginLeft: '10px'// TODO: not working for some reason
-                // color: palette.primary.main,
-                // "& .MuiTypography-root": { color: palette.grey[700] },
-              }
-            }
+            sx={{
+              textAlign: "center",
+              marginLeft: "10px", // TODO: not working for some reason
+              "& .MuiTypography-root": { color: palette.grey[700] },
+            }}
           >
-            $
+            {getSymbolFromCurrency(currencyCode)}
           </InputAdornment>
         ),
       }}
