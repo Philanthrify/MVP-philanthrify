@@ -73,35 +73,35 @@ const CreateProjectForm = () => {
       },
       data: JSON.stringify(dataWithoutImage),
     })
-      .then((response) => {
-        //console.log(response);
-        console.log("test");
-        if (image) {
-          const formData = new FormData();
-          formData.append("image", image);
-          //console.log("🚀 ~ .then ~ formData:", formData);
-          console.log("🚀 ~ .then ~ formData,image:", formData.get("image"));
-
-          
-          return axios({
-            method: "post",
-            url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`, // Change to your image upload endpoint
-            params: { projectId: response.data.project.id },
-            headers: {
-              Authorization: token,
-              "Content-Type": "multipart/form-data",
-            },
-            data: formData,
+    .then((response) => {
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+    
+        axios({
+          method: "post",
+          url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`,
+          params: { projectId: response.data.project.id },
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+          data: formData,
+        })
+          .then(() => {
+            console.log("Image upload successful");
+            openAlertSnackbar("Project created", "success");
+            navigate(`/project/${response.data.project.id}`);
+          })
+          .catch((uploadError) => {
+            console.log(uploadError);
+            openAlertSnackbar("Image upload failed", "error");
           });
-        }
+      } else {
         openAlertSnackbar("Project created", "success");
-        console.log("🚀 ~ .then ~ response.data.project.projectId:", response.data.project.id)
-        navigate(`/project/${response.data.project.id}`); // TODO: make success snackbar which persists for a bit, maybe put in whole app such that it persists
-      })
-      .catch((error) => {
-        console.log(error);
-        openAlertSnackbar("Something went wrong. Project not created", "error");
-      });
+        navigate(`/project/${response.data.project.id}`);
+      }
+    })    
   };
 
   const { palette } = useTheme();
