@@ -72,6 +72,7 @@ const ResultBox = (props: ResultBoxProps) => {
           backgroundColor: "#063970", // Placeholder color
           borderRadius: "1.5rem 1.5rem 0 0", // Top corners rounded
           backgroundSize: "cover",
+          backgroundPosition: "center", // Center the background image
           backgroundImage: `url(${imageToDisplay})`, // Use the imported image
           // Add any additional styling for the placeholder here
         }}
