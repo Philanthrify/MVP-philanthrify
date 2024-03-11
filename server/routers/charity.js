@@ -8,49 +8,45 @@ const authMiddleware = require("../middleware/JWTVerification");
 const { unrejectingTokenDecode } = require("../middleware/JWTVerification");
 const { body, validationResult } = require("express-validator");
 const { FindInputErrors } = require("../middleware/FindInputErrors");
-const aws = require("aws-sdk");
-const multerS3 = require("multer-s3");
 
-// Configure AWS SDK
-aws.config.update({
-  accessKeyId: process.env.AWS_KEY_NAME,
-  secretAccessKey: process.env.AWS_ACCESS_KEY,
-  region: process.env.AWS_REGION,
+//const storage = multer.diskStorage({
+//  destination: (req, file, cb) => {
+//    cb(null, "assets/CharityAvatars");
+//  },
+//  filename: (req, file, cb) => {
+//    console.log(file);
+//    console.log(req);
+//    const projectId = req.query.projectId;
+//    const fileExt = path.extname(file.originalname);
+//    const newFilename = `${projectId}-${Date.now()}${fileExt}`;
+//    console.log(newFilename);
+//    cb(null, newFilename);
+//  },
+//});
+
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true, //remove for localhost testing
 });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "assets/CharityAvatars");
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    console.log(req);
+// Update Multer configuration to use Cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'philanthrify', // Cloudinary folder where you want to store your files
+  allowedFormats: ['jpg', 'png', 'jpeg'],
+  //transformation: [{ width: 500, height: 500, crop: 'limit' }], // Optional: Resize and crop the image
+  filename: function (req, file, cb) {
     const projectId = req.query.projectId;
-    const fileExt = path.extname(file.originalname);
-    const newFilename = `${projectId}-${Date.now()}${fileExt}`;
-    console.log(newFilename);
+    const fileExt = file.originalname.split('.').pop();
+    const newFilename = `${projectId}-${Date.now()}.${fileExt}`;
     cb(null, newFilename);
   },
 });
-
-// Create an S3 instance
-const s3 = new aws.S3();
-
-// Configure multer-s3 to upload files directly to S3
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: "philanthrify-image-testeroonie",
-    acl: "public-read", // Adjust the ACL as needed
-    key: function (req, file, cb) {
-      const projectId = req.query.projectId;
-      const fileName = `project_${projectId}/${Date.now()}_${
-        file.originalname
-      }`;
-      cb(null, fileName);
-    },
-  }),
-});
+const upload = multer({ storage: storage });
 
 router.post(
   "/upload-charity-avatar/",
