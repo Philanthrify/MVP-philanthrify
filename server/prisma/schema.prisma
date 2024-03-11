@@ -134,7 +134,7 @@ model Link {
 model Transaction {
   id          String  @id @default(uuid())
   type         String
-    whatFor         String
+    whatFor         String?
   whatBrought         String
   amount         Float
   dollarAmount   Float

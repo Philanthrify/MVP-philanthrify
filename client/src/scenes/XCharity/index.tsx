@@ -27,15 +27,24 @@ import {
   CircularProgress,
   Grid,
   SelectChangeEvent,
+  TextField,
   Typography,
 } from "@mui/material";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { ErrorResponse, useParams } from "react-router-dom";
 import LeftHandSide from "./LeftHandSide";
 import { TagValuesObj } from "@/models/tagValues";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import OwnLink from "@/components/OwnLink";
+import OwnDatePicker from "@/components/FormsUI/DatePicker";
+
+// Extend AxiosError to include your custom properties
+interface ExtendedAxiosError<T = any> extends AxiosError<T> {
+  // Your custom property. You can make it optional or required based on your needs
+  msg?: string;
+}
 
 interface CharityUpdateTextFields {
   [key: string]: any; // This allows for any key of type string and any value type
@@ -56,12 +65,21 @@ const CharityPage = () => {
   });
   // for editing the details on the sidebar
   const [editingSidebar, setEditingSidebar] = useState<boolean>(false);
+  // a boolean for tracking whether the sidebar was actually edited since we only want to send new values upon save if
+  // there actually are new values.
+  /* 
+  Rules: 
+    - flips on when editing sidebar and there is a change to one of the fields
+    - flips off when edit mode is flipped off
+  */
+
+  const [sidebarFirstEdit, setSideBarFirstEdit] = useState<boolean>(false);
   const [sideBarChange, setSideBarChange] = useState<CharityPageUpdatePayload>({
     tags: [],
     countriesActive: [],
     weblink: "",
     reachOutEmail: "",
-    foundedDate: dayjs(),
+    foundedDate: null,
   });
   useEffect(() => {
     console.log("🚀 ~ CharityPage ~ sideBarChange:", sideBarChange);
@@ -102,6 +120,31 @@ const CharityPage = () => {
         setSideBarChange((prevState) => ({
           ...prevState,
           countriesActive: listOfCountriesActive,
+        }));
+      }
+
+      // update weblink active payload
+      if (charity.weblink) {
+        setSideBarChange((prevState) => ({
+          ...prevState,
+          weblink: charity.weblink != null ? charity.weblink : "",
+        }));
+      }
+
+      // update reachOutEmail active payload
+      if (charity.reachOutEmail) {
+        setSideBarChange((prevState) => ({
+          ...prevState,
+          reachOutEmail:
+            charity.reachOutEmail != null ? charity.reachOutEmail : "",
+        }));
+      }
+
+      // update foundedDate active payload
+      if (charity.foundedDate) {
+        setSideBarChange((prevState) => ({
+          ...prevState,
+          foundedDate: charity.foundedDate,
         }));
       }
     }
@@ -155,16 +198,22 @@ const CharityPage = () => {
     }
   };
 
-  const handleSidebarEditMode = (
+  const handleSidebarEditMode = async (
     _event: React.MouseEvent<HTMLButtonElement>
   ) => {
     if (charity) {
+      // only chaning values if coming from editing and there actually are edits
+      if (editingSidebar && sidebarFirstEdit) {
+        // TODO: validate inputs
+        const res = await sendNewTextValue(sideBarChange);
+        //TODO: check result for errors
+        console.log("🚀 ~ CharityPage ~ res:", res);
+        dispatch(updateSidebarCharityPage(sideBarChange));
+      }
       // flip whether editing the sidebar
-      const res = sendNewTextValue(sideBarChange);
-      console.log(res);
-      dispatch(updateSidebarCharityPage(sideBarChange));
       setEditingSidebar((prev) => !prev);
     }
+    setSideBarFirstEdit(false);
   };
 
   useEffect(() => {
@@ -212,27 +261,68 @@ const CharityPage = () => {
     }
   };
 
-  // the api call to update the values in backend
-  const sendNewTextValue = async (updateObj: CharityUpdateTextFields) => {
-    console.log("🚀 ~ sendNewValue ~ updateObj:", updateObj);
-    axios
-      .put(
+  // the api call to update the values in backend, returns true if success or false if there was a problem
+  const sendNewTextValue = async (
+    updateObj: CharityUpdateTextFields
+  ): Promise<boolean> => {
+    try {
+      const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/charity/${ukCharityNumber}`,
         updateObj,
         { headers: { authorization: token } }
-      )
-      .then((answer: AxiosResponse) => {
-        console.log(answer.data.project);
+      );
+      // If the request succeeds, log the response and show a success message
+      console.log(response.data);
+      openAlertSnackbar(
+        `${Object.keys(updateObj)} successfully changed!`,
+        "success"
+      );
+      // Return true to indicate success
+      return true;
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Check if the error has a response (which means it was an error from the server)
+      if (axios.isAxiosError(error) && error.response) {
+        const { status, data } = error.response;
+        switch (status) {
+          case 400: // Bad Request
+            const errorMessage = data.msg;
+
+            openAlertSnackbar(errorMessage, "error");
+
+            break;
+          case 401:
+            // Unauthorized - handle authentication errors
+            openAlertSnackbar(
+              "You are not authorized. Please log in again.",
+              "error"
+            );
+            break;
+          case 404:
+            // Not Found - handle cases where the resource doesn't exist
+            openAlertSnackbar("The requested resource was not found.", "error");
+            break;
+          case 500:
+            // Internal Server Error - handle server errors
+            openAlertSnackbar("An internal server error occurred.", "error");
+            break;
+          default:
+            // Other errors
+            openAlertSnackbar(
+              error.message || "An unknown error occurred",
+              "error"
+            );
+        }
+      } else {
+        // This is likely a network error or something else outside of Axios
         openAlertSnackbar(
-          `${Object.keys(updateObj)} successfully changed!`,
-          "success"
+          "An unknown error occurred. Please check your network connection.",
+          "error"
         );
-        return answer.data.project;
-      })
-      .catch((error: AxiosError) => {
-        console.log(error);
-        openAlertSnackbar(error.message, "error");
-      });
+      }
+      // Return false to indicate failure
+      return false;
+    }
   };
   const handleTagChange = (event: SelectChangeEvent<string[]>) => {
     const {
@@ -248,6 +338,7 @@ const CharityPage = () => {
       ...prevState,
       tags: tags,
     }));
+    setSideBarFirstEdit(true);
   };
 
   const handleCountryChange = (event: SelectChangeEvent<string[]>) => {
@@ -264,7 +355,41 @@ const CharityPage = () => {
       ...prevState,
       countriesActive: countries,
     }));
+    setSideBarFirstEdit(true);
   };
+
+  // handles chaning the weblink
+  const handleWeblinkChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    setSideBarChange((prevState) => ({
+      ...prevState,
+      weblink: value,
+    }));
+    setSideBarFirstEdit(true);
+  };
+
+  // handles chaning the weblink
+  const handleReachOutEmailChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    setSideBarChange((prevState) => ({
+      ...prevState,
+      reachOutEmail: value,
+    }));
+    setSideBarFirstEdit(true);
+  };
+
+  const handleEndDateChange = (newValue: Dayjs | null) => {
+    setSideBarChange((prevState) => ({
+      ...prevState,
+      foundedDate: newValue,
+    }));
+    setSideBarFirstEdit(true);
+  };
+
   // if not found the project yet then return loading screen
   if (!charity) {
     return (
@@ -420,21 +545,106 @@ const CharityPage = () => {
               )}
             </Grid>
 
-            <Grid item>
-              <Typography variant="h6" sx={{ color: "grey.main" }}>
-                Founded
-              </Typography>
+            {/* Founded */}
+            <Grid item container direction="column" spacing={2}>
+              <Grid item>
+                {" "}
+                <Typography variant="h6" sx={{ color: "grey.main" }}>
+                  Founded
+                </Typography>
+              </Grid>
+              {charity.foundedDate && !editingSidebar && (
+                <Grid item>
+                  {dayjs(charity.foundedDate).format("MMMM D, YYYY")}
+                </Grid>
+              )}
+
+              {editingSidebar && (
+                <Grid item>
+                  <OwnDatePicker
+                    value={
+                      sideBarChange.foundedDate
+                        ? dayjs(sideBarChange.foundedDate)
+                        : null
+                    }
+                    onChange={handleEndDateChange}
+                  />
+                </Grid>
+              )}
             </Grid>
 
-            <Grid item>
-              <Typography variant="h6" sx={{ color: "grey.main" }}>
-                Weblink
-              </Typography>
+            <Grid item container direction="column" spacing={1}>
+              {/* if weblink and not editing */}
+              {charity.weblink && (
+                <>
+                  {" "}
+                  <Grid item>
+                    <Typography variant="h6" sx={{ color: "grey.main" }}>
+                      Weblink
+                    </Typography>
+                  </Grid>{" "}
+                  <Grid item>
+                    {!editingSidebar && (
+                      <Grid item container>
+                        {" "}
+                        <Grid item>
+                          <OwnLink
+                            text={charity.weblink}
+                            weblink={charity.weblink}
+                          />
+                        </Grid>
+                      </Grid>
+                    )}
+                  </Grid>
+                </>
+              )}
+
+              {isCharityHead && editingSidebar && (
+                <Grid item>
+                  <TextField
+                    value={sideBarChange.weblink}
+                    onChange={handleWeblinkChange}
+                    placeholder="Input the link to website"
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              )}
             </Grid>
-            <Grid item>
-              <Typography variant="h6" sx={{ color: "grey.main" }}>
-                Email
-              </Typography>
+
+            <Grid item container direction="column" spacing={1}>
+              {charity.reachOutEmail && (
+                <>
+                  {" "}
+                  <Grid item>
+                    <Typography variant="h6" sx={{ color: "grey.main" }}>
+                      Email
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    {!editingSidebar && (
+                      <Grid item container>
+                        {" "}
+                        <Grid item>
+                          <OwnLink
+                            text={charity.reachOutEmail}
+                            weblink={"mailto:" + charity.reachOutEmail}
+                          />
+                        </Grid>
+                      </Grid>
+                    )}
+                  </Grid>
+                </>
+              )}
+              {isCharityHead && editingSidebar && (
+                <Grid item>
+                  <TextField
+                    value={sideBarChange.reachOutEmail}
+                    onChange={handleReachOutEmailChange}
+                    placeholder="Input the link to website"
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              )}
             </Grid>
           </Grid>{" "}
           {/* About */}

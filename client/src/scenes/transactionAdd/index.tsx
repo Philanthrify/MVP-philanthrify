@@ -47,7 +47,6 @@ const validationSchema = yup.object({
 const TransactionAdd = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null); // Add error state
-  const textFieldProps = FormStyles();
 
   const { openAlertSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -94,7 +93,7 @@ const TransactionAdd = () => {
   const formik = useFormik({
     initialValues: {
       project: "",
-      currency: "",
+      currency: "USD",
       amount: 0,
       category: "",
       whatBrought: "", // what did you pay for?
@@ -119,11 +118,24 @@ const TransactionAdd = () => {
         })
         .catch((error) => {
           console.log(error);
+          if (axios.isAxiosError(error) && error.response) {
+            const { status, data } = error.response;
 
-          openAlertSnackbar(
-            "Something went wrong. Transaction not submitted",
-            "error"
-          );
+            switch (status) {
+              case 400: // Bad Request
+                const errorMessage = data.msg;
+
+                openAlertSnackbar(errorMessage, "error");
+
+                break;
+              default:
+                // Other errors
+                openAlertSnackbar(
+                  error.message || "An unknown error occurred",
+                  "error"
+                );
+            }
+          }
         });
     },
   });
@@ -220,8 +232,7 @@ const TransactionAdd = () => {
                 value={formik.values.project}
                 label="Which project is this for?"
                 onChange={changeProject}
-                sx={{ height: "55px", maxWidth: "620px", }} // Set height here
-
+                sx={{ height: "55px", maxWidth: "620px" }} // Set height here
               >
                 {projects.map((project) => (
                   <MenuItem key={project.id} value={project.id}>
@@ -276,8 +287,7 @@ const TransactionAdd = () => {
                   value={formik.values.category}
                   label="Type of Transaction"
                   onChange={changeCategory}
-                  sx={{ height: "55px"}} // Set height here
-
+                  sx={{ height: "55px" }} // Set height here
                 >
                   {Object.entries(TransactionKinds).map(([key, value]) => (
                     <MenuItem key={key} value={key}>
@@ -289,37 +299,34 @@ const TransactionAdd = () => {
               </FormControl>
             </Grid>
           </Grid>
-
-
           <Grid
             item
             container
-            spacing={1}
+            spacing={3}
             direction="row"
             justifyContent="space-between"
             alignItems="space-between"
           >
-            <Grid item xs={1}>
-              <InputLabel id="demo-simple-select-label" >
-                Currency
-              </InputLabel>
+            <Grid item xs={6}>
+              {/* <InputLabel id="demo-simple-select-label">Currency</InputLabel> */}
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={formik.values.currency}
                 label="In which currency is this transaction?"
                 onChange={changeCurrency}
-                sx={{ width: '290px', height: '55px' }} // Set width here
-
+                sx={{ width: "290px", height: "55px" }} // Set width here
               >
                 {Object.keys(currencies).map((code) => (
                   <MenuItem key={code} value={code}>
-                  <ListItemText primary={currencies[code].fullName + " (" + code + ")"} />
-                </MenuItem>
+                    <ListItemText
+                      primary={currencies[code].fullName + " (" + code + ")"}
+                    />
+                  </MenuItem>
                 ))}
               </Select>
             </Grid>
-            
+
             <Grid item xs={6}>
               <AmountInput
                 value={formik.values.amount}
@@ -336,23 +343,24 @@ const TransactionAdd = () => {
                 id="amount"
                 name="amount"
                 width="100%"
+                currencyCode={formik.values.currency}
               />{" "}
             </Grid>
           </Grid>
-
-
           <Grid
-          item
+            item
             container
             spacing={1}
             direction="row"
             justifyContent="space-between"
             alignItems="space-between"
           >
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               {" "}
               <TextField
                 fullWidth
+                multiline
+                maxRows={12}
                 id="whatFor"
                 name="whatFor"
                 label="Further details (Optional)"
@@ -372,8 +380,6 @@ const TransactionAdd = () => {
               </Grid>{" "}
             </Grid>{" "}
           </Grid>{" "}
-
-
           <Grid
             item
             xs={true}
