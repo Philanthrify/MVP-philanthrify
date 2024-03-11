@@ -3,6 +3,8 @@ import { Box, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "../ProgressBar";
 import LocationText from "../Project/LocationText";
+import { useEffect, useState } from "react";
+import line from "@/assets/line.png";
 
 type ResultBoxProps = {
   project: Project;
@@ -12,10 +14,29 @@ type ResultBoxProps = {
 const ResultBox = (props: ResultBoxProps) => {
   const navigate = useNavigate();
   const { palette } = useTheme();
+  const [imageToDisplay, setImageToDisplay] = useState(`url(${line})`);
+
   console.log(palette.background.light);
   const goToProject = () => {
     navigate(`/project/${props.project.id}`);
   };
+  
+  useEffect(() => {
+    const imageLoad = async () => {
+      try {
+        const response = await fetch(`https://res.cloudinary.com/dl1zphjjk/image/upload/project_images/main/${props.project.id}`);
+        if (response.ok) {
+          // Image exists
+          setImageToDisplay(`https://res.cloudinary.com/dl1zphjjk/image/upload/project_images/main/${props.project.id}`);
+          console.log("🚀 ~ imageLoad ~ response:", response)
+        }
+      } catch (error) {
+        console.error('Error checking image:', error);
+      }
+    };
+    imageLoad();
+  }, [props.project.id]);
+
   return (
     <Box
       sx={{
@@ -50,10 +71,11 @@ const ResultBox = (props: ResultBoxProps) => {
           alignContent: "center",
           backgroundColor: "#063970", // Placeholder color
           borderRadius: "1.5rem 1.5rem 0 0", // Top corners rounded
+          backgroundSize: "cover",
+          backgroundImage: `url(${imageToDisplay})`, // Use the imported image
           // Add any additional styling for the placeholder here
         }}
       >
-        Image Here
       </Box>
       {typeof props.project.currentAmount === "number" &&
         typeof props.project.targetAmount === "number" && (
