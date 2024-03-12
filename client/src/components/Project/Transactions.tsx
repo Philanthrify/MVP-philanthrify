@@ -29,7 +29,7 @@ const DrawPieChart: React.FC<DrawPieChartProps> = ({ transactions }) => {
         const label = `${item.type} (${(acc[item.type]?.count || 0) + 1})`;
         acc[item.type] = {
           id: index,
-          value: (acc[item.type]?.value || 0) + item.amount,
+          value: (acc[item.type]?.value || 0) + item.dollarAmount,
           label,
           count: (acc[item.type]?.count || 0) + 1,
         };
@@ -91,73 +91,81 @@ const Transactions = () => {
 
       {/* TODO add scrollable element with transparent scrollbar - requires CSS file */}
       <div>
-        {transactions.map((transaction, index) => (
-          <div
-            key={index}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "10px",
-            }}
-          >
-            <div style={{ alignItems: "center", paddingBottom: "5px" }}>
-              <ListItemIcon sx={{ color: palette.white.light }}>
-                <PaidIcon fontSize="large" />
-              </ListItemIcon>
-            </div>
-
-            {/* Placeholder for the Title -- column width needs fine-tuning*/}
-            <div style={{ textAlign: "left", maxWidth: "450px" }}>
-              <h3 style={{ margin: "0", color: "white" }}>
-                {transaction.whatBrought}
-              </h3>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <p
-                  style={{
-                    wordWrap: "break-word", // Allows long words to be broken and wrapped to the next line
-                    overflowWrap: "break-word", // Ensures the browser will break and wrap words as needed
-                    wordBreak: "break-word", // Use this to break the word at the exact point even if it creates a new line
-                  }}
-                >
-                  {formatDate(transaction.dateTime.toString())} {"  ·  "}{" "}
-                  {transaction.whatFor}
-                </p>
-              </div>
-            </div>
-
-            {/* Placeholder for the Tag */}
+        {transactions.map((transaction, index) => {
+          const amount = transaction.dollarAmount;
+          const roundedAmount =
+            amount % 1 === 0 ? amount : parseFloat(amount.toFixed(2));
+          return (
             <div
+              key={index}
               style={{
-                border: "1px solid",
-                borderColor: palette.white.middle,
-                padding: "5px",
-                borderRadius: "12%",
-                display: "flex", // Use flex display
-                flexDirection: "row",
-                alignItems: "center", // Align items vertically in the center
-                color: "white",
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "10px",
               }}
             >
               <div
                 style={{
-                  width: "6px",
-                  height: "6px",
-                  backgroundColor: "#444ce7",
-                  borderRadius: "50%",
-                  marginRight: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                  flexBasis: "50px",
                 }}
-              ></div>
-              {transaction.type}
-            </div>
+              >
+                {" "}
+                {/* Adjust as needed */}
+                <ListItemIcon sx={{ color: palette.white.light }}>
+                  <PaidIcon fontSize="large" />
+                </ListItemIcon>
+              </div>
 
-            {/* Placeholder for the $amount */}
-            <div
-              style={{ textAlign: "right", marginLeft: "auto", color: "white" }}
-            >
-              <span>{transaction.amount} $</span>
+              {/* Expanded Details Section */}
+              <div style={{ flex: 1, textAlign: "left", paddingRight: "10px" }}>
+                {" "}
+                {/* Allow this to grow */}
+                <h3 style={{ margin: "0", color: "white" }}>
+                  {transaction.whatBrought}
+                </h3>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <p
+                    style={{
+                      wordWrap: "break-word",
+                      overflowWrap: "break-word",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {formatDate(transaction.dateTime.toString())} {"  ·  "}
+                    {transaction.whatFor}
+                  </p>
+                </div>
+              </div>
+
+              {/* Transaction Type - Fixed Position */}
+              <div
+                style={{
+                  flexBasis: "150px", // Fixed width or basis for transaction type and amount
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end", // Align items to the right
+                  textAlign: "right",
+                  color: "white",
+                }}
+              >
+                <div
+                  style={{
+                    border: "1px solid",
+                    borderColor: palette.white.middle,
+                    padding: "5px",
+                    borderRadius: "12%",
+                    marginBottom: "5px", // Space between type and amount
+                  }}
+                >
+                  <span>{transaction.type}</span>
+                </div>
+                <span>$ {roundedAmount}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

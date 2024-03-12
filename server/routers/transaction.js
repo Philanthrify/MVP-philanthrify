@@ -52,7 +52,7 @@ router.post(
         whatFor,
       } = req.body;
 
-      const dollarAmount = amount / exchangeRates[currency];
+      const dollarAmount = amount * exchangeRates[currency];
       console.log("🚀 ~ router.post ~ dollarAmount:", dollarAmount);
 
       const newTransaction = await prisma.transaction.create({

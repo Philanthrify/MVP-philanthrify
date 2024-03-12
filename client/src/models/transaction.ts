@@ -19,4 +19,5 @@ export interface Transaction {
   posterId: string;
   projectId: string;
   dateTime: Dayjs;
+  dollarAmount: number;
 }

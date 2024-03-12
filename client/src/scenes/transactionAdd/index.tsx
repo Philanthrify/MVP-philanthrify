@@ -45,7 +45,7 @@ const validationSchema = yup.object({
     .min(0.01, "Amount must be at least 0.01"),
   category: yup.string().required("Transaction category is required"),
   whatBrought: yup.string().required("Transaction subject is required"),
-  whatFor: yup.string().required("Transaction purpose is required"),
+  whatFor: yup.string(),
 });
 
 const TransactionAdd = () => {
