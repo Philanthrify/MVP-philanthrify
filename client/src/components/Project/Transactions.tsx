@@ -107,14 +107,20 @@ const Transactions = () => {
             </div>
 
             {/* Placeholder for the Title -- column width needs fine-tuning*/}
-            <div style={{ textAlign: "left", columnWidth: "450px" }}>
+            <div style={{ textAlign: "left", maxWidth: "450px" }}>
               <h3 style={{ margin: "0", color: "white" }}>
-                {transaction.whatFor}
+                {transaction.whatBrought}
               </h3>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <p>
+                <p
+                  style={{
+                    wordWrap: "break-word", // Allows long words to be broken and wrapped to the next line
+                    overflowWrap: "break-word", // Ensures the browser will break and wrap words as needed
+                    wordBreak: "break-word", // Use this to break the word at the exact point even if it creates a new line
+                  }}
+                >
                   {formatDate(transaction.dateTime.toString())} {"  ·  "}{" "}
-                  {transaction.whatBrought}
+                  {transaction.whatFor}
                 </p>
               </div>
             </div>

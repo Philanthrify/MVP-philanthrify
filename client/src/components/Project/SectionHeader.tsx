@@ -35,6 +35,8 @@ const SectionHeader = (props: SectionHeaderProps) => {
             spacing={2}
             sm={6}
             justifyContent="flex-end"
+            alignItems="flex-end"
+            // sx={{ marginBottom: "15px", marginTop: "35px" }}
           >
             {props.buttons.map((button, index) => (
               <Grid
@@ -42,6 +44,8 @@ const SectionHeader = (props: SectionHeaderProps) => {
                 key={index}
                 direction="column"
                 justifyContent="flex-end"
+                alignItems="flex-end"
+                sx={{ marginBottom: "15px" }}
               >
                 {button}
               </Grid>
