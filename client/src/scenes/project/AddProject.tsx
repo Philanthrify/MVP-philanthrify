@@ -1,5 +1,5 @@
 import FormBox from "@/components/FormBox";
-import { Alert, Grid, Snackbar, Step, StepLabel, Stepper } from "@mui/material";
+import { Grid, Step, StepLabel, Stepper } from "@mui/material";
 
 import TypographyTitle from "@/components/Title";
 import { Typography } from "@mui/material";
@@ -39,22 +39,12 @@ const CreateProjectForm = () => {
     endDate: null,
     targetAmount: 0,
   });
-  const [open, setOpen] = useState(false);
   const token = useSelector(selectToken);
   const [currentStep, setCurrentStep] = useState(0);
   const [skipped] = useState(new Set<number>());
   const { openAlertSnackbar } = useSnackbar();
 
-  const handleClose = (
-    _event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
 
-    setOpen(false);
-  };
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -71,7 +61,7 @@ const CreateProjectForm = () => {
   };
 
   const onSubmit = (data: Project) => {
-    console.log(data);
+    //console.log(data);
     const { image, ...dataWithoutImage } = data;
 
     axios({
@@ -83,31 +73,35 @@ const CreateProjectForm = () => {
       },
       data: JSON.stringify(dataWithoutImage),
     })
-      .then((response) => {
-        console.log(response);
-        if (image) {
-          const formData = new FormData();
-          formData.append("image", image);
-          console.log(response.data.project.id);
-          setOpen(true);
-          return axios({
-            method: "post",
-            url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`, // Change to your image upload endpoint
-            params: { projectId: response.data.project.id },
-            headers: {
-              Authorization: token,
-              // "Content-Type": "multipart/form-data",
-            },
-            data: formData,
+    .then((response) => {
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+    
+        axios({
+          method: "post",
+          url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`,
+          params: { projectId: response.data.project.id },
+          headers: {
+            Authorization: token,
+            "Content-Type": "multipart/form-data",
+          },
+          data: formData,
+        })
+          .then(() => {
+            console.log("Image upload successful");
+            openAlertSnackbar("Project created", "success");
+            navigate(`/project/${response.data.project.id}`);
+          })
+          .catch((uploadError) => {
+            console.log(uploadError);
+            openAlertSnackbar("Image upload failed", "error");
           });
-        }
+      } else {
         openAlertSnackbar("Project created", "success");
-        navigate("/"); // TODO: make success snackbar which persists for a bit, maybe put in whole app such that it persists
-      })
-      .catch((error) => {
-        console.log(error);
-        openAlertSnackbar("Something went wrong. Project not created", "error");
-      });
+        navigate(`/project/${response.data.project.id}`);
+      }
+    })    
   };
 
   const { palette } = useTheme();
@@ -124,11 +118,6 @@ const CreateProjectForm = () => {
       
     >
       {/* TODO: do this a bit later */}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          This is a success message!
-        </Alert>
-      </Snackbar>
       <Grid xs={8}>
         <FormBox>
           <TypographyTitle variant="h1" align="center" paddingTop="110px">

@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Grid,
   TextField,
+  Typography,
   useTheme,
 } from "@mui/material";
 
@@ -28,6 +29,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProjectPageFields } from "./Project";
 import ProjectSubtitle from "@/components/Project/ProjectSubtitle";
+import PageBox from "@/components/PageBox";
+
 
 // import Transactions from "@/components/Project/Transactions";
 
@@ -47,6 +50,42 @@ const ProjectPage = () => {
   const isProjectLead = project?.membershipBool || false;
   const { projectId } = useParams<{ projectId: string }>();
   const userCharity = useSelector((state: RootState) => state.auth.charity);
+  const [imageToDisplay, setImageToDisplay] = useState('');
+  const [logoToDisplay, setLogoToDisplay] = useState('https://res.cloudinary.com/dl1zphjjk/image/upload/charity_images/logo/default_charity_logo');
+
+  useEffect(() => {
+    const imageLoad = async () => {
+      try {
+        const response = await fetch(`https://res.cloudinary.com/dl1zphjjk/image/upload/project_images/main/${projectId}`);
+        console.log("🚀 ~ imageLoad ~ response:", response)
+        if (response.ok) {
+          // Image exists
+          setImageToDisplay(`https://res.cloudinary.com/dl1zphjjk/image/upload/project_images/main/${projectId}`);
+        }
+      } catch (error) {
+        console.error('Error checking image:', error);
+      }
+    };
+
+    imageLoad();
+  }, [projectId]);
+  useEffect(() => {
+    const logoLoad = async () => {
+      try {
+        const response = await fetch(`https://res.cloudinary.com/dl1zphjjk/image/upload/charity_images/logo/${project?.charityId}`);
+        console.log("🚀 ~ logoLoad ~ response:", response)
+        console.log(logoToDisplay);
+        if (response.ok) {
+          // Image exists
+          setLogoToDisplay(`https://res.cloudinary.com/dl1zphjjk/image/upload/charity_images/logo/${project?.charityId}`);
+        }
+      } catch (error) {
+        console.error('Error checking image:', error);
+      }
+    };
+
+    logoLoad();
+  }, [project?.charityId]);
 
   useEffect(() => {
     if (projectId) {
@@ -145,6 +184,7 @@ const ProjectPage = () => {
     );
   }
 
+
   const goToCharity = () => {
     // navigate(`/project/${props.project.id}`);
     navigate(`/charity/${project.charityId}`);
@@ -163,119 +203,149 @@ const ProjectPage = () => {
         margin: "auto",
       }}
     >
-      {/* Main content */}
-      <Grid
-        container
-        item
-        xs={12}
-        spacing={3}
-        width="1280px"
-        height="510px"
-        sx={{
-          backgroundColor: palette.background.light,
-          borderRadius: "1.75rem",
-          maxWidth: "1280px",
-          minHeight: "510px",
-          marginTop: "28px",
-          marginBottom: "96px",
-          //margin: "0px 0px",
-          //padding: "0px",
-        }}
-      >
-        {/* Left Side */}
-        <Grid
-          container
-          item
-          md={6}
-          xs={6}
-          direction="column"
-          justifyContent="center"
-          alignItems="flex-end"
-        >
-          <Grid item sx={{ width: "90%", height: "90%" }}>
-            <Box
-              sx={{
-                height: "100%",
-                backgroundColor: "#063970",
-                justifyContent: "center",
-                alignItems: "center",
 
-                // Add any additional styling you need here
-              }}
-            >
-              Image Here
-            </Box>
+
+      <PageBox backgroundColor={palette.background.light}>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid 
+              item
+              direction="column"
+              justifyContent="center"
+              alignItems="center">
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  spacing={3}
+                >
+                {/* Left Side */}
+                  <Grid
+                    container
+                    item
+                    md={6}
+                    xs={6}
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-end"
+                  >
+                    <Grid item sx={{ width: "90%" }}>
+                      <Box
+                        component="img"
+                        sx={{
+                          width: "90%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: "15px", // Adjust the value as needed
+                        }}
+                        src={imageToDisplay}
+                      />
+                    </Grid>
+                  </Grid>
+                  {/* Right Side */}
+                    <Grid
+                      container
+                      item
+                      md={6}
+                      xs={6}
+                      spacing={2}
+                      direction="column"
+                      justifyContent="center"
+                    >
+                    {/* the location of the project */}
+                    <Grid item>
+                      {project.country && <LocationText text={project.country} />}
+                    </Grid>
+                    <Grid item>
+                      <ProjectTitle
+                        editing={projectFields.title.edit}
+                        buttons={
+                          isProjectLead
+                            ? [
+                                <EditButton
+                                  name="title"
+                                  done={projectFields.title.edit}
+                                  onClick={handleButtonClick}
+                                />,
+                              ]
+                            : []
+                        }
+                        projectFields={projectFields}
+                        updateField={updateField}
+                      />
+                      <Grid item>
+                        <ProjectSubtitle
+                          editing={projectFields.subtitle.edit}
+                          buttons={
+                            isProjectLead
+                              ? [
+                                  <EditButton
+                                    name="subtitle"
+                                    done={projectFields.subtitle.edit}
+                                    onClick={handleButtonClick}
+                                  />,
+                                ]
+                              : []
+                          }
+                          projectFields={projectFields}
+                          updateField={updateField}
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        sx={{                          
+                          height: "32px",
+                          width: "32px",
+                        }}
+                        >
+                        <Button
+                          onClick={goToCharity}
+                          sx={{                          
+                            backgroundColor: "#64F2A4",//
+                            height: "100px",
+                            width: "100px",
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={logoToDisplay}
+                            sx={{
+                              width: "100%",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          />
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+
+            </Grid>
           </Grid>
-        </Grid>
-
-        {/* Right Side */}
+        </PageBox>
+        
+        {/* SPACER */}
         <Grid
           container
-          item
-          md={6}
-          xs={6}
           spacing={2}
           direction="column"
           justifyContent="center"
-        >
-          {" "}
-          {/* the location of the project */}
-          <Grid item>
-            {" "}
-            {project.country && <LocationText text={project.country} />}
-          </Grid>
-          <Grid item>
-            <ProjectTitle
-              editing={projectFields.title.edit}
-              buttons={
-                isProjectLead
-                  ? [
-                      <EditButton
-                        name="title"
-                        done={projectFields.title.edit}
-                        onClick={handleButtonClick}
-                      />,
-                    ]
-                  : []
-              }
-              projectFields={projectFields}
-              updateField={updateField}
-            />
-          </Grid>{" "}
-          <Grid item>
-            <ProjectSubtitle
-              editing={projectFields.subtitle.edit}
-              buttons={
-                isProjectLead
-                  ? [
-                      <EditButton
-                        name="subtitle"
-                        done={projectFields.subtitle.edit}
-                        onClick={handleButtonClick}
-                      />,
-                    ]
-                  : []
-              }
-              projectFields={projectFields}
-              updateField={updateField}
-            />
-          </Grid>
-          <Grid item>
-            <Button
-              onClick={goToCharity}
-              sx={{
-                color: "black",
+          alignItems="center"
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            width: "100%",
+          }}
+        />
 
-                backgroundColor: "#64F2A4",
-                // height: "100px",
-                // width: "100%",
-              }}
-            >
-              Charity Logo Here
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+
+
       {/* text on the left and progressbar on right */}
       <Grid
         container
