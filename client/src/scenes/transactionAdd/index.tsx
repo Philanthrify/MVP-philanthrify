@@ -38,7 +38,11 @@ import * as yup from "yup";
 //TODO need refresh in place for this to be worthwhile
 const validationSchema = yup.object({
   project: yup.string().required("Parent project is required"),
-  amount: yup.number().min(0.01, "A transaction amount is required"),
+  amount: yup
+    .number()
+    .typeError("Amount must be a number")
+    .required("Amount is required")
+    .min(0.01, "Amount must be at least 0.01"),
   category: yup.string().required("Transaction category is required"),
   whatBrought: yup.string().required("Transaction subject is required"),
   whatFor: yup.string().required("Transaction purpose is required"),

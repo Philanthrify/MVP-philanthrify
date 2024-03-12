@@ -29,11 +29,12 @@ const validateTransaction = [
     .isIn(["USD", "EUR", "GBP", "UGX"])
     .withMessage("Unallowed currency"),
   body("whatBrought")
-    .isLength({ max: 255 })
-    .withMessage("Inputs must be under 255 characters"),
+    .isLength({ max: 191 })
+    .withMessage("Inputs must be under 191 characters"),
   body("whatFor")
-    .isLength({ max: 255 })
-    .withMessage("Inputs must be under 255 characters"),
+    .optional({ checkFalsy: true }) // this is optional
+    .isLength({ max: 191 })
+    .withMessage("Inputs must be under 191 characters"),
   // Add other validations as needed
 ];
 // Add a new project for a user
