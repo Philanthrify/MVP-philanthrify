@@ -1,12 +1,11 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import FormStyles from "@/components/FormsUI";
-import { useEffect, useState } from "react";
 import { countries } from "@/models/country";
 import { SxProps, useTheme } from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Autocomplete from "@mui/material/Autocomplete";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
+import { useEffect, useState } from "react";
 
 interface CountrySelectProps {
   sxProps?: SxProps;
@@ -67,7 +66,7 @@ export default function CountrySelect(props: CountrySelectProps) {
 
               backgroundColor: "background.dark",
               color: palette.white.light,
-        
+              cursor: "pointer",
               "&:hover": {
                 backgroundColor: "background.dark",
                 color: palette.white.light,
@@ -89,8 +88,6 @@ export default function CountrySelect(props: CountrySelectProps) {
           <TextField
             autoComplete="off"
             placeholder="Select a country"
-          
-            
             {...params}
             inputProps={{
               ...params.inputProps,
@@ -101,7 +98,7 @@ export default function CountrySelect(props: CountrySelectProps) {
             sx={{
               //...props.sxProps,
               //paddingLeft: '80px',
-              marginTop: '10px',
+              marginTop: "10px",
               "&:hover": {
                 //backgroundColor: 'grey.900',
               },

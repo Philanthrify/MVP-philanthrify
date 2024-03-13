@@ -8,7 +8,7 @@ interface PageBoxProps {
   backgroundColor?: string; // Make it optional with a default value
 }
 
-const PageBox = styled(Box)<PageBoxProps>(({ theme, backgroundColor }) => ({
+const PageBox = styled(Box)<PageBoxProps>(({ backgroundColor }) => ({
   backgroundColor: backgroundColor ? backgroundColor : "#1F2330",
   borderRadius: "1.75rem",
   boxShadow: "0.15rem 0.15rem 0.45rem 0.15rem rgba(0,0,0,0.10)", // Increased blur and decreased opacity

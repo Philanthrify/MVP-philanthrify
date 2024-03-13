@@ -1,4 +1,4 @@
-import { Divider, Grid, useTheme } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 import TypographyTitle from "../Title";
 
 type SectionHeaderProps = {
@@ -6,7 +6,6 @@ type SectionHeaderProps = {
   buttons?: React.ReactNode[];
 };
 const SectionHeader = (props: SectionHeaderProps) => {
-  const { palette } = useTheme();
   return (
     <Grid container direction="column" alignItems="flex-start">
       <Grid

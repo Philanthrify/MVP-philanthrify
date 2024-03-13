@@ -8,7 +8,6 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
-  useTheme,
 } from "@mui/material";
 import { useEffect } from "react";
 import FormStyles from ".";
@@ -32,7 +31,6 @@ type TagSelectorProps = {
 };
 
 const TagSelector = (props: TagSelectorProps) => {
-  const { palette } = useTheme();
   const textFieldProps = FormStyles();
   useEffect(() => {
     console.log(

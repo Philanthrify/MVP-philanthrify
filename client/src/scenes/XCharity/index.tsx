@@ -1,6 +1,8 @@
 import EditButton from "@/components/Button/EditButton";
 import CountrySelector from "@/components/FormsUI/CountrySelectorMany";
+import OwnDatePicker from "@/components/FormsUI/DatePicker";
 import TagSelector from "@/components/FormsUI/TagSelector";
+import OwnLink from "@/components/OwnLink";
 import PageBox from "@/components/PageBox";
 import Tag from "@/components/Project/Tag";
 import Tagline from "@/components/charity/Tagline";
@@ -15,6 +17,7 @@ import {
   isCharityTag,
 } from "@/models/charity";
 import { countries } from "@/models/country";
+import { TagValuesObj } from "@/models/tagValues";
 import { selectToken } from "@/redux/authSlice";
 import {
   setCharity,
@@ -30,21 +33,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ErrorResponse, useParams } from "react-router-dom";
-import LeftHandSide from "./LeftHandSide";
-import { TagValuesObj } from "@/models/tagValues";
+import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
-import OwnLink from "@/components/OwnLink";
-import OwnDatePicker from "@/components/FormsUI/DatePicker";
-
-// Extend AxiosError to include your custom properties
-interface ExtendedAxiosError<T = any> extends AxiosError<T> {
-  // Your custom property. You can make it optional or required based on your needs
-  msg?: string;
-}
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import LeftHandSide from "./LeftHandSide";
 
 interface CharityUpdateTextFields {
   [key: string]: any; // This allows for any key of type string and any value type

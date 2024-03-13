@@ -109,7 +109,7 @@ const LeftHandSide = (props: LeftHandSideProps) => {
               alignItems="center"
               sx={{ width: "90%" }}
             >
-              {charity.projects.map((project: ProjectShort, index) => {
+              {charity.projects.map((project: ProjectShort, _index) => {
                 return (
                   <Grid item md={12} sx={{ height: "200px" }}>
                     <ProjectBox project={project} />{" "}

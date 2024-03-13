@@ -1,10 +1,9 @@
-import { ProjectShort } from "@/models/project";
-import { Avatar, Box, Grid, Typography, useTheme } from "@mui/material";
-import FolderIcon from "@mui/icons-material/Folder";
-import { useNavigate } from "react-router-dom";
 import ProgressBar from "@/components/ProgressBar";
 import LocationText from "@/components/Project/LocationText";
+import { ProjectShort } from "@/models/project";
 import PageviewIcon from "@mui/icons-material/Pageview";
+import { Avatar, Box, Grid, Typography, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 type ProjectBoxProps = {
   project: ProjectShort;

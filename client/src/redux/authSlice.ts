@@ -1,7 +1,7 @@
 // authSlice.js
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import { Charity, CharityMembership } from "@/models/charity";
+import { CharityPagePayload, CharityMembership } from "@/models/charity";
 import Cookies from "universal-cookie";
 
 // Define a type for the slice state
@@ -11,7 +11,7 @@ interface AuthState {
   firstname: string | null;
   email: string | null;
   userType: string | null;
-  charity: Charity | null;
+  charity: CharityPagePayload | null;
   // ATTENTION: charity is a for which they are a member of and are logged in as
   // for now assuming only one membership a user.
   charities: CharityMembership[] | null;
@@ -69,7 +69,7 @@ export const authSlice = createSlice({
         firstname: string | null;
         email: string | null;
         userType: string | null;
-        charity?: Charity | null;
+        charity?: CharityPagePayload | null;
         charities?: CharityMembership[] | null;
         projects?: any[] | null;
       }>

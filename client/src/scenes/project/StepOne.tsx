@@ -1,11 +1,10 @@
-import FormStyles from "@/components/FormsUI";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import AmountInput from "@/components/FormsUI/AmountInput";
 import CountrySelect from "@/components/FormsUI/CountrySelector";
 import OwnDatePicker from "@/components/FormsUI/DatePicker";
 import LinkInput, { Link } from "@/components/FormsUI/LinkInput";
 import TagSelector from "@/components/FormsUI/TagSelector";
 import TypographyTitle from "@/components/Title";
-import PrimaryButton from "@/components/Button/PrimaryButton";
 import { Project } from "@/models/project";
 import {
   Button,
@@ -79,7 +78,6 @@ const StepOne = (props: StepOneProps) => {
   const handleEndDateChange = (newValue: Dayjs | null) => {
     formik.setFieldValue("endDate", newValue ? newValue : null);
   };
-  const textFieldProps = FormStyles();
   useEffect(() => {
     console.log("Changed (FORMIK):", formik.values);
   }, [formik.values]);
@@ -312,6 +310,7 @@ const StepOne = (props: StepOneProps) => {
             id="targetAmount"
             name="targetAmount"
             width="100%"
+            currencyCode={"USD"}
           />
         </Grid>{" "}
         <Grid

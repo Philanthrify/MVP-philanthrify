@@ -1,10 +1,9 @@
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import SignupButton from "@/components/Button/SignupButton";
-import TypographyTitle from "@/components/Title";
 import Buildings from "@/components/Icons/Signup/Buildings";
 import GivingHand from "@/components/Icons/Signup/GivingHand";
 import { Signup } from "@/models/Signup";
-import { Button, Grid } from "@mui/material";
-import PrimaryButton from "@/components/Button/PrimaryButton";
+import { Grid } from "@mui/material";
 
 type StepOneProps = {
   data: Signup; // signup data store
@@ -35,9 +34,7 @@ const StepOne = (props: StepOneProps) => {
           description="Support a project and follow easily the impact of your donation."
           IconComponent={GivingHand}
           onClick={() => setData("DONOR")}
-          
         />
-       
       </Grid>
       <Grid item>
         <SignupButton
@@ -48,34 +45,24 @@ const StepOne = (props: StepOneProps) => {
           onClick={() => setData("CHARITY")}
         />
 
-<Grid
-            item
-            xs={true}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "40px",
-            }}
-          >
-            
-
-            <PrimaryButton
-              text="Continue"
-              type="submit"
-              onClick={props.handleNext}
-          
-              sx={{ width: "220px" }}
-            />
-          
-
-             
-              </Grid>
-
-
+        <Grid
+          item
+          xs={true}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "40px",
+          }}
+        >
+          <PrimaryButton
+            text="Continue"
+            type="submit"
+            onClick={props.handleNext}
+            sx={{ width: "220px" }}
+          />
+        </Grid>
       </Grid>
-      <Grid item>
-        
-      </Grid>
+      <Grid item></Grid>
     </Grid>
   );
 };

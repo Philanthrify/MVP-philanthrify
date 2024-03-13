@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,7 +14,6 @@ interface DatePickerProps {
 
 const OwnDatePicker: React.FC<DatePickerProps> = ({ value, onChange }) => {
   // const [date, setDate] = useState<Dayjs | null>(null);
-  const { palette } = useTheme();
   const [cleared, setCleared] = React.useState<boolean>(false);
   React.useEffect(() => {
     if (cleared) {

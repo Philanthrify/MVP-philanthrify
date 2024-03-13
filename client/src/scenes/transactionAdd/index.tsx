@@ -1,16 +1,15 @@
-import FormStyles from "@/components/FormsUI";
-import AmountInput from "@/components/FormsUI/AmountInput";
-import TypographyTitle from "@/components/Title";
-import TypographySmallText from "@/components/SmallText";
 import line2 from "@/assets/line2.png";
-import { Typography } from "@mui/material";
+import PrimaryButton from "@/components/Button/PrimaryButton";
+import SecondaryButton from "@/components/Button/SecondaryButton";
+import AmountInput from "@/components/FormsUI/AmountInput";
+import TypographySmallText from "@/components/SmallText";
+import TypographyTitle from "@/components/Title";
 import { useSnackbar } from "@/contexts/snackbarContext";
 import { DecodedToken } from "@/models/auth";
 import { Project } from "@/models/project";
 import { TransactionKinds } from "@/models/transaction";
 import { RootState } from "@/redux/store";
 import {
-  Button,
   FormControl,
   FormHelperText,
   Grid,
@@ -20,6 +19,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
@@ -27,9 +27,7 @@ import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import PrimaryButton from "@/components/Button/PrimaryButton";
-import SecondaryButton from "@/components/Button/SecondaryButton";
-import { Currency, currencies } from "../../assets/currencies";
+import { currencies } from "../../assets/currencies";
 
 import * as yup from "yup";
 
@@ -44,8 +42,13 @@ const validationSchema = yup.object({
     .required("Amount is required")
     .min(0.01, "Amount must be at least 0.01"),
   category: yup.string().required("Transaction category is required"),
-  whatBrought: yup.string().required("Transaction subject is required"),
-  whatFor: yup.string(),
+  whatBrought: yup
+    .string()
+    .required("Transaction subject is required")
+    .max(60, "Transaction subject must be at most 60 characters"),
+  whatFor: yup
+    .string()
+    .max(191, "Further details must be at most 191 characters"),
 });
 
 const TransactionAdd = () => {
@@ -170,6 +173,19 @@ const TransactionAdd = () => {
 
     formik.setFieldValue("currency", value);
   };
+
+  // for counting chars in string field
+  const [whatForCharCount, setWhatForCharCount] = useState(
+    formik.values.whatFor.length
+  );
+  // Update formik handleChange for whatFor to also update the character count
+  const handleWhatForChange: React.ChangeEventHandler<
+    HTMLInputElement | HTMLTextAreaElement
+  > = (event) => {
+    const { value } = event.target;
+    formik.handleChange(event); // Call the original formik handleChange
+    setWhatForCharCount(value.length); // Update character count
+  };
   if (loading) {
     return <div>Loading...</div>; // Show loading indicator while data is being fetched
   }
@@ -269,7 +285,11 @@ const TransactionAdd = () => {
                   formik.touched.whatBrought &&
                   Boolean(formik.errors.whatBrought)
                 }
-                helperText={""}
+                helperText={
+                  formik.touched.whatBrought &&
+                  formik.errors.whatBrought &&
+                  formik.errors.whatBrought
+                }
               />
               <Grid xs={10}>
                 <FormHelperText
@@ -370,10 +390,14 @@ const TransactionAdd = () => {
                 label="Further details (Optional)"
                 placeholder="e.g. Building school"
                 value={formik.values.whatFor}
-                onChange={formik.handleChange}
+                onChange={handleWhatForChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.whatFor && Boolean(formik.errors.whatFor)}
-                helperText={""}
+                helperText={
+                  formik.touched.whatFor && formik.errors.whatFor
+                    ? formik.errors.whatFor
+                    : `${whatForCharCount} characters` // Display character count here
+                }
               />
               <Grid xs={10}>
                 <FormHelperText

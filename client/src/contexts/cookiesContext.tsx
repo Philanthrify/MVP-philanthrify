@@ -1,4 +1,4 @@
-import { Charity, CharityMembership } from "@/models/charity";
+import { CharityPagePayload, CharityMembership } from "@/models/charity";
 import { login } from "@/redux/authSlice";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import React, { createContext, ReactNode } from "react";
@@ -13,7 +13,7 @@ interface CookiesToken extends UserToken {
   firstname: string;
   useremail: string;
   userType: string;
-  loggedInCharity?: Charity;
+  loggedInCharity?: CharityPagePayload;
   charity: CharityMembership[];
   projects: any[];
   exp: number;

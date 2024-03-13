@@ -1,28 +1,21 @@
+import PrimaryButton from "@/components/Button/PrimaryButton";
 import FormBox from "@/components/FormBox";
 import ErrorComponent from "@/components/FormError";
 import FormStyles from "@/components/FormsUI";
 import TypographyTitle from "@/components/Title";
+import { CharityMembership, CharityPagePayload } from "@/models/charity";
 import { login } from "@/redux/authSlice";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import {
-  Button,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Grid, IconButton, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useFormik } from "formik";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import * as yup from "yup";
 import Cookies from "universal-cookie";
-import PrimaryButton from "@/components/Button/PrimaryButton";
-import { JwtPayload, jwtDecode } from "jwt-decode";
-import { Charity, CharityMembership } from "@/models/charity";
+import * as yup from "yup";
 
 const validationSchema = yup.object({
   email: yup.string().required("Email is required"),
@@ -40,7 +33,7 @@ interface CookiesToken extends UserToken {
   firstname: string;
   useremail: string;
   userType: string;
-  loggedInCharity?: Charity;
+  loggedInCharity?: CharityPagePayload;
   charity: CharityMembership[];
   projects: any[];
   exp: number;
@@ -55,7 +48,7 @@ const Login = () => {
   const state = location.state as LocationState | undefined;
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
-  const { palette } = useTheme();
+
   const textFieldProps = FormStyles();
   const from = state?.from || "/";
   console.log(from);
@@ -155,7 +148,7 @@ const Login = () => {
           <TypographyTitle variant="h1" align="center" paddingTop="64px">
             Log in
           </TypographyTitle>
-          <TypographyTitle variant="body2" align="center" color= "#A4A6AD" >
+          <TypographyTitle variant="body2" align="center" color="#A4A6AD">
             Welcome back to our community
           </TypographyTitle>
           {loginError && (
@@ -240,28 +233,23 @@ const Login = () => {
                 }}
               />
 
-            <Grid
-            item
-            xs={true}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "40px",
-            }}
-          >
-            
-
-            <PrimaryButton
-              text="Login"
-              type="submit"
-              onClick={() => {
-                console.log("");
-              }}
-              sx={{ width: "150px" }}
-            />
-          
-
-             
+              <Grid
+                item
+                xs={true}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "40px",
+                }}
+              >
+                <PrimaryButton
+                  text="Login"
+                  type="submit"
+                  onClick={() => {
+                    console.log("");
+                  }}
+                  sx={{ width: "150px" }}
+                />
               </Grid>
               <Grid xs={10} padding="0px 0px">
                 <Typography
@@ -269,10 +257,9 @@ const Login = () => {
                   align="center"
                   paddingTop="30px"
                   paddingBottom="64px"
-                  color= "#A4A6AD"
-                  fontWeight= "200"
-                  fontSize= "14px"
-                
+                  color="#A4A6AD"
+                  fontWeight="200"
+                  fontSize="14px"
                 >
                   Don't have an account yet?{" "}
                   <Link to="/register">Register</Link>

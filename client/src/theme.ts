@@ -201,47 +201,38 @@ const themeSettings = {
           fontWeight: 500,
           lineHeight: "24px",
           borderRadius: "var(--radius-full, 1000px)",
-          
-          
         },
       },
     },
-    // Fergus: added these to style every textfield appwide
-    MuiTextField: {
-      styleOverrides: {
-        // Name of the slot
-        // root: { height: "55px" },
-        icon: {
-          fill: "#ABAEBB",
-        },
-      },
-    },
+    // // Fergus: added these to style every textfield appwide
+    // MuiTextField: {
+    //   styleOverrides: {
+    //     // Name of the slot
+    //     // root: { height: "55px" },
+    //     icon: {
+    //       fill: "#ABAEBB",
+    //     },
+    //   },
+    // },
     // applies to outline of each input thing (e.g. textfield, select, autocorrect)
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
           minHeight: "55px",
           borderRadius: "1.63rem", // Set the border radius here
-          
-          paddingLeft: '10px',
-          
-          
+
+          paddingLeft: "10px",
+
           "& .MuiOutlinedInput-notchedOutline": {
-            border: "1.25px solid", 
+            border: "1.25px solid",
             borderColor: "#686E82",
-            
-            
           },
 
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            
-            border: "1.5px solid",        
-            backgroundColor: 'rgba(104, 110, 130, 0.1)',
-            borderColor: '#ABB3CE',
-            
-            
+            border: "1.5px solid",
+            backgroundColor: "rgba(104, 110, 130, 0.1)",
+            borderColor: "#ABB3CE",
           },
-          
 
           "& .MuiInputBase-input": {
             color: "#FFFFFF",
@@ -249,14 +240,11 @@ const themeSettings = {
               WebkitTextFillColor: tokens.grey[500],
               WebkitBoxShadow: "0 0 0px 1000px white inset",
             },
-            
           },
 
-          
           "&:focus-within .MuiOutlinedInput-notchedOutline": {
-            borderColor: '#09864A', // Change border color when any descendant receives focus
-            backgroundColor: 'rgba(104, 110, 130, 0.1)',
-            
+            borderColor: "#09864A", // Change border color when any descendant receives focus
+            backgroundColor: "rgba(104, 110, 130, 0.1)",
           },
         },
       },
@@ -267,61 +255,51 @@ const themeSettings = {
         root: {},
         icon: {
           fill: "#ABAEBB",
-          
         },
       },
     },
 
     MuiInputLabel: {
       styleOverrides: {
-        
         root: {
-          marginLeft: '10px',
-          color: "#"
+          marginLeft: "10px",
+          color: "#",
 
-         // '&:hover': {
-         //   color: 'white', // Color change on hover doesn't work for some reason
-         //   marginLeft: '100px',
-         // },
-        
+          // '&:hover': {
+          //   color: 'white', // Color change on hover doesn't work for some reason
+          //   marginLeft: '100px',
+          // },
         },
         icon: {
           fill: "#ABAEBB",
-          
         },
       },
     },
 
-
     MuiPlaceholder: {
       styleOverrides: {
-        
         root: {
           //padding: '20px 20px 20px 20px',
-
-         // '&:hover': {
-         //   color: 'white', // Color change on hover doesn't work for some reason
-         //   marginLeft: '100px',
-         // },
-        
+          // '&:hover': {
+          //   color: 'white', // Color change on hover doesn't work for some reason
+          //   marginLeft: '100px',
+          // },
         },
         icon: {
           fill: "#ABAEBB",
-          
         },
       },
-    },    
-
+    },
 
     MuiSvgIcon: { styleOverrides: { root: { color: "#ABAEBB" } } }, // MUI icons are white unless overridden
 
     MuiCheckbox: {
       styleOverrides: {
-        root: { 
-          color: tokens.grey[800], 
+        root: {
+          color: tokens.grey[800],
           borderRadius: "10rem",
-          '&:hover .MuiCheckbox:': {
-            color: '#09864A',
+          "&:hover .MuiCheckbox:": {
+            color: "#09864A",
           },
         },
       },

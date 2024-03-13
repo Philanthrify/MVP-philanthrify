@@ -1,16 +1,16 @@
 import FormBox from "@/components/FormBox";
-import TypographyTitle from "@/components/Title";
-import { Signup } from "@/models/Signup";
-import { Box, Grid, Typography, useTheme } from "@mui/material";
-import axios from "axios";
 import TypographySmallText from "@/components/SmallText";
+import TypographyTitle from "@/components/Title";
+import { useSnackbar } from "@/contexts/snackbarContext";
+import { Signup } from "@/models/Signup";
+import { Grid, Typography, useTheme } from "@mui/material";
+import axios from "axios";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
-import { useSnackbar } from "@/contexts/snackbarContext";
 
 // an own type for the payload
 interface MyTokenPayload extends JwtPayload {
@@ -183,7 +183,13 @@ const Register = () => {
               {personalizedMessage}
             </TypographyTitle>
           ) : (
-            <TypographyTitle variant="body2" align="center" color= "#A4A6AD" paddingTop="5px" paddingBottom="15px">
+            <TypographyTitle
+              variant="body2"
+              align="center"
+              color="#A4A6AD"
+              paddingTop="5px"
+              paddingBottom="15px"
+            >
               Join our community and explore the benefits!
             </TypographyTitle>
           )}
@@ -200,8 +206,6 @@ const Register = () => {
                 data={data}
                 updateData={updateData}
                 handleNext={handleNextStepOne}
-                style={{ marginBottom: '20px' }} // Add marginBottom here
-
               />
             )}
 
@@ -223,8 +227,7 @@ const Register = () => {
             )}
           </>
 
-          <Grid sx={{ display: "flex", justifyContent: "center",
-}}>
+          <Grid sx={{ display: "flex", justifyContent: "center" }}>
             <TypographySmallText
               variant="body2"
               align="center"
@@ -236,25 +239,18 @@ const Register = () => {
                 color: "#A4A6AD",
                 fontWeight: 200,
                 fontSize: 12,
-                paddingBottom: "64px"
-                
-                
+                paddingBottom: "64px",
               }} // Use sx prop to specify color
             >
               By signing up, you agree to our
               <a href="/terms-of-service" color={palette.grey[500]}>
                 {" "}
-                 Terms of Service{" "}
+                Terms of Service{" "}
               </a>
-               and
+              and
               <a href="/privacy-policy"> Privacy Policy</a>
-
             </TypographySmallText>
           </Grid>
-
-
-
-    
         </FormBox>
       </Grid>
     </Grid>
