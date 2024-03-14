@@ -232,9 +232,9 @@ const ProjectPage = () => {
                 xs={6}
                 direction="column"
                 justifyContent="center"
-                alignItems="flex-end"
+                alignItems="center" // Align items in the center
               >
-                <Grid item sx={{ width: "90%" }}>
+                <Grid item sx={{ width: "90%", justifyContent: "center" }}>
                   <Box
                     component="img"
                     sx={{
@@ -247,6 +247,7 @@ const ProjectPage = () => {
                   />
                 </Grid>
               </Grid>
+
               {/* Right Side */}
               <Grid
                 container
