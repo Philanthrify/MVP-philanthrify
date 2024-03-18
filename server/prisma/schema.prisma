@@ -25,7 +25,7 @@ model Charity {
   membershipConfirmed         Boolean?
   membershipConfirmedDateTime DateTime?
   tagline                     String? @db.VarChar(800)
-  weblink String?
+  weblink String? @db.VarChar(2048)
 }
 
 model CharityCountry {
@@ -48,7 +48,8 @@ model CharityTag {
 
 model CharityLink {
   id          String  @id @default(uuid())
-  webLink     String
+  weblink String? @db.VarChar(2048)
+
   socialMedia String // Type of link, e.g., social media, website, etc.
   charityId   String // Foreign key reference to the Project model
   charity     Charity @relation(fields: [charityId], references: [ukCharityNumber], onDelete: Cascade)
@@ -124,7 +125,8 @@ model ProjectUpdate {
 
 model Link {
   id          String  @id @default(uuid())
-  webLink     String
+    weblink String? @db.VarChar(2048)
+
   socialMedia String // Type of link, e.g., social media, website, etc.
   projectId   String // Foreign key reference to the Project model
   project     Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
