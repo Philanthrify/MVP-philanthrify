@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// NOTES:
+// data type choices: 
+// string is 191 bytes (191 chars) in MySQL meaning that it's only for titles, taglines and subtitles where length needs to be restricted
+// varchar(8000) for the larger text things where string isn't enough and we want to add some flexibility so standardising to 8000 chars/bytes
+
 model Charity {
   ukCharityNumber             String              @id
   members                     CharityMembership[]
@@ -19,7 +24,7 @@ model Charity {
   projects                    Project[]
   charityName                 String
   email                       String
-  about                       String?             @db.LongText
+  about                       String?             @db.VarChar(8000)
   reachOutEmail               String?
   foundedDate                 DateTime?
   membershipConfirmed         Boolean?
@@ -96,9 +101,9 @@ model Project {
   title              String
   country            String?             @default("Unknown")
   charityId          String
-  backgroundAndGoals String              @db.LongText // A description of the challenge the project is addressing
-  solution           String              @db.LongText // The proposed solution for the challenge
-  donationUsage      String              @db.LongText // A description of how the donations will be used
+  backgroundAndGoals String              @db.VarChar(8000) // A description of the challenge the project is addressing
+  solution           String              @db.VarChar(8000) // The proposed solution for the challenge
+  donationUsage      String              @db.VarChar(8000) // A description of how the donations will be used
   subtitle           String // The anticipated future impact or end result of the project
   link               Link[] // Stores various links related to the project
   transactions       Transaction[] // Stores various links related to the project
@@ -115,7 +120,7 @@ model Project {
 
 model ProjectUpdate {
   id   String @id @default(uuid())
-  text String @db.LongText // text within the update which is displayed
+  text String @db.VarChar(8000) // text within the update which is displayed
 
   userId    String // Foreign key reference to the User model
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)

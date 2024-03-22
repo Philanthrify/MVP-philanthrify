@@ -404,6 +404,20 @@ const CharityPage = () => {
       <PageBox backgroundColor="primary.700">
         <Grid
           container
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="flex-start"
+        >
+          <Grid item>
+            <EditButton
+              name="tagline"
+              done={charityFields.tagline.edit}
+              onClick={handleButtonClick}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
           direction="column"
           alignItems="center"
           justifyContent="center"

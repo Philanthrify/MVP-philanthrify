@@ -3,7 +3,14 @@ import TypographySmallText from "@/components/SmallText";
 import TypographyTitle from "@/components/Title";
 import { useSnackbar } from "@/contexts/snackbarContext";
 import { Signup } from "@/models/Signup";
-import { Grid, Typography, useTheme } from "@mui/material";
+import {
+  Grid,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import axios from "axios";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
@@ -18,7 +25,7 @@ interface MyTokenPayload extends JwtPayload {
   charityId?: string;
   charityName?: string;
 }
-
+const steps = ["User Kind", "Charity Information", "User Information"];
 const Register = () => {
   const { openAlertSnackbar } = useSnackbar();
   const [searchParams] = useSearchParams();
@@ -34,10 +41,15 @@ const Register = () => {
     ukCharityNumber: null,
     charityName: "",
   });
+  const [skipped] = useState(new Set<number>());
+
   const navigate = useNavigate();
   const [regError, setRegError] = useState("");
   const { palette } = useTheme();
   const [currentStep, setCurrentStep] = useState(0);
+  const isStepSkipped = (step: number) => {
+    return skipped.has(step);
+  };
   useEffect(() => {
     // Validate token and set initial step
     if (token) {
@@ -198,6 +210,45 @@ const Register = () => {
               {regError}
             </Typography>
           )}
+
+          <Stepper
+            activeStep={currentStep}
+            // TODO: set these to be a nicer colourscheme later
+            sx={{
+              ".MuiStepLabel-label": {
+                color: palette.grey[500],
+              },
+              ".MuiStepIcon-root": {
+                color: palette.grey[500],
+              },
+              ".MuiStepLabel-label.Mui-active": {
+                color: palette.grey[500],
+              },
+              ".MuiStepLabel-label.Mui-completed": {
+                color: palette.grey[500],
+              },
+
+              width: "55%",
+              // marginTop: "100px",
+              marginBottom: "40px",
+            }}
+          >
+            {steps.map((label, index) => {
+              const stepProps: { completed?: boolean } = {};
+              const labelProps: {
+                optional?: React.ReactNode;
+              } = {};
+
+              if (isStepSkipped(index)) {
+                stepProps.completed = false;
+              }
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
 
           {/* Formstuff */}
           <>

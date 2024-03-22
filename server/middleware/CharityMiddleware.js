@@ -25,8 +25,17 @@ function hasCharityHeadRights(req) {
   const { charityId } = req.body;
   for (const charity of req.charity) {
     // if same charity and
-    console.log(charityId, charity.charityId); // these will be actually the charity membership id
-    if (charityId === charity.charityId && charity.charityHead === true) {
+    console.log(charityId, charity.charityId, charity.charityHead); // these will be actually the charity membership id
+    console.log(
+      "🚀 ~ hasCharityHeadRights ~ charityId === charity.charityId:",
+      charityId == charity.charityId
+    );
+    console.log(
+      "🚀 ~ hasCharityHeadRights ~ charity.charityHead === true:",
+      charity.charityHead === true
+    );
+
+    if (charityId == charity.charityId && charity.charityHead === true) {
       return charity; // Person has access rights for this charity, continue with the next middleware or route handler
     }
   }
