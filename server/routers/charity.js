@@ -24,7 +24,7 @@ const { FindInputErrors } = require("../middleware/FindInputErrors");
 //  },
 //});
 
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -36,12 +36,12 @@ cloudinary.config({
 // Update Multer configuration to use Cloudinary storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: 'philanthrify', // Cloudinary folder where you want to store your files
-  allowedFormats: ['jpg', 'png', 'jpeg'],
+  folder: "philanthrify", // Cloudinary folder where you want to store your files
+  allowedFormats: ["jpg", "png", "jpeg"],
   //transformation: [{ width: 500, height: 500, crop: 'limit' }], // Optional: Resize and crop the image
   filename: function (req, file, cb) {
     const projectId = req.query.projectId;
-    const fileExt = file.originalname.split('.').pop();
+    const fileExt = file.originalname.split(".").pop();
     const newFilename = `${projectId}-${Date.now()}.${fileExt}`;
     cb(null, newFilename);
   },
@@ -241,7 +241,7 @@ router.put(
     .optional({ checkFalsy: true })
     .custom(async (value) => {
       const urlRegex =
-        /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
       if (!urlRegex.test(value)) {
         // Throw an error if the value does not match the regular expression
         throw new Error("Web link is not in the correct format.");

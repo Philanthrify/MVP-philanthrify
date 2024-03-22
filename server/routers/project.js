@@ -11,13 +11,15 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const dayjs = require("dayjs");
+const { body, validationResult } = require("express-validator");
 const {
   getCharities,
   hasCharityHeadRights,
   isProjectLeadOrReporter,
 } = require("../middleware/CharityMiddleware");
+const { FindInputErrors } = require("../middleware/FindInputErrors");
 
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -30,96 +32,98 @@ cloudinary.config({
 const storageMain = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'project_images/main',
-    allowedFormats: ['jpg', 'png', 'jpeg'],
-    public_id: function ( req ) { 
-      console.log("🚀 ~ req.query.projectId:", req.query.projectId)
+    folder: "project_images/main",
+    allowedFormats: ["jpg", "png", "jpeg"],
+    public_id: function (req) {
+      console.log("🚀 ~ req.query.projectId:", req.query.projectId);
       return req.query.projectId;
-    }
+    },
   },
-//  //folder: 'project_images/main', // Cloudinary folder where you want to store your files
-//  allowedFormats: ['jpg', 'png', 'jpeg'],
-//  //transformation: [{ width: 500, height: 500, crop: 'limit' }], // Optional: Resize and crop the image
-//  filename: function (req, cb) {
-//    const projectId = req.query.projectId;
-//    const newFilename = `project_images/main/${projectId}`; //set up so that if upload with same name, replace - maintain singleton for main image
-//    cb(null, newFilename);
-//  },
 });
 const uploadMain = multer({ storage: storageMain });
-
+// Validation laws
+const validateProject = [
+  body("title")
+    .isLength({ max: 191 })
+    .withMessage("Inputs must be under 191 characters"),
+  body("country")
+    .isLength({ max: 191 })
+    .withMessage("Inputs must be under 191 characters"),
+];
 // Add a new project for a user
-router.post("/", authMiddleware, getCharities, async (req, res) => {
-  try {
-    const userId = req.user.userId;
-    const userType = req.user.userType;
-    //console.log("userId: " + userId);
-    //console.log("userType: " + userType);
-    // //  ensure userType is CHARITY
-    // if (userType !== "CHARITY") {
-    //   return res
-    //     .status(400)
-    //     .json({ error: "User type must be 'CHARITY' to upload project." });
-    // }
-    const {
-      title,
-      country,
-      backgroundAndGoals,
-      solution,
-      donationUsage,
-      subtitle,
-      link,
-      tag,
-      targetAmount,
-      currentAmount = 0.0, // default to 0 if not provided
-      endDate,
-    } = req.body;
-    //console.log(endDate);
-    //console.log("charity access rights: ", hasCharityHeadRights(req));
-    // check access rights, needs to be a charity head for that charity
-    const charity = hasCharityHeadRights(req); // uk charity number (or false)
-    if (!charity) {
-      return res.status(403).json({ error: "Access denied" });
-    }
+router.post(
+  "/",
+  authMiddleware,
+  validateProject,
+  FindInputErrors,
+  getCharities,
+  async (req, res) => {
+    try {
+      const userId = req.user.userId;
+      const userType = req.user.userType;
+      const {
+        title,
+        country,
+        backgroundAndGoals,
+        solution,
+        donationUsage,
+        subtitle,
+        link,
+        tag,
+        targetAmount,
+        currentAmount = 0.0, // default to 0 if not provided
+        endDate,
+      } = req.body;
+      //console.log(endDate);
+      //console.log("charity access rights: ", hasCharityHeadRights(req));
+      // check access rights, needs to be a charity head for that charity
+      const charity = hasCharityHeadRights(req); // uk charity number (or false)
+      if (!charity) {
+        return res.status(403).json({ error: "Access denied" });
+      }
 
-    const newProject = await prisma.project.create({
-      data: {
-        title: title,
-        country: country,
-        backgroundAndGoals: backgroundAndGoals,
-        solution: solution,
-        donationUsage: donationUsage,
-        subtitle: subtitle,
-        targetAmount: Number(targetAmount),
-        currentAmount: currentAmount,
-        charityId: charity.charityId, // actual charity ID here
-        endDate: endDate, // comes out as ISO 8641 which is compat with figma
-      },
-    });
-    console.log(link);
-    // create links
-    link.forEach(async (element) => {
-      const newLink = await prisma.link.create({
+      const newProject = await prisma.project.create({
         data: {
-          webLink: element.webLink,
-          socialMedia: element.socialMedia,
-          projectId: newProject.id,
+          title: title,
+          country: country,
+          backgroundAndGoals: backgroundAndGoals,
+          solution: solution,
+          donationUsage: donationUsage,
+          subtitle: subtitle,
+          targetAmount: Number(targetAmount),
+          currentAmount: currentAmount,
+          charityId: charity.charityId, // actual charity ID here
+          endDate: endDate, // comes out as ISO 8641 which is compat with figma
         },
       });
-    });
+      console.log(link);
+      // create links
+      const newLinkList = [];
+      link.forEach(async (element) => {
+        const newLink = await prisma.link.create({
+          data: {
+            webLink: element.webLink,
+            socialMedia: element.socialMedia,
+            projectId: newProject.id,
+          },
+        });
+        newLinkList.push(newLink);
+      });
 
-    // creating the tags
-    const tags = await tagMiddleware.createTag(newProject.id, tag);
+      // creating the tags
+      const tags = await tagMiddleware.createTag(newProject.id, tag);
 
-    res.status(201).json({
-      project: newProject,
-      createdTags: tags.createdTags,
-    });
-  } catch (error) {
-    console.error("Failed to add project:", error);
-    res.status(400).json({ error: "Failed to add project" });
+      res.status(201).json({
+        project: newProject,
+        createdTags: tags.createdTags,
+        newLinks: newLinkList,
+      });
+    } catch (error) {
+      console.error("Failed to add project:", error);
+      res.status(400).json({ error: "Failed to add project" });
+    }
   }
-});
+);
 
 // TODO: put request to edit one project for now anyone can do so
 router.put(
@@ -242,12 +246,12 @@ router.post("/search", async (req, res) => {
 
 router.post(
   "/upload-project-image/",
-  uploadMain.single('image'),
+  uploadMain.single("image"),
   async (req, res) => {
     try {
       const file = req.file;
-      console.log("🚀 ~ file:", file)
-      const projectId = req.query.projectId;      
+      console.log("🚀 ~ file:", file);
+      const projectId = req.query.projectId;
 
       if (!file) {
         return res.status(400).json({ error: "No file uploaded." });

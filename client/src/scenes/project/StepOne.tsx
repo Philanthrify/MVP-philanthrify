@@ -25,7 +25,7 @@ type StepOneProps = {
 
 // TODO: add validation for links including the 'http...' format
 const validationSchema = yup.object({
-  title: yup.string().required("username is required"),
+  title: yup.string().required("Title is required"),
 });
 
 const StepOne = (props: StepOneProps) => {
