@@ -73,6 +73,7 @@ const ProjectPage = () => {
 
     imageLoad();
   }, [projectId]);
+  
   useEffect(() => {
     const logoLoad = async () => {
       try {
