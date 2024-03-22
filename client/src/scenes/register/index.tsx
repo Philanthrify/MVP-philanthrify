@@ -187,110 +187,131 @@ const Register = () => {
     >
       <Grid xs={8}>
         <FormBox>
-          <TypographyTitle variant="h1" align="center" paddingTop="64px">
-            Sign Up
-          </TypographyTitle>
-
-          {personalizedMessage ? (
-            <TypographyTitle variant="h4" align="center" padding="15px 0">
-              {personalizedMessage}
-            </TypographyTitle>
-          ) : (
-            <TypographyTitle
-              variant="body2"
-              align="center"
-              color="#A4A6AD"
-              paddingTop="5px"
-              paddingBottom="15px"
-            >
-              Join our community and explore the benefits!
-            </TypographyTitle>
-          )}
-          {regError && (
-            <Typography color="error" align="center" padding="15px 0">
-              {regError}
-            </Typography>
-          )}
-
-          <Stepper
-            activeStep={currentStep}
-            // TODO: set these to be a nicer colourscheme later
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
           >
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
-              const labelProps: {
-                optional?: React.ReactNode;
-              } = {};
-
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-
-          {/* Formstuff */}
-          <>
-            {currentStep === 0 && (
-              <StepOne
-                data={data}
-                updateData={updateData}
-                handleNext={handleNextStepOne}
-              />
+            {" "}
+            <Grid item>
+              <TypographyTitle variant="h1" align="center" paddingTop="64px">
+                Sign Up
+              </TypographyTitle>
+            </Grid>
+            {personalizedMessage ? (
+              <Grid item>
+                {" "}
+                <TypographyTitle variant="h4" align="center" padding="15px 0">
+                  {personalizedMessage}
+                </TypographyTitle>
+              </Grid>
+            ) : (
+              <Grid item>
+                {" "}
+                <TypographyTitle
+                  variant="body2"
+                  align="center"
+                  color="#A4A6AD"
+                  paddingTop="5px"
+                  paddingBottom="15px"
+                >
+                  Join our community and explore the benefits!
+                </TypographyTitle>
+              </Grid>
             )}
-
-            {currentStep === 1 && (
-              <StepTwo
-                data={data}
-                updateData={updateData}
-                handleNext={handleNextRest}
-                handleBack={handleBack}
-              />
+            {regError && (
+              <Grid item>
+                {" "}
+                <Typography color="error" align="center" padding="15px 0">
+                  {regError}
+                </Typography>
+              </Grid>
             )}
-            {currentStep === 2 && (
-              <StepThree
-                data={data}
-                updateData={updateData}
-                onSubmit={onSubmit}
-                handleBack={handleBack}
-              />
-            )}
-          </>
+            <Grid item sx={{ width: "80%" }}>
+              {" "}
+              <Stepper
+                activeStep={currentStep}
+                // TODO: set these to be a nicer colourscheme later
+                sx={{
+                  width: "100%", // Ensuring the Stepper takes the full width
+                }}
+              >
+                {steps.map((label, index) => {
+                  const stepProps: { completed?: boolean } = {};
+                  const labelProps: {
+                    optional?: React.ReactNode;
+                  } = {};
 
-          <Grid sx={{ display: "flex", justifyContent: "center" }}>
-            <TypographySmallText
-              variant="body2"
-              align="center"
-              display="flex"
-              justifyContent="center"
-              marginTop={0}
-              // maxWidth="380px"
-              sx={{
-                color: "#A4A6AD",
-                fontWeight: 200,
-                fontSize: 12,
-                paddingBottom: "64px",
-              }} // Use sx prop to specify color
-            >
-              By signing up, you agree to our
-              <OwnLink
-                text=" Terms of Service"
-                weblink="/terms-of-service"
-                openInNew={false} // Assuming you do not need it to open in a new tab
-                linkColour="primary[100]"
-              />
-              {" and "}
-              <OwnLink
-                text=" Privacy Policy"
-                weblink="/privacy-policy"
-                openInNew={false} // Assuming you do not need it to open in a new tab
-                linkColour="primary[100]"
-              />
-            </TypographySmallText>
+                  if (isStepSkipped(index)) {
+                    stepProps.completed = false;
+                  }
+                  return (
+                    <Step key={label} {...stepProps}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            </Grid>
+            {/* Formstuff */}
+            <>
+              {currentStep === 0 && (
+                <StepOne
+                  data={data}
+                  updateData={updateData}
+                  handleNext={handleNextStepOne}
+                />
+              )}
+
+              {currentStep === 1 && (
+                <StepTwo
+                  data={data}
+                  updateData={updateData}
+                  handleNext={handleNextRest}
+                  handleBack={handleBack}
+                />
+              )}
+              {currentStep === 2 && (
+                <StepThree
+                  data={data}
+                  updateData={updateData}
+                  onSubmit={onSubmit}
+                  handleBack={handleBack}
+                />
+              )}
+            </>
+            <Grid sx={{ display: "flex", justifyContent: "center" }}>
+              <TypographySmallText
+                variant="body2"
+                align="center"
+                display="flex"
+                justifyContent="center"
+                marginTop={0}
+                // maxWidth="380px"
+                sx={{
+                  color: "#A4A6AD",
+                  fontWeight: 200,
+                  fontSize: 12,
+                  paddingBottom: "64px",
+                }} // Use sx prop to specify color
+              >
+                By signing up, you agree to our
+                <OwnLink
+                  text=" Terms of Service"
+                  weblink="/terms-of-service"
+                  openInNew={false} // Assuming you do not need it to open in a new tab
+                  linkColour="primary[100]"
+                />
+                {" and "}
+                <OwnLink
+                  text=" Privacy Policy"
+                  weblink="/privacy-policy"
+                  openInNew={false} // Assuming you do not need it to open in a new tab
+                  linkColour="primary[100]"
+                />
+              </TypographySmallText>
+            </Grid>
           </Grid>
         </FormBox>
       </Grid>
