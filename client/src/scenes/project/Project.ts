@@ -1,6 +1,8 @@
 import { Link } from "@/components/FormsUI/LinkInput";
 import { Dayjs } from "dayjs";
 
+//TODO: MOVE INTO MODELS FOLDER
+
 export interface Project {
   charityId: string;
   id?: string | null;

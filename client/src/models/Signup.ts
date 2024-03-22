@@ -11,6 +11,7 @@ export interface Signup {
   // when onboarding a new charity, the root is always CHARITYHEAD
   charityId?: string;
   token?: string;
+  image?: File | null;
 }
 
 export enum CharityUserType {
