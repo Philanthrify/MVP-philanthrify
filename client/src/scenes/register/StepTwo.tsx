@@ -122,6 +122,24 @@ const StepTwo = (props: StepTwoProps) => {
                     formik.errors.ukCharityNumber}
                 </FormHelperText>
               </Grid>
+              <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                marginTop="20px"
+      >        
+                <TypographyTitle
+                  variant="h3"
+                  fontSize="18px"
+                  align="left"
+                  marginTop="0px"
+                  paddingBottom="10px"
+                >
+                  Add a logo for your charity
+                </TypographyTitle>
+                <DragAndDrop onFileChange={handleFileChange} />
+              </Grid>
             </Grid>
           )}
           <Grid

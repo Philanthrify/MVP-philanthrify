@@ -55,14 +55,14 @@ const StepThree = (props: StepThreeProps) => {
       console.log("next page");
       props.onSubmit(values);
       if (props.data.image) {
-
+ 
         const URL_to_use = props.data.userType == "CHARITY" ? `/charity/upload-charity-avatar` : `/donor/upload-donor-avatar`; //TODO: implement donor API
         const { image, ...dataWithoutImage } = props.data;
         formData.append("image", image);
 
         axios({
         method: "post",
-        url: `${import.meta.env.VITE_API_URL}${URL_to_use}}`,
+        url: `${import.meta.env.VITE_API_URL}${URL_to_use}`,
         params: { charityId: props.data.charityId },
         headers: {
           "Content-Type": "multipart/form-data",
