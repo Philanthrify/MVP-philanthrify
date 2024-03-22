@@ -74,7 +74,7 @@ const CreateProjectForm = () => {
     }).then((response) => {
       if (image) {
         const formData = new FormData();
-        formData.append("image", image); 
+        formData.append("image", image);
     
         axios({
           method: "post",
