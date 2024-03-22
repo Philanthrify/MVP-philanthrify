@@ -325,6 +325,36 @@ const themeSettings = {
         },
       },
     },
+
+    /////// Stepper:
+    MuiStepper: {
+      styleOverrides: {
+        root: {
+          ".MuiStepLabel-label": {
+            color: tokens.grey[500],
+          },
+          ".MuiStepIcon-root": {
+            color: tokens.grey[500],
+          },
+          ".MuiStepIcon-root.Mui-active": {
+            color: tokens.primary[500],
+          },
+          ".MuiStepLabel-label.Mui-active": {
+            color: tokens.grey[500],
+          },
+          ".MuiStepIcon-root.Mui-completed": {
+            color: tokens.primary[500],
+          },
+          ".MuiStepLabel-label.Mui-completed": {
+            color: tokens.grey[500],
+          },
+
+          width: "55%",
+          // marginTop: "100px",
+          marginBottom: "40px",
+        },
+      },
+    },
     MuiAccordionSummary: {
       styleOverrides: {
         root: {

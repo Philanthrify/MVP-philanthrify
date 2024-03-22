@@ -2,6 +2,7 @@ import PrimaryButton from "@/components/Button/PrimaryButton";
 import FormBox from "@/components/FormBox";
 import ErrorComponent from "@/components/FormError";
 import FormStyles from "@/components/FormsUI";
+import OwnLink from "@/components/OwnLink";
 import TypographyTitle from "@/components/Title";
 import { CharityMembership, CharityPagePayload } from "@/models/charity";
 import { login } from "@/redux/authSlice";
@@ -145,128 +146,153 @@ const Login = () => {
     >
       <Grid xs={8}>
         <FormBox>
-          <TypographyTitle variant="h1" align="center" paddingTop="64px">
-            Log in
-          </TypographyTitle>
-          <TypographyTitle variant="body2" align="center" color="#A4A6AD">
-            Welcome back to our community
-          </TypographyTitle>
-          {loginError && (
-            // <Typography color="error" align="center" padding="15px 0">
-            //   {loginError}
-            // </Typography>
-            <ErrorComponent message={loginError} />
-          )}
-          <form
-            onSubmit={formik.handleSubmit}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+          {" "}
+          <Grid
+            container
+            spacing={1}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
           >
+            <Grid item>
+              <TypographyTitle variant="h1" paddingTop="64px">
+                Log in
+              </TypographyTitle>
+            </Grid>
+            <Grid item>
+              {" "}
+              <TypographyTitle variant="body2" align="center" color="#A4A6AD">
+                Welcome back to our community
+              </TypographyTitle>
+            </Grid>
+            {loginError && (
+              <Grid item>
+                {" "}
+                <ErrorComponent message={loginError} />
+              </Grid>
+            )}
+
+            <Grid item sx={{ width: "100%" }}>
+              <form onSubmit={formik.handleSubmit}>
+                <Grid
+                  item
+                  container
+                  spacing={0.5}
+                  direction="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{ width: "100%" }}
+                >
+                  <Grid item sx={{ width: "50%" }}>
+                    <TextField
+                      fullWidth
+                      id="email"
+                      name="email"
+                      label="Email"
+                      placeholder="Enter your email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+                  </Grid>
+                  <Grid item sx={{ width: "50%" }}>
+                    <TextField
+                      fullWidth
+                      id="password"
+                      name="password"
+                      label="Password"
+                      placeholder="**********"
+                      type={showPassword ? "text" : "password"}
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.password &&
+                        Boolean(formik.errors.password)
+                      }
+                      helperText={
+                        formik.touched.password && formik.errors.password
+                      }
+                      sx={{
+                        //...textFieldProps.textField,
+                        //width: textFieldProps.textFieldWidth,
+                        width: "100%", // Set the width to 100%
+                        // maxWidth: "320px", // Set the maximum width
+                        marginTop: "30px",
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <IconButton
+                            edge="end"
+                            color="primary"
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            size="small" // Set size to small
+                          >
+                            {showPassword ? (
+                              <VisibilityOffIcon
+                                sx={{ color: "primary.main" }}
+                              />
+                            ) : (
+                              <VisibilityIcon sx={{ color: "primary.main" }} />
+                            )}
+                          </IconButton>
+                        ),
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={true}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "40px",
+                    }}
+                  >
+                    <PrimaryButton
+                      text="Login"
+                      type="submit"
+                      onClick={() => {
+                        console.log("");
+                      }}
+                      sx={{ width: "150px" }}
+                    />
+                  </Grid>
+                </Grid>
+              </form>{" "}
+            </Grid>
             <Grid
+              item
               container
-              spacing={0}
-              direction="column"
+              direction="row"
+              spacing={1}
               justifyContent="center"
               alignItems="center"
-              width="70%"
+              paddingTop="30px"
+              paddingBottom="64px"
             >
-              <TextField
-                fullWidth
-                id="email"
-                name="email"
-                label="Email"
-                placeholder="Enter your email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                sx={{
-                  //...textFieldProps.textField,
-                  //width: textFieldProps.textFieldWidth,
-                  width: "100%", // Set the width to 100%
-                  maxWidth: "320px", // Set the maximum width
-                  marginTop: "20px",
-                }}
-              />
-
-              <TextField
-                fullWidth
-                id="password"
-                name="password"
-                label="Password"
-                placeholder="**********"
-                type={showPassword ? "text" : "password"}
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-                sx={{
-                  //...textFieldProps.textField,
-                  //width: textFieldProps.textFieldWidth,
-                  width: "100%", // Set the width to 100%
-                  maxWidth: "320px", // Set the maximum width
-                  marginTop: "30px",
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton
-                      edge="end"
-                      color="primary"
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(!showPassword)}
-                      size="small" // Set size to small
-                    >
-                      {showPassword ? (
-                        <VisibilityOffIcon sx={{ color: "primary.main" }} />
-                      ) : (
-                        <VisibilityIcon sx={{ color: "primary.main" }} />
-                      )}
-                    </IconButton>
-                  ),
-                }}
-              />
-
-              <Grid
-                item
-                xs={true}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "40px",
-                }}
-              >
-                <PrimaryButton
-                  text="Login"
-                  type="submit"
-                  onClick={() => {
-                    console.log("");
-                  }}
-                  sx={{ width: "150px" }}
+              <Grid item>
+                {" "}
+                <Typography variant="body2" fontWeight="200" fontSize="14px">
+                  Don't have an account yet?{" "}
+                </Typography>
+              </Grid>{" "}
+              <Grid item>
+                <OwnLink
+                  text="Register"
+                  weblink="/register"
+                  openInNew={false} // Assuming you do not need it to open in a new tab
+                  linkColour="primary[100]"
                 />
               </Grid>
-              <Grid xs={10} padding="0px 0px">
-                <Typography
-                  variant="body2"
-                  align="center"
-                  paddingTop="30px"
-                  paddingBottom="64px"
-                  color="#A4A6AD"
-                  fontWeight="200"
-                  fontSize="14px"
-                >
-                  Don't have an account yet?{" "}
-                  <Link to="/register">Register</Link>
-                </Typography>
-              </Grid>
             </Grid>
-          </form>
+          </Grid>
         </FormBox>
       </Grid>
     </Grid>

@@ -11,6 +11,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import StepOne from "./StepOne";
 import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
+import OwnLink from "@/components/OwnLink";
 
 // an own type for the payload
 interface MyTokenPayload extends JwtPayload {
@@ -200,6 +201,27 @@ const Register = () => {
             </Typography>
           )}
 
+          <Stepper
+            activeStep={currentStep}
+            // TODO: set these to be a nicer colourscheme later
+          >
+            {steps.map((label, index) => {
+              const stepProps: { completed?: boolean } = {};
+              const labelProps: {
+                optional?: React.ReactNode;
+              } = {};
+
+              if (isStepSkipped(index)) {
+                stepProps.completed = false;
+              }
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+
           {/* Formstuff */}
           <>
             {currentStep === 0 && (
@@ -235,7 +257,7 @@ const Register = () => {
               display="flex"
               justifyContent="center"
               marginTop={0}
-              maxWidth="380px"
+              // maxWidth="380px"
               sx={{
                 color: "#A4A6AD",
                 fontWeight: 200,
@@ -244,12 +266,19 @@ const Register = () => {
               }} // Use sx prop to specify color
             >
               By signing up, you agree to our
-              <a href="/terms-of-service" color={palette.grey[500]}>
-                {" "}
-                Terms of Service{" "}
-              </a>
-              and
-              <a href="/privacy-policy"> Privacy Policy</a>
+              <OwnLink
+                text=" Terms of Service"
+                weblink="/terms-of-service"
+                openInNew={false} // Assuming you do not need it to open in a new tab
+                linkColour="primary[100]"
+              />
+              {" and "}
+              <OwnLink
+                text=" Privacy Policy"
+                weblink="/privacy-policy"
+                openInNew={false} // Assuming you do not need it to open in a new tab
+                linkColour="primary[100]"
+              />
             </TypographySmallText>
           </Grid>
         </FormBox>

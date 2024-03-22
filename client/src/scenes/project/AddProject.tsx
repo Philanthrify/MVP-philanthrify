@@ -44,7 +44,6 @@ const CreateProjectForm = () => {
   const [skipped] = useState(new Set<number>());
   const { openAlertSnackbar } = useSnackbar();
 
-
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
@@ -72,8 +71,7 @@ const CreateProjectForm = () => {
         Authorization: token,
       },
       data: JSON.stringify(dataWithoutImage),
-    })
-    .then((response) => {
+    }).then((response) => {
       if (image) {
         const formData = new FormData();
         formData.append("image", image); 
@@ -101,7 +99,7 @@ const CreateProjectForm = () => {
         openAlertSnackbar("Project created", "success");
         navigate(`/project/${response.data.project.id}`);
       }
-    })    
+    });
   };
 
   const { palette } = useTheme();
@@ -113,9 +111,7 @@ const CreateProjectForm = () => {
       width="100%"
       height="100%"
       marginTop="16px" // Add marginTop here for spacing
-      marginBottom= "128px"
-
-      
+      marginBottom="128px"
     >
       {/* TODO: do this a bit later */}
       <Grid xs={8}>
@@ -124,34 +120,20 @@ const CreateProjectForm = () => {
             Fund a project
           </TypographyTitle>
 
-          <Typography variant="body2" align="center" marginTop= "10px" marginBottom="50px">
-            Add details to your funding, this will help you to fund fast your project
-            </Typography>
+          <Typography
+            variant="body2"
+            align="center"
+            marginTop="10px"
+            marginBottom="50px"
+          >
+            Add details to your funding, this will help you to fund fast your
+            project
+          </Typography>
 
           <Grid container justifyContent="center" padding="30px">
             <Stepper
               activeStep={currentStep}
               // TODO: set these to be a nicer colourscheme later
-              sx={{
-                ".MuiStepLabel-label": {
-                  color: palette.grey[500],
-                  
-                },
-                ".MuiStepIcon-root": {
-                  color: palette.grey[500],
-                  
-                },
-                ".MuiStepLabel-label.Mui-active": {
-                  color: palette.grey[500],
-                },
-                ".MuiStepLabel-label.Mui-completed": {
-                  color: palette.grey[500],
-                },
-
-                width: "55%",
-                // marginTop: "100px",
-                marginBottom: "40px",
-              }}
             >
               {steps.map((label, index) => {
                 const stepProps: { completed?: boolean } = {};

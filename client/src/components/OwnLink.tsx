@@ -4,10 +4,17 @@ import { Grid, IconButton, Link, Tooltip } from "@mui/material";
 type OwnLinkProps = {
   text: string;
   weblink: string;
+  openInNew: boolean; // bool for whether you want the side icon for opening in new tab
+  linkColour?: string;
 };
 
 // a link thing for general bits of the website, with icon on end
-const OwnLink: React.FC<OwnLinkProps> = ({ text, weblink }) => {
+const OwnLink: React.FC<OwnLinkProps> = ({
+  text,
+  weblink,
+  openInNew,
+  linkColour,
+}) => {
   // Check if the link is an email
   const isEmail = weblink.startsWith("mailto:");
   // Use a regex to match the domain part of the URL
@@ -28,15 +35,21 @@ const OwnLink: React.FC<OwnLinkProps> = ({ text, weblink }) => {
     <Link
       href={weblink}
       underline="hover"
-      target="_blank" // opens in another tab
-      sx={{ color: "#444CE7" }}
+      target={openInNew ? "_blank" : "_self"} // Conditional target attribute
+      sx={{ color: linkColour ? linkColour : "#444CE7" }}
+      paddingLeft={0.5}
+      paddingRight={0.5}
     >
       <Grid container direction="row" spacing={0.5}>
-        <Grid item>{textOutput}</Grid>{" "}
-        <Grid item>
-          <OpenInNewIcon sx={{ color: "#444CE7" }} />
-        </Grid>
-        <Grid item>
+        <Grid item> {textOutput} </Grid>{" "}
+        {openInNew && (
+          <Grid item>
+            <OpenInNewIcon
+              sx={{ color: linkColour ? linkColour : "#444CE7" }}
+            />
+          </Grid>
+        )}
+        {/* <Grid item>
           <Tooltip title="Copy to clipboard">
             <IconButton
               onClick={copyToClipboard}
@@ -46,7 +59,7 @@ const OwnLink: React.FC<OwnLinkProps> = ({ text, weblink }) => {
               <ContentCopyIcon />
             </IconButton>
           </Tooltip>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Link>
   );
