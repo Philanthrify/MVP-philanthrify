@@ -265,16 +265,37 @@ const StepThree = (props: StepThreeProps) => {
           </Grid>
         </Grid>
 
-        <Grid container item direction="row" justifyContent="center">
-          <Button
-            color="primary"
-            variant="contained"
-            fullWidth
-            type="submit"
-            sx={{ width: "100px" }}
-          >
-            Submit
-          </Button>
+        <Grid
+          container
+          item
+          direction="row"
+          justifyContent="center"
+          spacing={3}
+        >
+          <Grid item>
+            {" "}
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={props.handleBack}
+              sx={{ width: "100px" }}
+            >
+              Back
+            </Button>
+          </Grid>
+
+          <Grid item>
+            {" "}
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              type="submit"
+              sx={{ width: "100px" }}
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </form>

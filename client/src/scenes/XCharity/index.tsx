@@ -599,6 +599,7 @@ const CharityPage = () => {
                           <OwnLink
                             text={charity.weblink}
                             weblink={charity.weblink}
+                            openInNew={true}
                           />
                         </Grid>
                       </Grid>
@@ -636,6 +637,7 @@ const CharityPage = () => {
                           <OwnLink
                             text={charity.reachOutEmail}
                             weblink={"mailto:" + charity.reachOutEmail}
+                            openInNew={true}
                           />
                         </Grid>
                       </Grid>

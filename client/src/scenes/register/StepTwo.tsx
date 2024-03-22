@@ -113,15 +113,34 @@ const StepTwo = (props: StepTwoProps) => {
             </Grid>
           </Grid>
         )}
-        <Grid container item direction="row" justifyContent="center">
-          <Button
-            color="primary"
-            variant="contained"
-            type="submit"
-            sx={{ width: "100px" }}
-          >
-            Next
-          </Button>
+        <Grid
+          container
+          item
+          direction="row"
+          justifyContent="center"
+          spacing={3}
+        >
+          <Grid item>
+            {" "}
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={props.handleBack}
+              sx={{ width: "100px" }}
+            >
+              Back
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              color="primary"
+              variant="contained"
+              type="submit"
+              sx={{ width: "100px" }}
+            >
+              Next
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </form>
