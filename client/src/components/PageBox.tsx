@@ -17,9 +17,9 @@ const PageBox = styled(Box)<PageBoxProps>(({ backgroundColor }) => ({
   minHeight: "510px",
   margin: "0 auto", // Adjust external margin as needed
   padding: "50px 20px", // Adjust internal padding as needed
-  display: "flex", // Center all elements horizontally
-  justifyContent: "center", // Center all elements horizontally
-  alignItems: "center", // Center all elements vertically
+  // display: "flex", // Center all elements horizontally
+  // justifyContent: "center", // Center all elements horizontally
+  // alignItems: "center", // Center all elements vertically
   backgroundImage: `url(${line})`, // Use the imported image
   backgroundRepeat: "no-repeat", // Ensure the image is not repeated
   backgroundSize: "140%", // Cover the entire background

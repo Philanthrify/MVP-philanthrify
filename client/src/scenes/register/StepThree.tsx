@@ -105,19 +105,34 @@ const StepThree = (props: StepThreeProps) => {
     props.updateData(formik.values);
   }, [formik.values, props]);
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Grid
-        container
-        spacing={2}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid item container spacing={2} direction="row" sx={{ width: "80%" }}>
-          <Grid item container direction="column" xs={6}>
+    <Grid item sx={{ width: "100%" }}>
+      <form onSubmit={formik.handleSubmit}>
+        <Grid
+          container
+          spacing={2}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid
+            item
+            container
+            spacing={1}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ width: "100%" }}
+          >
+            {/* <Grid
+              item
+              container
+              direction="column"
+              xs={6}
+              justifyContent="center"
+              alignItems="flex-end"
+            > */}
             <Grid item>
               <TextField
-                fullWidth
                 id="firstname"
                 name="firstname"
                 label="Firstname"
@@ -128,6 +143,7 @@ const StepThree = (props: StepThreeProps) => {
                   formik.touched.firstname && Boolean(formik.errors.firstname)
                 }
                 helperText={""}
+                sx={{ width: "100%" }}
               />
             </Grid>
             <Grid item>
@@ -139,12 +155,10 @@ const StepThree = (props: StepThreeProps) => {
                 ></FormHelperText>{" "}
               </Grid>{" "}
             </Grid>
-          </Grid>
-          <Grid item xs={6}>
-            {" "}
+            {/* </Grid> */}
+            {/* <Grid item xs={6} justifyContent="center" alignItems="flex-end"> */}{" "}
             <Grid item>
               <TextField
-                fullWidth
                 id="lastname"
                 name="lastname"
                 label="Lastname"
@@ -155,18 +169,49 @@ const StepThree = (props: StepThreeProps) => {
                   formik.touched.lastname && Boolean(formik.errors.lastname)
                 }
                 helperText={""}
+                sx={{ width: "100%" }}
               />{" "}
             </Grid>
-            <Grid item>
-              <FormHelperText
-                error={
-                  formik.touched.lastname && Boolean(formik.errors.lastname)
-                }
-              ></FormHelperText>{" "}
-            </Grid>{" "}
+            {/* <Grid item>
+                <FormHelperText
+                  error={
+                    formik.touched.lastname && Boolean(formik.errors.lastname)
+                  }
+                ></FormHelperText>{" "}
+              </Grid>{" "} */}
+            {/* </Grid> */}
           </Grid>
-        </Grid>
-        {!formik.values.token && (
+          {!formik.values.token && (
+            <Grid
+              item
+              container
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              sx={{ width: "80%" }}
+            >
+              {" "}
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                label="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={""}
+                sx={{ width: "80%" }}
+              />
+              <Grid xs={10}>
+                <FormHelperText
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                >
+                  {formik.touched.email && formik.errors.email}
+                </FormHelperText>
+              </Grid>
+            </Grid>
+          )}
           <Grid
             item
             container
@@ -178,160 +223,134 @@ const StepThree = (props: StepThreeProps) => {
             {" "}
             <TextField
               fullWidth
-              id="email"
-              name="email"
-              label="Email"
-              value={formik.values.email}
+              id="password"
+              name="password"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.email && Boolean(formik.errors.email)}
+              error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={""}
               sx={{ width: "80%" }}
-            />
+              InputProps={{
+                endAdornment: (
+                  <>
+                    <IconButton
+                      edge="end"
+                      color="primary"
+                      aria-label="toggle password visibility"
+                      onMouseDown={handleMouseDownPassword}
+                      onMouseUp={handleMouseUpPassword}
+                      onTouchStart={handleMouseDownPassword}
+                      onTouchEnd={handleMouseUpPassword}
+                      size="small" // Set size to small
+                    >
+                      <VisibilityIcon sx={{ color: "primary.main" }} />
+                    </IconButton>
+                  </>
+                ),
+              }}
+            />{" "}
             <Grid xs={10}>
               <FormHelperText
-                error={formik.touched.email && Boolean(formik.errors.email)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
               >
-                {formik.touched.email && formik.errors.email}
+                {formik.touched.password && formik.errors.password}
               </FormHelperText>
             </Grid>
           </Grid>
-        )}
-        <Grid
-          item
-          container
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ width: "80%" }}
-        >
-          {" "}
-          <TextField
-            fullWidth
-            id="password"
-            name="password"
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={""}
+          <Grid
+            item
+            container
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
             sx={{ width: "80%" }}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <IconButton
-                    edge="end"
-                    color="primary"
-                    aria-label="toggle password visibility"
-                    onMouseDown={handleMouseDownPassword}
-                    onMouseUp={handleMouseUpPassword}
-                    onTouchStart={handleMouseDownPassword}
-                    onTouchEnd={handleMouseUpPassword}
-                    size="small" // Set size to small
-                  >
-                    <VisibilityIcon sx={{ color: "primary.main" }} />
-                  </IconButton>
-                </>
-              ),
-            }}
-          />{" "}
-          <Grid xs={10}>
-            <FormHelperText
-              error={formik.touched.password && Boolean(formik.errors.password)}
-            >
-              {formik.touched.password && formik.errors.password}
-            </FormHelperText>
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          container
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ width: "80%" }}
-        >
-          {" "}
-          <TextField
-            fullWidth
-            id="confirmPassword"
-            name="confirmPassword"
-            label="Confirm Password"
-            type={showConfirmPassword ? "text" : "password"}
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.confirmPassword &&
-              Boolean(formik.errors.confirmPassword)
-            }
-            helperText={""}
-            sx={{ width: "80%" }}
-            InputProps={{
-              endAdornment: (
-                <IconButton
-                  edge="end"
-                  color="primary"
-                  aria-label="toggle password visibility"
-                  onMouseDown={handleMouseDownConfirmPassword}
-                  onMouseUp={handleMouseUpConfirmPassword}
-                  onTouchStart={handleMouseDownConfirmPassword}
-                  onTouchEnd={handleMouseUpConfirmPassword}
-                  size="small"
-                >
-                  <VisibilityIcon sx={{ color: "primary.main" }} />
-                </IconButton>
-              ),
-            }}
-          />
-          <Grid xs={10}>
-            <FormHelperText
+          >
+            {" "}
+            <TextField
+              fullWidth
+              id="confirmPassword"
+              name="confirmPassword"
+              label="Confirm Password"
+              type={showConfirmPassword ? "text" : "password"}
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={
                 formik.touched.confirmPassword &&
                 Boolean(formik.errors.confirmPassword)
               }
-            >
-              {formik.touched.confirmPassword && formik.errors.confirmPassword}
-            </FormHelperText>
+              helperText={""}
+              sx={{ width: "80%" }}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    edge="end"
+                    color="primary"
+                    aria-label="toggle password visibility"
+                    onMouseDown={handleMouseDownConfirmPassword}
+                    onMouseUp={handleMouseUpConfirmPassword}
+                    onTouchStart={handleMouseDownConfirmPassword}
+                    onTouchEnd={handleMouseUpConfirmPassword}
+                    size="small"
+                  >
+                    <VisibilityIcon sx={{ color: "primary.main" }} />
+                  </IconButton>
+                ),
+              }}
+            />
+            <Grid xs={10}>
+              <FormHelperText
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+              >
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword}
+              </FormHelperText>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            item
+            direction="row"
+            justifyContent="center"
+            spacing={3}
+          >
+            <Grid item>
+              {" "}
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={props.handleBack}
+                sx={{ width: "100px" }}
+              >
+                Back
+              </Button>
+            </Grid>
+
+            <Grid item>
+              {" "}
+              <Button
+                color="primary"
+                variant="contained"
+                fullWidth
+                type="submit"
+                sx={{ width: "100px" }}
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-
-        <Grid
-          container
-          item
-          direction="row"
-          justifyContent="center"
-          spacing={3}
-        >
-          <Grid item>
-            {" "}
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={props.handleBack}
-              sx={{ width: "100px" }}
-            >
-              Back
-            </Button>
-          </Grid>
-
-          <Grid item>
-            {" "}
-            <Button
-              color="primary"
-              variant="contained"
-              fullWidth
-              type="submit"
-              sx={{ width: "100px" }}
-            >
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </form>
+      </form>
+    </Grid>
   );
 };
 export default StepThree;

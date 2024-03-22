@@ -403,20 +403,13 @@ const CharityPage = () => {
     <>
     {/* Image Mox */}
       <PageBox backgroundColor="primary.700">
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="flex-start"
-        >
-          <Grid item>
-            <EditButton
-              name="tagline"
-              done={charityFields.tagline.edit}
-              onClick={handleButtonClick}
-            />
-          </Grid>
-        </Grid>
+        <Box position="relative" top={0} right={0}>
+          <EditButton
+            name="tagline"
+            done={charityFields.tagline.edit}
+            onClick={handleButtonClick}
+          />
+        </Box>
         <Grid
           container
           direction="column"
