@@ -6,6 +6,8 @@ import UploadFile from "../Icons/UploadFile";
 import TypographySmallText from "../SmallText";
 const allowedExtensions = ["image/jpeg", "image/png", "image/svg"];
 
+//TODO: Enforce ratios for different images - logos and avatars are 1:1, others are 9:16, etc...
+
 type FileUploadProps = {
   onFileChange: (file: File | null) => void;
 };

@@ -401,6 +401,7 @@ const CharityPage = () => {
   }
   return (
     <>
+    {/* Image Mox */}
       <PageBox backgroundColor="primary.700">
         <EditButton
           name="tagline"
@@ -413,6 +414,11 @@ const CharityPage = () => {
           alignItems="center"
           justifyContent="center"
         >
+          <Grid item>
+            <Typography variant="h2" color="white.light">
+              {charity.charityName.toUpperCase()}
+            </Typography>
+          </Grid>
           <Grid item>
             <Typography variant="h2" color="white.light">
               {charity.charityName.toUpperCase()}

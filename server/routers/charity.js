@@ -33,36 +33,35 @@ cloudinary.config({
   secure: true, //remove for localhost testing
 });
 
-// Update Multer configuration to use Cloudinary storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  folder: "philanthrify", // Cloudinary folder where you want to store your files
-  allowedFormats: ["jpg", "png", "jpeg"],
-  //transformation: [{ width: 500, height: 500, crop: 'limit' }], // Optional: Resize and crop the image
-  filename: function (req, file, cb) {
-    const projectId = req.query.projectId;
-    const fileExt = file.originalname.split(".").pop();
-    const newFilename = `${projectId}-${Date.now()}.${fileExt}`;
-    cb(null, newFilename);
+  params: {
+    folder: "charity_images/logo",
+    allowedFormats: ["jpg", "png", "jpeg"],
+    public_id: function (req) {
+      console.log("🚀 ~ req.query.projectId:", req.query.charityId);
+      return req.query.charityId;
+    },
   },
 });
 const upload = multer({ storage: storage });
 
 router.post(
   "/upload-charity-avatar/",
-  upload.single("avatar"),
+  upload.single("image"),
   async (req, res) => {
     try {
       const file = req.file;
+      console.log("🚀 ~ file:", file);
+      const charityId = req.query.charityId;
 
       if (!file) {
         return res.status(400).json({ error: "No file uploaded." });
       }
+      //const result = await cloudinary.uploader.upload(req.file.path, {folder: "project_images/main", filename: projectId});
+      //console.log("🚀 ~ projectId:", projectId)
 
-      // Access the S3 URL of the uploaded file
-      const s3Url = file.location;
-
-      res.status(200).json({ message: "File uploaded successfully.", s3Url });
+      res.status(200).json({ message: "File uploaded successfully." });
     } catch (error) {
       console.error("Failed to upload image:", error);
       res.status(500).json({ error: "Failed to upload image" });

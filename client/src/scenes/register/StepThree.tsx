@@ -7,8 +7,13 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
+import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "@/contexts/snackbarContext";
+import { selectToken } from "@/redux/authSlice";
+
 import * as yup from "yup";
 type StepThreeProps = {
   data: Signup; // signup data store
@@ -38,12 +43,40 @@ const validationSchema = yup.object({
 
 const StepThree = (props: StepThreeProps) => {
   // console.log("🚀 ~ file: StepThree.tsx:47 ~ StepThree ~ props:", props);
+  const navigate = useNavigate();
+  const { openAlertSnackbar } = useSnackbar();
+  const formData = new FormData();
+
+
   const formik = useFormik({
     initialValues: props.data,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log("next page");
       props.onSubmit(values);
+      if (props.data.image) {
+ 
+        const URL_to_use = props.data.userType == "CHARITY" ? `/charity/upload-charity-avatar` : `/donor/upload-donor-avatar`; //TODO: implement donor API
+        const { image, ...dataWithoutImage } = props.data;
+        formData.append("image", image);
+
+        axios({
+        method: "post",
+        url: `${import.meta.env.VITE_API_URL}${URL_to_use}`,
+        params: { charityId: props.data.charityId },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+      })
+        .then(() => {
+          console.log("Image upload successful");
+          openAlertSnackbar("Image uploaded successfully", "success");
+        })
+        .catch((uploadError) => {
+          console.log(uploadError);
+          openAlertSnackbar("Image not uploaded", "error");
+        });}
     },
   });
   const [showPassword, setShowPassword] = useState(false);

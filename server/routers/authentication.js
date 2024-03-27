@@ -67,6 +67,7 @@ router.post("/signup-charity", async (req, res) => {
     ukCharityNumber,
     charityName,
     charityHead,
+    image
   } = req.body;
 
   // Basic validation including userType

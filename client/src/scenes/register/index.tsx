@@ -3,14 +3,7 @@ import TypographySmallText from "@/components/SmallText";
 import TypographyTitle from "@/components/Title";
 import { useSnackbar } from "@/contexts/snackbarContext";
 import { Signup } from "@/models/Signup";
-import {
-  Grid,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Grid, Step, StepLabel, Stepper, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
@@ -27,6 +20,7 @@ interface MyTokenPayload extends JwtPayload {
   charityName?: string;
 }
 const steps = ["User Kind", "Charity Information", "User Information"];
+
 const Register = () => {
   const { openAlertSnackbar } = useSnackbar();
   const [searchParams] = useSearchParams();
@@ -41,16 +35,18 @@ const Register = () => {
     password: "",
     ukCharityNumber: null,
     charityName: "",
+    image: null,
   });
-  const [skipped] = useState(new Set<number>());
-
   const navigate = useNavigate();
   const [regError, setRegError] = useState("");
   const { palette } = useTheme();
+  
+  const [skipped] = useState(new Set<number>());
   const [currentStep, setCurrentStep] = useState(0);
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
   };
+
   useEffect(() => {
     // Validate token and set initial step
     if (token) {

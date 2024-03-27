@@ -1,3 +1,5 @@
+import DragAndDrop from "@/components/FormsUI/DragAndDrop";
+import TypographyTitle from "@/components/Title";
 import { Signup } from "@/models/Signup";
 import { Button, FormHelperText, Grid, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -40,6 +42,13 @@ const StepTwo = (props: StepTwoProps) => {
       props.handleNext(values);
     },
   });
+  const handleFileChange = (file: File | null) => {
+    if (file) {
+      props.data.image = file;
+    } else {
+      props.data.image = null;
+    }
+  };
 
   // useEffect(() => {
   //   console.log("Changed (FORMIK):", formik.values);
@@ -112,6 +121,24 @@ const StepTwo = (props: StepTwoProps) => {
                   {formik.touched.ukCharityNumber &&
                     formik.errors.ukCharityNumber}
                 </FormHelperText>
+              </Grid>
+              <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                marginTop="20px"
+      >        
+                <TypographyTitle
+                  variant="h3"
+                  fontSize="18px"
+                  align="left"
+                  marginTop="0px"
+                  paddingBottom="10px"
+                >
+                  Add a logo for your charity
+                </TypographyTitle>
+                <DragAndDrop onFileChange={handleFileChange} />
               </Grid>
             </Grid>
           )}

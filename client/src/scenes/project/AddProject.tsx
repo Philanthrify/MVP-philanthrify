@@ -75,7 +75,7 @@ const CreateProjectForm = () => {
       if (image) {
         const formData = new FormData();
         formData.append("image", image);
-
+    
         axios({
           method: "post",
           url: `${import.meta.env.VITE_API_URL}/project/upload-project-image`,
