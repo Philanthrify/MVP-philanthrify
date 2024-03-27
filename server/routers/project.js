@@ -48,7 +48,21 @@ const validateProject = [
     .withMessage("Inputs must be under 191 characters"),
   body("country")
     .isLength({ max: 191 })
-    .withMessage("Inputs must be under 191 characters"),
+    .withMessage("Country must be under 191 characters"),
+  // checking longer strings
+  body("backgroundAndGoals")
+    .isLength({ max: 8000 })
+    .withMessage("Background and Goals must be under 8000 characters"),
+
+  body("soluion")
+    .isLength({ max: 8000 })
+    .withMessage("Solution must be under 8000 characters"),
+  body("donationUsage")
+    .isLength({ max: 8000 })
+    .withMessage("Donation Usage must be under 8000 characters"),
+  body("backgroundAndGoals")
+    .isLength({ max: 8000 })
+    .withMessage("Background and Goals must be under 8000 characters"),
 ];
 // Add a new project for a user
 router.post(

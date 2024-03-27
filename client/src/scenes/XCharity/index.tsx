@@ -402,13 +402,11 @@ const CharityPage = () => {
   return (
     <>
       <PageBox backgroundColor="primary.700">
-        <Box position="relative" top={0} right={0}>
-          <EditButton
-            name="tagline"
-            done={charityFields.tagline.edit}
-            onClick={handleButtonClick}
-          />
-        </Box>
+        <EditButton
+          name="tagline"
+          done={charityFields.tagline.edit}
+          onClick={handleButtonClick}
+        />
         <Grid
           container
           direction="column"
