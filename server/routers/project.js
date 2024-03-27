@@ -20,6 +20,7 @@ const {
 const { FindInputErrors } = require("../middleware/FindInputErrors");
 
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const { allowedTagValues } = require("../models/tags");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -49,6 +50,9 @@ const validateProject = [
   body("country")
     .isLength({ max: 191 })
     .withMessage("Country must be under 191 characters"),
+  body("subtitle")
+    .isLength({ max: 191 })
+    .withMessage("Subtitle must be under 191 characters"),
   // checking longer strings
   body("backgroundAndGoals")
     .isLength({ max: 8000 })
@@ -60,9 +64,52 @@ const validateProject = [
   body("donationUsage")
     .isLength({ max: 8000 })
     .withMessage("Donation Usage must be under 8000 characters"),
-  body("backgroundAndGoals")
-    .isLength({ max: 8000 })
-    .withMessage("Background and Goals must be under 8000 characters"),
+
+  // Validator for link array
+  body("link.*.weblink")
+    .optional({ checkFalsy: true })
+    .isLength({ max: 2084 })
+    .withMessage("Web link must be under 2084 characters")
+    .matches(
+      /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i
+    )
+    .withMessage("Web link is not in the correct format."),
+  body("link.*.socialMedia")
+    .optional({ checkFalsy: true })
+    .isString()
+    .withMessage("Social media name must be a string")
+    .isIn(["Facebook", "Instagram", "Twitter", "LinkedIn", "YouTube"])
+    .withMessage(
+      "Social media must be one of the specified values: Facebook, Instagram, Twitter, LinkedIn, YouTube"
+    ),
+  body("tag")
+    .optional({ checkFalsy: true })
+    .isArray()
+    .custom((tag) => {
+      return tag.every((indTag) => allowedTagValues.includes(indTag));
+    }),
+  body("targetAmount")
+    .isFloat({ min: 0 })
+    .withMessage("Amount must be non-negative"),
+  body("endDate")
+    .isISO8601()
+    .withMessage("End date must be a valid ISO 8601 date")
+    .custom((value, { req }) => {
+      const startDate = new Date();
+      const endDate = new Date(value);
+      const oneWeekLater = new Date(
+        startDate.getTime() + 7 * 24 * 60 * 60 * 1000
+      ); // Add 7 days to startDate
+
+      if (endDate <= oneWeekLater) {
+        throw new Error(
+          "End date must be at least one week beyond the start date"
+        );
+      }
+
+      // Indicates the success of this synchronous custom validator
+      return true;
+    }),
 ];
 // Add a new project for a user
 router.post(
@@ -87,7 +134,21 @@ router.post(
         targetAmount,
         currentAmount = 0.0, // default to 0 if not provided
         endDate,
+        charityId,
       } = req.body;
+
+      // Query the database to check if the charityId exists
+      // TODO: consider using caching to make this query unneeded
+      const charityExists = await prisma.charity.findUnique({
+        where: {
+          ukCharityNumber: charityId.toString(),
+        },
+      });
+
+      if (!charityExists) {
+        // If the charity does not exist, return an error response
+        return res.status(404).json({ error: "Charity not found" });
+      }
       //console.log(endDate);
       //console.log("charity access rights: ", hasCharityHeadRights(req));
       // check access rights, needs to be a charity head for that charity
@@ -116,7 +177,7 @@ router.post(
       link.forEach(async (element) => {
         const newLink = await prisma.link.create({
           data: {
-            webLink: element.webLink,
+            weblink: element.weblink,
             socialMedia: element.socialMedia,
             projectId: newProject.id,
           },

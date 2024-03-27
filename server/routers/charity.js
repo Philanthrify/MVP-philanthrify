@@ -25,6 +25,7 @@ const { FindInputErrors } = require("../middleware/FindInputErrors");
 //});
 
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const { allowedTagValues } = require("../models/tags");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -189,34 +190,6 @@ router.get("/:ukCharityNumber", unrejectingTokenDecode, async (req, res) => {
   }
 });
 
-const allowedTagValues = [
-  "Farming",
-  "Wildlife",
-  "Business",
-  "Climate",
-  "Community",
-  "Crisis",
-  "Culture",
-  "Development",
-  "Economy",
-  "Energy",
-  "Environment",
-  "Food",
-  "Healthcare",
-  "Housing",
-  "HumanRights",
-  "Innovation",
-  "Medical",
-  "Security",
-  "Sports",
-  "Technology",
-  "Women",
-  "Youth",
-  "Rewilding",
-  "ElderCare",
-  "Education",
-  "CleanWater",
-];
 // writing route to add change stuff within a charity e.g. add 'about'
 router.put(
   "/:ukCharityNumber",

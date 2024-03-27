@@ -75,8 +75,7 @@ const LinkInput: React.FC<LinkInputProps> = ({
             onChange({ id, webLink: e.target.value, socialMedia })
           }
           label="Link"
-          classes={{ ...textFieldProps.selectClasses  }}
-          
+          classes={{ ...textFieldProps.selectClasses }}
         />
       </Grid>
       <Grid item xs={1}>
